@@ -1,0 +1,7 @@
+<module rename-to='UiBinderSample'>
+	<inherits name='com.watopi.chosen.Chosen' />
+
+	<entry-point
+		class="com.watopi.chosen.uibindersample.client.UiBinderSample">
+	</entry-point>
+</module>

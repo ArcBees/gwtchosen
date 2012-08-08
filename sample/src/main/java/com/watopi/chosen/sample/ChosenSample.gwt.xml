@@ -1,0 +1,5 @@
+<module rename-to='Chosen'>
+    <inherits name='com.watopi.chosen.Chosen'/>
+    <entry-point class='com.watopi.chosen.sample.client.ChosenSample'/>
+
+</module>
