@@ -145,10 +145,6 @@ public class ChosenListBox extends ListBox {
     return ensureChosenHandlers().addHandler(ShowingDropDownEvent.getType(), handler);
   }
 
-  public Boolean getAllowSingleDeselect() {
-    return options.getAllowSingleDeselect();
-  }
-
   public int getDisableSearchThreshold() {
     return options.getDisableSearchThreshold();
   }
@@ -177,8 +173,8 @@ public class ChosenListBox extends ListBox {
    * Specify if the deselection is allowed on single selects.
    * 
    */
-  public Boolean isAllowSingleDeselect() {
-    return options.getAllowSingleDeselect();
+  public boolean isAllowSingleDeselect() {
+    return options.isAllowSingleDeselect();
   }
 
   public boolean isSearchContains() {
@@ -189,7 +185,7 @@ public class ChosenListBox extends ListBox {
     return options.isSingleBackstrokeDelete();
   }
 
-  public void setAllowSingleDeselect(Boolean allowSingleDeselect) {
+  public void setAllowSingleDeselect(boolean allowSingleDeselect) {
     options.setAllowSingleDeselect(allowSingleDeselect);
   }
 

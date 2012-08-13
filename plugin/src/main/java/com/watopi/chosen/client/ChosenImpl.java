@@ -93,11 +93,6 @@ public class ChosenImpl {
   private static final RegExp regExpChars = RegExp.compile("[-[\\]{}()*+?.,\\\\^$|#\\s]", "g");
   private static final String TABINDEX_PROPERTY = "tabindex";
 
-  //TODO remove this method
-  public static native void log(String message)/*-{
-		console.log(message);
-  }-*/;
-
   private GQuery $selectElement;
   private Function activateAction;
   private boolean activeField = false;
@@ -481,8 +476,6 @@ public class ChosenImpl {
   }
 
   private int getSideBorderPadding(GQuery elmt) {
-    log("elmt.outerWidth() " + elmt.outerWidth());
-    log("elmt.width()" + elmt.width());
     return elmt.outerWidth() - elmt.width();
   }
 
@@ -750,7 +743,7 @@ public class ChosenImpl {
     resultClearHighlight();
     winnowResults();
 
-    fireEvent(new ChosenChangeEvent(option.getValue(), this));
+    fireEvent(new ChosenChangeEvent(option.getValue(), false, this));
 
     searchFieldScale();
   }
@@ -816,7 +809,10 @@ public class ChosenImpl {
           continue;
         }
 
-        content.append(resultAddOption(optionItem));
+        SafeHtml optionHtml = resultAddOption(optionItem);
+        if (optionHtml != null){
+          content.append(optionHtml);
+        }
 
         if (optionItem.isSelected() && isMultiple) {
           choiceBuild(optionItem);
@@ -873,8 +869,10 @@ public class ChosenImpl {
 
       searchField.val("");
 
-      String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
-      fireEvent(new ChosenChangeEvent(value, this));
+      if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())){
+        String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
+        fireEvent(new ChosenChangeEvent(value, this));
+      }
 
       currentValue = $selectElement.val();
 
@@ -1110,9 +1108,8 @@ public class ChosenImpl {
 
     NodeList<OptionElement> optionsList = selectElement.getOptions();
     allowSingleDeselect =
-        options.isAllowSingleDeselect() != null && optionsList.getLength() > 0
-            && "".equals(optionsList.getItem(0).getText()) ? options.isAllowSingleDeselect()
-            : false;
+        options.isAllowSingleDeselect() && optionsList.getLength() > 0
+            && "".equals(optionsList.getItem(0).getText());
 
     choices = 0;
 

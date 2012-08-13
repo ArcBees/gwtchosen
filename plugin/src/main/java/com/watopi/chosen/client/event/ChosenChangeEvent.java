@@ -26,20 +26,30 @@ import com.watopi.chosen.client.ChosenImpl;
 public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChangeHandler> {
 
 	public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
-	private String deselected;
+	private String value;
+	private boolean selection;
 
 	public interface ChosenChangeHandler extends EventHandler {
 		void onChange(ChosenChangeEvent event);
 	}
 
-	public ChosenChangeEvent(String deselected, ChosenImpl chosen) {
-		super(chosen);
-		this.deselected = deselected;
+	public ChosenChangeEvent(String value, ChosenImpl chosen) {
+		this(value, true, chosen);
 	}
+	
+	public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
+    super(chosen);
+    this.value = value;
+    this.selection = selected;
+  }
 
-	public String getDeselected() {
-		return deselected;
+	public String getValue() {
+		return value;
 	}
+	
+	public boolean isSelection() {
+    return selection;
+  }
 
 	@Override
 	protected void dispatch(ChosenChangeHandler handler) {

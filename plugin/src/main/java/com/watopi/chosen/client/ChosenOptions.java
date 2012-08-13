@@ -20,7 +20,7 @@ package com.watopi.chosen.client;
 
 public class ChosenOptions {
 
-	private Boolean allowSingleDeselect;
+	private boolean allowSingleDeselect;
 	private int disableSearchThreshold;
 	private boolean searchContains;
 	private boolean singleBackstrokeDelete;
@@ -35,7 +35,7 @@ public class ChosenOptions {
 	}
 
 	private void setDefault() {
-		allowSingleDeselect = null;
+		allowSingleDeselect = false;
 		disableSearchThreshold = 0;
 		searchContains = false;
 		singleBackstrokeDelete = false;
@@ -43,15 +43,16 @@ public class ChosenOptions {
 
 	}
 
-	public void setAllowSingleDeselect(Boolean allowSingleDeselect) {
+	public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
 		this.allowSingleDeselect = allowSingleDeselect;
+		return this;
 	}
 
 	/**
 	 * Specify if the deselection is allowed on single selects.
 	 * 
 	 */
-	public Boolean isAllowSingleDeselect() {
+	public boolean isAllowSingleDeselect() {
 		return allowSingleDeselect;
 	}
 
@@ -59,67 +60,72 @@ public class ChosenOptions {
 		return disableSearchThreshold;
 	}
 
-	public void setDisableSearchThreshold(int disableSearchThreshold) {
+	public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
 		this.disableSearchThreshold = disableSearchThreshold;
+		return this;
 	}
 
 	public boolean isSearchContains() {
 		return searchContains;
 	}
 
-	public void setSearchContains(boolean searchContains) {
+	public ChosenOptions setSearchContains(boolean searchContains) {
 		this.searchContains = searchContains;
+		return this;
 	}
 
 	public boolean isSingleBackstrokeDelete() {
 		return singleBackstrokeDelete;
 	}
 
-	public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
+	public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
 		this.singleBackstrokeDelete = singleBackstrokeDelete;
+		return this;
 	}
 
 	public int getMaxSelectedOptions() {
 		return maxSelectedOptions;
 	}
 
-	public void setMaxSelectedOptions(int maxSelectedOptions) {
+	public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
 		this.maxSelectedOptions = maxSelectedOptions;
+		return this;
 	}
 
 	public String getPlaceholderTextMultiple() {
 		return placeholderTextMultiple;
 	}
 
-	public void setPlaceholderTextMultiple(String placeholderTextMultiple) {
+	public ChosenOptions setPlaceholderTextMultiple(String placeholderTextMultiple) {
 		this.placeholderTextMultiple = placeholderTextMultiple;
+		return this;
 	}
 
 	public String getPlaceholderText() {
 		return placeholderText;
 	}
 
-	public void setPlaceholderText(String placeholderText) {
+	public ChosenOptions setPlaceholderText(String placeholderText) {
 		this.placeholderText = placeholderText;
+		return this;
 	}
 
 	public String getPlaceholderTextSingle() {
 		return placeholderTextSingle;
 	}
 
-	public void setPlaceholderTextSingle(String placeholderTextSingle) {
+	public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
 		this.placeholderTextSingle = placeholderTextSingle;
+		return this;
 	}
 
-	public Boolean getAllowSingleDeselect() {
-		return allowSingleDeselect;
-	}
 
 	public String getNoResultsText() {
 		return noResultsText;
 	}
 
-	public void setNoResultsText(String noResultsText) {
+	public ChosenOptions setNoResultsText(String noResultsText) {
 		this.noResultsText = noResultsText;
+		return this;
 	}
 }

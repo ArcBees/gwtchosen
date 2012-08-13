@@ -77,6 +77,17 @@ public class Chosen extends GQuery {
     }
 		return this;
 	}
+	
+	public ChosenOptions options(){
+	  if (isEmpty()){
+	    return null;
+	  }
+	  
+	  ChosenImpl impl = data(CHOSEN_DATA_KEY, ChosenImpl.class);
+	  
+	  return impl != null ? impl.getOptions() : null;
+	  
+	}
 
 
 }
