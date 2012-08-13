@@ -15,18 +15,18 @@
 	margin-bottom: 15px;
 }
 
-.header p{
-font-size: 18px;
-font-weight: 200;
-line-height: 27px;
-color: inherit;
+.header p {
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 27px;
+	color: inherit;
 }
 }
 </style>
 </head>
 <body>
 	<div class="container">
-		<header class="header">
+		<header class="header well">
 			<h1>Chosen for GWT</h1>
 			<p class="lead">
 				<a href="http://harvesthq.github.com/chosen/">Chosen</a> is a
@@ -330,7 +330,7 @@ color: inherit;
 				</div>
 
 				<div class="span6">
-					<p>in a more user-friendly component like this:</p>
+					<p>into a more user-friendly component like this:</p>
 					<div>
 						<select class="enhance" data-placeholder="Choose a Country"
 							style="width: 350px;" tabindex="2">
@@ -1190,13 +1190,17 @@ color: inherit;
 			<div class="row">
 				<div class="span12">
 					<p>With one line of java code :</p>
-					<pre>$(".selectToEnHance").as(Chosen).chosen();</pre>
+					<pre>import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.Chosen;
+...	
+<strong>$(".selectToEnHance").as(Chosen).chosen();</strong>
+					</pre>
 				</div>
 			</div>
 		</section>
 		<section>
 			<div class="page-header">
-				<h2>Widget and UiBinder</h2>
+				<h2>Working with Widgets and UiBinder</h2>
 			</div>
 			<div class="row">
 				<div class="span12">
@@ -1230,7 +1234,7 @@ chzn.setMaxSelectedOptions(5);
 chzn.setPlaceholderText("Choose your country...");
 </pre>
 					<p>
-						Check <a href="#todo">this complete example</a>for more code
+						Check <a href="#todo">this complete example</a> for more code
 					</p>
 
 				</div>
@@ -1238,25 +1242,526 @@ chzn.setPlaceholderText("Choose your country...");
 		</section>
 		<section>
 			<div class="page-header">
-				<h2>Features</h2>
+				<h2>&lt;optgroup&gt; support</h2>
 			</div>
 			<div class="row">
-				<div class="span12">
-					<p>
-						The intial chosen javascript plugin was built by <a
-							href="http://www.getharvest.com/">Harvest</a>. Concept and
-						development by <a href="http://patrickfiller.com/">Patrick
-							Filler</a>. Design and CSS by <a href="http://matthewlettini.com/">Matthew
-							Lettini</a>
-					</p>
-					<p>
-						The GWT port of Chosen was built by <a
-							href="https://plus.google.com/u/0/103916508880440628637">Julien
-							Dramaix</a>
-					</p>
+				<div class="span6">
+
+					<p>Single select with groups</p>
+					<div>
+						<select data-placeholder="Your Favorite Football Team"
+							style="width: 350px;" class="enhance" tabindex="5">
+							<option value=""></option>
+							<optgroup label="NFC EAST">
+								<option>Dallas Cowboys</option>
+								<option>New York Giants</option>
+								<option>Philadelphia Eagles</option>
+								<option>Washington Redskins</option>
+							</optgroup>
+							<optgroup label="NFC NORTH">
+								<option>Chicago Bears</option>
+								<option>Detroit Lions</option>
+								<option>Green Bay Packers</option>
+								<option>Minnesota Vikings</option>
+							</optgroup>
+							<optgroup label="NFC SOUTH">
+								<option>Atlanta Falcons</option>
+								<option>Carolina Panthers</option>
+								<option>New Orleans Saints</option>
+								<option>Tampa Bay Buccaneers</option>
+							</optgroup>
+							<optgroup label="NFC WEST">
+								<option>Arizona Cardinals</option>
+								<option>St. Louis Rams</option>
+								<option>San Francisco 49ers</option>
+								<option>Seattle Seahawks</option>
+							</optgroup>
+							<optgroup label="AFC EAST">
+								<option>Buffalo Bills</option>
+								<option>Miami Dolphins</option>
+								<option>New England Patriots</option>
+								<option>New York Jets</option>
+							</optgroup>
+							<optgroup label="AFC NORTH">
+								<option>Baltimore Ravens</option>
+								<option>Cincinnati Bengals</option>
+								<option>Cleveland Browns</option>
+								<option>Pittsburgh Steelers</option>
+							</optgroup>
+							<optgroup label="AFC SOUTH">
+								<option>Houston Texans</option>
+								<option>Indianapolis Colts</option>
+								<option>Jacksonville Jaguars</option>
+								<option>Tennessee Titans</option>
+							</optgroup>
+							<optgroup label="AFC WEST">
+								<option>Denver Broncos</option>
+								<option>Kansas City Chiefs</option>
+								<option>Oakland Raiders</option>
+								<option>San Diego Chargers</option>
+							</optgroup>
+						</select>
+					</div>
+				</div>
+				<div class="span6">
+					<p>Multiple select with groups</p>
+					<div>
+						<select data-placeholder="Your Favorite Football Team"
+							style="width: 350px;" class="enhance" tabindex="6" multiple>
+							<option value=""></option>
+							<optgroup label="NFC EAST">
+								<option>Dallas Cowboys</option>
+								<option>New York Giants</option>
+								<option>Philadelphia Eagles</option>
+								<option>Washington Redskins</option>
+							</optgroup>
+							<optgroup label="NFC NORTH">
+								<option>Chicago Bears</option>
+								<option>Detroit Lions</option>
+								<option>Green Bay Packers</option>
+								<option>Minnesota Vikings</option>
+							</optgroup>
+							<optgroup label="NFC SOUTH">
+								<option>Atlanta Falcons</option>
+								<option>Carolina Panthers</option>
+								<option>New Orleans Saints</option>
+								<option>Tampa Bay Buccaneers</option>
+							</optgroup>
+							<optgroup label="NFC WEST">
+								<option>Arizona Cardinals</option>
+								<option>St. Louis Rams</option>
+								<option>San Francisco 49ers</option>
+								<option>Seattle Seahawks</option>
+							</optgroup>
+							<optgroup label="AFC EAST">
+								<option>Buffalo Bills</option>
+								<option>Miami Dolphins</option>
+								<option>New England Patriots</option>
+								<option>New York Jets</option>
+							</optgroup>
+							<optgroup label="AFC NORTH">
+								<option>Baltimore Ravens</option>
+								<option>Cincinnati Bengals</option>
+								<option>Cleveland Browns</option>
+								<option>Pittsburgh Steelers</option>
+							</optgroup>
+							<optgroup label="AFC SOUTH">
+								<option>Houston Texans</option>
+								<option>Indianapolis Colts</option>
+								<option>Jacksonville Jaguars</option>
+								<option>Tennessee Titans</option>
+							</optgroup>
+							<optgroup label="AFC WEST">
+								<option>Denver Broncos</option>
+								<option>Kansas City Chiefs</option>
+								<option>Oakland Raiders</option>
+								<option>San Diego Chargers</option>
+							</optgroup>
+						</select>
+					</div>
 				</div>
 			</div>
 		</section>
+		<section>
+			<div class="page-header">
+				<h2>Selected and Disabled Support</h2>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>Chosen automatically highlights selected options and removes
+						disabled options.</p>
+
+				</div>
+				<div class="span6">
+					<p>Single select</p>
+					<div>
+						<select data-placeholder="Your Favorite Type of Bear"
+							style="width: 350px;" class="enhance" tabindex="7">
+							<option value=""></option>
+							<option>American Black Bear</option>
+							<option>Asiatic Black Bear</option>
+							<option>Brown Bear</option>
+							<option>Giant Panda</option>
+							<option selected>Sloth Bear</option>
+							<option disabled>Sun Bear</option>
+							<option>Polar Bear</option>
+							<option disabled>Spectacled Bear</option>
+						</select>
+					</div>
+				</div>
+				<div class="span6">
+					<p>Multiple select</p>
+					<div>
+						<select data-placeholder="Your Favorite Types of Bear"
+							style="width: 350px;" multiple class="enhance" tabindex="8">
+							<option value=""></option>
+							<option>American Black Bear</option>
+							<option>Asiatic Black Bear</option>
+							<option>Brown Bear</option>
+							<option>Giant Panda</option>
+							<option selected>Sloth Bear</option>
+							<option disabled>Sun Bear</option>
+							<option selected>Polar Bear</option>
+							<option disabled>Spectacled Bear</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
+				<h2>ChosenOptions</h2>
+			</div>
+			<p>
+				The Chosen plugin can be configured by using an instance of the
+				object
+				<code>ChosenOptions</code>
+			</p>
+			<pre>ChosenOptions options = new ChosenOptions();
+options.setAllowSingleDeselect(true);
+//set the options you want...
+$("select").as(Chosen).chosen(options);
+
+//to retrieve the options later
+ChosenOptions options = $("#myselect").as(Chosen).options();
+</pre>
+			<p>
+				If you are using the
+				<code>ChosenListBox</code>
+				widget, it offers needed methods for configuring it.
+			</p>
+			<pre>
+ChosenListBox chzn = new ChosenListBox();
+chzn.setAllowSingleDeselect(true);
+//...
+</pre>
+
+			<div class="row">
+				<div class="span12">
+					<h3>Default Text Support</h3>
+					<p>Chosen automatically sets the default field text ("Choose a
+						country...") by reading the select element's data-placeholder
+						value. If no data-placeholder value is present, it will default to
+						"Select Some Option" or "Select Some Options" depending on whether
+						the select is single or multiple. You can change these default
+						textes via the options</p>
+
+					<p>If you have access to the select html element:</p>
+					<pre>&lt;select <strong>data-placeholder="Choose a country..."</strong> style="width:350px;" multiple class="chzn-select"&gt;</pre>
+					<p>
+						via the
+						<code>ChosenOptions</code>
+						object:
+					</p>
+					<pre>ChosenOptions options = new ChosenOptions();
+options.setPlaceholderTextSingle("Choose a country...");
+options.setPlaceholderTextMultiple("Choose countries..."); 
+
+//using the widget
+ChosenListBox chzn = new ChosenListBox();
+chzn.setPlaceholderTextSingle("Choose a country...");
+</pre>
+					<p>
+						<strong>Note:</strong> on single selects, the first element is
+						assumed to be selected by the browser. To take advantage of the
+						default text support, you will need to include a blank option as
+						the first element of your select list.
+					</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h3>List of options</h3>
+					<p>
+						The table below lists the different properties of the
+						<code>ChosenOptions</code>
+						. Each property is accessible via getter/setter methods.
+					</p>
+					<div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Property name</th>
+									<th>Type</th>
+									<th>Description</th>
+									<th>Default</th>
+									<th>Example</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>allowSingleDeselect</td>
+									<td>boolean</td>
+									<td>When a <strong>single</strong> select box isn't a
+										required field, you can set <code>allowSingleDeselect</code>
+										to true and an UI element will be added for option
+										deselection. This will only work if the <strong>first
+											option</strong> has <strong>blank text</strong>.
+									</td>
+									<td>false</td>
+									<td><p>allowSingleDeselect = true</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="allowSingleDeselect" tabindex="9">
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+								<tr>
+									<td>disableSearchThreshold</td>
+									<td>int</td>
+									<td>If the number of options is less or equal to the <code>disableSearchThreshold</code>,
+										the search box is disabled.
+									</td>
+									<td>0</td>
+									<td><p>disableSearchThreshold = 10</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="disableSearchThreshold"
+										tabindex="10">
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+								<tr>
+									<td>searchContains</td>
+									<td>boolean</td>
+									<td>If <code>searchContains</code> equals false, search
+										will only match words starting with the query entered by the
+										user. Otherwise, the search will match words containing the
+										query.
+									</td>
+									<td>false</td>
+									<td><p>searchContains = true</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="searchContains" tabindex="11">
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+								<tr>
+									<td>singleBackstrokeDelete</td>
+									<td>boolean</td>
+									<td>Indicate if a choice from a <strong>multiple</strong>
+										select box can be deleted by pressing one backspace. If this
+										option is set to false (default), the first backspace select
+										the last choice, the second remove it.
+									</td>
+									<td>false</td>
+									<td><p>singleBackstrokeDelete = true</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="singleBackstrokeDelete"
+										tabindex="12" multiple>
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+								<tr>
+									<td>maxSelectedOptions</td>
+									<td>int</td>
+									<td>Defines the maximum number of options that can be
+										selected in a <strong>multiple</strong> select box. if this
+										option is set to <code>-1</code>, the user can select as many
+										options as he wants.
+									</td>
+									<td>-1</td>
+									<td>
+										<p>maxSelectedOptions = 5</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="maxSelectedOptions" tabindex="13"
+										multiple>
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+								<tr>
+									<td>noResultsText</td>
+									<td>String</td>
+									<td>Defines the text to display when the query entered by
+										the user doesn't match any options.</td>
+									<td><em>No results match</em></td>
+									<td>
+										<p>noResultsText = "Ooops, nothing was found"</p> <select
+										data-placeholder="Your Favorite Type of Bear"
+										style="width: 250px;" id="noResultsText" tabindex="14">
+											<option value=""></option>
+											<option>American Black Bear</option>
+											<option>Asiatic Black Bear</option>
+											<option>Brown Bear</option>
+											<option>Giant Panda</option>
+											<option>Sloth Bear</option>
+											<option>Sun Bear</option>
+											<option>Polar Bear</option>
+											<option>Spectacled Bear</option>
+									</select>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+
+			</div>
+		</section>
+		<section>
+			<div class="page-header">
+				<h2>Events</h2>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>Chosen fires a number of events that you can listen for.</p>
+					<div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Event name</th>
+									<th>Description</th>
+									<th>Properties</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>ChosenChangeEvent</code></td>
+									<td>Event fired when the user selects or deselects an
+										option.</td>
+									<td><ul>
+											<li><code>isSelection()</code> returns a boolean
+												indicating if the event was fired on a selection (true) or a
+												deselection (false)</li>
+											<li><code>getValue()</code> return the selected or
+												deselected value (can be null)</li>
+
+										</ul></td>
+								</tr>
+								<tr>
+									<td><code>HidingDropDownEvent</code></td>
+									<td>Event fired when the drop down is hiding.</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><code>MaxSelectedEvent</code></td>
+									<td>Event fired when the maximum number of options defined
+										by the option <code>maxSelectedOptions</code> is reached on a
+										multiple select box.
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><code>ReadyEvent</code></td>
+									<td>Event fired when all html defining the chosen
+										component is ready.</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td><code>ShowingDropDownEvent</code></td>
+									<td>Event fired when the drop down is showing.</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p>
+						GwtChosen use the GWT event system for firing these events. In
+						order to listen them, you have to pass an instance of
+						<code>com.google.web.bindery.event.shared.EventBus</code>
+						when you call chosen:
+					</p>
+					<pre>EventBus eventBus = new SimpleEventBus();
+eventBus.addHandler(HidingDropDownEvent.getType(), new HidingDropDownHandler() {
+
+  public void onHidingDropdown(HidingDropDownEvent event) {
+    // Do something when choices are hiding
+  }
+});
+$(".chzn-select, .enhance").as(Chosen).chosen(eventBus);</pre>
+					<p>
+						The
+						<code>ChosenListBox</code>
+						widget exposes needed method for listening to the events:
+					</p>
+					<pre>ChosenListBox chzn = new ChosenListBox();
+    
+chzn.addHidingDropDownHandler(new HidingDropDownHandler() {
+
+  public void onHidingDropdown(HidingDropDownEvent event) {
+    // Do something when choices are hiding
+  }
+});
+
+</pre>
+					<p>
+						Check this <a href="#todo">example</a> in order to know how and
+						when the different events are fired.
+					</p>
+
+
+				</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="page-header">
+				<h2>Updating the component dynamically</h2>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>If you need to update the options in your select field and
+						want Chosen to pick up the changes, you'll need to prevent the
+						component in order to re-build itself based on the updated
+						content.</p>
+					<p>with GQuery:</p>
+
+					<pre>
+//add an option
+$("#mySelect").append($("&lt;option>&lt;/option>").attr("value","myNewOption").text("My new option"));
+$("#mySelect").as(Chosen).update();</pre>
+
+					<p>
+						with the
+						<code>ChosenListBox</code>
+						widget:
+					</p>
+					<pre>//let's assume that myChosenListBox is an instance of ChosenListBox
+myChosenListBox.addItem("My new option","myNewOption");
+myChosenListBox.update();</pre>
+				</div>
+			</div>
+		</section>
+
 		<section>
 			<div class="page-header">
 				<h2>Credits</h2>
@@ -1264,7 +1769,7 @@ chzn.setPlaceholderText("Choose your country...");
 			<div class="row">
 				<div class="span12">
 					<p>
-						The intial chosen javascript plugin was built by <a
+						The initial chosen javascript plugin was built by <a
 							href="http://www.getharvest.com/">Harvest</a>. Concept and
 						development by <a href="http://patrickfiller.com/">Patrick
 							Filler</a>. Design and CSS by <a href="http://matthewlettini.com/">Matthew

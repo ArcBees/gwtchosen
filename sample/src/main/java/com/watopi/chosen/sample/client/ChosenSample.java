@@ -21,42 +21,34 @@ package com.watopi.chosen.sample.client;
 import static com.google.gwt.query.client.GQuery.$;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 
 import static com.watopi.chosen.client.Chosen.Chosen;
 
-import com.watopi.chosen.client.ChosenImpl;
 import com.watopi.chosen.client.ChosenOptions;
 
-
-
-/**
- * Example code BasePlugin plugin for GwtQuery
- */
 public class ChosenSample implements EntryPoint {
 
   public void onModuleLoad() {
-	  
-	  GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-		
-		public void onUncaughtException(Throwable e) {
-			e.printStackTrace();
-			ChosenImpl.log("An error occured : "+e);
-			
-		}
-	});
+
+    $(".chzn-select, .enhance").as(Chosen).chosen();
     
-	  ChosenOptions option = new ChosenOptions();
-	  option.setAllowSingleDeselect(true);
-	  option.setMaxSelectedOptions(5);
-	  option.setNoResultsText("Oops no results here");
-	  option.setPlaceholderText("Place holder for single select");
-	  option.setPlaceholderTextMultiple("Place holder for multiple select");
-    $(".chzn-select, .enhance").as(Chosen).chosen(option);
-    //$(".chzn-select-deselect").chosen({allow_single_deselect:true});
-  
+    $("#allowSingleDeselect").as(Chosen).chosen(new ChosenOptions().setAllowSingleDeselect(true));
+    
+    $("#disableSearchThreshold").as(Chosen).chosen(
+        new ChosenOptions().setDisableSearchThreshold(10));
+    
+    $("#searchContains").as(Chosen).chosen(
+        new ChosenOptions().setSearchContains(true));
+    
+    $("#singleBackstrokeDelete").as(Chosen).chosen(
+        new ChosenOptions().setSingleBackstrokeDelete(true));
+    
+    $("#maxSelectedOptions").as(Chosen).chosen(
+        new ChosenOptions().setMaxSelectedOptions(5));
+    
+    $("#noResultsText").as(Chosen).chosen(
+        new ChosenOptions().setNoResultsText("Ooops, nothing was found:"));
     
   }
-  
+
 }
