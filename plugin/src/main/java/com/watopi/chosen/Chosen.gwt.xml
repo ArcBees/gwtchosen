@@ -1,4 +1,13 @@
 <module>
     <inherits name='com.google.gwt.query.Query'/>
+    
+    <replace-with class="com.watopi.chosen.client.ChosenImpl">
+        <when-type-assignable class="com.watopi.chosen.client.ChosenImpl"/>
+    </replace-with>
+    <replace-with class="com.watopi.chosen.client.NotSupportedChosenImpl">
+        <when-type-assignable class="com.watopi.chosen.client.ChosenImpl"/>
+        <when-property-is name="user.agent" value="ie6"/>
+    </replace-with>
+    
 </module>
     
