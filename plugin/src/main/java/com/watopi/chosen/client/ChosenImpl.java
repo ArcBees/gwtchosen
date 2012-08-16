@@ -882,6 +882,10 @@ public class ChosenImpl {
   }
 
   private void resultsHide() {
+    if (!resultsShowing){
+      return;
+    }
+    
     if (!isMultiple) {
       selectedItem.removeClass(css.chznSingleWithDrop());
     }
