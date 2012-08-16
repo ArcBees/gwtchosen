@@ -1,0 +1,7 @@
+<module rename-to='WidgetSample'>
+	<inherits name='com.watopi.chosen.Chosen' />
+
+	<entry-point
+		class="com.watopi.chosen.widgetsample.client.WidgetSample">
+	</entry-point>
+</module>
