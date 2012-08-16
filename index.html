@@ -4,11 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GwtQuery: Chosen plugin example</title>
 <link rel="stylesheet" href="bootstrap.css" />
+<!--  script language="javascript"
+	src="http://localhost:9876/Chosen/Chosen.nocache.js"></script-->
 <script language="javascript"
 	src="Chosen.nocache.js"></script>
 <style type="text/css">
 body {
-	padding-bottom:70px;
+	padding-bottom: 70px;
 }
 
 .header {
@@ -35,9 +37,9 @@ body {
 			<p class="lead">
 				<a href="http://harvesthq.github.com/chosen/">Chosen</a> is a
 				javascript plugin (for jQuery and Prototype) <em>that makes
-					long, unwieldy select boxes much more user-friendly.</em> GwtChosen is
-				the port of this jquery plugin for Google Web Toolkit. It is not
-				wrapper but an entire rewritte using the GWT standards. It is
+					long, unwieldy select boxes much more user-friendly.</em> GGwtChosen is
+				a port of the jquery version of Chosen for Google Web Toolkit. It is
+				not wrapper but a complete rewrite using the GWT standards. It is
 				available as a GwtQuery plugin or as a widget.
 			</p>
 		</header>
@@ -1521,7 +1523,7 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 								<tr>
 									<td>disableSearchThreshold</td>
 									<td>int</td>
-									<td>If the number of options is less or equal to the <code>disableSearchThreshold</code>,
+									<td>If the number of options is less than or equal to the <code>disableSearchThreshold</code>,
 										the search box is disabled.
 									</td>
 									<td>0</td>
@@ -1788,7 +1790,7 @@ myChosenListBox.update();</pre>
 			</div>
 		</section>
 	</div>
-	<div style="margin-bottom:35px;"></div>
+	<div style="margin-bottom: 35px;"></div>
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
 		_gaq.push([ '_setAccount', 'UA-31100363-2' ]);
@@ -1805,6 +1807,6 @@ myChosenListBox.update();</pre>
 			s.parentNode.insertBefore(ga, s);
 		})();
 	</script>
-	
+
 </body>
 </html>
