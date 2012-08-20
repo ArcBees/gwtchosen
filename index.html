@@ -1424,7 +1424,7 @@ chzn.setPlaceholderText("Choose your country...");
 			</div>
 			<p>
 				The Chosen plugin can be configured by using an instance of the
-				object
+				class
 				<code>ChosenOptions</code>
 			</p>
 			<pre>ChosenOptions options = new ChosenOptions();
@@ -1454,12 +1454,12 @@ chzn.setAllowSingleDeselect(true);
 						value. If no data-placeholder value is present, it will default to
 						"Select Some Option" or "Select Some Options" depending on whether
 						the select is single or multiple. You can change these default
-						textes via the options</p>
+						texts via the options</p>
 
 					<p>If you have access to the select html element:</p>
 					<pre>&lt;select <strong>data-placeholder="Choose a country..."</strong> style="width:350px;" multiple class="chzn-select"&gt;</pre>
 					<p>
-						via the
+						or via the
 						<code>ChosenOptions</code>
 						object:
 					</p>
@@ -1573,10 +1573,10 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 								<tr>
 									<td>singleBackstrokeDelete</td>
 									<td>boolean</td>
-									<td>Indicate if a choice from a <strong>multiple</strong>
+									<td>Indicates if a choice from a <strong>multiple</strong>
 										select box can be deleted by pressing one backspace. If this
-										option is set to false (default), the first backspace select
-										the last choice, the second remove it.
+										option is set to false (default), the first backspace selects
+										the last choice, the second removes it.
 									</td>
 									<td>false</td>
 									<td><p>singleBackstrokeDelete = true</p> <select
@@ -1673,7 +1673,7 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 											<li><code>isSelection()</code> returns a boolean
 												indicating if the event was fired on a selection (true) or a
 												deselection (false)</li>
-											<li><code>getValue()</code> return the selected or
+											<li><code>getValue()</code> returns the selected or
 												deselected value (can be null)</li>
 
 										</ul></td>
@@ -1706,8 +1706,8 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 						</table>
 					</div>
 					<p>
-						GwtChosen use the GWT event system for firing these events. In
-						order to listen them, you have to pass an instance of
+						GwtChosen uses the GWT event system for firing these events. In
+						order to listen to them, you have to pass an instance of
 						<code>com.google.web.bindery.event.shared.EventBus</code>
 						when you call chosen:
 					</p>
