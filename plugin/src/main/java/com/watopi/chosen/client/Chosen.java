@@ -90,4 +90,10 @@ public class Chosen extends GQuery {
 	}
 
 
+  public Chosen chosen(EventBus eventBus) {
+    return chosen(null, eventBus);
+    
+  }
+
+
 }
