@@ -4,10 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GwtQuery: Chosen plugin example</title>
 <link rel="stylesheet" href="bootstrap.css" />
-<script language="javascript"
-	src="http://localhost:9876/Chosen/Chosen.nocache.js"></script>
 <!--  script language="javascript"
-	src="Chosen.nocache.js"></script-->
+	src="http://localhost:9876/Chosen/Chosen.nocache.js"></script-->
+<script language="javascript" src="Chosen.nocache.js"></script>
 <style type="text/css">
 body {
 	padding-bottom: 70px;
@@ -31,15 +30,19 @@ body {
 </style>
 </head>
 <body>
+	<a href="https://github.com/jdramaix/gwtchosen/"><img
+		style="position: absolute; top: 0; right: 0; border: 0;"
+		src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+		alt="Fork me on GitHub"></a>
 	<div class="container">
 		<header class="header well">
 			<h1>Chosen for GWT</h1>
 			<p class="lead">
 				<a href="http://harvesthq.github.com/chosen/">Chosen</a> is a
 				javascript plugin (for jQuery and Prototype) <em>that makes
-					long, unwieldy select boxes much more user-friendly.</em> GGwtChosen is
+					long, unwieldy select boxes much more user-friendly.</em> GwtChosen is
 				a port of the jquery version of Chosen for Google Web Toolkit. It is
-				not wrapper but a complete rewrite using the GWT standards. It is
+				not a wrapper but a complete rewrite using the GWT standards. It is
 				available as a GwtQuery plugin or as a widget.
 			</p>
 		</header>
@@ -1240,7 +1243,8 @@ chzn.setMaxSelectedOptions(5);
 chzn.setPlaceholderText("Choose your country...");
 </pre>
 					<p>
-						Check <a href="#todo">this complete example</a> for more code
+						Check <a href="widgetsample/index.html">this complete example</a>
+						for more code
 					</p>
 
 				</div>
@@ -1420,7 +1424,7 @@ chzn.setPlaceholderText("Choose your country...");
 			</div>
 			<p>
 				The Chosen plugin can be configured by using an instance of the
-				object
+				class
 				<code>ChosenOptions</code>
 			</p>
 			<pre>ChosenOptions options = new ChosenOptions();
@@ -1450,12 +1454,12 @@ chzn.setAllowSingleDeselect(true);
 						value. If no data-placeholder value is present, it will default to
 						"Select Some Option" or "Select Some Options" depending on whether
 						the select is single or multiple. You can change these default
-						textes via the options</p>
+						texts via the options</p>
 
 					<p>If you have access to the select html element:</p>
 					<pre>&lt;select <strong>data-placeholder="Choose a country..."</strong> style="width:350px;" multiple class="chzn-select"&gt;</pre>
 					<p>
-						via the
+						or via the
 						<code>ChosenOptions</code>
 						object:
 					</p>
@@ -1523,8 +1527,9 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 								<tr>
 									<td>disableSearchThreshold</td>
 									<td>int</td>
-									<td>If the number of options is less than or equal to the <code>disableSearchThreshold</code>,
-										the search box is disabled.
+									<td>If the number of options is less than or equal to the
+										<code>disableSearchThreshold</code>, the search box is
+										disabled.
 									</td>
 									<td>0</td>
 									<td><p>disableSearchThreshold = 10</p> <select
@@ -1568,10 +1573,10 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 								<tr>
 									<td>singleBackstrokeDelete</td>
 									<td>boolean</td>
-									<td>Indicate if a choice from a <strong>multiple</strong>
+									<td>Indicates if a choice from a <strong>multiple</strong>
 										select box can be deleted by pressing one backspace. If this
-										option is set to false (default), the first backspace select
-										the last choice, the second remove it.
+										option is set to false (default), the first backspace selects
+										the last choice, the second removes it.
 									</td>
 									<td>false</td>
 									<td><p>singleBackstrokeDelete = true</p> <select
@@ -1668,7 +1673,7 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 											<li><code>isSelection()</code> returns a boolean
 												indicating if the event was fired on a selection (true) or a
 												deselection (false)</li>
-											<li><code>getValue()</code> return the selected or
+											<li><code>getValue()</code> returns the selected or
 												deselected value (can be null)</li>
 
 										</ul></td>
@@ -1701,8 +1706,8 @@ chzn.setPlaceholderTextSingle("Choose a country...");
 						</table>
 					</div>
 					<p>
-						GwtChosen use the GWT event system for firing these events. In
-						order to listen them, you have to pass an instance of
+						GwtChosen uses the GWT event system for firing these events. In
+						order to listen to them, you have to pass an instance of
 						<code>com.google.web.bindery.event.shared.EventBus</code>
 						when you call chosen:
 					</p>
@@ -1730,8 +1735,8 @@ chzn.addHidingDropDownHandler(new HidingDropDownHandler() {
 
 </pre>
 					<p>
-						Check this <a href="#todo">example</a> in order to know how and
-						when the different events are fired.
+						Check this <a href="widgetsample/index.html">example</a> in order
+						to know how and when the different events are fired.
 					</p>
 
 
