@@ -192,7 +192,7 @@ public class ChosenImpl {
 
     });
 
-    container.mouseover(new Function() {
+    container.mouseenter(new Function() {
       @Override
       public boolean f(Event e) {
         mouseOnContainer = true;
@@ -200,7 +200,7 @@ public class ChosenImpl {
       }
     });
 
-    container.mouseout(new Function() {
+    container.mouseleave(new Function() {
       @Override
       public boolean f(Event e) {
         mouseOnContainer = false;
@@ -435,7 +435,6 @@ public class ChosenImpl {
 
     } else {
       pendingDestroyClick = false;
-
     }
 
     return false;
@@ -1052,7 +1051,6 @@ public class ChosenImpl {
       resultHighlight = target;
       resultSelect(e);
     }
-
     return false;
   }
 
