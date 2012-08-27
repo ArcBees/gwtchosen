@@ -46,6 +46,11 @@ body {
 				available as a GwtQuery plugin or as a widget.
 			</p>
 		</header>
+		
+		<div id="browserWarning" class="alert" style="display: none;">
+  			<strong>Oooops, your browser is not supported.</strong> we cannot enhance the select elements with this browser.<br />
+  			Please try a modern browser !
+		</div>
 
 		<section>
 			<div class="page-header">
@@ -1771,8 +1776,86 @@ myChosenListBox.addItem("My new option","myNewOption");
 myChosenListBox.update();</pre>
 				</div>
 			</div>
+			<div class="row">
+				<div id="updateChozen" class="span4"></div>
+				<button id="updateButton" class="btn btn-primary">Add 100 items</button>
+			</div>
 		</section>
 
+		<section>
+			<div class="page-header">
+				<h2>Browsers support</h2>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+						All modern browsers are supported (Firefox, Chrome, Safari and IE9). Legacy support for IE8 is also enabled. On IE6 and IE7, we fall back on normal html select element.
+					</p>
+					<p>
+						To know if the use's browser is supported by the plugin, you can call the <code>isSupported()</code> method :
+					</p>
+					<pre>
+boolean chosenSupport = Chosen.isSupported();
+//or 
+boolean chosenSupport = ChosenListBox.isSupported();
+					</pre>
+				</div>
+			</div>
+		</section>
+		
+		<section>
+			<div class="page-header">
+				<h2>Setup</h2>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<p>
+					GwtChosen depends on <a href="http://www.gwtquery.com">GwtQuery</a>. You need at least GwtQuery 1.2. Please follow <a href="http://code.google.com/p/gwtquery/wiki/Downloads">the instructions</a> to download GwtQuery jar file and put it in your classpath.
+					</p>
+				</div>
+				<div class="span7">
+					<h3>With maven</h3>
+					<p>
+						Add the following block to your pom.xml
+					<pre>
+	&lt;repositories>
+        &lt;repository>
+         &lt;id>plugins&lt;/id>
+         &lt;url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo&lt;/url>
+       &lt;/repository>
+   &lt;/repositories>
+
+   &lt;build>
+    &lt;dependencies>
+        &lt;dependency>
+            &lt;groupId>com.watopi&lt;/groupId>
+            &lt;artifactId>gwtchosen&lt;/artifactId>
+            &lt;version>1.0.1&lt;/version>
+            &lt;scope>provided&lt;/scope>
+        &lt;/dependency>
+    &lt;/dependencies>
+   &lt;/build>	
+   	</pre>
+				</div>
+				<div class="span5">
+					<h3>Without maven</h3>
+					<p>
+						Download the last stable jar file and put it in your claspath.
+					</p>
+				</div>
+				
+				<div class="span12">
+					<p>
+						Then you need to inherit the plugin in your Module.gwt.xml file:
+					</p>
+					<pre>
+&lt;inherits name='com.watopi.chosen.Chosen'/>
+					</pre>
+				</div>
+			</div>
+		</section>
+		
+		
 		<section>
 			<div class="page-header">
 				<h2>Credits</h2>

@@ -58,30 +58,25 @@ public class WidgetSample implements EntryPoint {
               + additional + "</span>").scrollTop($("#log").get(0).getScrollHeight());
     }
 
-    @Override
     public void onReady(ReadyEvent event) {
       log("ReadyEvent", "");
 
     }
 
-    @Override
     public void onMaxSelected(MaxSelectedEvent event) {
       log("MaxSelectedEvent", "");
     }
 
-    @Override
     public void onShowingDropDown(ShowingDropDownEvent event) {
       log("ShowingDropDownEvent", "");
 
     }
 
-    @Override
     public void onHidingDropdown(HidingDropDownEvent event) {
       log("HidingDropDownEvent", "");
 
     }
 
-    @Override
     public void onChange(ChosenChangeEvent event) {
       String additional = (event.isSelection() ? ": selection of " : ": deselection of ") + event.getValue();
       log("ChangeEvent on",  additional);
@@ -111,8 +106,12 @@ public class WidgetSample implements EntryPoint {
   @UiField(provided = true)
   ChosenListBox teamChosen;
 
-  @Override
   public void onModuleLoad() {
+    
+    if (!ChosenListBox.isSupported()){
+      $("#browserWarning").show();
+    }
+    
     teamChosen = new ChosenListBox(true);
 
     Widget w = uiBinder.createAndBindUi(this);

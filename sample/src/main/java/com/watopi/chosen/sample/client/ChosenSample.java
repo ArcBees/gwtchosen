@@ -21,14 +21,21 @@ package com.watopi.chosen.sample.client;
 import static com.google.gwt.query.client.GQuery.$;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.query.client.Function;
+import com.google.gwt.user.client.ui.RootPanel;
 
 import static com.watopi.chosen.client.Chosen.Chosen;
 
 import com.watopi.chosen.client.ChosenOptions;
+import com.watopi.chosen.client.gwt.ChosenListBox;
 
 public class ChosenSample implements EntryPoint {
 
   public void onModuleLoad() {
+    
+    if (!com.watopi.chosen.client.Chosen.isSupported()){
+      $("#browserWarning").show();
+    }
 
     $(".chzn-select, .enhance").as(Chosen).chosen();
     
@@ -48,6 +55,27 @@ public class ChosenSample implements EntryPoint {
     
     $("#noResultsText").as(Chosen).chosen(
         new ChosenOptions().setNoResultsText("Ooops, nothing was found:"));
+    
+    final ChosenListBox chzn = new ChosenListBox();
+    chzn.addItem("item 1");
+    chzn.setWidth("250px");
+    
+    RootPanel.get("updateChozen").add(chzn);
+    
+    $("#updateButton").click(new Function(){
+      int i = 2;
+      
+      @Override
+      public void f() {
+        for (int j = 0; j < 100; j++){
+          chzn.addItem("item "+i);
+          i++;
+        }
+        
+        chzn.update();
+      }
+    });
+    
     
   }
 
