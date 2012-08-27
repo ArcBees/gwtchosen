@@ -70,6 +70,11 @@ public class ChosenListBox extends ListBox {
     return listBox;
   }
   
+  /**
+   * Indicates of the ChosenListBox is supported by the current browser.
+   * If not (IE6/7), we fall back on normal select element.
+   * @return
+   */
   public static boolean isSupported(){
     return com.watopi.chosen.client.Chosen.isSupported();
   }
