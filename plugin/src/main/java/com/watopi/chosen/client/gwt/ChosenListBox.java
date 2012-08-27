@@ -19,6 +19,7 @@
 package com.watopi.chosen.client.gwt;
 
 import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.Chosen;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -30,8 +31,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-
-import static com.watopi.chosen.client.Chosen.Chosen;
 
 import com.watopi.chosen.client.ChosenOptions;
 import com.watopi.chosen.client.event.ChosenChangeEvent;
@@ -113,7 +112,6 @@ public class ChosenListBox extends ListBox {
   @Deprecated
   public com.google.gwt.event.shared.HandlerRegistration addChangeHandler(final com.google.gwt.event.dom.client.ChangeHandler handler) {
     final HandlerRegistration registration = addChosenChangeHandler(new ChosenChangeHandler() {
-      @Override
       public void onChange(ChosenChangeEvent event) {
         handler.onChange(null);
       }
@@ -248,11 +246,10 @@ public class ChosenListBox extends ListBox {
     $(getElement()).as(Chosen).chosen(options, ensureChosenHandlers());
   }
 
-  // TODO : onUnload method is needed
   @Override
   protected void onUnload() {
-    // TODO Auto-generated method stub
     super.onUnload();
+    $(getElement()).as(Chosen).destroy();
   }
 
 }

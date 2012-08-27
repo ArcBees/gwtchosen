@@ -78,6 +78,21 @@ public class Chosen extends GQuery {
 		return this;
 	}
 	
+	
+	public Chosen destroy() {
+
+    for (Element e : elements()) {
+
+      ChosenImpl impl = $(e).data(CHOSEN_DATA_KEY, ChosenImpl.class);
+      
+      if (impl != null) {
+        impl.release();
+        $(e).removeData(CHOSEN_DATA_KEY);
+      }
+    }
+    return this;
+  }
+	
 	public ChosenOptions options(){
 	  if (isEmpty()){
 	    return null;

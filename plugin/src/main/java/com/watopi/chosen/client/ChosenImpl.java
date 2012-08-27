@@ -41,6 +41,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Event;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import com.watopi.chosen.client.SelectParser.GroupItem;
 import com.watopi.chosen.client.SelectParser.OptionItem;
@@ -126,7 +127,8 @@ public class ChosenImpl {
   private GQuery selectedItem;
   private SelectElement selectElement;
   private JsObjectArray<SelectItem> selectItems;
-
+  private HandlerRegistration updateEventHandlerRegistration;
+  
   public String getCurrentValue() {
     return currentValue;
   }
@@ -137,6 +139,20 @@ public class ChosenImpl {
   
   public SelectElement getSelectElement() {
     return selectElement;
+  }
+  
+  protected void release(){
+    if (updateEventHandlerRegistration != null){
+      updateEventHandlerRegistration.removeHandler();
+      updateEventHandlerRegistration = null;
+    }
+    //empty the searchChoice to speed up the container.remove()
+    searchChoices.html("");
+    
+    //remove method clean listener and cie
+    container.remove();
+    
+    $selectElement.show();
   }
   
   protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
@@ -232,7 +248,7 @@ public class ChosenImpl {
     });
 
     if (eventBus != null) {
-      eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
+      updateEventHandlerRegistration = eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
         public void onUpdated(UpdatedEvent event) {
           if (!isMultiple) {
             resultsResetCleanup();
@@ -494,8 +510,6 @@ public class ChosenImpl {
   private boolean inputFocus(final Event e) {
     if (!activeField) {
       Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
-
-        @Override
         public boolean execute() {
           containerMouseDown(e);
           return false;
