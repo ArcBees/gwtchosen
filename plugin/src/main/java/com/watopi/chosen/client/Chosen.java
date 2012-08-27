@@ -48,6 +48,14 @@ public class Chosen extends GQuery {
 
 	public static String CHOSEN_DATA_KEY = "chosen";
 	
+	/**
+	 * Indicate if the current browser is supported by the plugin or not. 
+	 * @return
+	 */
+	public static boolean isSupported(){
+	  return GWT.<ChosenImpl>create(ChosenImpl.class).isSupported();
+	}
+	
 	// Initialization
 	public Chosen(GQuery gq) {
 		super(gq);

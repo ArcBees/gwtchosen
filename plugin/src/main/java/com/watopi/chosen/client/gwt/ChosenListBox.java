@@ -19,7 +19,6 @@
 package com.watopi.chosen.client.gwt;
 
 import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.Chosen;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -32,18 +31,20 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
+import static com.watopi.chosen.client.Chosen.Chosen;
+
 import com.watopi.chosen.client.ChosenOptions;
 import com.watopi.chosen.client.event.ChosenChangeEvent;
-import com.watopi.chosen.client.event.HidingDropDownEvent;
-import com.watopi.chosen.client.event.MaxSelectedEvent;
-import com.watopi.chosen.client.event.ReadyEvent;
-import com.watopi.chosen.client.event.ShowingDropDownEvent;
-import com.watopi.chosen.client.event.UpdatedEvent;
 import com.watopi.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
+import com.watopi.chosen.client.event.HidingDropDownEvent;
 import com.watopi.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
+import com.watopi.chosen.client.event.MaxSelectedEvent;
 import com.watopi.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
+import com.watopi.chosen.client.event.ReadyEvent;
 import com.watopi.chosen.client.event.ReadyEvent.ReadyHandler;
+import com.watopi.chosen.client.event.ShowingDropDownEvent;
 import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
+import com.watopi.chosen.client.event.UpdatedEvent;
 
 
 
@@ -69,6 +70,9 @@ public class ChosenListBox extends ListBox {
     return listBox;
   }
   
+  public static boolean isSupported(){
+    return com.watopi.chosen.client.Chosen.isSupported();
+  }
   private EventBus chznHandlerManager;
   
   private ChosenOptions options;

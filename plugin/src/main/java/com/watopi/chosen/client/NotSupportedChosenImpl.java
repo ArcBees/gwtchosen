@@ -34,4 +34,8 @@ public class NotSupportedChosenImpl extends ChosenImpl {
 		// DO nothing
 	}
 
+	@Override
+	public boolean isSupported() {
+	  return false;
+	}
 }

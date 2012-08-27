@@ -141,6 +141,14 @@ public class ChosenImpl {
     return selectElement;
   }
   
+  /**
+   * Is the plugin support the current broxser ?
+   * @return
+   */
+  public boolean isSupported(){
+    return true;
+  }
+  
   protected void release(){
     if (updateEventHandlerRegistration != null){
       updateEventHandlerRegistration.removeHandler();
