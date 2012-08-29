@@ -4,12 +4,12 @@
 
     <parent>
         <groupId>com.watopi</groupId>
-        <artifactId>gwtchosen</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>gwtchosen-project</artifactId>
+        <version>1.0.1</version>
     </parent>
 
     <name>Chosen plugin for gQuery</name>
-    <artifactId>chosen-plugin</artifactId>
+    <artifactId>gwtchosen</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

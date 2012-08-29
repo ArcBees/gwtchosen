@@ -5,19 +5,19 @@
 
     <parent>
         <groupId>com.watopi</groupId>
-        <artifactId>gwtchosen</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>gwtchosen-project</artifactId>
+        <version>1.0.1</version>
     </parent>
 
     <name>Chosen gQuery plugin example</name>
-    <groupId>com.googlecode.gwtquery.plugins</groupId>
+    <groupId>com.watopi</groupId>
     <artifactId>chosen-sample</artifactId>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
             <groupId>com.watopi</groupId>
-            <artifactId>chosen-plugin</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>gwtchosen</artifactId>
+            <version>1.0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

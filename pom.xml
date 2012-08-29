@@ -4,14 +4,14 @@
     
     <name>Chosen plugin project</name>
     <groupId>com.watopi</groupId>
-    <artifactId>gwtchosen</artifactId>
+    <artifactId>gwtchosen-project</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <properties>
       <maven.compiler.source>1.5</maven.compiler.source>
       <maven.compiler.target>1.5</maven.compiler.target>
-      <gQueryVersion>1.1.1-SNAPSHOT</gQueryVersion>
+      <gQueryVersion>1.2.0</gQueryVersion>
       <gwtversion>2.4.0</gwtversion>
     </properties>
 
@@ -38,17 +38,9 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <scm>
-        <connection>scm:svn:http://gwtquery-plugins.googlecode.com/svn/trunk/chosen
-        </connection>
-        <developerConnection>scm:svn:https://gwtquery-plugins.googlecode.com/svn/trunk/chosen
-        </developerConnection>
-        <url>http://code.google.com/p/gwtquery-plugins/source/browse/trunk/chosen</url>
-    </scm>
-
     <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/gwtquery-plugins/issues/list</url>
+        <system>Github</system>
+        <url>https://github.com/jdramaix/gwtchosen/issues</url>
     </issueManagement>
 
     <dependencies>
@@ -59,13 +51,24 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.gwtquery</groupId>
-            <artifactId>gwtquery</artifactId>
-            <version>${gQueryVersion}</version>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwtversion}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwtversion}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <scope>provided</scope>
+            <version>${gQueryVersion}</version>
+        </dependency>
     </dependencies>
-
     <build>
         <extensions>
             <extension>
