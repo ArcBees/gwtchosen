@@ -154,13 +154,15 @@ public class ChosenImpl {
       updateEventHandlerRegistration.removeHandler();
       updateEventHandlerRegistration = null;
     }
-    //empty the searchChoice to speed up the container.remove()
-    searchChoices.html("");
+    //empty the searchResult to speed up the container.remove()
+    if (searchResults != null){
+      searchResults.html("");
+    }
     
     //remove method clean listener and cie
     container.remove();
     
-    $selectElement.show();
+    $selectElement.removeClass(css.chznDone(), "chzn-done").show();
   }
   
   protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
