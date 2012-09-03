@@ -151,11 +151,17 @@ public class ChosenListBox extends ListBox {
   public HandlerRegistration addShowingDropDownHandler(ShowingDropDownHandler handler) {
     return ensureChosenHandlers().addHandler(ShowingDropDownEvent.getType(), handler);
   }
+  
+  public void forceRedraw(){
+    
+    $(getElement()).as(Chosen).destroy().chosen(options, ensureChosenHandlers());
+    
+  }
 
   public int getDisableSearchThreshold() {
     return options.getDisableSearchThreshold();
   }
-
+  
   public int getMaxSelectedOptions() {
     return options.getMaxSelectedOptions();
   }
@@ -175,6 +181,7 @@ public class ChosenListBox extends ListBox {
   public String getPlaceholderTextSingle() {
     return options.getPlaceholderTextSingle();
   }
+  
 
   /**
    * Specify if the deselection is allowed on single selects.
@@ -227,6 +234,12 @@ public class ChosenListBox extends ListBox {
   public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
      options.setSingleBackstrokeDelete(singleBackstrokeDelete);
   }
+  
+  @Override
+  public void setSelectedIndex(int index) {
+    super.setSelectedIndex(index);
+    update();
+  }
 
   /**
    * Use this method to update the chosen list box (i.e. after insertion or removal of options)
@@ -244,7 +257,7 @@ public class ChosenListBox extends ListBox {
     return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
         : chznHandlerManager;
   }
-
+  
   protected EventBus getChosenHandlerManager() {
     return chznHandlerManager;
   }
