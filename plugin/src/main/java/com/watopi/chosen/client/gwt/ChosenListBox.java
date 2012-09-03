@@ -46,9 +46,17 @@ import com.watopi.chosen.client.event.ShowingDropDownEvent;
 import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
 import com.watopi.chosen.client.event.UpdatedEvent;
 
-
-
 public class ChosenListBox extends ListBox {
+
+  /**
+   * Indicates of the ChosenListBox is supported by the current browser. If not (IE6/7), we fall
+   * back on normal select element.
+   * 
+   * @return
+   */
+  public static boolean isSupported() {
+    return com.watopi.chosen.client.Chosen.isSupported();
+  }
 
   /**
    * Creates a ChosenListBox widget that wraps an existing &lt;select&gt; element.
@@ -69,17 +77,9 @@ public class ChosenListBox extends ListBox {
 
     return listBox;
   }
-  
-  /**
-   * Indicates of the ChosenListBox is supported by the current browser.
-   * If not (IE6/7), we fall back on normal select element.
-   * @return
-   */
-  public static boolean isSupported(){
-    return com.watopi.chosen.client.Chosen.isSupported();
-  }
+
   private EventBus chznHandlerManager;
-  
+
   private ChosenOptions options;
 
   /**
@@ -96,9 +96,9 @@ public class ChosenListBox extends ListBox {
    * @param isMultipleSelect specifies if multiple selection is enabled
    */
   public ChosenListBox(boolean isMultipleSelect) {
-   this(isMultipleSelect, new ChosenOptions());
+    this(isMultipleSelect, new ChosenOptions());
   }
-  
+
   /**
    * Creates an empty list box. The preferred way to enable multiple selections is to use this
    * constructor rather than {@link #setMultipleSelect(boolean)}.
@@ -119,14 +119,15 @@ public class ChosenListBox extends ListBox {
    */
   @Override
   @Deprecated
-  public com.google.gwt.event.shared.HandlerRegistration addChangeHandler(final com.google.gwt.event.dom.client.ChangeHandler handler) {
+  public com.google.gwt.event.shared.HandlerRegistration addChangeHandler(
+      final com.google.gwt.event.dom.client.ChangeHandler handler) {
     final HandlerRegistration registration = addChosenChangeHandler(new ChosenChangeHandler() {
       public void onChange(ChosenChangeEvent event) {
         handler.onChange(null);
       }
     });
-    
-    return new com.google.gwt.event.shared.HandlerRegistration(){
+
+    return new com.google.gwt.event.shared.HandlerRegistration() {
       public void removeHandler() {
         registration.removeHandler();
       }
@@ -136,6 +137,7 @@ public class ChosenListBox extends ListBox {
   public HandlerRegistration addChosenChangeHandler(ChosenChangeHandler handler) {
     return ensureChosenHandlers().addHandler(ChosenChangeEvent.getType(), handler);
   }
+
   public HandlerRegistration addHidingDropDownHandler(HidingDropDownHandler handler) {
     return ensureChosenHandlers().addHandler(HidingDropDownEvent.getType(), handler);
   }
@@ -151,17 +153,17 @@ public class ChosenListBox extends ListBox {
   public HandlerRegistration addShowingDropDownHandler(ShowingDropDownHandler handler) {
     return ensureChosenHandlers().addHandler(ShowingDropDownEvent.getType(), handler);
   }
-  
-  public void forceRedraw(){
-    
+
+  public void forceRedraw() {
+
     $(getElement()).as(Chosen).destroy().chosen(options, ensureChosenHandlers());
-    
+
   }
 
   public int getDisableSearchThreshold() {
     return options.getDisableSearchThreshold();
   }
-  
+
   public int getMaxSelectedOptions() {
     return options.getMaxSelectedOptions();
   }
@@ -177,11 +179,10 @@ public class ChosenListBox extends ListBox {
   public String getPlaceholderTextMultiple() {
     return options.getPlaceholderTextMultiple();
   }
-  
+
   public String getPlaceholderTextSingle() {
     return options.getPlaceholderTextSingle();
   }
-  
 
   /**
    * Specify if the deselection is allowed on single selects.
@@ -224,21 +225,21 @@ public class ChosenListBox extends ListBox {
   }
 
   public void setPlaceholderTextSingle(String placeholderTextSingle) {
-   options.setPlaceholderTextSingle(placeholderTextSingle);
+    options.setPlaceholderTextSingle(placeholderTextSingle);
   }
 
   public void setSearchContains(boolean searchContains) {
     options.setSearchContains(searchContains);
   }
 
-  public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
-     options.setSingleBackstrokeDelete(singleBackstrokeDelete);
-  }
-  
   @Override
   public void setSelectedIndex(int index) {
     super.setSelectedIndex(index);
     update();
+  }
+
+  public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
+    options.setSingleBackstrokeDelete(singleBackstrokeDelete);
   }
 
   /**
@@ -257,7 +258,7 @@ public class ChosenListBox extends ListBox {
     return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
         : chznHandlerManager;
   }
-  
+
   protected EventBus getChosenHandlerManager() {
     return chznHandlerManager;
   }

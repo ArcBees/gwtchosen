@@ -29,16 +29,145 @@ import com.google.gwt.query.client.js.JsObjectArray;
 
 public class SelectParser {
 
-  protected abstract class SelectItem {
-    protected boolean disabled;
-    protected int arrayIndex;
-    protected String domId;
+  protected class GroupItem extends SelectItem {
 
-    public abstract boolean isGroup();
+    private int children = 0;
+    private String label;
 
+    public int getChildren() {
+      return children;
+    }
+
+    public String getLabel() {
+      return label;
+    }
+
+    @Override
+    public boolean isGroup() {
+      return true;
+    }
+
+    public void setChildren(int children) {
+      this.children = children;
+    }
+
+    public void setLabel(String label) {
+      this.label = label;
+    }
+  }
+
+  protected class OptionItem extends SelectItem {
+
+    private int arrayIndex;
+
+    private String classes;
+
+    private boolean disabled;
+
+    private boolean empty;
+
+    private int groupArrayIndex;
+
+    private String html;
+
+    private int optionsIndex;
+
+    private boolean selected;
+
+    private String style;
+
+    private String text;
+
+    private String value;
+
+    public int getArrayIndex() {
+      return arrayIndex;
+    }
+    public String getClasses() {
+      return classes;
+    }
+    public int getGroupArrayIndex() {
+      return groupArrayIndex;
+    }
+    public String getHtml() {
+      return html;
+    }
+    public int getOptionsIndex() {
+      return optionsIndex;
+    }
+    public String getStyle() {
+      return style;
+    }
+    public String getText() {
+      return text;
+    }
+    public String getValue() {
+      return value;
+    }
     public boolean isDisabled() {
       return disabled;
     }
+    public boolean isEmpty() {
+      return empty;
+    }
+    @Override
+    public boolean isGroup() {
+      return false;
+    }
+
+    public boolean isSelected() {
+      return selected;
+    }
+
+    public void setArrayIndex(int arrayIndex) {
+      this.arrayIndex = arrayIndex;
+    }
+
+    public void setClasses(String classes) {
+      this.classes = classes;
+    }
+
+    public void setDisabled(boolean disabled) {
+      this.disabled = disabled;
+    }
+
+    public void setEmpty(boolean empty) {
+      this.empty = empty;
+    }
+
+    public void setGroupArrayIndex(int groupArrayIndex) {
+      this.groupArrayIndex = groupArrayIndex;
+    }
+
+    public void setHtml(String html) {
+      this.html = html;
+    }
+
+    public void setOptionsIndex(int optionsIndex) {
+      this.optionsIndex = optionsIndex;
+    }
+
+    public void setSelected(boolean selected) {
+      this.selected = selected;
+    }
+
+    public void setStyle(String style) {
+      this.style = style;
+    }
+
+    public void setText(String text) {
+      this.text = text;
+    }
+
+    public void setValue(String value) {
+      this.value = value;
+    }
+  }
+
+  protected abstract class SelectItem {
+    protected int arrayIndex;
+    protected boolean disabled;
+    protected String domId;
 
     public int getArrayIndex() {
       return arrayIndex;
@@ -48,149 +177,20 @@ public class SelectParser {
       return domId;
     }
 
-    public void setDomId(String domId) {
-      this.domId = domId;
-    }
-
-    public boolean isEmpty() {
-      return false;
-    }
-
-  }
-
-  protected class GroupItem extends SelectItem {
-
-    private String label;
-    private int children = 0;
-
-    @Override
-    public boolean isGroup() {
-      return true;
-    }
-
-    public String getLabel() {
-      return label;
-    }
-
-    public int getChildren() {
-      return children;
-    }
-
-    public void setLabel(String label) {
-      this.label = label;
-    }
-
-    public void setChildren(int children) {
-      this.children = children;
-    }
-  }
-
-  protected class OptionItem extends SelectItem {
-
-    public void setArrayIndex(int arrayIndex) {
-      this.arrayIndex = arrayIndex;
-    }
-
-    public void setOptionsIndex(int optionsIndex) {
-      this.optionsIndex = optionsIndex;
-    }
-
-    public void setValue(String value) {
-      this.value = value;
-    }
-
-    public void setText(String text) {
-      this.text = text;
-    }
-
-    public void setHtml(String html) {
-      this.html = html;
-    }
-
-    public void setSelected(boolean selected) {
-      this.selected = selected;
-    }
-
-    public void setDisabled(boolean disabled) {
-      this.disabled = disabled;
-    }
-
-    public void setGroupArrayIndex(int groupArrayIndex) {
-      this.groupArrayIndex = groupArrayIndex;
-    }
-
-    public void setClasses(String classes) {
-      this.classes = classes;
-    }
-
-    public void setStyle(String style) {
-      this.style = style;
-    }
-
-    public void setEmpty(boolean empty) {
-      this.empty = empty;
-    }
-
-    private int arrayIndex;
-    private int optionsIndex;
-    private String value;
-    private String text;
-    private String html;
-    private boolean selected;
-    private boolean disabled;
-    private int groupArrayIndex;
-    private String classes;
-    private String style;
-    private boolean empty;
-
-    public int getArrayIndex() {
-      return arrayIndex;
-    }
-
-    public int getOptionsIndex() {
-      return optionsIndex;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    public String getText() {
-      return text;
-    }
-
-    public String getHtml() {
-      return html;
-    }
-
-    public boolean isSelected() {
-      return selected;
-    }
-
     public boolean isDisabled() {
       return disabled;
     }
 
-    public int getGroupArrayIndex() {
-      return groupArrayIndex;
-    }
-
-    public String getClasses() {
-      return classes;
-    }
-
-    public String getStyle() {
-      return style;
-    }
-
     public boolean isEmpty() {
-      return empty;
-    }
-
-    @Override
-    public boolean isGroup() {
       return false;
     }
+
+    public abstract boolean isGroup();
+
+    public void setDomId(String domId) {
+      this.domId = domId;
+    }
+
   }
 
   private int optionsIndex;
@@ -202,18 +202,15 @@ public class SelectParser {
 
   }
 
-  private void addNode(Node child) {
-    if (!Element.is(child)) {
-      return;
+  public JsObjectArray<SelectItem> parse(SelectElement select) {
+
+    NodeList<Node> children = select.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++) {
+      Node n = children.getItem(i);
+      addNode(n);
     }
 
-    Element e = Element.as(child);
-
-    if ("OPTGROUP".equalsIgnoreCase(e.getNodeName())) {
-      addGroup(OptGroupElement.as(e));
-    } else if ("OPTION".equalsIgnoreCase(e.getNodeName())) {
-      addOption(OptionElement.as(e), -1, false);
-    }
+    return parsed;
   }
 
   private void addGroup(OptGroupElement group) {
@@ -235,6 +232,20 @@ public class SelectParser {
       }
     }
 
+  }
+
+  private void addNode(Node child) {
+    if (!Element.is(child)) {
+      return;
+    }
+
+    Element e = Element.as(child);
+
+    if ("OPTGROUP".equalsIgnoreCase(e.getNodeName())) {
+      addGroup(OptGroupElement.as(e));
+    } else if ("OPTION".equalsIgnoreCase(e.getNodeName())) {
+      addOption(OptionElement.as(e), -1, false);
+    }
   }
 
   private void addOption(OptionElement option, int groupPosition, boolean groupDisabled) {
@@ -270,18 +281,7 @@ public class SelectParser {
     optionsIndex++;
   }
 
-  public JsObjectArray<SelectItem> parse(SelectElement select) {
-
-    NodeList<Node> children = select.getChildNodes();
-    for (int i = 0; i < children.getLength(); i++) {
-      Node n = children.getItem(i);
-      addNode(n);
-    }
-
-    return parsed;
-  }
-
   private native String getCssText(Style s)/*-{
-		return s.cssText;
-	}-*/;
+                                           return s.cssText;
+                                           }-*/;
 }

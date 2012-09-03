@@ -58,6 +58,15 @@ public interface ChozenCss extends CssResource {
   @ClassName("chzn-results")
   public String chznResults();
 
+  @ClassName("chzn-results-scroll")
+  public String chznResultsScroll();
+
+  @ClassName("chzn-results-scroll-down")
+  public String chznResultsScrollDown();
+
+  @ClassName("chzn-results-scroll-up")
+  public String chznResultsScrollUp();
+
   @ClassName("chzn-rtl")
   public String chznRtl();
 
@@ -99,13 +108,4 @@ public interface ChozenCss extends CssResource {
 
   @ClassName("search-field")
   public String searchField();
-  
-  @ClassName("chzn-results-scroll")
-  public String chznResultsScroll();
-
-  @ClassName("chzn-results-scroll-up")
-  public String chznResultsScrollUp();
-  
-  @ClassName("chzn-results-scroll-down")
-  public String chznResultsScrollDown();
 }

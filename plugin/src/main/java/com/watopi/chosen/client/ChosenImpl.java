@@ -128,47 +128,32 @@ public class ChosenImpl {
   private SelectElement selectElement;
   private JsObjectArray<SelectItem> selectItems;
   private HandlerRegistration updateEventHandlerRegistration;
-  
+
+  public GQuery getContainer() {
+    return container;
+  }
+
   public String getCurrentValue() {
     return currentValue;
   }
-  
+
   public ChosenOptions getOptions() {
     return options;
   }
-  
+
   public SelectElement getSelectElement() {
     return selectElement;
   }
-  
-  public GQuery getContainer(){
-    return container;
-  }
-  
+
   /**
    * Is the plugin support the current broxser ?
+   * 
    * @return
    */
-  public boolean isSupported(){
+  public boolean isSupported() {
     return true;
   }
-  
-  protected void release(){
-    if (updateEventHandlerRegistration != null){
-      updateEventHandlerRegistration.removeHandler();
-      updateEventHandlerRegistration = null;
-    }
-    //empty the searchResult to speed up the container.remove()
-    if (searchResults != null){
-      searchResults.html("");
-    }
-    
-    //remove method clean listener and cie
-    container.remove();
-    
-    $selectElement.removeClass(css.chznDone(), "chzn-done").show();
-  }
-  
+
   protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
     this.selectElement = element;
     this.options = options;
@@ -188,6 +173,22 @@ public class ChosenImpl {
 
     finishSetup();
 
+  }
+
+  protected void release() {
+    if (updateEventHandlerRegistration != null) {
+      updateEventHandlerRegistration.removeHandler();
+      updateEventHandlerRegistration = null;
+    }
+    // empty the searchResult to speed up the container.remove()
+    if (searchResults != null) {
+      searchResults.html("");
+    }
+
+    // remove method clean listener and cie
+    container.remove();
+
+    $selectElement.removeClass(css.chznDone(), "chzn-done").show();
   }
 
   private boolean activateField(Event e) {
@@ -262,19 +263,20 @@ public class ChosenImpl {
     });
 
     if (eventBus != null) {
-      updateEventHandlerRegistration = eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
-        public void onUpdated(UpdatedEvent event) {
-          if (!isMultiple) {
-            resultsResetCleanup();
-          }
+      updateEventHandlerRegistration =
+          eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
+            public void onUpdated(UpdatedEvent event) {
+              if (!isMultiple) {
+                resultsResetCleanup();
+              }
 
-          resultClearHighlight();
-          resultSingleSelected = null;
-          resultsBuild();
+              resultClearHighlight();
+              resultSingleSelected = null;
+              resultsBuild();
 
-        }
+            }
 
-      });
+          });
     }
 
     searchField.blur(new Function() {
@@ -541,12 +543,12 @@ public class ChosenImpl {
       }
     } else if (resultsShowing) {
       // TODO should be replaced by :
-      //  GQuery nextSibling = resultHighlight.nextAll("li."+css.activeResult()).first();
+      // GQuery nextSibling = resultHighlight.nextAll("li."+css.activeResult()).first();
       // but performance is bad... See http://code.google.com/p/gwtquery/issues/detail?id=146
-      
+
       GQuery nextSibling = resultHighlight.next();
-      
-      while (!nextSibling.isEmpty() && !nextSibling.is("li."+css.activeResult())){
+
+      while (!nextSibling.isEmpty() && !nextSibling.is("li." + css.activeResult())) {
         nextSibling = nextSibling.next();
       }
 
@@ -617,12 +619,12 @@ public class ChosenImpl {
       resultsShow();
     } else if (resultHighlight != null) {
       // TODO should be replaced by :
-      //  GQuery prevSibs = resultHighlight.prevAll("li." + css.activeResult());
+      // GQuery prevSibs = resultHighlight.prevAll("li." + css.activeResult());
       // but performance is bad... See http://code.google.com/p/gwtquery/issues/detail?id=146
-      
+
       GQuery prevSibling = resultHighlight.prev();
-      
-      while (!prevSibling.isEmpty() && !prevSibling.is("li."+css.activeResult())){
+
+      while (!prevSibling.isEmpty() && !prevSibling.is("li." + css.activeResult())) {
         prevSibling = prevSibling.prev();
       }
 
@@ -837,7 +839,7 @@ public class ChosenImpl {
         }
 
         SafeHtml optionHtml = resultAddOption(optionItem);
-        if (optionHtml != null){
+        if (optionHtml != null) {
           content.append(optionHtml);
         }
 
@@ -896,7 +898,7 @@ public class ChosenImpl {
 
       searchField.val("");
 
-      if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())){
+      if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())) {
         String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
         fireEvent(new ChosenChangeEvent(value, this));
       }
@@ -909,10 +911,10 @@ public class ChosenImpl {
   }
 
   private void resultsHide() {
-    if (!resultsShowing){
+    if (!resultsShowing) {
       return;
     }
-    
+
     if (!isMultiple) {
       selectedItem.removeClass(css.chznSingleWithDrop());
     }
@@ -1165,7 +1167,7 @@ public class ChosenImpl {
   private void setup() {
     containerId = buildContainerId();
     fWidth = $selectElement.outerWidth();
-    
+
     isRTL = LocaleInfo.getCurrentLocale().isRTL();
     String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
@@ -1261,7 +1263,7 @@ public class ChosenImpl {
     String test2 = "test";
     test2.substring(1);
     RegExp regex = RegExp.compile(regexAnchor + escapedSearchText, "i");
-    RegExp zregex = RegExp.compile("("+escapedSearchText+")", "i");
+    RegExp zregex = RegExp.compile("(" + escapedSearchText + ")", "i");
 
     for (int i = 0; i < selectItems.length(); i++) {
       SelectItem item = selectItems.get(i);

@@ -28,54 +28,52 @@ import com.google.web.bindery.event.shared.EventBus;
 
 import com.watopi.chosen.client.resources.Resources;
 
-
 /**
  * Chosen for GwtQuery
  */
 public class Chosen extends GQuery {
-	
-	static{
-		StyleInjector.inject(Resources.INSTANCE.css().getText(), true);
-	}
 
-	// A shortcut to the class
-	public static final Class<Chosen> Chosen = GQuery.registerPlugin(
-			Chosen.class, new Plugin<Chosen>() {
-				public Chosen init(GQuery gq) {
-					return new Chosen(gq);
-				}
-			});
+  // A shortcut to the class
+  public static final Class<Chosen> Chosen = GQuery.registerPlugin(Chosen.class,
+      new Plugin<Chosen>() {
+        public Chosen init(GQuery gq) {
+          return new Chosen(gq);
+        }
+      });
 
-	public static String CHOSEN_DATA_KEY = "chosen";
-	
-	/**
-	 * Indicate if the current browser is supported by the plugin or not. 
-	 * @return
-	 */
-	public static boolean isSupported(){
-	  return GWT.<ChosenImpl>create(ChosenImpl.class).isSupported();
-	}
-	
-	// Initialization
-	public Chosen(GQuery gq) {
-		super(gq);
-	}
+  public static String CHOSEN_DATA_KEY = "chosen";
 
+  static {
+    StyleInjector.inject(Resources.INSTANCE.css().getText(), true);
+  }
 
-	public Chosen chosen() {
-		return chosen(new ChosenOptions(), null);
-	}
+  /**
+   * Indicate if the current browser is supported by the plugin or not.
+   * 
+   * @return
+   */
+  public static boolean isSupported() {
+    return GWT.<ChosenImpl> create(ChosenImpl.class).isSupported();
+  }
 
-	public Chosen chosen(ChosenOptions options) {
-		return chosen(options, null);
-	}
+  // Initialization
+  public Chosen(GQuery gq) {
+    super(gq);
+  }
 
-	public Chosen chosen(final ChosenOptions options, final EventBus eventBus) {
+  public Chosen chosen() {
+    return chosen(new ChosenOptions(), null);
+  }
 
-	  for (Element e : elements()) {
+  public Chosen chosen(ChosenOptions options) {
+    return chosen(options, null);
+  }
 
-      if ("select".equalsIgnoreCase(e.getTagName())
-          && !$(e).hasClass("chzn-done")) {
+  public Chosen chosen(final ChosenOptions options, final EventBus eventBus) {
+
+    for (Element e : elements()) {
+
+      if ("select".equalsIgnoreCase(e.getTagName()) && !$(e).hasClass("chzn-done")) {
 
         ChosenImpl impl = GWT.create(ChosenImpl.class);
         impl.init(SelectElement.as(e), options, eventBus);
@@ -83,16 +81,20 @@ public class Chosen extends GQuery {
 
       }
     }
-		return this;
-	}
-	
-	
-	public Chosen destroy() {
+    return this;
+  }
+
+  public Chosen chosen(EventBus eventBus) {
+    return chosen(null, eventBus);
+
+  }
+
+  public Chosen destroy() {
 
     for (Element e : elements()) {
 
       ChosenImpl impl = $(e).data(CHOSEN_DATA_KEY, ChosenImpl.class);
-      
+
       if (impl != null) {
         impl.release();
         $(e).removeData(CHOSEN_DATA_KEY);
@@ -100,23 +102,16 @@ public class Chosen extends GQuery {
     }
     return this;
   }
-	
-	public ChosenOptions options(){
-	  if (isEmpty()){
-	    return null;
-	  }
-	  
-	  ChosenImpl impl = data(CHOSEN_DATA_KEY, ChosenImpl.class);
-	  
-	  return impl != null ? impl.getOptions() : null;
-	  
-	}
 
+  public ChosenOptions options() {
+    if (isEmpty()) {
+      return null;
+    }
 
-  public Chosen chosen(EventBus eventBus) {
-    return chosen(null, eventBus);
-    
+    ChosenImpl impl = data(CHOSEN_DATA_KEY, ChosenImpl.class);
+
+    return impl != null ? impl.getOptions() : null;
+
   }
-
 
 }

@@ -20,112 +20,111 @@ package com.watopi.chosen.client;
 
 public class ChosenOptions {
 
-	private boolean allowSingleDeselect;
-	private int disableSearchThreshold;
-	private boolean searchContains;
-	private boolean singleBackstrokeDelete;
-	private int maxSelectedOptions;
-	private String placeholderTextMultiple;
-	private String placeholderText;
-	private String placeholderTextSingle;
-	private String noResultsText;
+  private boolean allowSingleDeselect;
+  private int disableSearchThreshold;
+  private int maxSelectedOptions;
+  private String noResultsText;
+  private String placeholderText;
+  private String placeholderTextMultiple;
+  private String placeholderTextSingle;
+  private boolean searchContains;
+  private boolean singleBackstrokeDelete;
 
-	public ChosenOptions() {
-		setDefault();
-	}
+  public ChosenOptions() {
+    setDefault();
+  }
 
-	private void setDefault() {
-		allowSingleDeselect = false;
-		disableSearchThreshold = 0;
-		searchContains = false;
-		singleBackstrokeDelete = false;
-		maxSelectedOptions = -1;
+  public int getDisableSearchThreshold() {
+    return disableSearchThreshold;
+  }
 
-	}
+  public int getMaxSelectedOptions() {
+    return maxSelectedOptions;
+  }
 
-	public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
-		this.allowSingleDeselect = allowSingleDeselect;
-		return this;
-	}
+  public String getNoResultsText() {
+    return noResultsText;
+  }
 
-	/**
-	 * Specify if the deselection is allowed on single selects.
-	 * 
-	 */
-	public boolean isAllowSingleDeselect() {
-		return allowSingleDeselect;
-	}
+  public String getPlaceholderText() {
+    return placeholderText;
+  }
 
-	public int getDisableSearchThreshold() {
-		return disableSearchThreshold;
-	}
+  public String getPlaceholderTextMultiple() {
+    return placeholderTextMultiple;
+  }
 
-	public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
-		this.disableSearchThreshold = disableSearchThreshold;
-		return this;
-	}
+  public String getPlaceholderTextSingle() {
+    return placeholderTextSingle;
+  }
 
-	public boolean isSearchContains() {
-		return searchContains;
-	}
+  /**
+   * Specify if the deselection is allowed on single selects.
+   * 
+   */
+  public boolean isAllowSingleDeselect() {
+    return allowSingleDeselect;
+  }
 
-	public ChosenOptions setSearchContains(boolean searchContains) {
-		this.searchContains = searchContains;
-		return this;
-	}
+  public boolean isSearchContains() {
+    return searchContains;
+  }
 
-	public boolean isSingleBackstrokeDelete() {
-		return singleBackstrokeDelete;
-	}
+  public boolean isSingleBackstrokeDelete() {
+    return singleBackstrokeDelete;
+  }
 
-	public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
-		this.singleBackstrokeDelete = singleBackstrokeDelete;
-		return this;
-	}
+  public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
+    this.allowSingleDeselect = allowSingleDeselect;
+    return this;
+  }
 
-	public int getMaxSelectedOptions() {
-		return maxSelectedOptions;
-	}
+  public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
+    this.disableSearchThreshold = disableSearchThreshold;
+    return this;
+  }
 
-	public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
-		this.maxSelectedOptions = maxSelectedOptions;
-		return this;
-	}
+  public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
+    this.maxSelectedOptions = maxSelectedOptions;
+    return this;
+  }
 
-	public String getPlaceholderTextMultiple() {
-		return placeholderTextMultiple;
-	}
+  public ChosenOptions setNoResultsText(String noResultsText) {
+    this.noResultsText = noResultsText;
+    return this;
+  }
 
-	public ChosenOptions setPlaceholderTextMultiple(String placeholderTextMultiple) {
-		this.placeholderTextMultiple = placeholderTextMultiple;
-		return this;
-	}
+  public ChosenOptions setPlaceholderText(String placeholderText) {
+    this.placeholderText = placeholderText;
+    return this;
+  }
 
-	public String getPlaceholderText() {
-		return placeholderText;
-	}
+  public ChosenOptions setPlaceholderTextMultiple(String placeholderTextMultiple) {
+    this.placeholderTextMultiple = placeholderTextMultiple;
+    return this;
+  }
 
-	public ChosenOptions setPlaceholderText(String placeholderText) {
-		this.placeholderText = placeholderText;
-		return this;
-	}
+  public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
+    this.placeholderTextSingle = placeholderTextSingle;
+    return this;
+  }
 
-	public String getPlaceholderTextSingle() {
-		return placeholderTextSingle;
-	}
+  public ChosenOptions setSearchContains(boolean searchContains) {
+    this.searchContains = searchContains;
+    return this;
+  }
 
-	public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
-		this.placeholderTextSingle = placeholderTextSingle;
-		return this;
-	}
+  public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
+    this.singleBackstrokeDelete = singleBackstrokeDelete;
+    return this;
+  }
 
+  private void setDefault() {
+    allowSingleDeselect = false;
+    disableSearchThreshold = 0;
+    searchContains = false;
+    singleBackstrokeDelete = false;
+    maxSelectedOptions = -1;
 
-	public String getNoResultsText() {
-		return noResultsText;
-	}
-
-	public ChosenOptions setNoResultsText(String noResultsText) {
-		this.noResultsText = noResultsText;
-		return this;
-	}
+  }
 }
