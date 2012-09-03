@@ -7,6 +7,10 @@ For documentation and examples see : http://jdramaix.github.com/gwtchosen/
 
 Other example : http://jdramaix.github.com/gwtchosen/widgetsample/index.html
 
+Stable version
+--------------
+[GwtChosen 1.2.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.0.2.jar)
+
 Credits
 -------
 

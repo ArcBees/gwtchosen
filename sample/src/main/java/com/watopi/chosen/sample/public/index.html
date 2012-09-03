@@ -1777,6 +1777,7 @@ myChosenListBox.update();</pre>
 				</div>
 			</div>
 			<div class="row">
+				<p>Example:</p>
 				<div id="updateChozen" class="span4"></div>
 				<button id="updateButton" class="btn btn-primary">Add 100 items</button>
 			</div>
@@ -1817,30 +1818,29 @@ boolean chosenSupport = ChosenListBox.isSupported();
 					<h3>With maven</h3>
 					<p>
 						Add the following block to your pom.xml
-					<pre>
-	&lt;repositories>
-        &lt;repository>
-         &lt;id>plugins&lt;/id>
-         &lt;url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo&lt;/url>
-       &lt;/repository>
-   &lt;/repositories>
+					<pre>&lt;repositories>
+	&lt;repository>
+		&lt;id>plugins&lt;/id>
+		&lt;url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo&lt;/url>
+	&lt;/repository>
+&lt;/repositories>
 
-   &lt;build>
-    &lt;dependencies>
-        &lt;dependency>
-            &lt;groupId>com.watopi&lt;/groupId>
+&lt;build>
+	&lt;dependencies>
+		&lt;dependency>
+        	&lt;groupId>com.watopi&lt;/groupId>
             &lt;artifactId>gwtchosen&lt;/artifactId>
-            &lt;version>1.0.1&lt;/version>
+            &lt;version>1.0.2&lt;/version>
             &lt;scope>provided&lt;/scope>
         &lt;/dependency>
     &lt;/dependencies>
-   &lt;/build>	
+&lt;/build>	
    	</pre>
 				</div>
 				<div class="span5">
 					<h3>Without maven</h3>
 					<p>
-						Download the last stable jar file and put it in your claspath.
+						Download <a href="http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.0.2.jar">the last stable jar file</a> and put it in your claspath.
 					</p>
 				</div>
 				
