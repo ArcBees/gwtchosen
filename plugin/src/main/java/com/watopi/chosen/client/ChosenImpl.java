@@ -141,6 +141,10 @@ public class ChosenImpl {
     return selectElement;
   }
   
+  public GQuery getContainer(){
+    return container;
+  }
+  
   /**
    * Is the plugin support the current broxser ?
    * @return
@@ -1161,6 +1165,7 @@ public class ChosenImpl {
   private void setup() {
     containerId = buildContainerId();
     fWidth = $selectElement.outerWidth();
+    
     isRTL = LocaleInfo.getCurrentLocale().isRTL();
     String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
@@ -1252,7 +1257,9 @@ public class ChosenImpl {
 
     String regexAnchor = options.isSearchContains() ? "" : "^";
     // escape reg exp special chars
-    String escapedSearchText = regExpChars.replace(searchText, "\\\\$&");
+    String escapedSearchText = regExpChars.replace(searchText, "\\$&");
+    String test2 = "test";
+    test2.substring(1);
     RegExp regex = RegExp.compile(regexAnchor + escapedSearchText, "i");
     RegExp zregex = RegExp.compile("("+escapedSearchText+")", "i");
 
@@ -1278,7 +1285,7 @@ public class ChosenImpl {
             found = true;
             results++;
           } else if (optionContent.indexOf(" ") >= 0 || optionContent.indexOf("[") == 0) {
-            String[] parts = optionContent.replaceAll("\\[\\]", "").split(" ");
+            String[] parts = optionContent.replaceAll("\\[|\\]", "").split(" ");
             for (String part : parts) {
               if (regex.test(part)) {
                 found = true;
