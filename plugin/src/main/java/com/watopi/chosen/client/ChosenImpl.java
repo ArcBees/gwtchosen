@@ -174,6 +174,16 @@ public class ChosenImpl {
     finishSetup();
 
   }
+  
+  protected void update(){
+    if (!isMultiple) {
+      resultsResetCleanup();
+    }
+
+    resultClearHighlight();
+    resultSingleSelected = null;
+    resultsBuild();
+  }
 
   protected void release() {
     if (updateEventHandlerRegistration != null) {
@@ -266,16 +276,8 @@ public class ChosenImpl {
       updateEventHandlerRegistration =
           eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
             public void onUpdated(UpdatedEvent event) {
-              if (!isMultiple) {
-                resultsResetCleanup();
-              }
-
-              resultClearHighlight();
-              resultSingleSelected = null;
-              resultsBuild();
-
+              update();
             }
-
           });
     }
 

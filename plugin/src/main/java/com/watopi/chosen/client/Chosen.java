@@ -113,5 +113,17 @@ public class Chosen extends GQuery {
     return impl != null ? impl.getOptions() : null;
 
   }
+  
+  public Chosen update(){
+    for (Element e : elements()) {
+      ChosenImpl impl = $(e).data(CHOSEN_DATA_KEY, ChosenImpl.class);
+
+      if (impl != null) {
+        impl.update();
+      }
+    }
+    
+    return this;
+  }
 
 }
