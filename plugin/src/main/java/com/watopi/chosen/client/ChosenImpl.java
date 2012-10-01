@@ -596,7 +596,7 @@ public class ChosenImpl {
           resultSelect(e);
         }
         mouseOnContainer = false;
-        return false;
+        break;
 
       case 13: // enter
         e.preventDefault();
