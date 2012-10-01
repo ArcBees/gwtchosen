@@ -24,6 +24,7 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,8 +32,10 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
+import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
 import static com.watopi.chosen.client.Chosen.Chosen;
 
+import com.watopi.chosen.client.ChosenImpl;
 import com.watopi.chosen.client.ChosenOptions;
 import com.watopi.chosen.client.event.ChosenChangeEvent;
 import com.watopi.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
@@ -241,6 +244,20 @@ public class ChosenListBox extends ListBox {
   public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
     options.setSingleBackstrokeDelete(singleBackstrokeDelete);
   }
+  
+  @Override
+  public void setVisible(boolean visible) {
+    if (isSupported()){
+      GQuery chosenElement = getChosenElement();
+      if (visible){
+        chosenElement.show();
+      }else{
+        chosenElement.hide();
+      }
+    }else{
+      super.setVisible(visible);
+    }
+  }
 
   /**
    * Use this method to update the chosen list box (i.e. after insertion or removal of options)
@@ -273,6 +290,14 @@ public class ChosenListBox extends ListBox {
   protected void onUnload() {
     super.onUnload();
     $(getElement()).as(Chosen).destroy();
+  }
+  
+  protected GQuery getChosenElement(){
+    ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY, ChosenImpl.class);
+    if (impl != null){
+      return impl.getContainer();
+    }
+    return $();
   }
 
 }
