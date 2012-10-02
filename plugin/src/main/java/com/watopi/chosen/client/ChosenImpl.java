@@ -883,7 +883,7 @@ public class ChosenImpl {
       int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
       OptionItem item = (OptionItem) selectItems.get(position);
       item.setSelected(true);
-      selectElement.getOptions().getItem(position).setSelected(true);
+      selectElement.getOptions().getItem(item.getOptionsIndex()).setSelected(true);
 
       if (isMultiple) {
         choiceBuild(item);
