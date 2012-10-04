@@ -1,4 +1,5 @@
 /* @group Base */
+@def DOWN_IMG url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAGCAIAAACepSOSAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABPSURBVBhXVcrBCQAxCATAdH7EmvwJFpCPoH87Ec8jR4j7WnZ2mNmc8+kBAHcfmbnWuqmuqlr7ZxVmPlzXPf5WDRGLiWhDs4gQkQPN7nX3F6jQg8KeOhGGAAAAAElFTkSuQmCC)
 .chzn-container {
   font-size: 13px;
   position: relative;
@@ -101,13 +102,13 @@
   z-index: 1010;
 }
 .chzn-container-single .chzn-search input {
-  background: #fff url('chosen-sprite.png') no-repeat 100% -22px;
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff))"); 
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: literal("url('chosen-sprite.png') no-repeat 100% -22px, linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: #fff DOWN_IMG no-repeat 100%;
+  background: DOWN_IMG literal("no-repeat 100%, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff))"); 
+  background: DOWN_IMG literal("no-repeat 100%, -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: DOWN_IMG literal("no-repeat 100%, -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: DOWN_IMG literal("no-repeat 100%, -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: DOWN_IMG literal("no-repeat 100%, -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: DOWN_IMG literal("no-repeat 100%, linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
   outline: 0;
