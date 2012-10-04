@@ -1,5 +1,7 @@
-/* @group Base */
 @def DOWN_IMG url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAGCAIAAACepSOSAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABPSURBVBhXVcrBCQAxCATAdH7EmvwJFpCPoH87Ec8jR4j7WnZ2mNmc8+kBAHcfmbnWuqmuqlr7ZxVmPlzXPf5WDRGLiWhDs4gQkQPN7nX3F6jQg8KeOhGGAAAAAElFTkSuQmCC)
+@def SEARCH_IMG url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD7SURBVDhP1ZMxDkVAEIZxAq1QqLVCohWFmyi1buECeokLiIboREKv0hCFxgGE97/YrGTfxssr3xST3X/nm9mdyYrneQq/m/Q78ib+AhNpS47jKMuybdt5njVNsyzLdV1J4r+CYGDiOFZV1XEc+GmamqZZliUMQz6JarCiKNI0vdbUoEBnxGtL7lDXted5zDCgQOdOiGDbtsmyzERAgf6EcSO4ua4spJpt25/3qaoK+lM13/eHYciyDN1DHDzWfd8bhsHF7rnt+57nedd1YBRFMU0TTJIkQRDous7C3P5ScRzHKIrgmTDhGcMpl/yOUXJdV1rjftvzx2OG8QLouTBEDh7jqAAAAABJRU5ErkJggg==)
+
+/* @group Base */
 .chzn-container {
   font-size: 13px;
   position: relative;
@@ -102,13 +104,13 @@
   z-index: 1010;
 }
 .chzn-container-single .chzn-search input {
-  background: #fff DOWN_IMG no-repeat 100%;
-  background: DOWN_IMG literal("no-repeat 100%, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff))"); 
-  background: DOWN_IMG literal("no-repeat 100%, -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: DOWN_IMG literal("no-repeat 100%, -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: DOWN_IMG literal("no-repeat 100%, -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: DOWN_IMG literal("no-repeat 100%, -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
-  background: DOWN_IMG literal("no-repeat 100%, linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: #fff SEARCH_IMG no-repeat 100%;
+  background: SEARCH_IMG literal("no-repeat 100%, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff))"); 
+  background: SEARCH_IMG literal("no-repeat 100%, -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: SEARCH_IMG literal("no-repeat 100%, -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: SEARCH_IMG literal("no-repeat 100%, -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: SEARCH_IMG literal("no-repeat 100%, -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
+  background: SEARCH_IMG literal("no-repeat 100%, linear-gradient(top, #eeeeee 1%, #ffffff 15%)"); 
   margin: 1px 0;
   padding: 4px 20px 4px 5px;
   outline: 0;
