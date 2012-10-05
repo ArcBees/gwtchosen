@@ -82,7 +82,7 @@
   width: 12px;
   height: 13px;
   font-size: 1px;
-  background: X1IMG right top no-repeat;
+  background: X1IMG center center no-repeat;
 }
 .chzn-container-single .chzn-single abbr:hover {
   background: X2IMG no-repeat center center;
@@ -224,13 +224,13 @@
   width: 12px;
   height: 13px;
   font-size: 1px;
-  background: X1IMG top no-repeat;
+  background: X1IMG center center no-repeat;
 }
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close:hover {
-  background: X2IMG top no-repeat;
+  background: X2IMG center center no-repeat;
 }
 .chzn-container-multi .chzn-choices .search-choice-focus .search-choice-close {
-  background: X2IMG top no-repeat;
+  background: X2IMG center center no-repeat;
 }
 /* @end */
 
