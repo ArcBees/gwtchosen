@@ -20,6 +20,7 @@ package com.watopi.chosen.client.resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
 
@@ -28,4 +29,7 @@ public interface Resources extends ClientBundle {
   @Source("chozen.css")
   ChozenCss css();
 
+  @Source("chosen-sprite.png")
+  DataResource chosenSprite();
+  
 }
