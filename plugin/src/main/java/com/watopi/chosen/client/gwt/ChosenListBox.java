@@ -88,6 +88,8 @@ public class ChosenListBox extends ListBox {
 	private EventBus chznHandlerManager;
 
 	private ChosenOptions options;
+	
+	private boolean visible = true;
 
 	/**
 	 * Creates an empty chosen component in single selection mode.
@@ -405,6 +407,7 @@ public class ChosenListBox extends ListBox {
 	protected void onLoad() {
 		super.onLoad();
 		$(getElement()).as(Chosen).chosen(options, ensureChosenHandlers());
+		setVisible(visible);
 	}
 
 	@Override
@@ -457,6 +460,8 @@ public class ChosenListBox extends ListBox {
 
 	@Override
 	public void setVisible(boolean visible) {
+		this.visible = visible;
+		
 		if (isSupported()) {
 			GQuery chosenElement = getChosenElement();
 			if (visible) {
