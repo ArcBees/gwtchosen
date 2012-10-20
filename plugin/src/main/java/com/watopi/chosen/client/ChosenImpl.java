@@ -508,7 +508,11 @@ public class ChosenImpl {
     return id;
   }
 
-  private int getSideBorderPadding(GQuery elmt) {
+  private int getSideBorderPadding(GQuery elmt, boolean isHidden) {
+	if (isHidden){
+		//bug in gquery when one parent of the element is hidden
+		return (int)(elmt.cur("padding-left", true) + elmt.cur("padding-right", true) + elmt.cur("border-left-width", true) + elmt.cur("border-right-width", true));
+	}  
     return elmt.outerWidth() - elmt.width();
   }
 
@@ -1167,8 +1171,14 @@ public class ChosenImpl {
   }
 
   private void setup() {
+	boolean isHidden = false;
     containerId = buildContainerId();
     fWidth = $selectElement.outerWidth();
+    
+    if (fWidth == 0){
+    	fWidth = (int)$selectElement.cur("width", false);
+    	isHidden = fWidth > 0;
+    }
 
     isRTL = LocaleInfo.getCurrentLocale().isRTL();
     String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
@@ -1193,7 +1203,7 @@ public class ChosenImpl {
 
     dropdown = container.find("div." + css.chznDrop()).first();
     int ddTop = container.height();
-    int ddWidth = fWidth - getSideBorderPadding(dropdown);
+    int ddWidth = fWidth - getSideBorderPadding(dropdown, isHidden);
     dropdown.css(Properties.create("{\"width\": " + ddWidth + "px, \"top\": " + ddTop + "px}"));
 
     searchField = container.find("input").first();
@@ -1207,7 +1217,7 @@ public class ChosenImpl {
       searchContainer = container.find("div." + css.chznSearch()).first();
       selectedItem = container.find("." + css.chznSingle()).first();
       int searchFieldWidth =
-          ddWidth - getSideBorderPadding(searchContainer) - getSideBorderPadding(searchField);
+          ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
       searchField.css("width", searchFieldWidth + "px");
     }
 
