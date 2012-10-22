@@ -18,13 +18,10 @@
  */
 package com.watopi.chosen.client.resources;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
-
-  Resources INSTANCE = GWT.create(Resources.class);
 
   @Source("chozen.css")
   ChozenCss css();

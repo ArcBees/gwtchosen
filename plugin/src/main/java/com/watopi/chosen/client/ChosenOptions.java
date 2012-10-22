@@ -18,6 +18,8 @@
  */
 package com.watopi.chosen.client;
 
+import com.watopi.chosen.client.resources.Resources;
+
 public class ChosenOptions {
 
   private boolean allowSingleDeselect;
@@ -29,6 +31,7 @@ public class ChosenOptions {
   private String placeholderTextSingle;
   private boolean searchContains;
   private boolean singleBackstrokeDelete;
+  private Resources resources;
 
   public ChosenOptions() {
     setDefault();
@@ -56,6 +59,10 @@ public class ChosenOptions {
 
   public String getPlaceholderTextSingle() {
     return placeholderTextSingle;
+  }
+  
+  public Resources getResources() {
+	return resources;
   }
 
   /**
@@ -107,6 +114,10 @@ public class ChosenOptions {
   public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
     this.placeholderTextSingle = placeholderTextSingle;
     return this;
+  }
+  
+  public void setResources(Resources resources) {
+	this.resources = resources;
   }
 
   public ChosenOptions setSearchContains(boolean searchContains) {

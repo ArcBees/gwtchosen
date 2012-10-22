@@ -21,12 +21,9 @@ package com.watopi.chosen.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.SelectElement;
-import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.query.client.plugins.Plugin;
 import com.google.web.bindery.event.shared.EventBus;
-
-import com.watopi.chosen.client.resources.Resources;
 
 /**
  * Chosen for GwtQuery
@@ -42,10 +39,6 @@ public class Chosen extends GQuery {
       });
 
   public static String CHOSEN_DATA_KEY = "chosen";
-
-  static {
-    StyleInjector.inject(Resources.INSTANCE.css().getText(), true);
-  }
 
   /**
    * Indicate if the current browser is supported by the plugin or not.

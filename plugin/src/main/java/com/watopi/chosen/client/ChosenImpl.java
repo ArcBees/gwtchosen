@@ -29,6 +29,7 @@ import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.dom.client.SelectElement;
+import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
@@ -42,7 +43,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Event;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
-
 import com.watopi.chosen.client.SelectParser.GroupItem;
 import com.watopi.chosen.client.SelectParser.OptionItem;
 import com.watopi.chosen.client.SelectParser.SelectItem;
@@ -88,6 +88,7 @@ public class ChosenImpl {
   }
 
   private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
+  private static boolean cssInjected = false;
 
   private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
   private static int idCounter = 0;
@@ -1151,8 +1152,20 @@ public class ChosenImpl {
 
     choices = 0;
 
-    css = Resources.INSTANCE.css();
+    if (options.getResources() != null){
+    	css = options.getResources().css();
+    }else{
+    	css = GWT.<Resources>create(Resources.class).css();
+    }
 
+    // Force the injection the first time only 
+    // If you want to use different css file for different GwtChosen component
+    // please register your css files (css.ensureInject()) before the first call of the plugin
+    if (!cssInjected){
+    	StyleInjector.inject(css.getText(), true);
+    	cssInjected = true;
+    }
+    
   }
 
   private void setTabIndex() {

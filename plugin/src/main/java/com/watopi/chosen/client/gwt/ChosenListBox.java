@@ -99,6 +99,14 @@ public class ChosenListBox extends ListBox {
 	}
 
 	/**
+	 * Creates an empty chosen component in single selection mode.
+	 */
+	public ChosenListBox(ChosenOptions options) {
+		this(false,options);
+	}
+
+	
+	/**
 	 * Creates an empty list box. The preferred way to enable multiple
 	 * selections is to use this constructor rather than
 	 * {@link #setMultipleSelect(boolean)}.
