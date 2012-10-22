@@ -1372,7 +1372,7 @@ public class ChosenImpl {
     for (Element li : lis.elements()) {
       GQuery $li = $(li);
       if ($li.hasClass(css.groupResult())) {
-        $li.css("display", "auto");
+        $li.css("display", "");
       } else if (!isMultiple || !$li.hasClass(css.resultSelected())) {
         resultActivate($li);
       }
