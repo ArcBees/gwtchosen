@@ -1175,9 +1175,18 @@ public class ChosenImpl {
     containerId = buildContainerId();
     fWidth = $selectElement.outerWidth();
     
+    //Temporary fix. IIf the select element is inside a hidden container
+    //GQuery cannot get the size of the select element.
     if (fWidth == 0){
-    	fWidth = (int)$selectElement.cur("width", false);
+    	$("body").append("<div id='gwt_chosen_temp_div' style='display:block;position:absolute;left:-9000px; visibility:hidden'> </div>");
+    	GQuery tempDiv = $("#gwt_chosen_temp_div");
+    	tempDiv.append($selectElement.clone());
+       
+        fWidth = tempDiv.children("select").outerWidth();
+       
+        tempDiv.remove();
     	isHidden = fWidth > 0;
+    	
     }
 
     isRTL = LocaleInfo.getCurrentLocale().isRTL();
