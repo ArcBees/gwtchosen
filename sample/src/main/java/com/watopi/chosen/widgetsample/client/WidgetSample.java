@@ -84,8 +84,13 @@ public class WidgetSample implements EntryPoint {
     }
 
   }
-
+  
   private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
+  
+  private static String[] teamsGroup = new String[] {
+	  "NFC EAST", "NFC NORTH", "NFC SOUTH", "NFC WEST","AFC EAST", "AFC NORTH", "AFC SOUTH", "AFC WEST"
+  };
+  
   private static String[] teams = new String[] {
       "Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Redskins",
       "Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings",
@@ -113,6 +118,7 @@ public class WidgetSample implements EntryPoint {
     }
     
     teamChosen = new ChosenListBox(true);
+    
 
     Widget w = uiBinder.createAndBindUi(this);
     init();
@@ -144,9 +150,15 @@ public class WidgetSample implements EntryPoint {
 
   private void init() {
 
+	teamChosen.addGroup(teamsGroup[0]);
+	  
     // init options for teamchosen
+	int i = 0;
     for (String team : teams) {
-      teamChosen.addItem(team);
+      if (i % 4 == 0){
+        teamChosen.addGroup(teamsGroup[i/4]);
+      }
+      teamChosen.addItemToGroup(team);
     }
 
     // init default place holder text
