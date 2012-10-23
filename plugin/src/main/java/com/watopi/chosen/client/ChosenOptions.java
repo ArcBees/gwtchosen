@@ -116,8 +116,9 @@ public class ChosenOptions {
     return this;
   }
   
-  public void setResources(Resources resources) {
+  public ChosenOptions setResources(Resources resources) {
 	this.resources = resources;
+	return this;
   }
 
   public ChosenOptions setSearchContains(boolean searchContains) {
