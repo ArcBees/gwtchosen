@@ -2,15 +2,15 @@
   <formats>
     <format>zip</format>
   </formats>
-  <baseDirectory>/chosen-1.0-SNAPSHOT</baseDirectory>
+  <baseDirectory>/chosen-1.1.0</baseDirectory>
   <files>
    <file>
      <outputDirectory>/</outputDirectory>
-     <source>plugin/target/chosen-plugin-1.0-SNAPSHOT.jar</source>
+     <source>plugin/target/chosen-plugin-1.1.0.jar</source>
    </file>
    <file>
      <outputDirectory>/</outputDirectory>
-     <source>sample/target/chosen-sample-1.0-SNAPSHOT.war</source>
+     <source>sample/target/chosen-sample-1.1.0.war</source>
    </file>
   </files>
   <fileSets>

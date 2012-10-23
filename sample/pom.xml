@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.watopi</groupId>
 		<artifactId>gwtchosen-project</artifactId>
-		<version>1.0.2</version>
+		<version>1.1.0</version>
 	</parent>
 
 	<name>Chosen gQuery plugin example</name>
@@ -17,13 +17,13 @@
 		<dependency>
 			<groupId>com.watopi</groupId>
 			<artifactId>gwtchosen</artifactId>
-			<version>1.0.2</version>
+			<version>1.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.gwtquery</groupId>
 			<artifactId>gwtquery</artifactId>
-			<version>${gQueryVersion}</version>
+			<version>1.2.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
