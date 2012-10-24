@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>GwtQuery: Chosen plugin example</title>
 <link rel="stylesheet" href="bootstrap.css" />
-<!--  script language="javascript"
+<!-- script language="javascript"
 	src="http://localhost:9876/Chosen/Chosen.nocache.js"></script-->
 <script language="javascript" src="Chosen.nocache.js"></script>
 <style type="text/css">
@@ -315,7 +315,7 @@ body {
 					<div>
 						<select class="enhance" data-placeholder="Choose a Country"
 							style="width: 350px;" tabindex="2">
-														<option value=""></option>
+							<option value=""></option>
 							<option value="United States">United States</option>
 							<option value="United Kingdom">United Kingdom</option>
 							<option value="Afghanistan">Afghanistan</option>
@@ -1244,6 +1244,24 @@ chzn.setPlaceholderText("Choose your country...");
 					</div>
 				</div>
 			</div>
+			<div class="row">
+			<div class="span12">
+					<p>The <code>ChosenListBox</code> supports the optgroups as well:</p>
+					
+<pre>
+//add a optgroup
+chzn.addGroup("NFC EAST");
+//insert a optgroup in a specific position
+chzn.insertGroup("NFC EAST", 2);
+//add an item to the last optgroup
+chzn.addItemToGroup("Dallas Cowboys");
+//add an item at the end to the second optgroup
+chzn.addItemToGroup("Chicago Bears", 1);
+//insert the item in the 4th position of the second optgroup 
+chzn.insertItemToGroup("Dallas Cowboys", 1, 3);
+</pre>
+				</div>
+				</div>
 		</section>
 		<section>
 			<div class="page-header">
@@ -1708,7 +1726,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
 				<div class="span5">
 					<h3>Without maven</h3>
 					<p>
-						Download <a href="http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.0.2.jar">the last stable jar file</a> and put it in your claspath.
+						Download <a href="http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar">the last stable jar file</a> and put it in your claspath.
 					</p>
 				</div>
 				
