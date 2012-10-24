@@ -159,6 +159,7 @@ public class WidgetSample implements EntryPoint {
         teamChosen.addGroup(teamsGroup[i/4]);
       }
       teamChosen.addItemToGroup(team);
+      i++;
     }
 
     // init default place holder text
