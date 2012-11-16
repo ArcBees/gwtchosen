@@ -1,3 +1,5 @@
+@noflip {
+
 /* @group Base */
 .chzn-container {
   font-size: 13px;
@@ -216,12 +218,15 @@
   font-size: 1px;
   background: CHOSEN_SPRITE_URL right top no-repeat;
 }
+
+
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close:hover {
   background-position: right -11px;
 }
 .chzn-container-multi .chzn-choices .search-choice-focus .search-choice-close {
   background-position: right -11px;
 }
+
 /* @end */
 
 /* @group Results */
@@ -399,3 +404,5 @@
 
 /*To make the gwt compiler happy*/
 .chzn-done{}
+
+}
