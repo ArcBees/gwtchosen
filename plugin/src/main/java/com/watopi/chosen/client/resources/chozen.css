@@ -1,3 +1,4 @@
+@noflip {
 /* @group Base */
 .chzn-container {
   font-size: 13px;
@@ -395,7 +396,13 @@
   padding: 4px 5px 4px 20px;
   direction: rtl;
 }
+
+.chzn-rtl.chzn-container-single-nosearch .chzn-search input {
+  position: absolute;
+  right: -9000px;
+}
 /* @end */
 
 /*To make the gwt compiler happy*/
 .chzn-done{}
+}

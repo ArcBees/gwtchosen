@@ -68,13 +68,13 @@ public class ChosenImpl {
     @Template("<div id=\"{0}\" class=\"{1}\"></div>")
     SafeHtml container(String id, String cssClasses);
 
-    @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"left:-9000px;\"><ul class=\"{5}\"></ul></div>")
+    @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"{6}:-9000px;\"><ul class=\"{5}\"></ul></div>")
     SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
-        String defaultText, String defaultClass, String chznDropClass, String chznResultClass);
+    	String defaultText, String defaultClass, String chznDropClass, String chznResultClass, String rightOrLeft);
 
-    @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div class=\"{3}\" style=\"left:-9000px;\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
+    @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div class=\"{3}\" style=\"{6}:-9000px;\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
     SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-        String dropClass, String chznSearchClass, String chznResultClass);
+        String dropClass, String chznSearchClass, String chznResultClass, String rightOrLeft);
 
     @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
     SafeHtml group(String id, String groupResultClass, String content);
@@ -930,7 +930,7 @@ public class ChosenImpl {
 
     fireEvent(new HidingDropDownEvent(this));
 
-    dropdown.css("left", "-9000px");
+    dropdown.css(isRTL ? "right" : "left", "-9000px");
     resultsShowing = false;
 
   }
@@ -984,7 +984,7 @@ public class ChosenImpl {
 
     fireEvent(new ShowingDropDownEvent(this));
 
-    dropdown.css("top", ddTop + "px").css("left", "0");
+    dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
     resultsShowing = true;
 
     searchField.focus();
@@ -1028,7 +1028,7 @@ public class ChosenImpl {
     }
 
     StringBuilder styleBlock =
-        new StringBuilder("position:absolute; left: -1000px; top: -1000px; visibility:hidden;");
+        new StringBuilder("position:absolute; "+ (isRTL ? "right" : "left")+": -1000px; top: -1000px; visibility:hidden;");
     String[] styleToCopy =
         {
             "font-size", "font-style", "font-weight", "font-family", "line-height",
@@ -1191,7 +1191,7 @@ public class ChosenImpl {
     //Temporary fix. IIf the select element is inside a hidden container
     //GQuery cannot get the size of the select element.
     if (fWidth == 0){
-    	$("body").append("<div id='gwt_chosen_temp_div' style='display:block;position:absolute;left:-9000px; visibility:hidden'> </div>");
+    	$("body").append("<div id='gwt_chosen_temp_div' style='display:block;position:absolute;"+ (isRTL ? "right" : "left")+":-9000px; visibility:hidden'> </div>");
     	GQuery tempDiv = $("#gwt_chosen_temp_div");
     	tempDiv.append($selectElement.clone());
        
@@ -1202,7 +1202,8 @@ public class ChosenImpl {
     	
     }
 
-    isRTL = LocaleInfo.getCurrentLocale().isRTL();
+    isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
+
     String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
     GQuery containerTemp =
@@ -1210,11 +1211,11 @@ public class ChosenImpl {
 
     if (isMultiple) {
       containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
-          css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults())
+          css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(), (isRTL ? "right" : "left"))
           .asString());
     } else {
       containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
-          css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults())
+          css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(), (isRTL ? "right" : "left"))
           .asString());
     }
 
