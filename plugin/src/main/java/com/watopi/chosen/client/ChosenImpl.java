@@ -957,6 +957,7 @@ public class ChosenImpl {
   }
 
   private void resultsResetCleanup() {
+	currentValue = $selectElement.val();
     selectedItem.find("abbr").remove();
   }
 
