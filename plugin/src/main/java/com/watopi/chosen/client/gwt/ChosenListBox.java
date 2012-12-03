@@ -391,7 +391,7 @@ public class ChosenListBox extends ListBox {
 	 */
 	public void insertItemToGroup(String item, String value, int groupIndex,
 			int itemIndex) {
-		insertItemToGroup(item, null, item, groupIndex, itemIndex);
+		insertItemToGroup(item, null, value, groupIndex, itemIndex);
 
 	}
 
