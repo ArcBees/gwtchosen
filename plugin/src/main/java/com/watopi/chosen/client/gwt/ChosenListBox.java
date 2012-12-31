@@ -456,8 +456,8 @@ public class ChosenListBox extends ListBox {
 		super.setSelectedIndex(index);
 		update();
 	}
-    public void getValue(){
-        super.getValue(
+    public String getValue(){
+        return super.getValue(
                 super.getSelectedIndex());
     }
 	public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
