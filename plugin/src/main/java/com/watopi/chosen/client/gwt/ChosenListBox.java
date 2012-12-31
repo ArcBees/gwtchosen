@@ -18,10 +18,6 @@
  */
 package com.watopi.chosen.client.gwt;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
-import static com.watopi.chosen.client.Chosen.Chosen;
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.OptionElement;
@@ -38,17 +34,16 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.watopi.chosen.client.ChosenImpl;
 import com.watopi.chosen.client.ChosenOptions;
-import com.watopi.chosen.client.event.ChosenChangeEvent;
+import com.watopi.chosen.client.event.*;
 import com.watopi.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
-import com.watopi.chosen.client.event.HidingDropDownEvent;
 import com.watopi.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
-import com.watopi.chosen.client.event.MaxSelectedEvent;
 import com.watopi.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
-import com.watopi.chosen.client.event.ReadyEvent;
 import com.watopi.chosen.client.event.ReadyEvent.ReadyHandler;
-import com.watopi.chosen.client.event.ShowingDropDownEvent;
 import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
-import com.watopi.chosen.client.event.UpdatedEvent;
+
+import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
+import static com.watopi.chosen.client.Chosen.Chosen;
 
 public class ChosenListBox extends ListBox {
 
@@ -461,7 +456,10 @@ public class ChosenListBox extends ListBox {
 		super.setSelectedIndex(index);
 		update();
 	}
-
+    public void getValue(){
+        super.getValue(
+                super.getSelectedIndex());
+    }
 	public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
 		options.setSingleBackstrokeDelete(singleBackstrokeDelete);
 	}
