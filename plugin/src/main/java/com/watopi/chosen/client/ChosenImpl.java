@@ -33,6 +33,7 @@ import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
+import com.google.gwt.query.client.GQuery.Offset;
 import com.google.gwt.query.client.Properties;
 import com.google.gwt.query.client.js.JsObjectArray;
 import com.google.gwt.regexp.shared.RegExp;
@@ -982,10 +983,11 @@ public class ChosenImpl {
     }
 
     int ddTop = isMultiple ? container.height() : container.height() - 1;
+    Offset offset = container.offset();
 
     fireEvent(new ShowingDropDownEvent(this));
 
-    dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+    dropdown.css("top", (offset.top + ddTop) + "px").css(isRTL ? "right" : "left", offset.left + "px").css("display", "block");
     resultsShowing = true;
 
     searchField.focus();
@@ -1052,7 +1054,8 @@ public class ChosenImpl {
     searchField.css("width", w + "px");
 
     int ddTop = container.height();
-    dropdown.css("top", ddTop + "px");
+    Offset offset = container.offset();
+    dropdown.css("top", offset.top + ddTop + "px");
   }
 
   private boolean searchResultsMouseOut(Event e) {
