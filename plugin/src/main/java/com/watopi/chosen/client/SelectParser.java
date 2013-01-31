@@ -29,7 +29,7 @@ import com.google.gwt.query.client.js.JsObjectArray;
 
 public class SelectParser {
 
-  protected class GroupItem extends SelectItem {
+  public class GroupItem extends OptionItem {
 
     private int children = 0;
     private String label;
@@ -54,9 +54,15 @@ public class SelectParser {
     public void setLabel(String label) {
       this.label = label;
     }
+
+      @Override
+      public String getText() {
+          return label;
+      }
+
   }
 
-  protected class OptionItem extends SelectItem {
+  public class OptionItem extends SelectItem {
 
     private int arrayIndex;
 
@@ -217,10 +223,11 @@ public class SelectParser {
     int position = parsed.length();
 
     GroupItem item = new GroupItem();
-    item.arrayIndex = position;
+    item.setArrayIndex(position);
     item.label = group.getLabel();
     item.children = 0;
-    item.disabled = group.isDisabled();
+    item.setDisabled(group.isDisabled());
+    item.setValue(group.getAttribute("groupid"));
 
     parsed.add(item);
 

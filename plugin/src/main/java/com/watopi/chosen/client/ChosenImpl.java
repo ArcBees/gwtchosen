@@ -715,41 +715,60 @@ public class ChosenImpl {
   private SafeHtml resultAddGroup(GroupItem group) {
     if (!group.isDisabled()) {
       group.domId = containerId + "_g_" + group.getArrayIndex();
-      return ChozenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
-    } else {
-      return null;
-    }
-  }
-
-  private SafeHtml resultAddOption(OptionItem option) {
-    if (!option.isDisabled()) {
-      option.domId = containerId + "_o_" + option.getArrayIndex();
-
-      StringBuilder classes = new StringBuilder();
-
-      if (!(option.isSelected() && isMultiple)) {
-        classes.append(css.activeResult()).append(" ");
-      }
-
-      if (option.isSelected()) {
-        classes.append(css.resultSelected()).append(" ");
-      }
-
-      if (option.getGroupArrayIndex() != -1) {
-        classes.append(css.groupOption()).append(" ");
-      }
-
-      if (option.getClasses() != null) {
-        classes.append(option.getClasses());
-      }
-
-      String style = option.getStyle();
-
-      return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), style,
-          option.getText());
+        if (!options.isAllowGroupSelect()) {
+          return ChozenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
+        } else {
+          if (!group.isDisabled()) {
+            String classes = parseOptionForStyleInfo(group);
+            String style = (group.getStyle() == null ? "" : group.getStyle());
+            return ChozenTemplate.templates.option(group.getDomId(), classes.toString().trim(), style,
+                                                       group.getLabel());
+          }
+        }
     }
     return null;
   }
+
+    private SafeHtml resultAddOption(OptionItem option) {
+        if (!option.isDisabled()) {
+            option.domId = containerId + "_o_" + option.getArrayIndex();
+            String classes = parseOptionForStyleInfo(option);
+            String style = option.getStyle();
+            return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), style,
+                                                   option.getText());
+        }
+        return null;
+    }
+
+    private String parseOptionForStyleInfo(OptionItem option) {
+        StringBuilder classes = new StringBuilder();
+        classes.append("");
+
+        boolean isGroupHeader = (option instanceof GroupItem);
+
+        if (option instanceof GroupItem) {
+            classes.append(css.groupResult()).append(" ");
+        }
+
+        if (!(option.isSelected() && isMultiple)) {
+            classes.append(css.activeResult()).append(" ");
+        }
+
+        if (option.isSelected()) {
+            classes.append(css.resultSelected()).append(" ");
+        }
+
+        if (!isGroupHeader && option.getGroupArrayIndex() != -1) {
+            classes.append(css.groupOption()).append(" ");
+        }
+
+        if (option.getClasses() != null) {
+            classes.append(option.getClasses());
+        }
+
+        return classes.toString();
+
+    }
 
   private void resultClearHighlight() {
     if (resultHighlight != null) {
@@ -893,10 +912,14 @@ public class ChosenImpl {
       if (isMultiple) {
         choiceBuild(item);
       } else {
-        selectedItem.find("span").text(item.getText());
-        if (allowSingleDeselect) {
-          singleDeselectControlBuild();
-        }
+          if (item instanceof GroupItem){
+              selectedItem.find("span").text(((GroupItem) item).getLabel());
+          } else {
+              selectedItem.find("span").text(item.getText());
+          }
+          if (allowSingleDeselect) {
+              singleDeselectControlBuild();
+          }
       }
 
       if (!e.getMetaKey() || !isMultiple) {
@@ -905,10 +928,16 @@ public class ChosenImpl {
 
       searchField.val("");
 
-      if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())) {
-        String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
-        fireEvent(new ChosenChangeEvent(value, this));
-      }
+        if (options.isAllowGroupSelect() && item instanceof GroupItem) {
+            GroupItem groupItem = (GroupItem) item;
+            currentValue = groupItem.getValue();
+            fireEvent(new ChosenChangeEvent(currentValue, this, item));
+        } else {
+            if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())) {
+                String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
+                fireEvent(new ChosenChangeEvent(value, this, item));
+            }
+        }
 
       currentValue = $selectElement.val();
 
@@ -1070,8 +1099,15 @@ public class ChosenImpl {
     Element targetEl = e.getEventTarget().cast();
     GQuery $e = $(targetEl);
 
-    GQuery target =
+      boolean isGroupResult = isGroup($e);
+      GQuery target =
         $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
+
+      if (isGroupResult && options.isAllowGroupSelect()) {
+          target =
+                  $e.hasClass(css.groupResult()) ? $e : $e.parents("." + css.activeResult()).first();
+      }
+
     if (!target.isEmpty()) {
       resultDoHighlight(target);
     }
@@ -1083,8 +1119,15 @@ public class ChosenImpl {
     Element targetEvent = e.getEventTarget().cast();
     GQuery $e = $(targetEvent);
 
-    GQuery target =
+      boolean isGroupResult = isGroup($e);
+      GQuery target =
         $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
+
+      if (isGroupResult && options.isAllowGroupSelect()) {
+          target =
+                  $e.hasClass(css.groupResult()) ? $e : $e.parents("." + css.activeResult()).first();
+      }
+
     if (!target.isEmpty()) {
       resultHighlight = target;
       resultSelect(e);
@@ -1309,7 +1352,9 @@ public class ChosenImpl {
       }
 
       if (item.isGroup()) {
-        $('#' + item.getDomId()).css("display", "none");
+          if (!options.isAllowShowEmptyGroups()) {
+              $('#' + item.getDomId()).css("display", "none");
+          }
       } else {
         OptionItem option = (OptionItem) item;
 
@@ -1398,5 +1443,13 @@ public class ChosenImpl {
     }
 
   }
+
+    private boolean isGroup(GQuery gqEl) {
+        return gqEl.hasClass(css.groupResult());
+    }
+
+    private boolean isNullOrEmpty(String value) {
+        return (value == null || value.length() < 1);
+    }
 
 }

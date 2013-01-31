@@ -173,9 +173,13 @@ public class ChosenListBox extends ListBox {
 	 * @param group
 	 *            the text of the group to be added
 	 */
-	public void addGroup(String group) {
-		insertGroup(group, -1);
-	}
+    public void addGroup(String group) {
+        insertGroup(group, null, -1);
+    }
+
+    public void addGroup(String group, String value) {
+        insertGroup(group, value, -1);
+    }
 
 	public HandlerRegistration addHidingDropDownHandler(
 			HidingDropDownHandler handler) {
@@ -297,21 +301,25 @@ public class ChosenListBox extends ListBox {
 	 * @param index
 	 *            the index at which to insert it
 	 */
-	public void insertGroup(String group, int index) {
-		GQuery optGroup = $("<optgroup></optgroup>").attr("label", group);
-		GQuery select = $(getElement());
+    public void insertGroup(String group, String value, int index) {
+        GQuery optGroup = $("<optgroup></optgroup>").attr("label", group);
+        GQuery select = $(getElement());
 
-		int itemCount = SelectElement.as(getElement()).getLength();
+        if (value != null) {
+            optGroup.attr("groupId", value);
+        }
 
-		if (index < 0 || index > itemCount) {
-			select.append(optGroup);
-		} else {
-			GQuery before = select.children().eq(index);
-			before.before(optGroup);
-		}
-	}
+        int itemCount = SelectElement.as(getElement()).getLength();
 
-	/**
+        if (index < 0 || index > itemCount) {
+            select.append(optGroup);
+        } else {
+            GQuery before = select.children().eq(index);
+            before.before(optGroup);
+        }
+    }
+
+    /**
 	 * Adds an item to the an optgroup of the list box. If no optgroup exists,
 	 * the item will be add at the end ot the list box.
 	 * 
@@ -489,5 +497,17 @@ public class ChosenListBox extends ListBox {
 	public void update() {
 		ensureChosenHandlers().fireEvent(new UpdatedEvent());
 	}
+
+    @Override
+    public void clear() {
+        super.clear();
+        $(getElement()).children().remove();
+    }
+
+    public void setSelectedText(String text) {
+        if (isSupported()) {
+            getChosenElement().find("span").text(text);
+        }
+    }
 
 }
