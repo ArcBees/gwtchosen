@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -44,56 +43,62 @@
     <build>
         <plugins>
             <plugin>
-               <artifactId>maven-surefire-plugin</artifactId>
-               <configuration>
-                 <additionalClasspathElements>
-                   <additionalClasspathElement>\${project.build.sourceDirectory}</additionalClasspathElement>
-                   <additionalClasspathElement>\${project.build.testSourceDirectory}</additionalClasspathElement>
-                 </additionalClasspathElements>
-                 <useManifestOnlyJar>false</useManifestOnlyJar>
-                 <forkMode>always</forkMode>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>\${project.build.sourceDirectory}</additionalClasspathElement>
+                        <additionalClasspathElement>\${project.build.testSourceDirectory}</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <forkMode>always</forkMode>
 
-                 <!-- Folder for generated testing stuff -->
-                 <systemProperties>
-                   <property>
-                     <name>gwt.args</name>
-                     <value>-out target/www</value>
-                   </property>
-                 </systemProperties>
-               </configuration>
+                    <!-- Folder for generated testing stuff -->
+                    <systemProperties>
+                        <property>
+                            <name>gwt.args</name>
+                            <value>-out target/www</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.riedelcastro</groupId>
                 <artifactId>gcupload-maven-plugin</artifactId>
                 <version>0.9</version>
                 <executions>
-                  <execution>
-                    <phase>deploy</phase>
-                    <goals>
-                      <goal>gcupload</goal>
-                    </goals>
-                  </execution>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>gcupload</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
-                  <allowSnapshots>true</allowSnapshots>
-                  <projectName>gwtquery-plugins</projectName>
-                  <uploads>
-                    <upload>
-                      <extensions>jar</extensions>
-                      <labels>Featured</labels>
-                    </upload>
-                  </uploads>
+                    <allowSnapshots>true</allowSnapshots>
+                    <projectName>gwtquery-plugins</projectName>
+                    <uploads>
+                        <upload>
+                            <extensions>jar</extensions>
+                            <labels>Featured</labels>
+                        </upload>
+                    </uploads>
                 </configuration>
             </plugin>
             <plugin>
-              <artifactId>maven-clean-plugin</artifactId>
-              <configuration>
-                <filesets>
-                  <fileset><directory>tomcat</directory></fileset>
-                  <fileset><directory>www-test</directory></fileset>
-                  <fileset><directory>.gwt-tmp</directory></fileset>
-                </filesets>
-              </configuration>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>tomcat</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>www-test</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>.gwt-tmp</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -104,5 +109,5 @@
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
         </resources>
-   </build>
+    </build>
 </project>
