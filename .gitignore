@@ -43,3 +43,4 @@ local.properties
 gwt-unitCache/
 webapp/Chosen
 webApp/UiBinderSample
+www-test**
