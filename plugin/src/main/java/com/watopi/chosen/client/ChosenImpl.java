@@ -604,8 +604,11 @@ public class ChosenImpl {
         break;
 
       case 13: // enter
-        e.preventDefault();
-        return false;
+        if (resultsShowing) {
+          e.preventDefault();
+          return false;
+        }
+        return true;
 
       case 38: // up arrow
         e.preventDefault();
@@ -664,11 +667,10 @@ public class ChosenImpl {
         break;
 
       case 13: // enter
-        e.preventDefault();
         if (resultsShowing) {
           resultSelect(e);
         }
-        return false;
+        return true;
       case 27: // escape
         if (resultsShowing) {
           resultsHide();

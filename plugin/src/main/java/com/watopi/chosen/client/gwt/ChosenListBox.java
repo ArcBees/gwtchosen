@@ -254,7 +254,17 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers{
 				: chznHandlerManager;
 	}
 
-	public void forceRedraw() {
+    @Override
+    public void setFocus(boolean focused) {
+        GQuery focusElement = getFocusableElement();
+        if (focused) {
+            focusElement.focus();
+        } else {
+           focusElement.blur();
+        }
+    }
+
+    public void forceRedraw() {
 		$(getElement()).as(Chosen).destroy()
 				.chosen(options, ensureChosenHandlers());
 	}
@@ -496,6 +506,16 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers{
 	public void update() {
 		ensureChosenHandlers().fireEvent(new UpdatedEvent());
 	}
+
+    private GQuery getFocusableElement(){
+        GQuery chosen = getChosenElement();
+        GQuery focusableElement = chosen.children("a");
+        if (focusableElement.isEmpty()){
+            focusableElement =  chosen.find("input");
+        }
+
+        return focusableElement;
+    }
 
 
 
