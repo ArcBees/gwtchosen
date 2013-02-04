@@ -12,11 +12,13 @@
     <description>Chosen is a javascript plugin (for jQuery and Prototype).</description>
 
     <properties>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
-        <gwt.version>2.4.0</gwt.version>
-        <gwtquery.version>1.2.0</gwtquery.version>
+        <gwt.version>2.5.0</gwt.version>
+        <gwtquery.version>1.3.1</gwtquery.version>
         <junit.version>4.11</junit.version>
+        
+        <!-- maven -->
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
     <modules>
@@ -30,47 +32,14 @@
     </issueManagement>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
-            </extension>
-        </extensions>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.version}</version>
+            </plugin>
+        </plugins>
     </build>
-    
-     <repositories>
-        <repository>
-            <id>central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>site</id>
-            <url>http://gwtquery.googlecode.com/svn/mavenrepo</url>
-        </repository>
-        <repository>
-            <id>m.g.o</id>
-            <url>http://maven.glassfish.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>gcupload</id>
-            <name>Repository for gcupload plugin</name>
-            <url>http://gwtupload.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>
