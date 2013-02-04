@@ -41,7 +41,7 @@
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
 
                     <runTarget>ChosenSample.html</runTarget>
-                    <module>com.watopi.chosen.ChosenSample</module>
+                    <module>com.watopi.chosen.sample.ChosenSample</module>
                 </configuration>
                 <executions>
                     <execution>
