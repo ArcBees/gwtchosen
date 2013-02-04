@@ -13,7 +13,13 @@
     <packaging>jar</packaging>
     <name>Chosen plugin for gQuery</name>
 
+    <properties>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+    </properties>
+
     <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+        
         <resources>
             <resource>
                 <directory>${basedir}/src/main/java</directory>
@@ -24,65 +30,34 @@
         </resources>
 
         <plugins>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
+           <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.version}</version>
                 <configuration>
-                    <additionalClasspathElements>
-                        <additionalClasspathElement>\${project.build.sourceDirectory}</additionalClasspathElement>
-                        <additionalClasspathElement>\${project.build.testSourceDirectory}</additionalClasspathElement>
-                    </additionalClasspathElements>
-                    <useManifestOnlyJar>false</useManifestOnlyJar>
-                    <forkMode>always</forkMode>
+                    <strict>true</strict>
+                    <mode>htmlunit</mode>
+                    <testTimeOut>180</testTimeOut>
+                    <!-- With multiple tests use GwtTestSuite.java for speed -->
+                    <!-- <includes>**/*GwtTestSuite.java</includes> -->
+                    <includes>**/*GwtTest.java</includes>
 
-                    <!-- Folder for generated testing stuff -->
-                    <systemProperties>
-                        <property>
-                            <name>gwt.args</name>
-                            <value>-out target/www</value>
-                        </property>
-                    </systemProperties>
+                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
+                    <logLevel>${gwt.loglevel}</logLevel>
+                    <style>${gwt.outputstyle}</style>
+
+                    <compileSourcesArtifacts>
+                        <compileSourcesArtifact>com.watopi.chosen:Chosen</compileSourcesArtifact>
+                    </compileSourcesArtifacts>
                 </configuration>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.riedelcastro</groupId>
-                <artifactId>gcupload-maven-plugin</artifactId>
-                <version>0.9</version>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>
                         <goals>
-                            <goal>gcupload</goal>
+                            <goal>test</goal>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <allowSnapshots>true</allowSnapshots>
-                    <projectName>gwtquery-plugins</projectName>
-                    <uploads>
-                        <upload>
-                            <extensions>jar</extensions>
-                            <labels>Featured</labels>
-                        </upload>
-                    </uploads>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>tomcat</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>www-test</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>.gwt-tmp</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
             </plugin>
         </plugins>
     </build>

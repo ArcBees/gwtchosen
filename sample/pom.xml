@@ -13,71 +13,47 @@
     <artifactId>chosen-sample</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+    </properties>
+
     <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+    
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt.version}</version>
                 <configuration>
+                    <strict>true</strict>
+                    <mode>htmlunit</mode>
+                    <testTimeOut>180</testTimeOut>
+                    <!-- With multiple tests use GwtTestSuite.java for speed -->
+                    <!-- <includes>**/*GwtTestSuite.java</includes> -->
+                    <includes>**/*GwtTest.java</includes>
+                    
+                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
                     <logLevel>${gwt.loglevel}</logLevel>
                     <style>${gwt.outputstyle}</style>
-                    <soyc>false</soyc>
-                    <runTarget>Chosen/ChosenSample.html</runTarget>
-                    <hostedWebapp>src/main/webapp</hostedWebapp>
+
+                    <copyWebapp>true</copyWebapp>
+                    <hostedWebapp>${webappDirectory}</hostedWebapp>
+
+                    <runTarget>ChosenSample.html</runTarget>
+                    <module>com.watopi.chosen.sample.ChosenSample</module>
+                    <module>com.watopi.chosen.sample.WidgetSample</module>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
                         <goals>
+                            <goal>test</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/webapp/Chosen</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>src/main/webapp/WEB-INF/classes</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>tomcat</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>www-test</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>.gwt-tmp</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
         </plugins>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <dependencies>
