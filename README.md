@@ -5,7 +5,8 @@
 * Other example : http://jdramaix.github.com/gwtchosen/widgetsample/index.html
 
 ##Stable version
-[GwtChosen 1.1.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar)
+* [GwtChosen 1.1.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar)
+* [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix)
 
 ##Credits
 he initial chosen javascript plugin was built by [Harvest](http://www.getharvest.com/). Concept and development by [Patrick Filler](http://patrickfiller.com/). Design and CSS by [Matthew Lettini](http://matthewlettini.com/)
@@ -15,8 +16,8 @@ he initial chosen javascript plugin was built by [Harvest](http://www.getharvest
 ##Maven Configuration
 Find the the available jars in [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix).
 
-* Release
-```
+* Release:
+```xml
 <dependency>
     <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen</artifactId>
@@ -25,8 +26,8 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 </dependency>
 ```
 
-* Snapshot
-```
+* Snapshot:
+```xml
 <repositories>
     <repository>
         <id>sonatype.snapshots</id>
