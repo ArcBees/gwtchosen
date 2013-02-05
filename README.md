@@ -16,7 +16,7 @@ he initial chosen javascript plugin was built by [Harvest](http://www.getharvest
 ##Maven Configuration
 Find the the available jars in [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix).
 
-* Release:
+### Release:
 ```xml
 <dependency>
     <groupId>com.github.jdramaix</groupId>
@@ -26,7 +26,7 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 </dependency>
 ```
 
-* Snapshot:
+### Snapshot:
 ```xml
 <repositories>
     <repository>
@@ -45,9 +45,7 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 </dependency>
 ```
 
-
-
-##Contributor
+#Contributor
 
 ##IDE Setup
 * Create a git clone.
