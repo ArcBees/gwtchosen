@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.jdramaix</groupId>
         <artifactId>gwtchosen-project</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.0-alpha-1-SNAPSHOT</version>
     </parent>
 
     <name>Chosen gQuery plugin example</name>
@@ -19,8 +19,24 @@
 
     <build>
         <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
-    
+
         <plugins>
+            <!-- JUnit Testing - skip *.GwtTest cases -->
+            <!-- 'mvn test' - runs the Jukito tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*GwtTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
@@ -32,7 +48,7 @@
                     <!-- With multiple tests use GwtTestSuite.java for speed -->
                     <!-- <includes>**/*GwtTestSuite.java</includes> -->
                     <includes>**/*GwtTest.java</includes>
-                    
+
                     <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
                     <logLevel>${gwt.loglevel}</logLevel>
                     <style>${gwt.outputstyle}</style>
