@@ -64,9 +64,7 @@
                     <style>${gwt.outputstyle}</style>
 
                     <module>com.watopi.chosen.Chosen</module>
-                    <compileSourcesArtifacts>
-                        <compileSourcesArtifact>com.watopi.chosen:Chosen</compileSourcesArtifact>
-                    </compileSourcesArtifacts>
+  
                 </configuration>
                 
                 <executions>
