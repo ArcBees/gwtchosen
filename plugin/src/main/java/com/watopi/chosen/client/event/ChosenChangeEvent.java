@@ -21,6 +21,8 @@ package com.watopi.chosen.client.event;
 import com.google.gwt.event.shared.EventHandler;
 
 import com.watopi.chosen.client.ChosenImpl;
+import com.watopi.chosen.client.SelectParser.GroupItem;
+import com.watopi.chosen.client.SelectParser.OptionItem;
 
 public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChangeHandler> {
 
@@ -36,11 +38,24 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
 
   private String value;
 
-  public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
+  private OptionItem optionItem;
+
+    public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen, OptionItem optionItem) {
+        super(chosen);
+        this.value = value;
+        this.selection = selected;
+        this.optionItem = optionItem;
+    }
+
+    public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
     super(chosen);
     this.value = value;
     this.selection = selected;
   }
+
+    public ChosenChangeEvent(String value, ChosenImpl chosen, OptionItem optionItem) {
+        this(value, true, chosen, optionItem);
+    }
 
   public ChosenChangeEvent(String value, ChosenImpl chosen) {
     this(value, true, chosen);
@@ -63,5 +78,17 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
   protected void dispatch(ChosenChangeHandler handler) {
     handler.onChange(this);
   }
+
+    public OptionItem getOptionItem() {
+        return optionItem;
+    }
+
+    public void setOptionItem(OptionItem optionItem) {
+        this.optionItem = optionItem;
+    }
+
+    public boolean isGroup() {
+        return (optionItem == null ? false : (optionItem instanceof GroupItem));
+    }
 
 }

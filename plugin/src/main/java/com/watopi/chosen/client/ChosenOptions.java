@@ -23,6 +23,7 @@ import com.watopi.chosen.client.resources.Resources;
 public class ChosenOptions {
 
   private boolean allowSingleDeselect;
+  private boolean allowGroupSelect;
   private int disableSearchThreshold;
   private int maxSelectedOptions;
   private String noResultsText;
@@ -31,6 +32,7 @@ public class ChosenOptions {
   private String placeholderTextSingle;
   private boolean searchContains;
   private boolean singleBackstrokeDelete;
+  private boolean allowShowEmptyGroups;
   private Resources resources;
 
   public ChosenOptions() {
@@ -139,4 +141,20 @@ public class ChosenOptions {
     maxSelectedOptions = -1;
 
   }
+
+    public boolean isAllowGroupSelect() {
+        return allowGroupSelect;
+    }
+
+    public void setAllowGroupSelect(boolean allowGroupSelect) {
+        this.allowGroupSelect = allowGroupSelect;
+    }
+
+    public boolean isAllowShowEmptyGroups() {
+        return allowShowEmptyGroups;
+    }
+
+    public void setAllowShowEmptyGroups(boolean allowShowEmptyGroups) {
+        this.allowShowEmptyGroups = allowShowEmptyGroups;
+    }
 }
