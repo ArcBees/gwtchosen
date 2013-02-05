@@ -11,7 +11,7 @@
     <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen-project</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-alpha-1</version>
+    <version>1.1.0-alpha-2-SNAPSHOT</version>
     <name>Chosen plugin project parent.</name>
     <inceptionYear>2012</inceptionYear>
     <url>https://github.com/jDramaix/gwtchosen</url>
