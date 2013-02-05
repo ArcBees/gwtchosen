@@ -18,9 +18,6 @@
  */
 package com.watopi.chosen.client;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static com.google.gwt.query.client.GQuery.document;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -29,6 +26,7 @@ import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.dom.client.SelectElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.query.client.Function;
@@ -36,6 +34,8 @@ import com.google.gwt.query.client.GQuery;
 import com.google.gwt.query.client.Properties;
 import com.google.gwt.query.client.js.JsObjectArray;
 import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.safecss.shared.SafeStyles;
+import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -56,6 +56,9 @@ import com.watopi.chosen.client.event.UpdatedEvent;
 import com.watopi.chosen.client.resources.ChozenCss;
 import com.watopi.chosen.client.resources.Resources;
 
+import static com.google.gwt.query.client.GQuery.$;
+import static com.google.gwt.query.client.GQuery.document;
+
 public class ChosenImpl {
 
   public static interface ChozenTemplate extends SafeHtmlTemplates {
@@ -63,18 +66,18 @@ public class ChosenImpl {
 
     @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3}\" rel=\"{4}\"></a></li>")
     SafeHtml choice(String id, String searchChoiceClass, String content,
-        String searchChoiceCloseClass, String rel);
+            String searchChoiceCloseClass, String rel);
 
     @Template("<div id=\"{0}\" class=\"{1}\"></div>")
     SafeHtml container(String id, String cssClasses);
 
-    @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"{6}:-9000px;\"><ul class=\"{5}\"></ul></div>")
+    @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"{6}\"><ul class=\"{5}\"></ul></div>")
     SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
-    	String defaultText, String defaultClass, String chznDropClass, String chznResultClass, String rightOrLeft);
+            String defaultText, String defaultClass, String chznDropClass, String chznResultClass, SafeStyles horizontalOffset);
 
-    @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div class=\"{3}\" style=\"{6}:-9000px;\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
+    @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div class=\"{3}\" style=\"{6}\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
     SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-        String dropClass, String chznSearchClass, String chznResultClass, String rightOrLeft);
+            String dropClass, String chznSearchClass, String chznResultClass, SafeStyles horizontalOffset);
 
     @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
     SafeHtml group(String id, String groupResultClass, String content);
@@ -83,12 +86,13 @@ public class ChosenImpl {
     SafeHtml noResults(String noResultsClass, String content);
 
     @Template("<li id=\"{0}\" class=\"{1}\" style=\"{2}\">{3}</li>")
-    SafeHtml option(String id, String groupResultClass, String style, String content);
+    SafeHtml option(String id, String groupResultClass, SafeStyles style, String content);
 
   }
 
   private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
   private static boolean cssInjected = false;
+  private static final int HORIZONTAL_OFFSET = -9000;
 
   private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
   private static int idCounter = 0;
@@ -148,7 +152,7 @@ public class ChosenImpl {
 
   /**
    * Is the plugin support the current broxser ?
-   * 
+   *
    * @return
    */
   public boolean isSupported() {
@@ -175,7 +179,7 @@ public class ChosenImpl {
     finishSetup();
 
   }
-  
+
   protected void update(){
     if (!isMultiple) {
       resultsResetCleanup();
@@ -513,7 +517,7 @@ public class ChosenImpl {
 	if (isHidden){
 		//bug in gquery when one parent of the element is hidden
 		return (int)(elmt.cur("padding-left", true) + elmt.cur("padding-right", true) + elmt.cur("border-left-width", true) + elmt.cur("border-right-width", true));
-	}  
+	}
     return elmt.outerWidth() - elmt.width();
   }
 
@@ -745,9 +749,9 @@ public class ChosenImpl {
         classes.append(option.getClasses());
       }
 
-      String style = option.getStyle();
+      SafeStyles safeStyles = SafeStylesUtils.fromTrustedString(option.getStyle());
 
-      return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), style,
+      return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
           option.getText());
     }
     return null;
@@ -1161,14 +1165,14 @@ public class ChosenImpl {
     	css = GWT.<Resources>create(Resources.class).css();
     }
 
-    // Force the injection the first time only 
+    // Force the injection the first time only
     // If you want to use different css file for different GwtChosen component
     // please register your css files (css.ensureInject()) before the first call of the plugin
     if (!cssInjected){
     	StyleInjector.inject(css.getText(), true);
     	cssInjected = true;
     }
-    
+
   }
 
   private void setTabIndex() {
@@ -1190,19 +1194,19 @@ public class ChosenImpl {
 	boolean isHidden = false;
     containerId = buildContainerId();
     fWidth = $selectElement.outerWidth();
-    
+
     //Temporary fix. IIf the select element is inside a hidden container
     //GQuery cannot get the size of the select element.
     if (fWidth == 0){
     	$("body").append("<div id='gwt_chosen_temp_div' style='display:block;position:absolute;"+ (isRTL ? "right" : "left")+":-9000px; visibility:hidden'> </div>");
     	GQuery tempDiv = $("#gwt_chosen_temp_div");
     	tempDiv.append($selectElement.clone());
-       
+
         fWidth = tempDiv.children("select").outerWidth();
-       
+
         tempDiv.remove();
     	isHidden = fWidth > 0;
-    	
+
     }
 
     isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
@@ -1212,13 +1216,16 @@ public class ChosenImpl {
     GQuery containerTemp =
         $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
 
+    SafeStyles horizontalOffset = isRTL ? SafeStylesUtils.forRight(HORIZONTAL_OFFSET,
+            Style.Unit.PX) : SafeStylesUtils.forLeft(HORIZONTAL_OFFSET, Style.Unit.PX);
+
     if (isMultiple) {
       containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
-          css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(), (isRTL ? "right" : "left"))
+          css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(), horizontalOffset)
           .asString());
     } else {
       containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
-          css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(), (isRTL ? "right" : "left"))
+          css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(), horizontalOffset)
           .asString());
     }
 
