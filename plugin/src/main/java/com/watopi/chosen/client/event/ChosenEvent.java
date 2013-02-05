@@ -20,18 +20,17 @@ package com.watopi.chosen.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
-
 import com.watopi.chosen.client.ChosenImpl;
 
 public abstract class ChosenEvent<H extends EventHandler> extends GwtEvent<H> {
 
-  private ChosenImpl chosen;
+    private ChosenImpl chosen;
 
-  public ChosenEvent(ChosenImpl chosen) {
-    this.chosen = chosen;
-  }
+    public ChosenEvent(ChosenImpl chosen) {
+        this.chosen = chosen;
+    }
 
-  public ChosenImpl getChosen() {
-    return chosen;
-  }
+    public ChosenImpl getChosen() {
+        return chosen;
+    }
 }

@@ -20,7 +20,7 @@
 package com.watopi.chosen.client.event;
 
 public interface HasAllChosenHandlers extends HasChosenChangeHandlers,
-		HasHidingDropDownHandlers, HasMaxSelectedHandlers, HasReadyHandlers,
-		HasShowingDropDownHandlers, HasUpdatedHandlers {
+        HasHidingDropDownHandlers, HasMaxSelectedHandlers, HasReadyHandlers,
+        HasShowingDropDownHandlers, HasUpdatedHandlers {
 
 }

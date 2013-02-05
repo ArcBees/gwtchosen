@@ -24,6 +24,5 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.watopi.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
 
 public interface HasMaxSelectedHandlers extends HasHandlers {
-
-  HandlerRegistration addMaxSelectedHandler(MaxSelectedHandler handler);
+    HandlerRegistration addMaxSelectedHandler(MaxSelectedHandler handler);
 }

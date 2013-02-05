@@ -24,6 +24,5 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.watopi.chosen.client.event.ReadyEvent.ReadyHandler;
 
 public interface HasReadyHandlers extends HasHandlers {
-
-  HandlerRegistration addReadyHandler(ReadyHandler handler);
+    HandlerRegistration addReadyHandler(ReadyHandler handler);
 }
