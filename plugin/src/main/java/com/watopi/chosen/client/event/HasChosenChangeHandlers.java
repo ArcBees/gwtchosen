@@ -24,6 +24,5 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.watopi.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
 
 public interface HasChosenChangeHandlers extends HasHandlers {
-
-  HandlerRegistration addChosenChangeHandler(ChosenChangeHandler handler);
+    HandlerRegistration addChosenChangeHandler(ChosenChangeHandler handler);
 }

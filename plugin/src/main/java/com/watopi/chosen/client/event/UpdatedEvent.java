@@ -22,28 +22,27 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 
 public class UpdatedEvent extends GwtEvent<UpdatedEvent.UpdatedHandler> {
+    public interface UpdatedHandler extends EventHandler {
+        void onUpdated(UpdatedEvent event);
+    }
 
-  public interface UpdatedHandler extends EventHandler {
-    void onUpdated(UpdatedEvent event);
-  }
+    public static Type<UpdatedHandler> TYPE = new Type<UpdatedHandler>();
 
-  public static Type<UpdatedHandler> TYPE = new Type<UpdatedHandler>();
+    public static Type<UpdatedHandler> getType() {
+        return TYPE;
+    }
 
-  public static Type<UpdatedHandler> getType() {
-    return TYPE;
-  }
+    public UpdatedEvent() {
+    }
 
-  public UpdatedEvent() {
-  }
+    @Override
+    public Type<UpdatedHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  @Override
-  public Type<UpdatedHandler> getAssociatedType() {
-    return TYPE;
-  }
-
-  @Override
-  protected void dispatch(UpdatedHandler handler) {
-    handler.onUpdated(this);
-  }
+    @Override
+    protected void dispatch(UpdatedHandler handler) {
+        handler.onUpdated(this);
+    }
 
 }

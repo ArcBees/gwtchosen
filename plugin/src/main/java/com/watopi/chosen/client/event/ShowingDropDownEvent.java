@@ -19,32 +19,30 @@
 package com.watopi.chosen.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
-
 import com.watopi.chosen.client.ChosenImpl;
 
 public class ShowingDropDownEvent extends ChosenEvent<ShowingDropDownEvent.ShowingDropDownHandler> {
+    public interface ShowingDropDownHandler extends EventHandler {
+        void onShowingDropDown(ShowingDropDownEvent event);
+    }
 
-  public interface ShowingDropDownHandler extends EventHandler {
-    void onShowingDropDown(ShowingDropDownEvent event);
-  }
+    public static Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
 
-  public static Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
+    public static Type<ShowingDropDownHandler> getType() {
+        return TYPE;
+    }
 
-  public static Type<ShowingDropDownHandler> getType() {
-    return TYPE;
-  }
+    public ShowingDropDownEvent(ChosenImpl chosen) {
+        super(chosen);
+    }
 
-  public ShowingDropDownEvent(ChosenImpl chosen) {
-    super(chosen);
-  }
+    @Override
+    public Type<ShowingDropDownHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  @Override
-  public Type<ShowingDropDownHandler> getAssociatedType() {
-    return TYPE;
-  }
-
-  @Override
-  protected void dispatch(ShowingDropDownHandler handler) {
-    handler.onShowingDropDown(this);
-  }
+    @Override
+    protected void dispatch(ShowingDropDownHandler handler) {
+        handler.onShowingDropDown(this);
+    }
 }

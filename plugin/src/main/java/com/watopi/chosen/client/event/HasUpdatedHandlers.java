@@ -24,6 +24,5 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.watopi.chosen.client.event.UpdatedEvent.UpdatedHandler;
 
 public interface HasUpdatedHandlers extends HasHandlers {
-
-  HandlerRegistration addUpdatedHandler(UpdatedHandler handler);
+    HandlerRegistration addUpdatedHandler(UpdatedHandler handler);
 }
