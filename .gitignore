@@ -23,6 +23,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
+www-test**
+war**
 
 #intellij
 *.iml

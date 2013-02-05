@@ -1,5 +1,8 @@
-<module rename-to='Chosen'>
-    <inherits name='com.watopi.chosen.Chosen'/>
-    <entry-point class='com.watopi.chosen.sample.client.ChosenSample'/>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.0//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to='ChosenSample'>
+    <inherits name='com.watopi.chosen.Chosen' />
+    
+    <entry-point class='com.watopi.chosen.sample.client.ChosenSample' />
 </module>

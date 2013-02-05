@@ -1,105 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
-    <name>Chosen plugin project</name>
-    <groupId>com.watopi</groupId>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen-project</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.0-alpha-2-SNAPSHOT</version>
+    <name>Chosen plugin project parent.</name>
+    <inceptionYear>2012</inceptionYear>
+    <url>https://github.com/jDramaix/gwtchosen</url>
 
-    <properties>
-      <maven.compiler.source>1.5</maven.compiler.source>
-      <maven.compiler.target>1.5</maven.compiler.target>
-      <gQueryVersion>1.2.0</gQueryVersion>
-      <gwtversion>2.4.0</gwtversion>
-    </properties>
+    <developers>
+        <developer>
+            <id>jDramaix</id>
+            <name>Julien Dramaix</name>
+            <email>julien.dramaix@gmail.com</email>
+            <organization>ArcBees</organization>
+            <organizationUrl>https://github.com/jDramaix</organizationUrl>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
-    <repositories>
-       <repository>
-         <id>central</id>
-         <url>http://repo1.maven.org/maven2</url>
-       </repository>
-       <repository>
-         <id>site</id>
-         <url>http://gwtquery.googlecode.com/svn/mavenrepo</url>
-       </repository>
-       <repository>
-         <id>m.g.o</id>
-         <url>http://maven.glassfish.org/content/groups/public/</url>
-       </repository>
-       <repository>
-      <id>sonatype-snapshots</id>
-      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-      <snapshots><enabled>true</enabled></snapshots>
-      <releases><enabled>false</enabled></releases>
-    </repository>
-    </repositories>
+    <contributors>
+        <contributor>
+            <name>Brandon Donnelson</name>
+            <email>branflake2267@gmail.com</email>
+        </contributor>
+    </contributors>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>gcupload</id>
-            <name>Repository for gcupload plugin</name>
-            <url>http://gwtupload.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <issueManagement>
-        <system>Github</system>
+        <system>GitHub</system>
         <url>https://github.com/jdramaix/gwtchosen/issues</url>
     </issueManagement>
+
+    <organization>
+        <name>Julien Dramaix</name>
+        <url>https://github.com/jDramaix</url>
+    </organization>
+
+    <scm>
+        <connection>scm:git:git@github.com:jDramaix/gwtchosen.git</connection>
+        <developerConnection>scm:git:git@github.com:jDramaix/gwtchosen.git</developerConnection>
+        <url>https://github.com/jDramaix/gwtchosen.git</url>
+    </scm>
+
+    <ciManagement>
+        <system>Team City</system>
+        <url>http://teamcity.gonevertical.org/viewType.html?buildTypeId=bt11</url>
+    </ciManagement>
+
+    <properties>
+        <gwt.version>2.5.0</gwt.version>
+        <gwtquery.version>1.3.1</gwtquery.version>
+        <junit.version>4.11</junit.version>
+
+        <!-- maven -->
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+        <maven-surefire-plugin.version>2.12</maven-surefire-plugin.version>
+
+        <!-- GitHub Sites -->
+        <github.version>0.7</github.version>
+
+        <!-- Used for releasing to sonatype as command line parameter -->
+        <gpg.passphrase>SetAsParam</gpg.passphrase>
+        <github.username>SetAsParam</github.username>
+        <github.password>SetAsParam</github.password>
+    </properties>
+
+    <modules>
+        <module>plugin</module>
+        <module>sample</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <arguments>-Psonatype-oss-release -Prelease -Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+            </plugin>
+
+            <!-- run 'mvn site' to output javadocs to gh-pages -->
+            <!-- run 'mvn javadoc:javadoc -X' to debug -->
+            <!-- http://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/javadoc.html -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <additionalJOption>-J-Xmx2048m</additionalJOption>
+                    <failOnError>false</failOnError>
+                    <links>
+                        <link>http://download.oracle.com/javase/6/docs/api/</link>
+                        <link>http://google-web-toolkit.googlecode.com/svn/javadoc/latest/</link>
+                        <link>http://gwtquery.googlecode.com/svn/trunk/gwtquery-core/javadoc/</link>
+                    </links>
+                    <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+                    <reportOutputDirectory>${project.reporting.outputDirectory}/javadoc</reportOutputDirectory>
+                    <excludes>
+                        <exclude>*.txt</exclude>
+                        <exclude>**/*.txt</exclude>
+                    </excludes>
+                    <header>
+                        <![CDATA[
+                            <a href="https://github.com/jDramaix/gwtchosen" target="_blank">Back to GwtChosen Home</a>
+                        ]]>
+                    </header>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>aggregate</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                    <!-- <execution>
+                        <id>attach-javadocs2</id>
+                        <phase>performRelease</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution> -->
+                </executions>
+            </plugin>
+
+            <!-- TODO add the war directory to get pushed ot the gh-pages -->
+            <!-- run 'mvn ghSite:site -X' to debug -->
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${github.version}</version>
+                <configuration>
+                    <dryRun>true</dryRun><!-- TODO turn off at some point -->
+                    <outputDirectory>javadoc</outputDirectory>
+                    <path>${project.version}</path>
+                    <message>Creating site for ${project.version}</message>
+                    <!-- sets the ~/.m2/setting.xml profile -->
+                    <server>github</server>
+                    <outputDirectory>${project.build.directory}/site/javadoc</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>${gwtversion}</version>
+            <version>${gwt.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
-            <version>${gwtversion}</version>
+            <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
             <artifactId>gwtquery</artifactId>
+            <version>${gwtquery.version}</version>
             <scope>provided</scope>
-            <version>${gQueryVersion}</version>
         </dependency>
     </dependencies>
-    <build>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.8</version>
-            </extension>
-        </extensions>
-    </build>
-
-    <distributionManagement>
-        <repository>
-          <uniqueVersion>false</uniqueVersion>
-          <id>googlecode</id>
-          <url>svn:https://gwtquery-plugins.googlecode.com/svn/mavenrepo/</url>
-        </repository>
-        <snapshotRepository>
-          <uniqueVersion>false</uniqueVersion>
-          <id>localfolder</id>
-          <url>file:mavenrepo</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-  <modules>
-    <module>plugin</module>
-    <module>sample</module>
-  </modules>
 </project>
