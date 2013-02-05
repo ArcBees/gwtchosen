@@ -123,7 +123,7 @@
                     <links>
                         <link>http://download.oracle.com/javase/6/docs/api/</link>
                         <link>http://google-web-toolkit.googlecode.com/svn/javadoc/latest/</link>
-                        <link>http://gwtquery.googlecode.com/svn/trunk/gwtquery-core/javadoc/index.html</link>
+                        <link>http://gwtquery.googlecode.com/svn/trunk/gwtquery-core/javadoc/</link>
                     </links>
                     <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
                     <reportOutputDirectory>${project.reporting.outputDirectory}/javadoc</reportOutputDirectory>
