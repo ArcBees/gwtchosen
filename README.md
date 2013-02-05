@@ -12,6 +12,40 @@ he initial chosen javascript plugin was built by [Harvest](http://www.getharvest
 
 * The GWT port of Chosen was built by [Julien Dramaix](https://plus.google.com/u/0/103916508880440628637)
 
+##Maven Configuration
+Find the the available jars in [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix).
+
+* Release
+```
+<dependency>
+    <groupId>com.github.jdramaix</groupId>
+    <artifactId>gwtchosen</artifactId>
+    <version>1.1.0-alpha-2</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+* Snapshot
+```
+<repositories>
+    <repository>
+        <id>sonatype.snapshots</id>
+        <name>Sonatype snapshot repository</name>
+        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        <layout>default</layout>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.jdramaix</groupId>
+    <artifactId>gwtchosen</artifactId>
+    <version>1.1.0-alpha-3-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+
+
 ##Contributor
 
 ##IDE Setup
