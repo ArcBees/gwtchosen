@@ -1,99 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.watopi</groupId>
+        <groupId>com.github.jdramaix</groupId>
         <artifactId>gwtchosen-project</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
 
-    <name>Chosen plugin for gQuery</name>
     <artifactId>gwtchosen</artifactId>
     <packaging>jar</packaging>
-
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwtversion}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwtversion}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.gwtquery</groupId>
-            <artifactId>gwtquery</artifactId>
-            <scope>provided</scope>
-            <version>${gQueryVersion}</version>
-        </dependency>
-    </dependencies>
+    <name>Chosen plugin for gQuery</name>
 
     <build>
-        <plugins>
-            <plugin>
-               <artifactId>maven-surefire-plugin</artifactId>
-               <configuration>
-                 <additionalClasspathElements>
-                   <additionalClasspathElement>\${project.build.sourceDirectory}</additionalClasspathElement>
-                   <additionalClasspathElement>\${project.build.testSourceDirectory}</additionalClasspathElement>
-                 </additionalClasspathElements>
-                 <useManifestOnlyJar>false</useManifestOnlyJar>
-                 <forkMode>always</forkMode>
-
-                 <!-- Folder for generated testing stuff -->
-                 <systemProperties>
-                   <property>
-                     <name>gwt.args</name>
-                     <value>-out target/www</value>
-                   </property>
-                 </systemProperties>
-               </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.riedelcastro</groupId>
-                <artifactId>gcupload-maven-plugin</artifactId>
-                <version>0.9</version>
-                <executions>
-                  <execution>
-                    <phase>deploy</phase>
-                    <goals>
-                      <goal>gcupload</goal>
-                    </goals>
-                  </execution>
-                </executions>
-                <configuration>
-                  <allowSnapshots>true</allowSnapshots>
-                  <projectName>gwtquery-plugins</projectName>
-                  <uploads>
-                    <upload>
-                      <extensions>jar</extensions>
-                      <labels>Featured</labels>
-                    </upload>
-                  </uploads>
-                </configuration>
-            </plugin>
-            <plugin>
-              <artifactId>maven-clean-plugin</artifactId>
-              <configuration>
-                <filesets>
-                  <fileset><directory>tomcat</directory></fileset>
-                  <fileset><directory>www-test</directory></fileset>
-                  <fileset><directory>.gwt-tmp</directory></fileset>
-                </filesets>
-              </configuration>
-            </plugin>
-        </plugins>
         <resources>
             <resource>
                 <directory>${basedir}/src/main/java</directory>
@@ -102,5 +22,96 @@
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
         </resources>
-   </build>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>\${project.build.sourceDirectory}</additionalClasspathElement>
+                        <additionalClasspathElement>\${project.build.testSourceDirectory}</additionalClasspathElement>
+                    </additionalClasspathElements>
+                    <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <forkMode>always</forkMode>
+
+                    <!-- Folder for generated testing stuff -->
+                    <systemProperties>
+                        <property>
+                            <name>gwt.args</name>
+                            <value>-out target/www</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.riedelcastro</groupId>
+                <artifactId>gcupload-maven-plugin</artifactId>
+                <version>0.9</version>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>gcupload</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <allowSnapshots>true</allowSnapshots>
+                    <projectName>gwtquery-plugins</projectName>
+                    <uploads>
+                        <upload>
+                            <extensions>jar</extensions>
+                            <labels>Featured</labels>
+                        </upload>
+                    </uploads>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>tomcat</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>www-test</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>.gwt-tmp</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.gwtquery</groupId>
+            <artifactId>gwtquery</artifactId>
+            <version>${gwtquery.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
 </project>
