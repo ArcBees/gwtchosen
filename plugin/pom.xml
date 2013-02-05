@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.github.jdramaix</groupId>
         <artifactId>gwtchosen-project</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.0-alpha-2-SNAPSHOT</version>
     </parent>
 
     <artifactId>gwtchosen</artifactId>
     <packaging>jar</packaging>
     <name>Chosen plugin for gQuery</name>
-    <description>Chosen is a javascript plugin (for jQuery and Prototype).</description>
+    <description>GwtChosen is the GWT port of the Chosen javascript plugin that makes long, unwieldy select boxes much more user-friendly.</description>
 
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
@@ -20,7 +19,7 @@
 
     <build>
         <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
-        
+
         <resources>
             <resource>
                 <directory>${basedir}/src/main/java</directory>
@@ -31,7 +30,23 @@
         </resources>
 
         <plugins>
-           <plugin>
+            <!-- JUnit Testing - skip *.GwtTest cases -->
+            <!-- 'mvn test' - runs the Jukito tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/*GwtTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt.version}</version>
@@ -47,10 +62,10 @@
                     <logLevel>${gwt.loglevel}</logLevel>
                     <style>${gwt.outputstyle}</style>
 
-                    <compileSourcesArtifacts>
-                        <compileSourcesArtifact>com.watopi.chosen:Chosen</compileSourcesArtifact>
-                    </compileSourcesArtifacts>
+                    <module>com.watopi.chosen.Chosen</module>
+  
                 </configuration>
+                
                 <executions>
                     <execution>
                         <goals>

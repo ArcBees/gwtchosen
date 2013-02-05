@@ -1,4 +1,4 @@
-package com.watop.chosen.client;
+package com.watopi.chosen.client;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
