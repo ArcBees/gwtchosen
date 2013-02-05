@@ -24,6 +24,5 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.watopi.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
 
 public interface HasHidingDropDownHandlers extends HasHandlers {
-
-  HandlerRegistration addHidingDropDownHandler(HidingDropDownHandler handler);
+    HandlerRegistration addHidingDropDownHandler(HidingDropDownHandler handler);
 }

@@ -19,32 +19,30 @@
 package com.watopi.chosen.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
-
 import com.watopi.chosen.client.ChosenImpl;
 
 public class MaxSelectedEvent extends ChosenEvent<MaxSelectedEvent.MaxSelectedHandler> {
+    public interface MaxSelectedHandler extends EventHandler {
+        void onMaxSelected(MaxSelectedEvent event);
+    }
 
-  public interface MaxSelectedHandler extends EventHandler {
-    void onMaxSelected(MaxSelectedEvent event);
-  }
+    public static Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
 
-  public static Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
+    public static Type<MaxSelectedHandler> getType() {
+        return TYPE;
+    }
 
-  public static Type<MaxSelectedHandler> getType() {
-    return TYPE;
-  }
+    public MaxSelectedEvent(ChosenImpl chosen) {
+        super(chosen);
+    }
 
-  public MaxSelectedEvent(ChosenImpl chosen) {
-    super(chosen);
-  }
+    @Override
+    public Type<MaxSelectedHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  @Override
-  public Type<MaxSelectedHandler> getAssociatedType() {
-    return TYPE;
-  }
-
-  @Override
-  protected void dispatch(MaxSelectedHandler handler) {
-    handler.onMaxSelected(this);
-  }
+    @Override
+    protected void dispatch(MaxSelectedHandler handler) {
+        handler.onMaxSelected(this);
+    }
 }

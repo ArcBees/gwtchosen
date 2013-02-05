@@ -19,49 +19,49 @@
 package com.watopi.chosen.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
-
 import com.watopi.chosen.client.ChosenImpl;
 
 public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChangeHandler> {
 
-  public interface ChosenChangeHandler extends EventHandler {
-    void onChange(ChosenChangeEvent event);
-  }
-  public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
-  public static Type<ChosenChangeHandler> getType() {
-    return TYPE;
-  }
+    public interface ChosenChangeHandler extends EventHandler {
+        void onChange(ChosenChangeEvent event);
+    }
 
-  private boolean selection;
+    public static Type<ChosenChangeHandler> getType() {
+        return TYPE;
+    }
 
-  private String value;
+    public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
 
-  public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
-    super(chosen);
-    this.value = value;
-    this.selection = selected;
-  }
+    private boolean selection;
+    private String value;
 
-  public ChosenChangeEvent(String value, ChosenImpl chosen) {
-    this(value, true, chosen);
-  }
+    public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
+        super(chosen);
+        this.value = value;
+        this.selection = selected;
+    }
 
-  @Override
-  public Type<ChosenChangeHandler> getAssociatedType() {
-    return TYPE;
-  }
+    public ChosenChangeEvent(String value, ChosenImpl chosen) {
+        this(value, true, chosen);
+    }
 
-  public String getValue() {
-    return value;
-  }
+    @Override
+    public Type<ChosenChangeHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  public boolean isSelection() {
-    return selection;
-  }
+    public String getValue() {
+        return value;
+    }
 
-  @Override
-  protected void dispatch(ChosenChangeHandler handler) {
-    handler.onChange(this);
-  }
+    public boolean isSelection() {
+        return selection;
+    }
+
+    @Override
+    protected void dispatch(ChosenChangeHandler handler) {
+        handler.onChange(this);
+    }
 
 }

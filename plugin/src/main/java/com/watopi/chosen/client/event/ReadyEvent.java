@@ -19,33 +19,31 @@
 package com.watopi.chosen.client.event;
 
 import com.google.gwt.event.shared.EventHandler;
-
 import com.watopi.chosen.client.ChosenImpl;
 
 public class ReadyEvent extends ChosenEvent<ReadyEvent.ReadyHandler> {
+    public interface ReadyHandler extends EventHandler {
+        void onReady(ReadyEvent event);
+    }
 
-  public interface ReadyHandler extends EventHandler {
-    void onReady(ReadyEvent event);
-  }
+    public static Type<ReadyHandler> TYPE = new Type<ReadyHandler>();
 
-  public static Type<ReadyHandler> TYPE = new Type<ReadyHandler>();
+    public static Type<ReadyHandler> getType() {
+        return TYPE;
+    }
 
-  public static Type<ReadyHandler> getType() {
-    return TYPE;
-  }
+    public ReadyEvent(ChosenImpl chosen) {
+        super(chosen);
+    }
 
-  public ReadyEvent(ChosenImpl chosen) {
-    super(chosen);
-  }
+    @Override
+    public Type<ReadyHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-  @Override
-  public Type<ReadyHandler> getAssociatedType() {
-    return TYPE;
-  }
-
-  @Override
-  protected void dispatch(ReadyHandler handler) {
-    handler.onReady(this);
-  }
+    @Override
+    protected void dispatch(ReadyHandler handler) {
+        handler.onReady(this);
+    }
 
 }

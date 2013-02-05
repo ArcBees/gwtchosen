@@ -52,207 +52,328 @@ import static com.google.gwt.query.client.GQuery.$;
 import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
 import static com.watopi.chosen.client.Chosen.Chosen;
 
-public class ChosenListBox extends ListBox implements HasAllChosenHandlers{
+public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
-	/**
-	 * Indicates of the ChosenListBox is supported by the current browser. If
-	 * not (IE6/7), we fall back on normal select element.
-	 * 
-	 * @return
-	 */
-	public static boolean isSupported() {
-		return com.watopi.chosen.client.Chosen.isSupported();
-	}
+    /**
+     * Indicates of the ChosenListBox is supported by the current browser. If
+     * not (IE6/7), we fall back on normal select element.
+     *
+     * @return
+     */
+    public static boolean isSupported() {
+        return com.watopi.chosen.client.Chosen.isSupported();
+    }
 
-	/**
-	 * Creates a ChosenListBox widget that wraps an existing &lt;select&gt;
-	 * element.
-	 * 
-	 * This element must already be attached to the document. If the element is
-	 * removed from the document, you must call
-	 * {@link RootPanel#detachNow(Widget)}.
-	 * 
-	 * @param element
-	 *            the element to be wrapped
-	 * @return list box
-	 */
-	public static ChosenListBox wrap(Element element) {
-		assert Document.get().getBody().isOrHasChild(element);
+    /**
+     * Creates a ChosenListBox widget that wraps an existing &lt;select&gt;
+     * element.
+     * <p/>
+     * This element must already be attached to the document. If the element is
+     * removed from the document, you must call
+     * {@link RootPanel#detachNow(Widget)}.
+     *
+     * @param element the element to be wrapped
+     * @return list box
+     */
+    public static ChosenListBox wrap(Element element) {
+        assert Document.get().getBody().isOrHasChild(element);
 
-		ChosenListBox listBox = new ChosenListBox(element);
+        ChosenListBox listBox = new ChosenListBox(element);
 
-		listBox.onAttach();
-		RootPanel.detachOnWindowClose(listBox);
+        listBox.onAttach();
+        RootPanel.detachOnWindowClose(listBox);
 
-		return listBox;
-	}
+        return listBox;
+    }
+    private EventBus chznHandlerManager;
+    private ChosenOptions options;
+    private boolean visible = true;
 
-	private EventBus chznHandlerManager;
+    /**
+     * Creates an empty chosen component in single selection mode.
+     */
+    public ChosenListBox() {
+        this(false);
+    }
 
-	private ChosenOptions options;
-	
-	private boolean visible = true;
+    /**
+     * Creates an empty chosen component in single selection mode.
+     */
+    public ChosenListBox(ChosenOptions options) {
+        this(false, options);
+    }
 
-	/**
-	 * Creates an empty chosen component in single selection mode.
-	 */
-	public ChosenListBox() {
-		this(false);
-	}
+    /**
+     * Creates an empty list box. The preferred way to enable multiple
+     * selections is to use this constructor rather than
+     * {@link #setMultipleSelect(boolean)}.
+     *
+     * @param isMultipleSelect specifies if multiple selection is enabled
+     */
+    public ChosenListBox(boolean isMultipleSelect) {
+        this(isMultipleSelect, new ChosenOptions());
+    }
 
-	/**
-	 * Creates an empty chosen component in single selection mode.
-	 */
-	public ChosenListBox(ChosenOptions options) {
-		this(false,options);
-	}
+    /**
+     * Creates an empty list box. The preferred way to enable multiple
+     * selections is to use this constructor rather than
+     * {@link #setMultipleSelect(boolean)}.
+     *
+     * @param isMultipleSelect specifies if multiple selection is enabled
+     */
+    public ChosenListBox(boolean isMultipleSelect, ChosenOptions options) {
+        super(Document.get().createSelectElement(isMultipleSelect));
+        this.options = options;
+    }
 
-	
-	/**
-	 * Creates an empty list box. The preferred way to enable multiple
-	 * selections is to use this constructor rather than
-	 * {@link #setMultipleSelect(boolean)}.
-	 * 
-	 * @param isMultipleSelect
-	 *            specifies if multiple selection is enabled
-	 */
-	public ChosenListBox(boolean isMultipleSelect) {
-		this(isMultipleSelect, new ChosenOptions());
-	}
+    protected ChosenListBox(Element element) {
+        super(element);
+    }
 
-	/**
-	 * Creates an empty list box. The preferred way to enable multiple
-	 * selections is to use this constructor rather than
-	 * {@link #setMultipleSelect(boolean)}.
-	 * 
-	 * @param isMultipleSelect
-	 *            specifies if multiple selection is enabled
-	 */
-	public ChosenListBox(boolean isMultipleSelect, ChosenOptions options) {
-		super(Document.get().createSelectElement(isMultipleSelect));
-		this.options = options;
-	}
+    /**
+     * Deprecated, use {@link #addChosenChangeHandler(ChosenChangeHandler)}
+     * instead
+     */
+    @Override
+    @Deprecated
+    public com.google.gwt.event.shared.HandlerRegistration addChangeHandler(
+            final com.google.gwt.event.dom.client.ChangeHandler handler) {
+        final HandlerRegistration registration = addChosenChangeHandler(new ChosenChangeHandler() {
+            public void onChange(ChosenChangeEvent event) {
+                handler.onChange(null);
+            }
+        });
 
-	protected ChosenListBox(Element element) {
-		super(element);
-	}
+        return new com.google.gwt.event.shared.HandlerRegistration() {
+            public void removeHandler() {
+                registration.removeHandler();
+            }
+        };
+    }
 
-	/**
-	 * Deprecated, use {@link #addChosenChangeHandler(ChosenChangeHandler)}
-	 * instead
-	 */
-	@Override
-	@Deprecated
-	public com.google.gwt.event.shared.HandlerRegistration addChangeHandler(
-			final com.google.gwt.event.dom.client.ChangeHandler handler) {
-		final HandlerRegistration registration = addChosenChangeHandler(new ChosenChangeHandler() {
-			public void onChange(ChosenChangeEvent event) {
-				handler.onChange(null);
-			}
-		});
+    public HandlerRegistration addChosenChangeHandler(
+            ChosenChangeHandler handler) {
+        return ensureChosenHandlers().addHandler(ChosenChangeEvent.getType(),
+                handler);
+    }
 
-		return new com.google.gwt.event.shared.HandlerRegistration() {
-			public void removeHandler() {
-				registration.removeHandler();
-			}
-		};
-	}
+    /**
+     * Adds a group at the end of the list box.
+     *
+     * @param group the text of the group to be added
+     */
+    public void addGroup(String group) {
+        insertGroup(group, -1);
+    }
 
-	public HandlerRegistration addChosenChangeHandler(
-			ChosenChangeHandler handler) {
-		return ensureChosenHandlers().addHandler(ChosenChangeEvent.getType(),
-				handler);
-	}
+    public HandlerRegistration addHidingDropDownHandler(
+            HidingDropDownHandler handler) {
+        return ensureChosenHandlers().addHandler(HidingDropDownEvent.getType(),
+                handler);
+    }
 
-	protected final <H extends EventHandler> HandlerRegistration addChosenHandler(
-			H handler, Type<H> type) {
-		return ensureChosenHandlers().addHandler(type, handler);
-	}
+    /**
+     * Adds an item to the last optgroup of the list box.
+     *
+     * @param item the text of the item to be added
+     */
+    public void addItemToGroup(String item) {
+        insertItemToGroup(item, -1, -1);
+    }
 
-	/**
-	 * Adds a group at the end of the list box.
-	 * 
-	 * @param group
-	 *            the text of the group to be added
-	 */
-	public void addGroup(String group) {
-		insertGroup(group, -1);
-	}
+    /**
+     * Adds an item to the an optgroup of the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void addItemToGroup(String item, int groupIndex) {
+        insertItemToGroup(item, groupIndex, -1);
+    }
 
-	public HandlerRegistration addHidingDropDownHandler(
-			HidingDropDownHandler handler) {
-		return ensureChosenHandlers().addHandler(HidingDropDownEvent.getType(),
-				handler);
-	}
+    /**
+     * Adds an item to the last optgroup of the list box.
+     *
+     * @param item the text of the item to be added
+     */
+    public void addItemToGroup(String item, String value) {
+        insertItemToGroup(item, value, -1, -1);
+    }
 
-	/**
-	 * Adds an item to the last optgroup of the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 */
-	public void addItemToGroup(String item) {
-		insertItemToGroup(item, -1, -1);
-	}
+    /**
+     * Adds an item to the an optgroup of the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void addItemToGroup(String item, String value, int groupIndex) {
+        insertItemToGroup(item, value, groupIndex, -1);
+    }
 
-	/**
-	 * Adds an item to the an optgroup of the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 * @param groupIndex
-	 *            the index of the optGroup where the item will be inserted
-	 */
-	public void addItemToGroup(String item, int groupIndex) {
-		insertItemToGroup(item, groupIndex, -1);
-	}
+    public HandlerRegistration addMaxSelectedHandler(MaxSelectedHandler handler) {
+        return ensureChosenHandlers().addHandler(MaxSelectedEvent.getType(),
+                handler);
+    }
 
-	/**
-	 * Adds an item to the last optgroup of the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 */
-	public void addItemToGroup(String item, String value) {
-		insertItemToGroup(item, value, -1, -1);
-	}
+    public HandlerRegistration addReadyHandler(ReadyHandler handler) {
+        return ensureChosenHandlers().addHandler(ReadyEvent.getType(), handler);
+    }
 
-	/**
-	 * Adds an item to the an optgroup of the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 * @param groupIndex
-	 *            the index of the optGroup where the item will be inserted
-	 */
-	public void addItemToGroup(String item, String value, int groupIndex) {
-		insertItemToGroup(item, value, groupIndex, -1);
-	}
+    public HandlerRegistration addShowingDropDownHandler(
+            ShowingDropDownHandler handler) {
+        return ensureChosenHandlers().addHandler(
+                ShowingDropDownEvent.getType(), handler);
+    }
 
-	public HandlerRegistration addMaxSelectedHandler(MaxSelectedHandler handler) {
-		return ensureChosenHandlers().addHandler(MaxSelectedEvent.getType(),
-				handler);
-	}
+    public HandlerRegistration addUpdatedHandler(UpdatedHandler handler) {
+        return ensureChosenHandlers().addHandler(
+                UpdatedEvent.getType(), handler);
+    }
 
-	public HandlerRegistration addReadyHandler(ReadyHandler handler) {
-		return ensureChosenHandlers().addHandler(ReadyEvent.getType(), handler);
-	}
+    public void forceRedraw() {
+        $(getElement()).as(Chosen).destroy()
+                .chosen(options, ensureChosenHandlers());
+    }
 
-	public HandlerRegistration addShowingDropDownHandler(
-			ShowingDropDownHandler handler) {
-		return ensureChosenHandlers().addHandler(
-				ShowingDropDownEvent.getType(), handler);
-	}
-	
-	public HandlerRegistration addUpdatedHandler(UpdatedHandler handler) {
-		return ensureChosenHandlers().addHandler(
-				UpdatedEvent.getType(), handler);
-	}
+    public int getDisableSearchThreshold() {
+        return options.getDisableSearchThreshold();
+    }
 
-	protected EventBus ensureChosenHandlers() {
-		return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
-				: chznHandlerManager;
-	}
+    public int getMaxSelectedOptions() {
+        return options.getMaxSelectedOptions();
+    }
+
+    public String getNoResultsText() {
+        return options.getNoResultsText();
+    }
+
+    public String getPlaceholderText() {
+        return options.getPlaceholderText();
+    }
+
+    public String getPlaceholderTextMultiple() {
+        return options.getPlaceholderTextMultiple();
+    }
+
+    public String getPlaceholderTextSingle() {
+        return options.getPlaceholderTextSingle();
+    }
+
+    /**
+     * Insert a group to the list box.
+     *
+     * @param group the text of the group to be added
+     * @param index the index at which to insert it
+     */
+    public void insertGroup(String group, int index) {
+        GQuery optGroup = $("<optgroup></optgroup>").attr("label", group);
+        GQuery select = $(getElement());
+
+        int itemCount = SelectElement.as(getElement()).getLength();
+
+        if (index < 0 || index > itemCount) {
+            select.append(optGroup);
+        } else {
+            GQuery before = select.children().eq(index);
+            before.before(optGroup);
+        }
+    }
+
+    /**
+     * Adds an item to the an optgroup of the list box. If no optgroup exists,
+     * the item will be add at the end ot the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param value      the value of the item to be added
+     * @param itemIndex  the index inside the optgroup at which to insert the item
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void insertItemToGroup(String item, Direction dir, String value,
+            int groupIndex, int itemIndex) {
+
+        GQuery select = $(getElement());
+        GQuery optgroupList = select.children("optgroup");
+
+        int groupCount = optgroupList.size();
+
+        if (groupCount == 0) {
+            // simply insert the item to the listbox
+            insertItem(item, dir, value, itemIndex);
+            return;
+        }
+
+        if (groupIndex < 0 || groupIndex > groupCount - 1) {
+            groupIndex = groupCount - 1;
+        }
+
+        GQuery optgroup = optgroupList.eq(groupIndex);
+
+        OptionElement option = Document.get().createOptionElement();
+        setOptionText(option, item, dir);
+        option.setValue(value);
+
+        int itemCount = optgroup.children().size();
+
+        if (itemIndex < 0 || itemIndex > itemCount - 1) {
+            optgroup.append(option);
+        } else {
+            GQuery before = optgroup.children().eq(itemIndex);
+            before.before(option);
+        }
+
+    }
+
+    /**
+     * Adds an item to the an optgroup of the list box. If no optgroup exists,
+     * the item will be add at the end ot the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param itemIndex  the index inside the optgroup at which to insert the item
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+
+    public void insertItemToGroup(String item, int groupIndex, int itemIndex) {
+        insertItemToGroup(item, null, item, groupIndex, itemIndex);
+
+    }
+
+    /**
+     * Adds an item to the an optgroup of the list box. If no optgroup exists,
+     * the item will be add at the end ot the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param value      the value of the item to be added
+     * @param itemIndex  the index inside the optgroup at which to insert the item
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void insertItemToGroup(String item, String value, int groupIndex,
+            int itemIndex) {
+        insertItemToGroup(item, null, value, groupIndex, itemIndex);
+
+    }
+
+    /**
+     * Specify if the deselection is allowed on single selects.
+     */
+    public boolean isAllowSingleDeselect() {
+        return options.isAllowSingleDeselect();
+    }
+
+    public boolean isSearchContains() {
+        return options.isSearchContains();
+    }
+
+    public boolean isSingleBackstrokeDelete() {
+        return options.isSingleBackstrokeDelete();
+    }
+
+    public void setAllowSingleDeselect(boolean allowSingleDeselect) {
+        options.setAllowSingleDeselect(allowSingleDeselect);
+    }
+
+    public void setDisableSearchThreshold(int disableSearchThreshold) {
+        options.setDisableSearchThreshold(disableSearchThreshold);
+    }
 
     @Override
     public void setFocus(boolean focused) {
@@ -260,263 +381,112 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers{
         if (focused) {
             focusElement.focus();
         } else {
-           focusElement.blur();
+            focusElement.blur();
         }
     }
 
-    public void forceRedraw() {
-		$(getElement()).as(Chosen).destroy()
-				.chosen(options, ensureChosenHandlers());
-	}
+    public void setMaxSelectedOptions(int maxSelectedOptions) {
+        options.setMaxSelectedOptions(maxSelectedOptions);
+    }
 
-	protected GQuery getChosenElement() {
-		ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY,
-				ChosenImpl.class);
-		if (impl != null) {
-			return impl.getContainer();
-		}
-		return $();
-	}
+    public void setNoResultsText(String noResultsText) {
+        options.setNoResultsText(noResultsText);
+    }
 
-	protected EventBus getChosenHandlerManager() {
-		return chznHandlerManager;
-	}
+    public void setPlaceholderText(String placeholderText) {
+        options.setPlaceholderText(placeholderText);
+    }
 
-	public int getDisableSearchThreshold() {
-		return options.getDisableSearchThreshold();
-	}
+    public void setPlaceholderTextMultiple(String placeholderTextMultiple) {
+        options.setPlaceholderTextMultiple(placeholderTextMultiple);
+    }
 
-	public int getMaxSelectedOptions() {
-		return options.getMaxSelectedOptions();
-	}
+    public void setPlaceholderTextSingle(String placeholderTextSingle) {
+        options.setPlaceholderTextSingle(placeholderTextSingle);
+    }
 
-	public String getNoResultsText() {
-		return options.getNoResultsText();
-	}
+    public void setSearchContains(boolean searchContains) {
+        options.setSearchContains(searchContains);
+    }
 
-	public String getPlaceholderText() {
-		return options.getPlaceholderText();
-	}
+    @Override
+    public void setSelectedIndex(int index) {
+        super.setSelectedIndex(index);
+        update();
+    }
 
-	public String getPlaceholderTextMultiple() {
-		return options.getPlaceholderTextMultiple();
-	}
+    public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
+        options.setSingleBackstrokeDelete(singleBackstrokeDelete);
+    }
 
-	public String getPlaceholderTextSingle() {
-		return options.getPlaceholderTextSingle();
-	}
+    @Override
+    public void setVisible(boolean visible) {
+        this.visible = visible;
 
-	/**
-	 * Insert a group to the list box.
-	 * 
-	 * @param group
-	 *            the text of the group to be added
-	 * @param index
-	 *            the index at which to insert it
-	 */
-	public void insertGroup(String group, int index) {
-		GQuery optGroup = $("<optgroup></optgroup>").attr("label", group);
-		GQuery select = $(getElement());
+        if (isSupported()) {
+            GQuery chosenElement = getChosenElement();
+            if (visible) {
+                chosenElement.show();
+            } else {
+                chosenElement.hide();
+            }
+        } else {
+            super.setVisible(visible);
+        }
+    }
 
-		int itemCount = SelectElement.as(getElement()).getLength();
+    /**
+     * Use this method to update the chosen list box (i.e. after insertion or
+     * removal of options)
+     */
+    public void update() {
+        ensureChosenHandlers().fireEvent(new UpdatedEvent());
+    }
 
-		if (index < 0 || index > itemCount) {
-			select.append(optGroup);
-		} else {
-			GQuery before = select.children().eq(index);
-			before.before(optGroup);
-		}
-	}
+    protected final <H extends EventHandler> HandlerRegistration addChosenHandler(
+            H handler, Type<H> type) {
+        return ensureChosenHandlers().addHandler(type, handler);
+    }
 
-	/**
-	 * Adds an item to the an optgroup of the list box. If no optgroup exists,
-	 * the item will be add at the end ot the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 * @param value
-	 *            the value of the item to be added
-	 * @param itemIndex
-	 *            the index inside the optgroup at which to insert the item
-	 * @param groupIndex
-	 *            the index of the optGroup where the item will be inserted
-	 */
-	public void insertItemToGroup(String item, Direction dir, String value,
-			 int groupIndex, int itemIndex) {
+    protected EventBus ensureChosenHandlers() {
+        return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
+                : chznHandlerManager;
+    }
 
-		GQuery select = $(getElement());
-		GQuery optgroupList = select.children("optgroup");
+    protected GQuery getChosenElement() {
+        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY,
+                ChosenImpl.class);
+        if (impl != null) {
+            return impl.getContainer();
+        }
+        return $();
+    }
 
-		int groupCount = optgroupList.size();
+    protected EventBus getChosenHandlerManager() {
+        return chznHandlerManager;
+    }
 
-		if (groupCount == 0) {
-			// simply insert the item to the listbox
-			insertItem(item, dir, value, itemIndex);
-			return;
-		}
+    @Override
+    protected void onLoad() {
+        super.onLoad();
+        $(getElement()).as(Chosen).chosen(options, ensureChosenHandlers());
+        setVisible(visible);
+    }
 
-		if (groupIndex < 0 || groupIndex > groupCount - 1) {
-			groupIndex = groupCount - 1;
-		}
+    @Override
+    protected void onUnload() {
+        super.onUnload();
+        $(getElement()).as(Chosen).destroy();
+    }
 
-		GQuery optgroup = optgroupList.eq(groupIndex);
-
-		OptionElement option = Document.get().createOptionElement();
-		setOptionText(option, item, dir);
-		option.setValue(value);
-
-		int itemCount = optgroup.children().size();
-
-		if (itemIndex < 0 || itemIndex > itemCount - 1) {
-			optgroup.append(option);
-		} else {
-			GQuery before = optgroup.children().eq(itemIndex);
-			before.before(option);
-		}
-
-	}
-
-	/**
-	 * Adds an item to the an optgroup of the list box. If no optgroup exists,
-	 * the item will be add at the end ot the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 * @param itemIndex
-	 *            the index inside the optgroup at which to insert the item
-	 * @param groupIndex
-	 *            the index of the optGroup where the item will be inserted
-	 */
-
-	public void insertItemToGroup(String item, int groupIndex, int itemIndex) {
-		insertItemToGroup(item, null, item, groupIndex, itemIndex);
-
-	}
-
-	/**
-	 * Adds an item to the an optgroup of the list box. If no optgroup exists,
-	 * the item will be add at the end ot the list box.
-	 * 
-	 * @param item
-	 *            the text of the item to be added
-	 * @param value
-	 *            the value of the item to be added
-	 * @param itemIndex
-	 *            the index inside the optgroup at which to insert the item
-	 * @param groupIndex
-	 *            the index of the optGroup where the item will be inserted
-	 */
-	public void insertItemToGroup(String item, String value, int groupIndex,
-			int itemIndex) {
-		insertItemToGroup(item, null, value, groupIndex, itemIndex);
-
-	}
-
-	/**
-	 * Specify if the deselection is allowed on single selects.
-	 * 
-	 */
-	public boolean isAllowSingleDeselect() {
-		return options.isAllowSingleDeselect();
-	}
-
-	public boolean isSearchContains() {
-		return options.isSearchContains();
-	}
-
-	public boolean isSingleBackstrokeDelete() {
-		return options.isSingleBackstrokeDelete();
-	}
-
-	@Override
-	protected void onLoad() {
-		super.onLoad();
-		$(getElement()).as(Chosen).chosen(options, ensureChosenHandlers());
-		setVisible(visible);
-	}
-
-	@Override
-	protected void onUnload() {
-		super.onUnload();
-		$(getElement()).as(Chosen).destroy();
-	}
-
-	public void setAllowSingleDeselect(boolean allowSingleDeselect) {
-		options.setAllowSingleDeselect(allowSingleDeselect);
-	}
-
-	public void setDisableSearchThreshold(int disableSearchThreshold) {
-		options.setDisableSearchThreshold(disableSearchThreshold);
-	}
-
-	public void setMaxSelectedOptions(int maxSelectedOptions) {
-		options.setMaxSelectedOptions(maxSelectedOptions);
-	}
-
-	public void setNoResultsText(String noResultsText) {
-		options.setNoResultsText(noResultsText);
-	}
-
-	public void setPlaceholderText(String placeholderText) {
-		options.setPlaceholderText(placeholderText);
-	}
-
-	public void setPlaceholderTextMultiple(String placeholderTextMultiple) {
-		options.setPlaceholderTextMultiple(placeholderTextMultiple);
-	}
-
-	public void setPlaceholderTextSingle(String placeholderTextSingle) {
-		options.setPlaceholderTextSingle(placeholderTextSingle);
-	}
-
-	public void setSearchContains(boolean searchContains) {
-		options.setSearchContains(searchContains);
-	}
-
-	@Override
-	public void setSelectedIndex(int index) {
-		super.setSelectedIndex(index);
-		update();
-	}
-
-	public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
-		options.setSingleBackstrokeDelete(singleBackstrokeDelete);
-	}
-
-	@Override
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-		
-		if (isSupported()) {
-			GQuery chosenElement = getChosenElement();
-			if (visible) {
-				chosenElement.show();
-			} else {
-				chosenElement.hide();
-			}
-		} else {
-			super.setVisible(visible);
-		}
-	}
-
-	/**
-	 * Use this method to update the chosen list box (i.e. after insertion or
-	 * removal of options)
-	 */
-	public void update() {
-		ensureChosenHandlers().fireEvent(new UpdatedEvent());
-	}
-
-    private GQuery getFocusableElement(){
+    private GQuery getFocusableElement() {
         GQuery chosen = getChosenElement();
         GQuery focusableElement = chosen.children("a");
-        if (focusableElement.isEmpty()){
-            focusableElement =  chosen.find("input");
+        if (focusableElement.isEmpty()) {
+            focusableElement = chosen.find("input");
         }
 
         return focusableElement;
     }
-
-
 
 }
