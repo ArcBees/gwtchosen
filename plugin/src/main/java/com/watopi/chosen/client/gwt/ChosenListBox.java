@@ -18,10 +18,6 @@
  */
 package com.watopi.chosen.client.gwt;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
-import static com.watopi.chosen.client.Chosen.Chosen;
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.OptionElement;
@@ -40,6 +36,7 @@ import com.watopi.chosen.client.ChosenImpl;
 import com.watopi.chosen.client.ChosenOptions;
 import com.watopi.chosen.client.event.ChosenChangeEvent;
 import com.watopi.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
+import com.watopi.chosen.client.event.HasAllChosenHandlers;
 import com.watopi.chosen.client.event.HidingDropDownEvent;
 import com.watopi.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
 import com.watopi.chosen.client.event.MaxSelectedEvent;
@@ -49,8 +46,13 @@ import com.watopi.chosen.client.event.ReadyEvent.ReadyHandler;
 import com.watopi.chosen.client.event.ShowingDropDownEvent;
 import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
 import com.watopi.chosen.client.event.UpdatedEvent;
+import com.watopi.chosen.client.event.UpdatedEvent.UpdatedHandler;
 
-public class ChosenListBox extends ListBox {
+import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
+import static com.watopi.chosen.client.Chosen.Chosen;
+
+public class ChosenListBox extends ListBox implements HasAllChosenHandlers{
 
 	/**
 	 * Indicates of the ChosenListBox is supported by the current browser. If
@@ -245,13 +247,28 @@ public class ChosenListBox extends ListBox {
 		return ensureChosenHandlers().addHandler(
 				ShowingDropDownEvent.getType(), handler);
 	}
+	
+	public HandlerRegistration addUpdatedHandler(UpdatedHandler handler) {
+		return ensureChosenHandlers().addHandler(
+				UpdatedEvent.getType(), handler);
+	}
 
 	protected EventBus ensureChosenHandlers() {
 		return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
 				: chznHandlerManager;
 	}
 
-	public void forceRedraw() {
+    @Override
+    public void setFocus(boolean focused) {
+        GQuery focusElement = getFocusableElement();
+        if (focused) {
+            focusElement.focus();
+        } else {
+           focusElement.blur();
+        }
+    }
+
+    public void forceRedraw() {
 		$(getElement()).as(Chosen).destroy()
 				.chosen(options, ensureChosenHandlers());
 	}
@@ -508,6 +525,16 @@ public class ChosenListBox extends ListBox {
         if (isSupported()) {
             getChosenElement().find("span").text(text);
         }
+    }
+
+    private GQuery getFocusableElement(){
+        GQuery chosen = getChosenElement();
+        GQuery focusableElement = chosen.children("a");
+        if (focusableElement.isEmpty()){
+            focusableElement =  chosen.find("input");
+        }
+
+        return focusableElement;
     }
 
 }
