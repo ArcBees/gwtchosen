@@ -11,7 +11,7 @@
   background: #fff;
   border: 1px solid #aaa;
   border-top: 0;
-  position: absolute;
+  position: fixed;
   top: 29px;
   left: 0;
   -webkit-box-shadow: 0 4px 5px rgba(0,0,0,.15);
