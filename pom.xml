@@ -154,6 +154,31 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- TODO add the war directory to get pushed ot the gh-pages -->
+            <!-- run 'mvn ghSite:site -X' to debug -->
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${github.version}</version>
+                <configuration>
+                    <!-- <dryRun>true</dryRun> -->
+                    <outputDirectory>javadoc</outputDirectory>
+                    <path>${project.version}</path>
+                    <message>Creating site for ${project.version}</message>
+                    <!-- sets the ~/.m2/setting.xml profile -->
+                    <server>github</server>
+                    <outputDirectory>${project.build.directory}/site/javadoc</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
