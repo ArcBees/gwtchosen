@@ -12,6 +12,7 @@
     <artifactId>gwtchosen</artifactId>
     <packaging>jar</packaging>
     <name>Chosen plugin for gQuery</name>
+    <description>Chosen is a javascript plugin (for jQuery and Prototype).</description>
 
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
