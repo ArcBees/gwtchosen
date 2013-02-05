@@ -58,7 +58,7 @@
 
                     <runTarget>ChosenSample.html</runTarget>
                     <module>com.watopi.chosen.sample.ChosenSample</module>
-                    <module>com.watopi.chosen.sample.WidgetSample</module>
+                    <module>com.watopi.chosen.widgetsample.WidgetSample</module>
                 </configuration>
                 <executions>
                     <execution>
