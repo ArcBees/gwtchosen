@@ -145,13 +145,13 @@
                         </goals>
                         <phase>site</phase>
                     </execution>
-                    <execution>
+                    <!-- <execution>
                         <id>attach-javadocs2</id>
                         <phase>performRelease</phase>
                         <goals>
                             <goal>aggregate</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                 </executions>
             </plugin>
 
@@ -162,7 +162,7 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>${github.version}</version>
                 <configuration>
-                    <!-- <dryRun>true</dryRun> -->
+                    <dryRun>true</dryRun><!-- TODO turn off at some point -->
                     <outputDirectory>javadoc</outputDirectory>
                     <path>${project.version}</path>
                     <message>Creating site for ${project.version}</message>
