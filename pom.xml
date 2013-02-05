@@ -62,10 +62,9 @@
         <url>https://github.com/jDramaix/gwtchosen.git</url>
     </scm>
 
-    <!-- TODO -->
     <ciManagement>
-        <system>Team City 7.1.2</system>
-        <url>http://teamcity.gonevertical.org/viewType.html?buildTypeId=btTODO</url>
+        <system>Team City</system>
+        <url>http://teamcity.gonevertical.org/viewType.html?buildTypeId=bt11</url>
     </ciManagement>
 
     <properties>
