@@ -23,6 +23,8 @@ local.properties
 .classpath
 .settings/
 .loadpath
+www-test**
+war**
 
 #intellij
 *.iml
@@ -43,5 +45,3 @@ local.properties
 gwt-unitCache/
 webapp/Chosen
 webApp/UiBinderSample
-www-test**
-war**
