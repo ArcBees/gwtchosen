@@ -33,17 +33,20 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
 
     public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
 
-    private boolean selection;
-    private String value;
+    private final int index;
+    private final boolean selection;
+    private final String value;
 
-    public ChosenChangeEvent(String value, boolean selected, ChosenImpl chosen) {
-        super(chosen);
-        this.value = value;
-        this.selection = selected;
+    public ChosenChangeEvent(String value, int index, ChosenImpl chosen) {
+        this(value, index, true, chosen);
     }
 
-    public ChosenChangeEvent(String value, ChosenImpl chosen) {
-        this(value, true, chosen);
+    public ChosenChangeEvent(String value, int index, boolean selection, ChosenImpl chosen) {
+        super(chosen);
+
+        this.value = value;
+        this.index = index;
+        this.selection = selection;
     }
 
     @Override
@@ -53,6 +56,10 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
 
     public String getValue() {
         return value;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public boolean isSelection() {
