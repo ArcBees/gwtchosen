@@ -85,6 +85,9 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
         return listBox;
     }
+
+    private static String OPTGROUP_TAG = "optgroup";
+
     private EventBus chznHandlerManager;
     private ChosenOptions options;
     private boolean visible = true;
@@ -292,7 +295,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
             int groupIndex, int itemIndex) {
 
         GQuery select = $(getElement());
-        GQuery optgroupList = select.children("optgroup");
+        GQuery optgroupList = select.children(OPTGROUP_TAG);
 
         int groupCount = optgroupList.size();
 
@@ -365,6 +368,16 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     public boolean isSingleBackstrokeDelete() {
         return options.isSingleBackstrokeDelete();
+    }
+
+    public void removeGroup(int index){
+        $(OPTGROUP_TAG, getElement()).eq(index).remove();
+        update();
+    }
+
+    public void removeGroup(String label){
+        $(OPTGROUP_TAG + "[label='" + label + "']", getElement()).remove();
+        update();
     }
 
     public void setAllowSingleDeselect(boolean allowSingleDeselect) {
