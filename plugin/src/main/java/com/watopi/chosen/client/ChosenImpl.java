@@ -791,7 +791,7 @@ public class ChosenImpl {
         resultClearHighlight();
         winnowResults();
 
-        fireEvent(new ChosenChangeEvent(option.getValue(), false, this));
+        fireEvent(new ChosenChangeEvent(option.getValue(), index, false, this));
 
         searchFieldScale();
     }
@@ -862,7 +862,7 @@ public class ChosenImpl {
 
             if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())) {
                 String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
-                fireEvent(new ChosenChangeEvent(value, this));
+                fireEvent(new ChosenChangeEvent(value, position, this));
             }
 
             currentValue = $selectElement.val();
@@ -961,7 +961,7 @@ public class ChosenImpl {
         showSearchFieldDefault();
         resultsResetCleanup();
 
-        fireEvent(new ChosenChangeEvent(null, this));
+        fireEvent(new ChosenChangeEvent(null, 0, this));
         if (activeField) {
             resultsHide();
         }
