@@ -56,7 +56,7 @@ import static com.google.gwt.query.client.GQuery.$;
 import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
 import static com.watopi.chosen.client.Chosen.Chosen;
 
-public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
+public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     /**
      * Indicates of the ChosenListBox is supported by the current browser. If
@@ -518,6 +518,21 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
         options.setSingleBackstrokeDelete(singleBackstrokeDelete);
+    }
+
+    /**
+     * Select all options with value present in <code>values</code> array and update the component.
+     * @param values
+     */
+    public void setSelectedValue(String... values) {
+        for (String value : values){
+            Element element = $("option[value='" + value + "']", this).get(0);
+
+            if (element != null) {
+                OptionElement.as(element).setSelected(true);
+            }
+        }
+        update();
     }
 
     @Override
