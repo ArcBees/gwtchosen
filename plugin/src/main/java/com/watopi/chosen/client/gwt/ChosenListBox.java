@@ -18,13 +18,17 @@
  */
 package com.watopi.chosen.client.gwt;
 
+import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.LegacyHandlerWrapper;
 import com.google.gwt.i18n.client.HasDirection.Direction;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -52,7 +56,7 @@ import static com.google.gwt.query.client.GQuery.$;
 import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
 import static com.watopi.chosen.client.Chosen.Chosen;
 
-public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
+public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     /**
      * Indicates of the ChosenListBox is supported by the current browser. If
@@ -147,11 +151,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
             }
         });
 
-        return new com.google.gwt.event.shared.HandlerRegistration() {
-            public void removeHandler() {
-                registration.removeHandler();
-            }
-        };
+        return new LegacyHandlerWrapper(registration);
     }
 
     public HandlerRegistration addChosenChangeHandler(
@@ -163,10 +163,20 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     /**
      * Adds a group at the end of the list box.
      *
-     * @param group the text of the group to be added
+     * @param label the text of the group to be added
      */
-    public void addGroup(String group) {
-        insertGroup(group, -1);
+    public void addGroup(String label) {
+        insertGroup(label, -1);
+    }
+
+    /**
+     * Adds a group at the end of the list box.
+     *
+     * @param label the text of the group to be added
+     * @param groupId the id for the optgroup element
+     */
+    public void addGroup(String label, String groupId) {
+        insertGroup(label, groupId, -1);
     }
 
     public HandlerRegistration addHidingDropDownHandler(
@@ -233,6 +243,18 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
                 UpdatedEvent.getType(), handler);
     }
 
+    @Override
+    public void clear() {
+        clear(true);
+    }
+
+    public void clear(boolean update) {
+        super.clear();
+        if (update){
+            update();
+        }
+    }
+
     public void forceRedraw() {
         $(getElement()).as(Chosen).destroy()
                 .chosen(options, ensureChosenHandlers());
@@ -263,13 +285,65 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     /**
+     * Return the value of the first selected option if any. Returns false otherwise.
+     * In case of multiple ChosenListBox, please use {@link #getValues()} instead.
+     * @return
+     */
+    public String getValue(){
+        int selectedIndex = getSelectedIndex();
+
+        return selectedIndex != -1 ? getValue(selectedIndex) : null;
+    }
+
+    /**
+     * Return the values of all selected options in an array.
+     * Usefull to know which options are selected in case of multiple ChosenListBox
+     * @return
+     */
+    public String[] getValues() {
+        if (!isMultipleSelect()){
+            return new String[]{getValue()};
+        }
+
+        JsArrayString values = JsArrayString.createArray().cast();
+        NodeList<OptionElement> options = SelectElement.as(getElement()).getOptions();
+        for (int i = 0; i < options.getLength(); i++){
+            OptionElement option = options.getItem(i);
+            if (option.isSelected()){
+                values.push(option.getValue());
+            }
+        }
+
+        String[] result = new String[values.length()];
+        for (int i = 0; i < values.length(); i++){
+            result[i] = values.get(i);
+        }
+
+        return result;
+    }
+
+    /**
      * Insert a group to the list box.
      *
-     * @param group the text of the group to be added
+     * @param label the text of the group to be added
      * @param index the index at which to insert it
      */
-    public void insertGroup(String group, int index) {
-        GQuery optGroup = $("<optgroup></optgroup>").attr("label", group);
+    public void insertGroup(String label, int index) {
+        insertGroup(label, null, index);
+    }
+
+    /**
+     * Insert a group to the list box.
+     *
+     * @param label the text of the group to be added
+     * @param id the id of the optgroup element
+     * @param index the index at which to insert it
+     */
+    public void insertGroup(String label, String id, int index) {
+        GQuery optGroup = $("<optgroup></optgroup>").attr("label", label);
+        if (id != null){
+            optGroup.attr("id", id);
+        }
         GQuery select = $(getElement());
 
         int itemCount = SelectElement.as(getElement()).getLength();
@@ -375,7 +449,21 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
         update();
     }
 
-    public void removeGroup(String label){
+    /**
+     * Remove the optgroup (and the children options) by id.
+     * To set an id to an optgroup, use {@link #insertGroup(String, String, int)} or {@link #addGroup(String, String)}
+     * @param id
+     */
+    public void removeGroupById(String id){
+        $("#"+id, getElement()).remove();
+        update();
+    }
+
+    /**
+     * Remove all optgroup (and the children options) with a label matching <code>label</code> argument
+     * @param label
+     */
+    public void removeGroupByLabel(String label){
         $(OPTGROUP_TAG + "[label='" + label + "']", getElement()).remove();
         update();
     }
@@ -430,6 +518,21 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
         options.setSingleBackstrokeDelete(singleBackstrokeDelete);
+    }
+
+    /**
+     * Select all options with value present in <code>values</code> array and update the component.
+     * @param values
+     */
+    public void setSelectedValue(String... values) {
+        for (String value : values){
+            Element element = $("option[value='" + value + "']", this).get(0);
+
+            if (element != null) {
+                OptionElement.as(element).setSelected(true);
+            }
+        }
+        update();
     }
 
     @Override
