@@ -314,12 +314,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             }
         }
 
-        String[] result = new String[values.length()];
-        for (int i = 0; i < values.length(); i++){
-            result[i] = values.get(i);
-        }
-
-        return result;
+        return jsArrayToString(values);
     }
 
     /**
@@ -604,5 +599,9 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
         return focusableElement;
     }
+
+    private static native String[] jsArrayToString(JsArrayString array) /*-{
+        return array;
+    }-*/;
 
 }
