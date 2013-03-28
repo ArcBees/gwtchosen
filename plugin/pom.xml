@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.github.jdramaix</groupId>
         <artifactId>gwtchosen-project</artifactId>
-        <version>1.1.0-alpha-2-SNAPSHOT</version>
+        <version>1.1.0-alpha-3-SNAPSHOT</version>
     </parent>
 
     <artifactId>gwtchosen</artifactId>
