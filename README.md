@@ -8,7 +8,6 @@
 * [Widget Sample](http://jdramaix.github.com/gwtchosen/widgetsample/index.html)
 
 ##Stable version
-* [GwtChosen 1.1.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar)
 * [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix)
 
 ##Maven Configuration
@@ -42,6 +41,9 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
     <scope>provided</scope>
 </dependency>
 ```
+
+##Previous Versions
+* [GwtChosen 1.1.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar)
 
 #Contributor
 
