@@ -364,7 +364,7 @@ public class ChosenImpl {
     String choiceId = containerId + "_c_" + option.getArrayIndex();
     choices++;
     searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(),
-        option.getHtml(), css.searchChoiceClose(), "" + option.getArrayIndex()).asString());
+        option.getText(), css.searchChoiceClose(), "" + option.getArrayIndex()).asString());
     $('#' + choiceId).find("a").click(new Function() {
       public boolean f(final Event e) {
         choiceDestroyLinkClick(e);
@@ -1319,7 +1319,7 @@ public class ChosenImpl {
           boolean found = false;
           String resultId = option.getDomId();
           GQuery result = $("#" + resultId);
-          String optionContent = option.getHtml();
+          String optionContent = option.getText();
 
           if (regex.test(optionContent)) {
             found = true;
