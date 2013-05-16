@@ -249,7 +249,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     public void clear(boolean update) {
-        super.clear();
+        $(getElement()).html("");
         if (update){
             update();
         }
@@ -314,7 +314,12 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             }
         }
 
-        return jsArrayToString(values);
+        String[] result = new String[values.length()];
+        for (int i = 0; i < values.length(); i++){
+            result[i] = values.get(i);
+        }
+
+        return result;
     }
 
     /**
@@ -362,9 +367,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      */
     public void insertItemToGroup(String item, Direction dir, String value,
             int groupIndex, int itemIndex) {
-
-        GQuery select = $(getElement());
-        GQuery optgroupList = select.children(OPTGROUP_TAG);
+        GQuery optgroupList = $(OPTGROUP_TAG, getElement());
 
         int groupCount = optgroupList.size();
 
@@ -599,9 +602,5 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
         return focusableElement;
     }
-
-    private static native String[] jsArrayToString(JsArrayString array) /*-{
-        return array;
-    }-*/;
 
 }
