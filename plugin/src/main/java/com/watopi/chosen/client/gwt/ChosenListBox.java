@@ -249,7 +249,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     public void clear(boolean update) {
-        super.clear();
+        $(getElement()).html("");
         if (update){
             update();
         }
@@ -367,9 +367,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      */
     public void insertItemToGroup(String item, Direction dir, String value,
             int groupIndex, int itemIndex) {
-
-        GQuery select = $(getElement());
-        GQuery optgroupList = select.children(OPTGROUP_TAG);
+        GQuery optgroupList = $(OPTGROUP_TAG, getElement());
 
         int groupCount = optgroupList.size();
 
