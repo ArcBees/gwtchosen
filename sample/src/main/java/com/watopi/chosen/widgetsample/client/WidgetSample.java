@@ -21,10 +21,14 @@ package com.watopi.chosen.widgetsample.client;
 import static com.google.gwt.query.client.GQuery.$;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -168,6 +172,43 @@ public class WidgetSample implements EntryPoint {
     teamChosen.setWidth("300px");
 
     bind();
+
+      Button b = new Button("clear and add");
+      b.addClickHandler(new ClickHandler() {
+          public void onClick(ClickEvent event) {
+              String result = "time to clear: ";
+
+              long start = System.currentTimeMillis();
+
+              teamChosen.clear();
+
+              result += (System.currentTimeMillis() - start)+"ms";
+              result += "; time to add item: ";
+
+              start = System.currentTimeMillis();
+
+              for(int i=0; i<20; i++){
+                  teamChosen.addGroup("group"+i);
+                  for(int j=0; j<50; j++){
+                      teamChosen.addItemToGroup("item"+j);
+                  }
+              }
+
+              result += (System.currentTimeMillis() - start)+"ms";
+              result += "; time to update: ";
+
+              start = System.currentTimeMillis();
+
+              teamChosen.update();
+
+              result += (System.currentTimeMillis() - start)+"ms";
+
+              RootPanel.get().add(new Label(result));
+          }
+      });
+
+      RootPanel.get().add(b);
+
   }
 
 }

@@ -22,6 +22,7 @@ import static com.google.gwt.query.client.GQuery.$;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import static com.watopi.chosen.client.Chosen.Chosen;
@@ -61,18 +62,37 @@ public class ChosenSample implements EntryPoint {
     chzn.setWidth("250px");
     
     RootPanel.get("updateChozen").add(chzn);
-    
+
     $("#updateButton").click(new Function(){
-      int i = 2;
-      
-      @Override
       public void f() {
-        for (int j = 0; j < 100; j++){
-          chzn.addItem("item "+i);
-          i++;
+      String result = "time to clear: ";
+
+      long start = System.currentTimeMillis();
+
+      chzn.clear();
+
+      result += (System.currentTimeMillis() - start)+"ms";
+      result += "; time to add item: ";
+
+      start = System.currentTimeMillis();
+
+      for(int i=0; i<20; i++){
+        chzn.addGroup("group"+i);
+        for(int j=0; j<50; j++){
+          chzn.addItemToGroup("item"+j);
         }
-        
-        chzn.update();
+      }
+
+      result += (System.currentTimeMillis() - start)+"ms";
+      result += "; time to update: ";
+
+      start = System.currentTimeMillis();
+
+      chzn.update();
+
+      result += (System.currentTimeMillis() - start)+"ms";
+
+      RootPanel.get().add(new Label(result));
       }
     });
     
