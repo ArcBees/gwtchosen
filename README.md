@@ -18,7 +18,7 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 <dependency>
     <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>1.1.0-alpha-2</version>
+    <version>1.2.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -37,7 +37,7 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 <dependency>
     <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>1.1.0-alpha-3-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
