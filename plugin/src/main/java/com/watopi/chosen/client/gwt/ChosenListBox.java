@@ -266,6 +266,15 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
                 .chosen(options, ensureChosenHandlers());
     }
 
+    public GQuery getChosenElement() {
+        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY,
+                ChosenImpl.class);
+        if (impl != null) {
+            return impl.getContainer();
+        }
+        return $();
+    }
+
     public int getDisableSearchThreshold() {
         return options.getDisableSearchThreshold();
     }
@@ -571,15 +580,6 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     protected EventBus ensureChosenHandlers() {
         return chznHandlerManager == null ? chznHandlerManager = new SimpleEventBus()
                 : chznHandlerManager;
-    }
-
-    protected GQuery getChosenElement() {
-        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY,
-                ChosenImpl.class);
-        if (impl != null) {
-            return impl.getContainer();
-        }
-        return $();
     }
 
     protected EventBus getChosenHandlerManager() {
