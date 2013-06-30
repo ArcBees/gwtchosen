@@ -1,14 +1,32 @@
+# Package Files #
+target/**/*.jar
+*.war
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# gwt caches and compiled units #
+war/gwt_bree/
+gwt-unitCache/
+*/.gwt/
+*/gen*
 
-#maven
+# boilerplate generated classes #
+.apt_generated/
+
+# more caches and things from deploy #
+war/WEB-INF/deploy/
+war/WEB-INF/classes/
+
+# maven #
 target/
 
-#eclipse
+# intellij generated files #
+*.iml
+*.ipr
+*.iws
+.idea/
+velocity_implicit.vm
+
+# Eclipse generated files #
 *.pydevproject
 .project
 .metadata
@@ -23,11 +41,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
-www-test**
-war**
-
-#intellij
-*.iml
+*.ucls
 
 # External tool builders
 .externalToolBuilders/
@@ -41,7 +55,8 @@ war**
 # PDT-specific
 .buildpath
 
-#GWT
-gwt-unitCache/
-webapp/Chosen
-webApp/UiBinderSample
+# OS X generated files #
+.DS_Store
+
+# Others
+*.log
