@@ -534,6 +534,10 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         options.setSingleBackstrokeDelete(singleBackstrokeDelete);
     }
 
+    public void setHighlightSearchTerm(boolean highlightSearchTerm) {
+        options.setHighlightSearchTerm(highlightSearchTerm);
+    }
+
     /**
      * Select all options with value present in <code>values</code> array and update the component.
      * @param values
@@ -609,5 +613,4 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
         return focusableElement;
     }
-
 }
