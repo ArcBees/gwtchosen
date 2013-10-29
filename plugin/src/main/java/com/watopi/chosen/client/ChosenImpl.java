@@ -206,6 +206,7 @@ public class ChosenImpl {
             resultsResetCleanup();
         }
 
+        setDefaultText();
         resultClearHighlight();
         resultSingleSelected = null;
         resultsBuild();
