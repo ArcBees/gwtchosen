@@ -90,6 +90,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     private static String OPTGROUP_TAG = "optgroup";
+    private static final int INDENT_PX = 15; // pixels per indentation level
 
     private EventBus chznHandlerManager;
     private ChosenOptions options;
@@ -182,6 +183,45 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             HidingDropDownHandler handler) {
         return ensureChosenHandlers().addHandler(HidingDropDownEvent.getType(),
                 handler);
+    }
+    
+    /**
+     * Appends an item to the end of the list, adding the supplied class name to its class attribute. Specifying a
+     * non-zero {@code indentLevel} will pad the item from the left by a fixed distance applied {@code indentLevel}
+     * times.
+     * <p>
+     * For example, a call:
+     * <p>
+     * {@code 
+     * addStyledItem("My Item", "item1", "highlighted", 1);
+     * }
+     * <p>
+     * will result in the addition to the end of the {@code <select>} element of:
+     * <p>
+     * {@code
+     * <option value="item1" class="highlighted" style="padding-left: 15px;" >My Item</option>
+     * }
+     * 
+     * @param label the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item
+     * @param indentLevel the number of times to indent the item from the left
+     */
+    public void addStyledItem(String label, String value, String className, int indentLevel) {
+       if (indentLevel < 0) {
+          throw new IllegalArgumentException("[indentLevel] must be non-negative.");
+       }
+       GQuery $selectElem = $(getElement());
+       OptionElement option = Document.get().createOptionElement();
+       option.setValue(value);
+       option.setText(label);
+      if (!(className == null || className.trim().isEmpty())) {
+         option.addClassName(className);
+      }
+      if (indentLevel > 0) {
+         option.setAttribute("style", "padding-left: " + indentLevel * INDENT_PX + "px;");
+      }
+       $selectElem.append(option);
     }
 
     /**
