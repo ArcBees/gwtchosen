@@ -1352,14 +1352,16 @@ public class ChosenImpl {
                     }
 
                     if (found) {
-                        String text;
-                        if (searchText.length() > 0) {
-                            text = zregex.replace(optionContent, "<em>$1</em>");
-                        } else {
-                            text = optionContent;
+                        if (options.isHighlightSearchTerm()) {
+                            String text;
+                            if (searchText.length() > 0) {
+                                text = zregex.replace(optionContent, "<em>$1</em>");
+                            } else {
+                                text = optionContent;
+                            }
+                            result.html(text);
                         }
 
-                        result.html(text);
                         resultActivate(result);
 
                         if (option.getGroupArrayIndex() != -1) {
@@ -1409,13 +1411,23 @@ public class ChosenImpl {
 
             GQuery doHigh =
                     selectedResults != null && selectedResults.length() > 0 ? selectedResults.first()
-                            : searchResults.find("." + css.activeResult()).first();
+                            : getFirstActive();
 
             if (doHigh != null) {
                 resultDoHighlight(doHigh);
             }
         }
 
+    }
+
+    private GQuery getFirstActive() {
+        for (Element element : searchResults.elements()) {
+            GQuery gq = $(element);
+            if(gq.hasClass(css.activeResult())) {
+                return gq;
+            }
+        }
+        return $();
     }
 
 }

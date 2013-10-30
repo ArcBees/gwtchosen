@@ -32,6 +32,7 @@ public class ChosenOptions {
     private Resources resources;
     private boolean searchContains;
     private boolean singleBackstrokeDelete;
+    private boolean highlightSearchTerm;
 
     public ChosenOptions() {
         setDefault();
@@ -136,6 +137,15 @@ public class ChosenOptions {
         searchContains = false;
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
+        highlightSearchTerm = true;
 
+    }
+
+    public boolean isHighlightSearchTerm() {
+        return highlightSearchTerm;
+    }
+
+    public void setHighlightSearchTerm(boolean highlightSearchTerm) {
+        this.highlightSearchTerm = highlightSearchTerm;
     }
 }
