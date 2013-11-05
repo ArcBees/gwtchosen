@@ -204,24 +204,24 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * 
      * @param label the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
-     * @param className the class name to add to this item
-     * @param indentLevel the number of times to indent the item from the left
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation)
      */
     public void addStyledItem(String label, String value, String className, int indentLevel) {
-       if (indentLevel < 0) {
-          throw new IllegalArgumentException("[indentLevel] must be non-negative.");
-       }
-       GQuery $selectElem = $(getElement());
-       OptionElement option = Document.get().createOptionElement();
-       option.setValue(value);
-       option.setText(label);
-      if (!(className == null || className.trim().isEmpty())) {
-         option.addClassName(className);
-      }
-      if (indentLevel > 0) {
-         option.setAttribute("style", "padding-left: " + indentLevel * INDENT_PX + "px;");
-      }
-       $selectElem.append(option);
+        if (indentLevel < 0) {
+            throw new IllegalArgumentException("[indentLevel] must be non-negative.");
+        }
+        GQuery $selectElem = $(getElement());
+        OptionElement option = Document.get().createOptionElement();
+        option.setValue(value);
+        option.setText(label);
+        if (!(className == null || className.trim().isEmpty())) {
+            option.addClassName(className);
+        }
+        if (indentLevel > 0) {
+            option.setAttribute("style", "padding-left: " + indentLevel * INDENT_PX + "px;");
+        }
+        $selectElem.append(option);
     }
 
     /**
