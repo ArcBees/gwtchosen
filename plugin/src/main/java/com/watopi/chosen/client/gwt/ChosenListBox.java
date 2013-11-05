@@ -186,6 +186,19 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
     
     /**
+     * Appends an item to the end of the list, adding the supplied class name to its class attribute. Equivalent to
+     * calling {@code addStyledItem(label, value, className, 0)}.
+     * 
+     * @param label the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @see #addStyledItem(String, String, String, int)
+     */
+    public void addStyledItem(String label, String value, String className) {
+        addStyledItem(label, value, className, 0);
+    }
+
+    /**
      * Appends an item to the end of the list, adding the supplied class name to its class attribute. Specifying a
      * non-zero {@code indentLevel} will pad the item from the left by a fixed distance applied {@code indentLevel}
      * times.
