@@ -18,6 +18,7 @@
  */
 package com.watopi.chosen.client.gwt;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -50,6 +51,7 @@ import com.watopi.chosen.client.event.ShowingDropDownEvent;
 import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
 import com.watopi.chosen.client.event.UpdatedEvent;
 import com.watopi.chosen.client.event.UpdatedEvent.UpdatedHandler;
+import com.watopi.chosen.client.resources.Resources;
 
 import static com.google.gwt.query.client.GQuery.$;
 import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
@@ -90,7 +92,6 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     private static String OPTGROUP_TAG = "optgroup";
-    private static final int INDENT_PX = 15; // pixels per indentation level
 
     private EventBus chznHandlerManager;
     private ChosenOptions options;
@@ -131,6 +132,9 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public ChosenListBox(boolean isMultipleSelect, ChosenOptions options) {
         super(Document.get().createSelectElement(isMultipleSelect));
         this.options = options;
+        if (options.getResources() == null) {
+            options.setResources(GWT.<Resources>create(Resources.class));
+        }
     }
 
     protected ChosenListBox(Element element) {
@@ -232,7 +236,8 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             option.addClassName(className);
         }
         if (indentLevel > 0) {
-            option.setAttribute("style", "padding-left: " + indentLevel * INDENT_PX + "px;");
+            int leftPadding = options.getResources().css().indent() * indentLevel;
+            option.setAttribute("style", "padding-left: " + leftPadding + "px;");
         }
         $selectElem.append(option);
     }

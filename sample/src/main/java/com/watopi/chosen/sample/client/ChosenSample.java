@@ -76,7 +76,20 @@ public class ChosenSample implements EntryPoint {
       }
     });
     
-    
+    final ChosenListBox hcs = new ChosenListBox();
+    hcs.setWidth( "350px" );
+    hcs.setPlaceholderText( "Navigate to..." );
+    hcs.setTabIndex( 9 );
+    hcs.addItem( "" );
+    hcs.addStyledItem( "Home", "home", null);
+    hcs.addStyledItem( "About Us", "about", null, 1);
+    hcs.addStyledItem( "Press Releases", "about", null, 2);
+    hcs.addStyledItem( "Contact Us", "about", null, 2);
+    hcs.addStyledItem( "Products", "prod", "youAreHere", 1);
+    hcs.addStyledItem( "Tera-Magic", "prod", null, 2);
+    hcs.addStyledItem( "Tera-Magic Standard", "tmp", null, 3);
+    hcs.addStyledItem( "Tera-Magic Pro", "tmp", null, 3);
+    RootPanel.get("hierChozenSingle").add(hcs);
   }
 
 }

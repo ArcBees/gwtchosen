@@ -773,7 +773,7 @@ public class ChosenImpl {
     }
 
     private void resultDeactivate(GQuery query) {
-        query.removeClass(css.activeResult());
+        query.removeClass(css.activeResult(),  css.foundResult());
 
     }
 
@@ -1355,8 +1355,10 @@ public class ChosenImpl {
                     if (found) {
                         String text;
                         if (searchText.length() > 0) {
+                            result.addClass(css.foundResult());
                             text = zregex.replace(optionContent, "<em>$1</em>");
                         } else {
+                            result.removeClass(css.foundResult());
                             text = optionContent;
                         }
 
@@ -1398,6 +1400,7 @@ public class ChosenImpl {
             } else if (!isMultiple || !$li.hasClass(css.resultSelected())) {
                 resultActivate($li);
             }
+            $li.removeClass(css.foundResult());
         }
 
     }
