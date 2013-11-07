@@ -1355,11 +1355,15 @@ public class ChosenImpl {
                     if (found) {
                         String text;
                         if (searchText.length() > 0) {
+                            if (options.isHighlightSearchTerm()) {
+                                text = zregex.replace(optionContent, "<em>$1</em>");
+                            } else {
+                                text = optionContent;
+                            }
                             result.addClass(css.foundResult());
-                            text = zregex.replace(optionContent, "<em>$1</em>");
                         } else {
-                            result.removeClass(css.foundResult());
                             text = optionContent;
+                            result.removeClass(css.foundResult());
                         }
 
                         result.html(text);
@@ -1413,13 +1417,23 @@ public class ChosenImpl {
 
             GQuery doHigh =
                     selectedResults != null && selectedResults.length() > 0 ? selectedResults.first()
-                            : searchResults.find("." + css.activeResult()).first();
+                            : getFirstActive();
 
             if (doHigh != null) {
                 resultDoHighlight(doHigh);
             }
         }
 
+    }
+
+    private GQuery getFirstActive() {
+        for (Element element : searchResults.elements()) {
+            GQuery gq = $(element);
+            if(gq.hasClass(css.activeResult())) {
+                return gq;
+            }
+        }
+        return $();
     }
 
 }

@@ -460,12 +460,13 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         setOptionText(option, item, dir);
         option.setValue(value);
 
-        int itemCount = optgroup.children().size();
+        Element optGroupElement = optgroup.get(0);
+        int itemCount = optGroupElement.getChildCount();
 
         if (itemIndex < 0 || itemIndex > itemCount - 1) {
             optgroup.append(option);
         } else {
-            GQuery before = optgroup.children().eq(itemIndex);
+            GQuery before = $(optGroupElement.getChild(itemIndex));
             before.before(option);
         }
 
@@ -589,6 +590,10 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     public void setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
         options.setSingleBackstrokeDelete(singleBackstrokeDelete);
+    }
+
+    public void setHighlightSearchTerm(boolean highlightSearchTerm) {
+        options.setHighlightSearchTerm(highlightSearchTerm);
     }
 
     /**
