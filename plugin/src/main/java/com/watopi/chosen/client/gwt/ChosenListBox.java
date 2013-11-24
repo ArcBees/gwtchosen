@@ -279,6 +279,29 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public void addItemToGroup(String item, String value, int groupIndex) {
         insertItemToGroup(item, value, groupIndex, -1);
     }
+    
+    /**
+     * Adds an item to the group specified by its index.
+     * 
+     * @param label the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @param groupIndex index of the group to add the item to
+     */
+    public void addStyledItemToGroup(String label, String value, String className, int groupIndex) {
+        addStyledItemToGroup(label, value, className, 0, groupIndex);
+    }
+
+    /**
+     * @param label the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation) 
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void addStyledItemToGroup(String label, String value, String className, int indentLevel, int groupIndex) {
+        insertStyledItemToGroup(label, value, className, null /* dir */, indentLevel, groupIndex, -1);
+    }
 
     public HandlerRegistration addMaxSelectedHandler(MaxSelectedHandler handler) {
         return ensureChosenHandlers().addHandler(MaxSelectedEvent.getType(),
@@ -438,8 +461,79 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @param itemIndex  the index inside the optgroup at which to insert the item
      * @param groupIndex the index of the optGroup where the item will be inserted
      */
-    public void insertItemToGroup(String item, Direction dir, String value,
+    public void insertItemToGroup(String item, Direction dir, String value, int groupIndex, int itemIndex) {
+        insertStyledItemToGroup(item, value, null /* className */, dir, 0, groupIndex, itemIndex);
+    }
+
+    /**
+     * Adds an item to the an optgroup of the list box. If no optgroup exists,
+     * the item will be add at the end ot the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param itemIndex  the index inside the optgroup at which to insert the item
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void insertItemToGroup(String item, int groupIndex, int itemIndex) {
+        insertItemToGroup(item, null, item, groupIndex, itemIndex);
+
+    }
+
+    /**
+     * Adds an item to the an optgroup of the list box. If no optgroup exists,
+     * the item will be add at the end ot the list box.
+     *
+     * @param item       the text of the item to be added
+     * @param value      the value of the item to be added
+     * @param itemIndex  the index inside the optgroup at which to insert the item
+     * @param groupIndex the index of the optGroup where the item will be inserted
+     */
+    public void insertItemToGroup(String item, String value, int groupIndex,
+            int itemIndex) {
+        insertItemToGroup(item, null, value, groupIndex, itemIndex);
+    }
+    
+    /**
+     * @param item the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @param groupIndex the index of the optgroup where the item will be inserted
+     * @param itemIndex the index inside the optgroup at which to insert the item
+     */
+    public void insertStyledItemToGroup(String item, String value, String className, int groupIndex, int itemIndex) {
+        insertStyledItemToGroup(item, value, className, 0, groupIndex, itemIndex);
+    }
+
+    /**
+     * @param item the item label to display to the user
+     * @param value the value of the item, meaningful in the context of an HTML form
+     * @param className the class name to add to this item (pass {@code null} to add no class name)
+     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation)
+     * @param groupIndex the index of the optgroup where the item will be inserted
+     * @param itemIndex the index inside the optgroup at which to insert the item
+     */
+    public void insertStyledItemToGroup(String item, String value, String className, int indentLevel, int groupIndex,
+            int itemIndex) {
+        insertStyledItemToGroup(item, value, className, null /* dir */, indentLevel, groupIndex, itemIndex);
+    }
+    
+    /**
+     * Inserts an item into a group at the specified location. Additionally, the item can have an extra class name as
+     * well as indent level assigned to it.
+     * 
+     * @param item the item label to display
+     * @param value the value of the item in the HTML form context
+     * @param className the class name to append to the option (pass {@code null} to append no class name)
+     * @param dir allows specifying an RTL, LTR or inherited direction ({@code null} is LTR)
+     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation)
+     * @param groupIndex the index of the group to insert the item into (if out of bounds, the last group will be used)
+     * @param itemIndex the index of the item within a group (if out of bounds, item will be placed last in the group)
+     */
+    public void insertStyledItemToGroup(String item, String value, String className, Direction dir, int indentLevel,
             int groupIndex, int itemIndex) {
+        if (indentLevel < 0) {
+            throw new IllegalArgumentException("[indentLevel] must be non-negative.");
+        }
+        // -----
         GQuery optgroupList = $(OPTGROUP_TAG, getElement());
 
         int groupCount = optgroupList.size();
@@ -459,6 +553,14 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         OptionElement option = Document.get().createOptionElement();
         setOptionText(option, item, dir);
         option.setValue(value);
+        if (!(className == null || className.trim().isEmpty())) {
+            option.addClassName(className);
+        }
+        if (indentLevel > 0) {
+            // Calculate total indentation, not forgetting that being in a group is adding one extra indent step
+            int leftPadding = options.getResources().css().indent() * (indentLevel + 1);
+            option.setAttribute("style", "padding-left: " + leftPadding + "px;");
+        }
 
         Element optGroupElement = optgroup.get(0);
         int itemCount = optGroupElement.getChildCount();
@@ -469,36 +571,6 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             GQuery before = $(optGroupElement.getChild(itemIndex));
             before.before(option);
         }
-
-    }
-
-    /**
-     * Adds an item to the an optgroup of the list box. If no optgroup exists,
-     * the item will be add at the end ot the list box.
-     *
-     * @param item       the text of the item to be added
-     * @param itemIndex  the index inside the optgroup at which to insert the item
-     * @param groupIndex the index of the optGroup where the item will be inserted
-     */
-
-    public void insertItemToGroup(String item, int groupIndex, int itemIndex) {
-        insertItemToGroup(item, null, item, groupIndex, itemIndex);
-
-    }
-
-    /**
-     * Adds an item to the an optgroup of the list box. If no optgroup exists,
-     * the item will be add at the end ot the list box.
-     *
-     * @param item       the text of the item to be added
-     * @param value      the value of the item to be added
-     * @param itemIndex  the index inside the optgroup at which to insert the item
-     * @param groupIndex the index of the optGroup where the item will be inserted
-     */
-    public void insertItemToGroup(String item, String value, int groupIndex,
-            int itemIndex) {
-        insertItemToGroup(item, null, value, groupIndex, itemIndex);
-
     }
 
     /**

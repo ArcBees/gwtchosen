@@ -81,15 +81,16 @@ public class ChosenSample implements EntryPoint {
     hcs.setPlaceholderText( "Navigate to..." );
     hcs.setTabIndex( 9 );
     hcs.addItem( "" );
-    hcs.addStyledItem( "Home", "home", null);
-    hcs.addStyledItem( "About Us", "about", null, 1);
-    hcs.addStyledItem( "Press Releases", "about", null, 2);
-    hcs.addStyledItem( "Contact Us", "about", null, 2);
-    hcs.addStyledItem( "Products", "prod", "youAreHere", 1);
-    hcs.addStyledItem( "Tera-Magic", "prod", null, 2);
-    hcs.addStyledItem( "Tera-Magic Standard", "tmp", null, 3);
-    hcs.addStyledItem( "Tera-Magic Pro", "tmp", null, 3);
-    RootPanel.get("hierChozenSingle").add(hcs);
+    hcs.addStyledItem( "Home", "home", null );
+    hcs.addGroup( "ABOUT US" );
+    hcs.addStyledItemToGroup( "Press Releases", "press", null, 0 );
+    hcs.addStyledItemToGroup( "Contact Us", "about", null, 0 );
+    hcs.addGroup( "PRODUCTS" );
+    hcs.addStyledItemToGroup( "Tera-Magic", "tm", null, 0, 1 );
+    hcs.addStyledItemToGroup( "Tera-Magic Pro", "tmpro", null, 1, 1 );
+    // Will be inserted before "Tera-Magic Pro" and custom-styled
+    hcs.insertStyledItemToGroup( "Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1 );
+    RootPanel.get( "hierChozenSingle" ).add( hcs );
   }
 
 }

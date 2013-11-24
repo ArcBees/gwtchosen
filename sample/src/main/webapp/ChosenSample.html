@@ -1318,29 +1318,38 @@ chzn.insertItemToGroup("Dallas Cowboys", 1, 3);
         <div class="row">
             <div class="span12">
             <p>
-                The <code>ChosenListBox</code> widget allows you to programmatically construct option hierarchies of arbitrary depth as
-                well as add CSS class names to individual options:  
+                The <code>ChosenListBox</code> widget allows you to programmatically construct option hierarchies of arbitrary depth 
+                within or outside of groups, as well as add CSS class names to individual options:
             </p>
             </div>
             <div class="span6">
              <div id="hierChozenSingle" class="span4" style="margin-left: 0;"></div>
             </div>
         </div>
-           <p>Each option includes an indentation level:</p>
-           <pre>
+           <h4>Java:</h4>
+<pre>
 ChosenListBox chzn = new ChosenListBox();
+chzn.setWidth( "350px" );
 chzn.setPlaceholderText( "Navigate to..." );
+chzn.setTabIndex( 9 );
 chzn.addItem( "" );
-chzn.addStyledItem( "Home", "home", null);
-chzn.addStyledItem( "About Us", "about", null, 1);
-chzn.addStyledItem( "Press Releases", "about", null, 2);
-chzn.addStyledItem( "Contact Us", "about", null, 2);
-// Style "Products" by supplying a class name
-chzn.addStyledItem( "Products", "prod", "youAreHere", 1);
-chzn.addStyledItem( "Tera-Magic", "prod", null, 2);
-chzn.addStyledItem( "Tera-Magic Standard", "tmp", null, 3);
-chzn.addStyledItem( "Tera-Magic Pro", "tmp", null, 3);
-           </pre>
+chzn.addStyledItem( "Home", "home", null );
+chzn.addGroup( "ABOUT US" ); // group 0
+chzn.addStyledItemToGroup( "Press Releases", "press", null, 0 );
+chzn.addStyledItemToGroup( "Contact Us", "about", null, 0 );
+chzn.addGroup( "PRODUCTS" ); // group 1
+chzn.addStyledItemToGroup( "Tera-Magic", "tm", null, 0, 1 );
+chzn.addStyledItemToGroup( "Tera-Magic Pro", "tmpro", null, 1, 1 );
+// Item will be custom-styled and inserted before "Tera-Magic Pro"
+chzn.insertStyledItemToGroup( "Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1 );
+</pre>
+<h4>CSS:</h4>
+<pre>
+.youAreHere {
+    border: dashed 1px lightGrey;
+    border-left: solid 3px orange;
+}
+</pre>
         </section>
         <section>
 			<div class="page-header">
