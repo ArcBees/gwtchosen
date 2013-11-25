@@ -533,7 +533,6 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         if (indentLevel < 0) {
             throw new IllegalArgumentException("[indentLevel] must be non-negative.");
         }
-        // -----
         GQuery optgroupList = $(OPTGROUP_TAG, getElement());
 
         int groupCount = optgroupList.size();

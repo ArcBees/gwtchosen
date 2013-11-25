@@ -773,8 +773,7 @@ public class ChosenImpl {
     }
 
     private void resultDeactivate(GQuery query) {
-        query.removeClass(css.activeResult(),  css.foundResult());
-
+        query.removeClass(css.activeResult(), css.foundResult());
     }
 
     private void resultDeselect(int index) {
