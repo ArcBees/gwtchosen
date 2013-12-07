@@ -80,6 +80,10 @@ public class ChosenOptions {
     public boolean isSingleBackstrokeDelete() {
         return singleBackstrokeDelete;
     }
+    
+    public boolean isHighlightSearchTerm() {
+        return highlightSearchTerm;
+    }
 
     public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
         this.allowSingleDeselect = allowSingleDeselect;
@@ -130,6 +134,10 @@ public class ChosenOptions {
         this.singleBackstrokeDelete = singleBackstrokeDelete;
         return this;
     }
+    
+    public void setHighlightSearchTerm(boolean highlightSearchTerm) {
+        this.highlightSearchTerm = highlightSearchTerm;
+    }
 
     private void setDefault() {
         allowSingleDeselect = false;
@@ -139,13 +147,5 @@ public class ChosenOptions {
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
 
-    }
-
-    public boolean isHighlightSearchTerm() {
-        return highlightSearchTerm;
-    }
-
-    public void setHighlightSearchTerm(boolean highlightSearchTerm) {
-        this.highlightSearchTerm = highlightSearchTerm;
     }
 }

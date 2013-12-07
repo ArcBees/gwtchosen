@@ -206,6 +206,7 @@ public class ChosenImpl {
             resultsResetCleanup();
         }
 
+        setDefaultText();
         resultClearHighlight();
         resultSingleSelected = null;
         resultsBuild();
@@ -772,8 +773,7 @@ public class ChosenImpl {
     }
 
     private void resultDeactivate(GQuery query) {
-        query.removeClass(css.activeResult());
-
+        query.removeClass(css.activeResult(), css.foundResult());
     }
 
     private void resultDeselect(int index) {
@@ -1352,16 +1352,20 @@ public class ChosenImpl {
                     }
 
                     if (found) {
-                        if (options.isHighlightSearchTerm()) {
-                            String text;
-                            if (searchText.length() > 0) {
+                        String text;
+                        if (searchText.length() > 0) {
+                            if (options.isHighlightSearchTerm()) {
                                 text = zregex.replace(optionContent, "<em>$1</em>");
                             } else {
                                 text = optionContent;
                             }
-                            result.html(text);
+                            result.addClass(css.foundResult());
+                        } else {
+                            text = optionContent;
+                            result.removeClass(css.foundResult());
                         }
 
+                        result.html(text);
                         resultActivate(result);
 
                         if (option.getGroupArrayIndex() != -1) {
@@ -1399,6 +1403,7 @@ public class ChosenImpl {
             } else if (!isMultiple || !$li.hasClass(css.resultSelected())) {
                 resultActivate($li);
             }
+            $li.removeClass(css.foundResult());
         }
 
     }

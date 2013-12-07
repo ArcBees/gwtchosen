@@ -25,6 +25,9 @@ public interface ChozenCss extends CssResource {
   @ClassName("active-result")
   public String activeResult();
 
+  @ClassName("found-result")
+  public String foundResult();
+
   @ClassName("chzn-choices")
   public String chznChoices();
 
@@ -108,4 +111,6 @@ public interface ChozenCss extends CssResource {
 
   @ClassName("search-field")
   public String searchField();
+
+  public int indent();
 }
