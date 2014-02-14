@@ -18,6 +18,10 @@
  */
 package com.watopi.chosen.client.gwt;
 
+import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
+import static com.watopi.chosen.client.Chosen.Chosen;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Document;
@@ -52,10 +56,6 @@ import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandle
 import com.watopi.chosen.client.event.UpdatedEvent;
 import com.watopi.chosen.client.event.UpdatedEvent.UpdatedHandler;
 import com.watopi.chosen.client.resources.Resources;
-
-import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
-import static com.watopi.chosen.client.Chosen.Chosen;
 
 public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
@@ -550,8 +550,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         GQuery optgroup = optgroupList.eq(groupIndex);
 
         OptionElement option = Document.get().createOptionElement();
-        setOptionText(option, item, dir);
-        option.setValue(value);
+
         if (!(className == null || className.trim().isEmpty())) {
             option.addClassName(className);
         }
@@ -570,6 +569,8 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             GQuery before = $(optGroupElement.getChild(itemIndex));
             before.before(option);
         }
+        setOptionText(option, item, dir);
+        option.setValue(value);
     }
 
     /**
