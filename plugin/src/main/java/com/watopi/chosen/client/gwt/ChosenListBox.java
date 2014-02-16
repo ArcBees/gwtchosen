@@ -18,10 +18,6 @@
  */
 package com.watopi.chosen.client.gwt;
 
-import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
-import static com.watopi.chosen.client.Chosen.Chosen;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.dom.client.Document;
@@ -56,6 +52,10 @@ import com.watopi.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandle
 import com.watopi.chosen.client.event.UpdatedEvent;
 import com.watopi.chosen.client.event.UpdatedEvent.UpdatedHandler;
 import com.watopi.chosen.client.resources.Resources;
+
+import static com.google.gwt.query.client.GQuery.$;
+import static com.watopi.chosen.client.Chosen.CHOSEN_DATA_KEY;
+import static com.watopi.chosen.client.Chosen.Chosen;
 
 public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
@@ -519,7 +519,12 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     /**
      * Inserts an item into a group at the specified location. Additionally, the item can have an extra class name as
      * well as indent level assigned to it.
-     * 
+     *
+     * <p>
+     * <b>NB!</b> It is important to set text into the option after the option has been appended to the DOM
+     * <br/>that's known bug in IE  @see <a href="http://bugs.jquery.com/ticket/3041">jQuery bug tracker</a>
+     * </p>
+     *
      * @param item the item label to display
      * @param value the value of the item in the HTML form context
      * @param className the class name to append to the option (pass {@code null} to append no class name)
@@ -569,6 +574,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             GQuery before = $(optGroupElement.getChild(itemIndex));
             before.before(option);
         }
+        // setText must be after the element has been appended to the DOM - see javadoc
         setOptionText(option, item, dir);
         option.setValue(value);
     }
