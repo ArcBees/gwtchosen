@@ -17,7 +17,6 @@
 package com.arcbees.chosen.client;
 
 public interface ResultsFilter {
-
     /**
      * This method is called when you user is trying to filter the list of items by entering characters in the
      * input text element.

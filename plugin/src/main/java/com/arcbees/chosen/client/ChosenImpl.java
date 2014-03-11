@@ -59,7 +59,6 @@ import static com.google.gwt.query.client.GQuery.$;
 import static com.google.gwt.query.client.GQuery.document;
 
 public class ChosenImpl {
-
     public static interface ChozenTemplate extends SafeHtmlTemplates {
         public ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
@@ -98,7 +97,6 @@ public class ChosenImpl {
     }
 
     public static class ClientResultsFilter implements ResultsFilter {
-
         private static final RegExp regExpChars = RegExp.compile("[-[\\]{}()*+?.,\\\\^$|#\\s]", "g");
 
         @Override
@@ -118,7 +116,6 @@ public class ChosenImpl {
             List<SelectItem> selectItems = chosen.getSelectItems();
 
             for (SelectItem item : selectItems) {
-
                 if (item.isDisabled() || item.isEmpty()) {
                     continue;
                 }
@@ -168,14 +165,11 @@ public class ChosenImpl {
                             }
                             chosen.resultDeactivate(result);
                         }
-
                     }
-
                 }
-
             }
 
-            if (results < 1 && searchText.length() > 0) {
+            if (results < 1 && !searchText.isEmpty()) {
                 chosen.noResults(searchText);
             } else {
                 chosen.winnowResultsSetHighlight();
@@ -286,7 +280,6 @@ public class ChosenImpl {
         bind();
 
         finishSetup();
-
     }
 
     protected void release() {
@@ -509,7 +502,6 @@ public class ChosenImpl {
         } else {
             e.stopPropagation();
         }
-
     }
 
     private boolean choicesClick(Event e) {
@@ -531,7 +523,6 @@ public class ChosenImpl {
             pendingBackstroke.removeClass(css.searchChoiceFocus());
         }
         pendingBackstroke = null;
-
     }
 
     private void closeField() {
@@ -552,7 +543,6 @@ public class ChosenImpl {
 
         showSearchFieldDefault();
         searchFieldScale();
-
     }
 
     private boolean containerMouseDown(Event e) {
@@ -604,14 +594,12 @@ public class ChosenImpl {
 
     private void finishSetup() {
         $selectElement.addClass(css.chznDone(), "chzn-done");
-
     }
 
     private void fireEvent(ChosenEvent<?> event) {
         if (eventBus != null) {
             eventBus.fireEvent(event);
         }
-
     }
 
     private String generateContainerId() {
@@ -700,7 +688,6 @@ public class ChosenImpl {
                 pendingBackstroke.addClass(css.searchChoiceFocus());
             }
         }
-
     }
 
     private boolean keydownChecker(Event e) {
@@ -741,7 +728,6 @@ public class ChosenImpl {
         }
 
         return true;
-
     }
 
     private void keyupArrow() {
@@ -768,7 +754,6 @@ public class ChosenImpl {
                 resultClearHighlight();
             }
         }
-
     }
 
     private boolean keyupChecker(Event e) {
@@ -826,7 +811,6 @@ public class ChosenImpl {
         noResults.find("span").html(terms);
 
         searchResults.append(noResults);
-
     }
 
     private void resultActivate(GQuery query) {
@@ -882,7 +866,6 @@ public class ChosenImpl {
             resultHighlight.removeClass(css.highlighted());
             resultHighlight = null;
         }
-
     }
 
     private void resultDeactivate(GQuery query) {
@@ -935,7 +918,6 @@ public class ChosenImpl {
         } else if (highTop < visibleTop) {
             searchResults.scrollTop(highTop);
         }
-
     }
 
     private void resultSelect(Event e) {
@@ -984,11 +966,9 @@ public class ChosenImpl {
 
             searchFieldScale();
         }
-
     }
 
     private void resultsBuild() {
-
         selectItems = new SelectParser().parse(selectElement);
 
         if (isMultiple && choices > 0) {
@@ -1004,13 +984,11 @@ public class ChosenImpl {
             }
         }
 
-       rebuildResultItems(true);
-
+        rebuildResultItems(true);
     }
 
     public void rebuildResultItems() {
         rebuildResultItems(false);
-
     }
 
     private void rebuildResultItems(boolean init) {
@@ -1069,7 +1047,6 @@ public class ChosenImpl {
 
         dropdown.css(isRTL ? "right" : "left", "-9000px");
         resultsShowing = false;
-
     }
 
     private void resultsReset(Event e) {
@@ -1090,7 +1067,6 @@ public class ChosenImpl {
         if (activeField) {
             resultsHide();
         }
-
     }
 
     private void resultsResetCleanup() {
@@ -1104,7 +1080,6 @@ public class ChosenImpl {
         } else {
             resultsShow();
         }
-
     }
 
     private boolean resultsShow() {
@@ -1156,7 +1131,6 @@ public class ChosenImpl {
             if (!isMultiple) {
                 selectedItem.bind("focus", activateAction);
             }
-
         }
     }
 
@@ -1231,7 +1205,6 @@ public class ChosenImpl {
     }
 
     private void setDefaultText() {
-
         String dataPlaceHolder = selectElement.getAttribute("data-placeholder");
 
         if (dataPlaceHolder != null && dataPlaceHolder.length() > 0) {
@@ -1310,7 +1283,6 @@ public class ChosenImpl {
         if (resultsFilter == null) {
             resultsFilter = new ClientResultsFilter();
         }
-
     }
 
     private void setTabIndex() {
@@ -1325,7 +1297,6 @@ public class ChosenImpl {
                 searchField.attr(TABINDEX_PROPERTY, -1);
             }
         }
-
     }
 
     private void setup() {
@@ -1400,7 +1371,6 @@ public class ChosenImpl {
         setTabIndex();
 
         fireEvent(new ReadyEvent(this));
-
     }
 
     private void showSearchFieldDefault() {
@@ -1418,11 +1388,9 @@ public class ChosenImpl {
             selectedItem.find("span").first().after(
                     "<abbr class=\"" + css.searchChoiceClose() + "\"></abbr>");
         }
-
     }
 
     private boolean testActiveClick(Event e) {
-
         Element target = e.getEventTarget().cast();
         GQuery $e = $(target);
 
@@ -1435,7 +1403,6 @@ public class ChosenImpl {
     }
 
     private void winnowResults(boolean isShowing) {
-
         noResultClear();
 
         String searchText = defaultText.equals(searchField.val()) ? "" : searchField.val().trim();
@@ -1457,7 +1424,6 @@ public class ChosenImpl {
             }
             $li.removeClass(css.foundResult());
         }
-
     }
 
     private void winnowResultsSetHighlight() {
@@ -1474,7 +1440,6 @@ public class ChosenImpl {
                 resultDoHighlight(doHigh);
             }
         }
-
     }
 
     private GQuery getFirstActive() {
@@ -1486,5 +1451,4 @@ public class ChosenImpl {
         }
         return $();
     }
-
 }
