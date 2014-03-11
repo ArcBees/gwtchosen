@@ -18,20 +18,10 @@
  */
 package com.watopi.chosen.sample.client;
 
-import java.util.List;
-
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
-import com.google.gwt.query.client.Console;
 import com.google.gwt.query.client.Function;
-import com.google.gwt.query.client.impl.ConsoleBrowser;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.watopi.chosen.client.ChosenImpl;
 import com.watopi.chosen.client.ChosenOptions;
-import com.watopi.chosen.client.ResultsFilter;
-import com.watopi.chosen.client.SelectParser.OptionItem;
-import com.watopi.chosen.client.SelectParser.SelectItem;
 import com.watopi.chosen.client.gwt.ChosenListBox;
 
 import static com.google.gwt.query.client.GQuery.$;
@@ -39,51 +29,11 @@ import static com.watopi.chosen.client.Chosen.Chosen;
 
 public class ChosenSample implements EntryPoint {
 
-    private static class ServerSideResultFilter implements ResultsFilter {
-        private static Console console = new ConsoleBrowser();
-        private static String[] items = new String[]{"blop", "chaussure", "test"};
-
-        private boolean initialized;
-
-        @Override
-        public void filter(final String searchText, final ChosenImpl chosen, boolean isShowing) {
-            if (isShowing && initialized) {
-                return; // do nothing, keep the last results
-            }
-            initialized = true;
-
-            console.log("filter with text : " + searchText);
-            Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-                @Override
-                public void execute() {
-                    List<SelectItem> selectItems = chosen.getSelectItems();
-                    selectItems.clear();
-                    int nextId = 0;
-
-                    for (String item : items) {
-                        if (item.startsWith(searchText)) {
-                            OptionItem optionItem = new OptionItem();
-                            optionItem.setHtml("<table><tr><td style=\"padding:" + (nextId * 5) + "px\">" + (nextId +
-                                    1) + ".</td><td>" + item + "</td></tr></table>");
-                            optionItem.setText(item);
-                            optionItem.setValue(item);
-                            optionItem.setArrayIndex(nextId);
-                            optionItem.setDomId("myOption_" + nextId);
-                            nextId++;
-
-                            selectItems.add(optionItem);
-                        }
-                    }
-
-                    console.log("rebuild result with " + selectItems.size() + " items");
-
-                    chosen.rebuildResultItems();
-                }
-            });
-        }
-    }
-
     public void onModuleLoad() {
+
+        if (!com.watopi.chosen.client.Chosen.isSupported()){
+            $("#browserWarning").show();
+        }
 
         $(".chzn-select, .enhance").as(Chosen).chosen();
 
@@ -110,13 +60,13 @@ public class ChosenSample implements EntryPoint {
 
         RootPanel.get("updateChozen").add(chzn);
 
-        $("#updateButton").click(new Function() {
+        $("#updateButton").click(new Function(){
             int i = 2;
 
             @Override
             public void f() {
-                for (int j = 0; j < 100; j++) {
-                    chzn.addItem("item " + i);
+                for (int j = 0; j < 100; j++){
+                    chzn.addItem("item "+i);
                     i++;
                 }
 
@@ -124,30 +74,21 @@ public class ChosenSample implements EntryPoint {
             }
         });
 
-        ChosenOptions options = new ChosenOptions();
-        options.setAllowSingleDeselect(true);
-        options.setResultFilter(new ServerSideResultFilter());
-        ChosenListBox chzn2 = new ChosenListBox(true, options);
-        chzn2.setWidth("250px");
-        $(chzn2).css("margin-left", "100px").css("margin-bottom", "300px");
-        chzn2.addItem("");
-
-        RootPanel.get().add(chzn2);
-
         final ChosenListBox hcs = new ChosenListBox();
-        hcs.setWidth("350px");
-        hcs.setPlaceholderText("Navigate to...");
-        hcs.setTabIndex(9);
-        hcs.addItem("");
-        hcs.addStyledItem("Home", "home", null);
-        hcs.addGroup("ABOUT US");
-        hcs.addStyledItemToGroup("Press Releases", "press", null, 0);
-        hcs.addStyledItemToGroup("Contact Us", "about", null, 0);
-        hcs.addGroup("PRODUCTS");
-        hcs.addStyledItemToGroup("Tera-Magic", "tm", null, 0, 1);
-        hcs.addStyledItemToGroup("Tera-Magic Pro", "tmpro", null, 1, 1);
+        hcs.setWidth( "350px" );
+        hcs.setPlaceholderText( "Navigate to..." );
+        hcs.setTabIndex( 9 );
+        hcs.addItem( "" );
+        hcs.addStyledItem( "Home", "home", null );
+        hcs.addGroup( "ABOUT US" );
+        hcs.addStyledItemToGroup( "Press Releases", "press", null, 0 );
+        hcs.addStyledItemToGroup( "Contact Us", "about", null, 0 );
+        hcs.addGroup( "PRODUCTS" );
+        hcs.addStyledItemToGroup( "Tera-Magic", "tm", null, 0, 1 );
+        hcs.addStyledItemToGroup( "Tera-Magic Pro", "tmpro", null, 1, 1 );
         // Will be inserted before "Tera-Magic Pro" and custom-styled
-        hcs.insertStyledItemToGroup("Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1);
-        RootPanel.get("hierChozenSingle").add(hcs);
+        hcs.insertStyledItemToGroup( "Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1 );
+        RootPanel.get( "hierChozenSingle" ).add( hcs );
     }
+
 }
