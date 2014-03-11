@@ -33,6 +33,7 @@ public class ChosenOptions {
     private boolean searchContains;
     private boolean singleBackstrokeDelete;
     private boolean highlightSearchTerm;
+    private ResultsFilter resultFilter;
 
     public ChosenOptions() {
         setDefault();
@@ -64,6 +65,14 @@ public class ChosenOptions {
 
     public Resources getResources() {
         return resources;
+    }
+
+    /**
+     * provide the {@code ResultFilter} instance used to filter the data
+     * @return
+     */
+    public ResultsFilter getResultFilter() {
+        return resultFilter;
     }
 
     /**
@@ -123,6 +132,10 @@ public class ChosenOptions {
     public ChosenOptions setResources(Resources resources) {
         this.resources = resources;
         return this;
+    }
+
+    public void setResultFilter(ResultsFilter resultFilter) {
+        this.resultFilter = resultFilter;
     }
 
     public ChosenOptions setSearchContains(boolean searchContains) {

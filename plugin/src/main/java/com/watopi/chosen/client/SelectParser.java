@@ -18,6 +18,9 @@
  */
 package com.watopi.chosen.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
@@ -25,10 +28,9 @@ import com.google.gwt.dom.client.OptGroupElement;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.query.client.js.JsObjectArray;
 
 public class SelectParser {
-    protected class GroupItem extends SelectItem {
+    public static class GroupItem extends SelectItem {
 
         private int children = 0;
         private String label;
@@ -55,7 +57,7 @@ public class SelectParser {
         }
     }
 
-    protected class OptionItem extends SelectItem {
+    public static class OptionItem extends SelectItem {
         private int arrayIndex;
         private String classes;
         private boolean disabled;
@@ -64,7 +66,7 @@ public class SelectParser {
         private String html;
         private int optionsIndex;
         private boolean selected;
-        private String style;
+        private String style = "";
         private String text;
         private String value;
 
@@ -162,7 +164,7 @@ public class SelectParser {
         }
     }
 
-    protected abstract class SelectItem {
+    public static abstract class SelectItem {
         protected int arrayIndex;
         protected boolean disabled;
         protected String domId;
@@ -192,15 +194,15 @@ public class SelectParser {
     }
 
     private int optionsIndex;
-    private JsObjectArray<SelectItem> parsed;
+    private List<SelectItem> parsed;
 
     public SelectParser() {
         optionsIndex = 0;
-        parsed = JsObjectArray.create();
+        parsed = new ArrayList<SelectItem>();
 
     }
 
-    public JsObjectArray<SelectItem> parse(SelectElement select) {
+    public List<SelectItem> parse(SelectElement select) {
 
         NodeList<Node> children = select.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
@@ -212,7 +214,7 @@ public class SelectParser {
     }
 
     private void addGroup(OptGroupElement group) {
-        int position = parsed.length();
+        int position = parsed.size();
 
         GroupItem item = new GroupItem();
         item.arrayIndex = position;
@@ -250,7 +252,7 @@ public class SelectParser {
         String optionText = option.getText();
 
         OptionItem item = new OptionItem();
-        item.arrayIndex = parsed.length();
+        item.arrayIndex = parsed.size();
         item.optionsIndex = optionsIndex;
 
         if (optionText != null && optionText.length() > 0) {

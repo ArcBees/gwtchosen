@@ -67,8 +67,8 @@
     </ciManagement>
 
     <properties>
-        <gwt.version>2.5.0</gwt.version>
-        <gwtquery.version>1.3.3</gwtquery.version>
+        <gwt.version>2.6.0</gwt.version>
+        <gwtquery.version>1.4.1</gwtquery.version>
         <junit.version>4.11</junit.version>
 
         <!-- maven -->
