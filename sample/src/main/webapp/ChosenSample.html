@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-	<a href="https://github.com/jdramaix/gwtchosen/"><img
+	<a href="https://github.com/arcbees/gwtchosen/"><img
 		style="position: absolute; top: 0; right: 0; border: 0;"
 		src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
 		alt="Fork me on GitHub"></a>
@@ -1075,7 +1075,7 @@
 				<div class="span12">
 					<p>With one line of java code :</p>
 					<pre>import static com.google.gwt.query.client.GQuery.$;
-import static com.watopi.chosen.client.Chosen.Chosen;
+import static com.arcbees.chosen.client.Chosen.Chosen;
 ...	
 <strong>$(".selectToEnHance").as(Chosen).chosen();</strong>
 					</pre>
@@ -1097,7 +1097,7 @@ import static com.watopi.chosen.client.Chosen.Chosen;
 					<pre>
 &lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
 &lt;ui:UiBinder ...
-	xmlns:chzn="urn:import:com.watopi.chosen.client.gwt"&gt;
+	xmlns:chzn="urn:import:com.arcbees.chosen.client.gwt"&gt;
 	&lt;chzn:ChosenListBox maxSelectedOptions="5" placeholderText="Choose your country..."&gt;
 			&lt;g:item value=""&gt;&lt;/g:item&gt;
 			&lt;g:item value="United States"&gt;United States&lt;/g:item&gt;
@@ -1107,7 +1107,7 @@ import static com.watopi.chosen.client.Chosen.Chosen;
 </pre>
 					<p>or directly in your java code :</p>
 					<pre>
-import com.watopi.chosen.client.gwt.ChosenListBox;
+import com.arcbees.chosen.client.gwt.ChosenListBox;
 ...
 
 ChosenListBox chzn = new ChosenListBox(true);
@@ -1756,7 +1756,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
 &lt;build>
 	&lt;dependencies>
 		&lt;dependency>
-        	&lt;groupId>com.watopi&lt;/groupId>
+        	&lt;groupId>com.arcbees&lt;/groupId>
             &lt;artifactId>gwtchosen&lt;/artifactId>
             &lt;version>1.1.0&lt;/version>
             &lt;scope>provided&lt;/scope>
@@ -1777,7 +1777,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
 						Then you need to inherit the plugin in your Module.gwt.xml file:
 					</p>
 					<pre>
-&lt;inherits name='com.watopi.chosen.Chosen'/>
+&lt;inherits name='com.arcbees.chosen.Chosen'/>
 					</pre>
 				</div>
 			</div>
@@ -1799,7 +1799,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
 					</p>
 					<p>
 						The GWT port of Chosen was built by <a
-							href="https://plus.google.com/u/0/103916508880440628637">Julien
+							href="https://plus.google.com/+JulienDramaix">Julien
 							Dramaix</a>
 					</p>
 				</div>
