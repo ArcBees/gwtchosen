@@ -75,13 +75,13 @@ public class ChosenImpl {
                 "class=\"{5}\"></ul></div>")
         SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
-                SafeStyles horizontalOffset);
+                SafeStyles dropDownStyle);
 
         @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div " +
                 "class=\"{3}\" style=\"{6}\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul" +
                 " class=\"{5}\"></ul></div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles horizontalOffset);
+                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles dropDownStyle);
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
@@ -178,7 +178,6 @@ public class ChosenImpl {
     }
 
     private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
-    private static final int HORIZONTAL_OFFSET = -9000;
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
 
     private static final String TABINDEX_PROPERTY = "tabindex";
@@ -1045,7 +1044,7 @@ public class ChosenImpl {
 
         fireEvent(new HidingDropDownEvent(this));
 
-        dropdown.css(isRTL ? "right" : "left", "-9000px");
+        dropdown.css("display", "none");
         resultsShowing = false;
     }
 
@@ -1098,6 +1097,7 @@ public class ChosenImpl {
         fireEvent(new ShowingDropDownEvent(this));
 
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+        dropdown.css("display", "inline");
         resultsShowing = true;
 
         searchField.focus();
@@ -1326,18 +1326,17 @@ public class ChosenImpl {
         GQuery containerTemp =
                 $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
 
-        SafeStyles horizontalOffset = isRTL ? SafeStylesUtils.forRight(HORIZONTAL_OFFSET,
-                Style.Unit.PX) : SafeStylesUtils.forLeft(HORIZONTAL_OFFSET, Style.Unit.PX);
+        SafeStyles dropDownStyle = SafeStylesUtils.forDisplay(Style.Display.NONE);
 
         if (isMultiple) {
             containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
                     css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(),
-                    horizontalOffset)
+                    dropDownStyle)
                     .asString());
         } else {
             containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
                     css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
-                    horizontalOffset)
+                    dropDownStyle)
                     .asString());
         }
 
