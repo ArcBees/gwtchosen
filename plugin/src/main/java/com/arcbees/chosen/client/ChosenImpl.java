@@ -1096,8 +1096,12 @@ public class ChosenImpl {
 
         fireEvent(new ShowingDropDownEvent(this));
 
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+        final boolean isHidden = false;
+        final int dropDownWidth = calculateDropDownWidth(isHidden);
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0").css("width", "" + dropDownWidth);
         dropdown.css("display", "inline");
+        updateSearchFieldWidth(isHidden, dropDownWidth);
+
         resultsShowing = true;
 
         searchField.focus();
@@ -1347,7 +1351,7 @@ public class ChosenImpl {
 
         dropdown = container.find("div." + css.chznDrop()).first();
         int ddTop = container.height();
-        int ddWidth = fWidth - getSideBorderPadding(dropdown, isHidden);
+        int ddWidth = calculateDropDownWidth(isHidden);
         dropdown.css(Properties.create("{\"width\": " + ddWidth + "px, \"top\": " + ddTop + "px}"));
 
         searchField = container.find("input").first();
@@ -1360,9 +1364,7 @@ public class ChosenImpl {
         } else {
             searchContainer = container.find("div." + css.chznSearch()).first();
             selectedItem = container.find("." + css.chznSingle()).first();
-            int searchFieldWidth =
-                    ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
-            searchField.css("width", searchFieldWidth + "px");
+            updateSearchFieldWidth(isHidden, ddWidth);
         }
 
         resultsBuild();
@@ -1370,6 +1372,16 @@ public class ChosenImpl {
         setTabIndex();
 
         fireEvent(new ReadyEvent(this));
+    }
+
+    private int calculateDropDownWidth(boolean isHidden) {
+        return fWidth - getSideBorderPadding(dropdown, isHidden);
+    }
+
+    private void updateSearchFieldWidth(boolean isHidden, int ddWidth) {
+        int searchFieldWidth =
+                ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
+        searchField.css("width", searchFieldWidth + "px");
     }
 
     private void showSearchFieldDefault() {
