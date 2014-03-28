@@ -1082,12 +1082,7 @@ public class ChosenImpl {
     }
 
     private boolean resultsShow() {
-        if (!isMultiple) {
-            selectedItem.addClass(css.chznSingleWithDrop());
-            if (resultSingleSelected != null) {
-                resultDoHighlight(resultSingleSelected);
-            }
-        } else if (maxSelectedOptionsReached()) {
+        if (isMultiple && maxSelectedOptionsReached()) {
             fireEvent(new MaxSelectedEvent(this));
             return false;
         }
@@ -1100,6 +1095,12 @@ public class ChosenImpl {
         final int dropDownWidth = calculateDropDownWidth(isHidden);
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0").css("width", "" + dropDownWidth);
         dropdown.css("display", "inline");
+        if (!isMultiple) {
+            selectedItem.addClass(css.chznSingleWithDrop());
+            if (resultSingleSelected != null) {
+                resultDoHighlight(resultSingleSelected);
+            }
+        }
         updateSearchFieldWidth(isHidden, dropDownWidth);
 
         resultsShowing = true;
