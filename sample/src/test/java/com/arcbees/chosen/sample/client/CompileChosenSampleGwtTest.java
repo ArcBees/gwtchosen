@@ -5,7 +5,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 public class CompileChosenSampleGwtTest extends GWTTestCase {
     @Override
     public String getModuleName() {
-        return "com.arcbees.chosen.sample.client.ChosenSample";
+        return "com.arcbees.chosen.sample.ChosenSample";
     }
 
     public void testSandbox() {
