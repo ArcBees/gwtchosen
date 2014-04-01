@@ -917,7 +917,7 @@ public class ChosenImpl {
             if (found || !s.equals(value)) {
                 newValues.add(s);
             } else {
-                // in case of the same item was selected many times
+                // in case of the same item has been selected many times
                 found = true;
             }
         }
