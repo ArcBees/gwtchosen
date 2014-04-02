@@ -98,7 +98,7 @@ public class ChosenImpl {
         SafeHtml option(String id, String groupResultClass, SafeStyles safeStyles, SafeHtml htmlContent);
     }
 
-    public static class ClientResultsFilter implements ResultsFilter {
+    private static class ClientResultsFilter implements ResultsFilter {
         private static final RegExp regExpChars = RegExp.compile("[-[\\]{}()*+?.,\\\\^$|#\\s]", "g");
 
         @Override
@@ -205,6 +205,7 @@ public class ChosenImpl {
     private boolean isDisabled;
     private boolean isMultiple;
     private boolean isRTL;
+    private boolean customFilter;
     private boolean mouseOnContainer = false;
     private ChosenOptions options;
     private GQuery pendingBackstroke;
@@ -1018,7 +1019,7 @@ public class ChosenImpl {
         } else if (!isMultiple) {
             selectedItem.addClass(css.chznDefault()).find("span").text(defaultText);
 
-            if (selectElement.getOptions().getLength() <= options.getDisableSearchThreshold()) {
+            if (!customFilter && selectElement.getOptions().getLength() <= options.getDisableSearchThreshold()) {
                 container.addClass(css.chznContainerSingleNoSearch());
             } else {
                 container.removeClass(css.chznContainerSingleNoSearch());
@@ -1049,7 +1050,7 @@ public class ChosenImpl {
                     continue;
                 }
 
-                if (!init) {
+                if (customFilter) {
                     optionsHtml.append(createOption(optionItem));
                 }
 
@@ -1073,7 +1074,8 @@ public class ChosenImpl {
             searchFieldDisabled();
             showSearchFieldDefault();
             searchFieldScale();
-        } else {
+        }
+        if (customFilter) {
             // keep the html select element synchronized with the new result.
             $selectElement.html(optionsHtml.toSafeHtml().asString());
         }
@@ -1352,7 +1354,9 @@ public class ChosenImpl {
 
         resultsFilter = options.getResultFilter();
 
-        if (resultsFilter == null) {
+        customFilter = resultsFilter != null;
+
+        if (!customFilter) {
             resultsFilter = new ClientResultsFilter();
         }
     }
