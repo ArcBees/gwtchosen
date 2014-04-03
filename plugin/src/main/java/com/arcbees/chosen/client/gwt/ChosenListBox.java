@@ -15,6 +15,8 @@
  */
 package com.arcbees.chosen.client.gwt;
 
+import java.util.List;
+
 import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
@@ -383,9 +385,9 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @return
      */
     public String getValue(){
-        int selectedIndex = getSelectedIndex();
+        String[] values = getValues();
 
-        return selectedIndex != -1 ? getValue(selectedIndex) : null;
+        return values != null && values.length > 0 ?  values[0] : null;
     }
 
     /**
@@ -394,25 +396,28 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @return
      */
     public String[] getValues() {
-        if (!isMultipleSelect()){
-            return new String[]{getValue()};
-        }
+        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY, ChosenImpl.class);
 
-        JsArrayString values = JsArrayString.createArray().cast();
-        NodeList<OptionElement> options = SelectElement.as(getElement()).getOptions();
-        for (int i = 0; i < options.getLength(); i++){
-            OptionElement option = options.getItem(i);
-            if (option.isSelected()){
-                values.push(option.getValue());
+        if (impl != null) {
+            List<String> selectedValues = impl.getSelectedValues();
+            return selectedValues.toArray(new String[selectedValues.size()]);
+        } else {
+            JsArrayString values = JsArrayString.createArray().cast();
+            NodeList<OptionElement> options = SelectElement.as(getElement()).getOptions();
+            for (int i = 0; i < options.getLength(); i++) {
+                OptionElement option = options.getItem(i);
+                if (option.isSelected()) {
+                    values.push(option.getValue());
+                }
             }
-        }
 
-        String[] result = new String[values.length()];
-        for (int i = 0; i < values.length(); i++){
-            result[i] = values.get(i);
-        }
+            String[] result = new String[values.length()];
+            for (int i = 0; i < values.length(); i++) {
+                result[i] = values.get(i);
+            }
 
-        return result;
+            return result;
+        }
     }
 
     /**

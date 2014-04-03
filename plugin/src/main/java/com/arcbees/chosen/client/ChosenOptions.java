@@ -96,6 +96,13 @@ public class ChosenOptions {
         return this;
     }
 
+    /**
+     * Set the number of items needed to show and enable the search input. This option is when the Chosen component is
+     * used in "multiple select" mode or when a custom ResultFilter is used.
+     *
+     * @param disableSearchThreshold
+     * @return
+     */
     public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
         this.disableSearchThreshold = disableSearchThreshold;
         return this;

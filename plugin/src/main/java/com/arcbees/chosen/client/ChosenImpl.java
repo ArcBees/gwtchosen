@@ -16,6 +16,7 @@
 
 package com.arcbees.chosen.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.chosen.client.SelectParser.GroupItem;
@@ -58,15 +59,16 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import static com.google.gwt.query.client.GQuery.$;
 import static com.google.gwt.query.client.GQuery.document;
+import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromSafeConstant;
 
 public class ChosenImpl {
     public static interface ChozenTemplate extends SafeHtmlTemplates {
         public ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
         @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3}\" " +
-                "rel=\"{4}\"></a></li>")
+                "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
         SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
-                String searchChoiceCloseClass, String rel);
+                String searchChoiceCloseClass, String rel, String value);
 
         @Template("<div id=\"{0}\" class=\"{1}\"></div>")
         SafeHtml container(String id, String cssClasses);
@@ -97,7 +99,7 @@ public class ChosenImpl {
         SafeHtml option(String id, String groupResultClass, SafeStyles safeStyles, SafeHtml htmlContent);
     }
 
-    public static class ClientResultsFilter implements ResultsFilter {
+    private static class ClientResultsFilter implements ResultsFilter {
         private static final RegExp regExpChars = RegExp.compile("[-[\\]{}()*+?.,\\\\^$|#\\s]", "g");
 
         @Override
@@ -197,7 +199,7 @@ public class ChosenImpl {
     private GQuery container;
     private String containerId;
     private ChozenCss css;
-    private String currentValue;
+    private List<String> selectedValues = new ArrayList<String>();
     private String defaultText;
     private GQuery dropdown;
     private EventBus eventBus;
@@ -205,6 +207,7 @@ public class ChosenImpl {
     private boolean isDisabled;
     private boolean isMultiple;
     private boolean isRTL;
+    private boolean customFilter;
     private boolean mouseOnContainer = false;
     private ChosenOptions options;
     private GQuery pendingBackstroke;
@@ -228,7 +231,15 @@ public class ChosenImpl {
     }
 
     public String getCurrentValue() {
-        return currentValue;
+        if (!selectedValues.isEmpty()) {
+            return selectedValues.get(selectedValues.size() - 1);
+        }
+
+        return null;
+    }
+
+    public List<String> getSelectedValues() {
+        return selectedValues;
     }
 
     public ChosenOptions getOptions() {
@@ -474,7 +485,7 @@ public class ChosenImpl {
         choices++;
         SafeHtml html = SafeHtmlUtils.fromTrustedString(option.getHtml());
         searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(), html,
-                css.searchChoiceClose(), "" + option.getArrayIndex()).asString());
+                css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue()).asString());
         $('#' + choiceId).find("a").click(new Function() {
             public boolean f(final Event e) {
                 choiceDestroyLinkClick(e);
@@ -491,7 +502,7 @@ public class ChosenImpl {
             resultsHide();
         }
 
-        resultDeselect(Integer.parseInt(link.attr("rel")));
+        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosen-value"));
         link.parents("li").first().remove();
     }
 
@@ -874,27 +885,49 @@ public class ChosenImpl {
         query.removeClass(css.activeResult(), css.foundResult());
     }
 
-    private void resultDeselect(int index) {
-        OptionItem item = (OptionItem) selectItems.get(index);
+    private void resultDeselect(int index, String value) {
+        if (index < selectItems.size()) {
+            OptionItem item = (OptionItem) selectItems.get(index);
 
-        item.setSelected(false);
+            if (item.getValue().equals(value)) {
+                item.setSelected(false);
 
-        // select option in original element
-        OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
-        if (option != null) {
-            option.setSelected(false);
+                // select option in original element
+                OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
+                if (option != null) {
+                    option.setSelected(false);
+                }
+
+                $("#" + containerId + "_o_" + index).removeClass(css.resultSelected()).addClass(
+                        css.activeResult()).show();
+            }
         }
-
-        $("#" + containerId + "_o_" + index).removeClass(css.resultSelected()).addClass(
-                css.activeResult()).show();
 
         resultClearHighlight();
         winnowResults(false);
 
-        fireEvent(new ChosenChangeEvent(item.getValue(), index, false, this));
+        deselect(value);
+
+        fireEvent(new ChosenChangeEvent(value, index, false, this));
 
         searchFieldScale();
     }
+
+    private void deselect(String value) {
+        List<String> newValues = new ArrayList<String>();
+        boolean found = false;
+        for (String s : selectedValues) {
+            if (found || !s.equals(value)) {
+                newValues.add(s);
+            } else {
+                // in case of the same item has been selected many times
+                found = true;
+            }
+        }
+
+        selectedValues = newValues;
+    }
+
 
     private void resultDoHighlight(GQuery el) {
         if (el == null || el.length() == 0 || isDetached(el)) {
@@ -942,7 +975,10 @@ public class ChosenImpl {
             int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
             OptionItem item = (OptionItem) selectItems.get(position);
             item.setSelected(true);
-            selectElement.getOptions().getItem(item.getOptionsIndex()).setSelected(true);
+            OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
+            if (option != null) {
+                option.setSelected(true);
+            }
 
             if (isMultiple) {
                 choiceBuild(item);
@@ -959,12 +995,18 @@ public class ChosenImpl {
 
             searchField.val("");
 
-            if (isMultiple || currentValue == null || !currentValue.equals($selectElement.val())) {
-                String value = selectElement.getOptions().getItem(item.getOptionsIndex()).getValue();
-                fireEvent(new ChosenChangeEvent(value, position, this));
+            String oldValue = getCurrentValue();
+            String newValue = item.getValue();
+
+            if (!isMultiple()) {
+                selectedValues.clear();
             }
 
-            currentValue = $selectElement.val();
+            selectedValues.add(newValue);
+
+            if (isMultiple || oldValue == null || !oldValue.equals($selectElement.val())) {
+                fireEvent(new ChosenChangeEvent(newValue, position, this));
+            }
 
             searchFieldScale();
         }
@@ -979,7 +1021,7 @@ public class ChosenImpl {
         } else if (!isMultiple) {
             selectedItem.addClass(css.chznDefault()).find("span").text(defaultText);
 
-            if (selectElement.getOptions().getLength() <= options.getDisableSearchThreshold()) {
+            if (!customFilter && selectElement.getOptions().getLength() <= options.getDisableSearchThreshold()) {
                 container.addClass(css.chznContainerSingleNoSearch());
             } else {
                 container.removeClass(css.chznContainerSingleNoSearch());
@@ -995,6 +1037,7 @@ public class ChosenImpl {
 
     private void rebuildResultItems(boolean init) {
         SafeHtmlBuilder content = new SafeHtmlBuilder();
+        SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
 
         for (SelectItem item : selectItems) {
             if (item.isGroup()) {
@@ -1007,6 +1050,10 @@ public class ChosenImpl {
 
                 if (optionItem.isEmpty()) {
                     continue;
+                }
+
+                if (customFilter) {
+                    optionsHtml.append(createOption(optionItem));
                 }
 
                 SafeHtml optionHtml = resultAddOption(optionItem);
@@ -1030,8 +1077,31 @@ public class ChosenImpl {
             showSearchFieldDefault();
             searchFieldScale();
         }
+        if (customFilter) {
+            // keep the html select element synchronized with the new result.
+            $selectElement.html(optionsHtml.toSafeHtml().asString());
+        }
 
         searchResults.html(content.toSafeHtml().asString());
+    }
+
+    private SafeHtml createOption(OptionItem item) {
+        SafeHtmlBuilder builder = new SafeHtmlBuilder();
+        builder.append(fromSafeConstant("<option value='")).appendEscaped(item.getValue())
+                .append(fromSafeConstant("'"));
+
+        if (item.isSelected()) {
+            builder.append(fromSafeConstant(" selected"));
+        }
+
+        if (item.isDisabled()) {
+            builder.append(fromSafeConstant(" disabled"));
+        }
+
+        builder.append(fromSafeConstant(">")).appendEscaped(item.getText());
+        builder.append(fromSafeConstant("</option>"));
+
+        return builder.toSafeHtml();
     }
 
     private void resultsHide() {
@@ -1073,7 +1143,11 @@ public class ChosenImpl {
     }
 
     private void resultsResetCleanup() {
-        currentValue = $selectElement.val();
+        selectedValues = new ArrayList<String>();
+        String currentValue = $selectElement.val();
+        if (currentValue != null && !currentValue.isEmpty()) {
+            selectedValues.add(currentValue);
+        }
         selectedItem.find("abbr").remove();
     }
 
@@ -1283,7 +1357,9 @@ public class ChosenImpl {
 
         resultsFilter = options.getResultFilter();
 
-        if (resultsFilter == null) {
+        customFilter = resultsFilter != null;
+
+        if (!customFilter) {
             resultsFilter = new ClientResultsFilter();
         }
     }
