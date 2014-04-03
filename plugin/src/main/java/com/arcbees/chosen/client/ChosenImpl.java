@@ -46,6 +46,7 @@ import com.google.gwt.query.client.GQuery;
 import com.google.gwt.query.client.Properties;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.safecss.shared.SafeStyles;
+import com.google.gwt.safecss.shared.SafeStylesBuilder;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -75,13 +76,13 @@ public class ChosenImpl {
                 "class=\"{5}\"></ul></div>")
         SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
-                SafeStyles dropDownStyle);
+                SafeStyles offsets);
 
         @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div " +
                 "class=\"{3}\" style=\"{6}\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul" +
                 " class=\"{5}\"></ul></div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles dropDownStyle);
+                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets);
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
@@ -178,6 +179,8 @@ public class ChosenImpl {
     }
 
     private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
+    private static final int HORIZONTAL_OFFSET = -9000;
+    private static final int VERTICAL_OFFSET = -9000;
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
 
     private static final String TABINDEX_PROPERTY = "tabindex";
@@ -1044,7 +1047,8 @@ public class ChosenImpl {
 
         fireEvent(new HidingDropDownEvent(this));
 
-        dropdown.css("display", "none");
+        dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
+        dropdown.css("top", VERTICAL_OFFSET + "px");
         resultsShowing = false;
     }
 
@@ -1082,7 +1086,12 @@ public class ChosenImpl {
     }
 
     private boolean resultsShow() {
-        if (isMultiple && maxSelectedOptionsReached()) {
+        if (!isMultiple) {
+            selectedItem.addClass(css.chznSingleWithDrop());
+            if (resultSingleSelected != null) {
+                resultDoHighlight(resultSingleSelected);
+            }
+        } else if (maxSelectedOptionsReached()) {
             fireEvent(new MaxSelectedEvent(this));
             return false;
         }
@@ -1091,18 +1100,7 @@ public class ChosenImpl {
 
         fireEvent(new ShowingDropDownEvent(this));
 
-        final boolean isHidden = false;
-        final int dropDownWidth = calculateDropDownWidth(isHidden);
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0").css("width", "" + dropDownWidth);
-        dropdown.css("display", "inline");
-        if (!isMultiple) {
-            selectedItem.addClass(css.chznSingleWithDrop());
-            if (resultSingleSelected != null) {
-                resultDoHighlight(resultSingleSelected);
-            }
-        }
-        updateSearchFieldWidth(isHidden, dropDownWidth);
-
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
         resultsShowing = true;
 
         searchField.focus();
@@ -1331,17 +1329,23 @@ public class ChosenImpl {
         GQuery containerTemp =
                 $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
 
-        SafeStyles dropDownStyle = SafeStylesUtils.forDisplay(Style.Display.NONE);
+        final SafeStylesBuilder ssb = new SafeStylesBuilder();
+        if (isRTL) {
+            ssb.right(HORIZONTAL_OFFSET, Style.Unit.PX);
+        } else {
+            ssb.left(HORIZONTAL_OFFSET, Style.Unit.PX);
+        }
+        ssb.top(VERTICAL_OFFSET, Style.Unit.PX);
 
         if (isMultiple) {
             containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
                     css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(),
-                    dropDownStyle)
+                    ssb.toSafeStyles())
                     .asString());
         } else {
             containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
                     css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
-                    dropDownStyle)
+                    ssb.toSafeStyles())
                     .asString());
         }
 
@@ -1351,9 +1355,8 @@ public class ChosenImpl {
         container.addClass(isMultiple ? css.chznContainerMulti() : css.chznContainerSingle());
 
         dropdown = container.find("div." + css.chznDrop()).first();
-        int ddTop = container.height();
-        int ddWidth = calculateDropDownWidth(isHidden);
-        dropdown.css(Properties.create("{\"width\": " + ddWidth + "px, \"top\": " + ddTop + "px}"));
+        int ddWidth = fWidth - getSideBorderPadding(dropdown, isHidden);
+        dropdown.css(Properties.create("{\"width\": " + ddWidth + "px}"));
 
         searchField = container.find("input").first();
         searchResults = container.find("ul." + css.chznResults()).first();
@@ -1365,7 +1368,9 @@ public class ChosenImpl {
         } else {
             searchContainer = container.find("div." + css.chznSearch()).first();
             selectedItem = container.find("." + css.chznSingle()).first();
-            updateSearchFieldWidth(isHidden, ddWidth);
+            int searchFieldWidth =
+                    ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
+            searchField.css("width", searchFieldWidth + "px");
         }
 
         resultsBuild();
@@ -1373,16 +1378,6 @@ public class ChosenImpl {
         setTabIndex();
 
         fireEvent(new ReadyEvent(this));
-    }
-
-    private int calculateDropDownWidth(boolean isHidden) {
-        return fWidth - getSideBorderPadding(dropdown, isHidden);
-    }
-
-    private void updateSearchFieldWidth(boolean isHidden, int ddWidth) {
-        int searchFieldWidth =
-                ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
-        searchField.css("width", searchFieldWidth + "px");
     }
 
     private void showSearchFieldDefault() {
