@@ -320,6 +320,7 @@ public class ChosenImpl {
         resultClearHighlight();
         resultSingleSelected = null;
         resultsBuild();
+        setTabIndex();
     }
 
     private boolean activateField(Event e) {
@@ -1366,6 +1367,13 @@ public class ChosenImpl {
 
     private void setTabIndex() {
         String tabIndexProperty = $selectElement.attr(TABINDEX_PROPERTY);
+        if (options.isRemoveFromTabIndexWhenDisabled()) {
+            if (isDisabled) {
+                tabIndexProperty = "-1";
+            } else {
+                tabIndexProperty = "0";
+            }
+        }
         if (tabIndexProperty != null && tabIndexProperty.length() > 0) {
             $selectElement.attr(TABINDEX_PROPERTY, -1);
 

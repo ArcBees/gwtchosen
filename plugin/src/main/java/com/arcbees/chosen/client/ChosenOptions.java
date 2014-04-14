@@ -31,6 +31,7 @@ public class ChosenOptions {
     private boolean singleBackstrokeDelete;
     private boolean highlightSearchTerm;
     private ResultsFilter resultFilter;
+    private boolean removeFromTabIndexWhenDisabled;
 
     public ChosenOptions() {
         setDefault();
@@ -163,6 +164,14 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
+        removeFromTabIndexWhenDisabled = false;
+    }
 
+    public boolean isRemoveFromTabIndexWhenDisabled() {
+        return removeFromTabIndexWhenDisabled;
+    }
+
+    public void setRemoveFromTabIndexWhenDisabled(boolean removeFromTabIndexWhenDisabled) {
+        this.removeFromTabIndexWhenDisabled = removeFromTabIndexWhenDisabled;
     }
 }
