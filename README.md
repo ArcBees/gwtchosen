@@ -19,7 +19,7 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
     <groupId>com.github.jdramaix</groupId>
     <artifactId>gwtchosen</artifactId>
     <version>1.2.0</version>
-    <scope>provided</scope>
+    <scope>compile</scope>
 </dependency>
 ```
 
@@ -33,12 +33,11 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
         <layout>default</layout>
     </repository>
 </repositories>
-
 <dependency>
-    <groupId>com.github.jdramaix</groupId>
+    <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
-    <scope>provided</scope>
+    <version>2.0.0-SNAPSHOT</version>
+    <scope>compile</scope>
 </dependency>
 ```
 
