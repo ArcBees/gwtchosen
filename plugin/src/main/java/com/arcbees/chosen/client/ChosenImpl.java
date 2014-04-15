@@ -59,7 +59,7 @@ import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import static com.google.gwt.query.client.GQuery.$;
 import static com.google.gwt.query.client.GQuery.document;
-import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromSafeConstant;
+import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
 public class ChosenImpl {
     public static interface ChozenTemplate extends SafeHtmlTemplates {
@@ -483,7 +483,7 @@ public class ChosenImpl {
 
         String choiceId = containerId + "_c_" + option.getArrayIndex();
         choices++;
-        SafeHtml html = SafeHtmlUtils.fromTrustedString(option.getHtml());
+        SafeHtml html = fromTrustedString(option.getHtml());
         searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(), html,
                 css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue()).asString());
         $('#' + choiceId).find("a").click(new Function() {
@@ -864,7 +864,7 @@ public class ChosenImpl {
 
             SafeStyles safeStyles = SafeStylesUtils.fromTrustedString(option.getStyle());
             if (option.getHtml() != null && !option.getHtml().trim().isEmpty()) {
-                SafeHtml html = SafeHtmlUtils.fromTrustedString(option.getHtml());
+                SafeHtml html = fromTrustedString(option.getHtml());
                 return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
             } else {
                 return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, option.getText());
@@ -1087,19 +1087,19 @@ public class ChosenImpl {
 
     private SafeHtml createOption(OptionItem item) {
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        builder.append(fromSafeConstant("<option value='")).appendEscaped(item.getValue())
-                .append(fromSafeConstant("'"));
+        builder.append(fromTrustedString("<option value='")).appendEscaped(item.getValue())
+                .append(fromTrustedString("'"));
 
         if (item.isSelected()) {
-            builder.append(fromSafeConstant(" selected"));
+            builder.append(fromTrustedString(" selected"));
         }
 
         if (item.isDisabled()) {
-            builder.append(fromSafeConstant(" disabled"));
+            builder.append(fromTrustedString(" disabled"));
         }
 
-        builder.append(fromSafeConstant(">")).appendEscaped(item.getText());
-        builder.append(fromSafeConstant("</option>"));
+        builder.append(fromTrustedString(">")).appendEscaped(item.getText());
+        builder.append(fromTrustedString("</option>"));
 
         return builder.toSafeHtml();
     }
