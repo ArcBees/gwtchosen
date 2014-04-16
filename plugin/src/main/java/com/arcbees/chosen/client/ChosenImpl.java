@@ -22,13 +22,7 @@ import java.util.List;
 import com.arcbees.chosen.client.SelectParser.GroupItem;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.SelectParser.SelectItem;
-import com.arcbees.chosen.client.event.ChosenChangeEvent;
-import com.arcbees.chosen.client.event.ChosenEvent;
-import com.arcbees.chosen.client.event.HidingDropDownEvent;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
-import com.arcbees.chosen.client.event.ReadyEvent;
-import com.arcbees.chosen.client.event.ShowingDropDownEvent;
-import com.arcbees.chosen.client.event.UpdatedEvent;
+import com.arcbees.chosen.client.event.*;
 import com.arcbees.chosen.client.resources.ChozenCss;
 import com.arcbees.chosen.client.resources.Resources;
 import com.google.gwt.core.client.GWT;
@@ -224,6 +218,7 @@ public class ChosenImpl {
     private List<SelectItem> selectItems;
     private GQuery selectedItem;
     private HandlerRegistration updateEventHandlerRegistration;
+    private HandlerRegistration updateTabIndexEventHandlerRegistration;
     private ResultsFilter resultsFilter;
 
     public GQuery getContainer() {
@@ -299,6 +294,10 @@ public class ChosenImpl {
         if (updateEventHandlerRegistration != null) {
             updateEventHandlerRegistration.removeHandler();
             updateEventHandlerRegistration = null;
+        }
+        if (updateTabIndexEventHandlerRegistration != null) {
+            updateTabIndexEventHandlerRegistration.removeHandler();
+            updateTabIndexEventHandlerRegistration = null;
         }
         // empty the searchResult to speed up the container.remove()
         if (searchResults != null) {
@@ -401,6 +400,12 @@ public class ChosenImpl {
                             update();
                         }
                     });
+            updateTabIndexEventHandlerRegistration = eventBus.addHandler(UpdatedTabIndexEvent.getType(), new UpdatedTabIndexEvent.UpdatedTabIndexHandler() {
+                @Override
+                public void onUpdated(UpdatedTabIndexEvent event) {
+                    setTabIndex();
+                }
+            });
         }
 
         searchField.blur(new Function() {
@@ -1366,16 +1371,14 @@ public class ChosenImpl {
     }
 
     private void setTabIndex() {
-        String tabIndexProperty = $selectElement.attr(TABINDEX_PROPERTY);
-        if (options.isRemoveFromTabIndexWhenDisabled()) {
-            if (isDisabled) {
-                tabIndexProperty = "-1";
-            } else {
-                tabIndexProperty = "0";
-            }
+        final String selectElementOriginalTabIndexProperty = $selectElement.attr(TABINDEX_PROPERTY);
+        String tabIndexProperty = selectElementOriginalTabIndexProperty;
+        // if component is disabled we have to exclude it from tab index
+        if (isDisabled) {
+            tabIndexProperty = "-1";
         }
+
         if (tabIndexProperty != null && tabIndexProperty.length() > 0) {
-            $selectElement.attr(TABINDEX_PROPERTY, -1);
 
             if (isMultiple) {
                 searchField.attr(TABINDEX_PROPERTY, tabIndexProperty);

@@ -15,31 +15,19 @@
  */
 package com.arcbees.chosen.client.gwt;
 
-import java.util.List;
-
 import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.client.ChosenOptions;
-import com.arcbees.chosen.client.event.ChosenChangeEvent;
+import com.arcbees.chosen.client.event.*;
 import com.arcbees.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
-import com.arcbees.chosen.client.event.HasAllChosenHandlers;
-import com.arcbees.chosen.client.event.HidingDropDownEvent;
 import com.arcbees.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
-import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ReadyEvent.ReadyHandler;
-import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
-import com.arcbees.chosen.client.event.UpdatedEvent;
 import com.arcbees.chosen.client.event.UpdatedEvent.UpdatedHandler;
 import com.arcbees.chosen.client.resources.Resources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NodeList;
-import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.dom.client.SelectElement;
+import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.DomEvent.Type;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.LegacyHandlerWrapper;
@@ -51,6 +39,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+
+import java.util.List;
 
 import static com.arcbees.chosen.client.Chosen.CHOSEN_DATA_KEY;
 import static com.arcbees.chosen.client.Chosen.Chosen;
@@ -338,7 +328,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
 
-        update();
+        updateTabIndex();
     }
 
     public void forceRedraw() {
@@ -752,4 +742,13 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         return focusableElement;
     }
 
+    @Override
+    public void setTabIndex(int index) {
+        super.setTabIndex(index);
+        updateTabIndex();
+    }
+
+    private void updateTabIndex() {
+        ensureChosenHandlers().fireEvent(new UpdatedTabIndexEvent());
+    }
 }
