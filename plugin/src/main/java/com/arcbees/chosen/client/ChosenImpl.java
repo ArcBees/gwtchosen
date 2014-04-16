@@ -1005,6 +1005,9 @@ public class ChosenImpl {
             selectedValues.add(newValue);
 
             if (isMultiple || oldValue == null || !oldValue.equals($selectElement.val())) {
+                if (!isMultiple) {
+                    closeField();
+                }
                 fireEvent(new ChosenChangeEvent(newValue, position, this));
             }
 
