@@ -17,7 +17,9 @@
 package com.arcbees.chosen.client;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.arcbees.chosen.client.SelectParser.GroupItem;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
@@ -184,9 +186,9 @@ public class ChosenImpl {
     private static final int HORIZONTAL_OFFSET = -9000;
     private static final int VERTICAL_OFFSET = -9000;
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
+    private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
 
     private static final String TABINDEX_PROPERTY = "tabindex";
-    private static boolean cssInjected = false;
     private static int idCounter = 0;
 
     private GQuery $selectElement;
@@ -1347,12 +1349,9 @@ public class ChosenImpl {
             css = GWT.<Resources>create(Resources.class).css();
         }
 
-        // Force the injection the first time only
-        // If you want to use different css file for different GwtChosen component
-        // please register your css files (css.ensureInject()) before the first call of the plugin
-        if (!cssInjected) {
+        if (!INJECTED_RESOURCES.contains(options.getResources().getClass())) {
             StyleInjector.inject(css.getText(), true);
-            cssInjected = true;
+            INJECTED_RESOURCES.add(options.getResources().getClass());
         }
 
         resultsFilter = options.getResultFilter();
