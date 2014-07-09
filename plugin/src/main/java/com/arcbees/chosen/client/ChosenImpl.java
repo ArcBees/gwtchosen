@@ -165,7 +165,8 @@ public class ChosenImpl {
                                         "list-item");
                             }
                         } else {
-                            if (chosen.getResultHighlight() != null && resultId.equals(chosen.getResultHighlight().attr("id"))) {
+                            if (chosen.getResultHighlight() != null
+                                    && resultId.equals(chosen.getResultHighlight().attr("id"))) {
                                 chosen.resultClearHighlight();
                             }
                             chosen.resultDeactivate(result);
@@ -314,9 +315,7 @@ public class ChosenImpl {
     }
 
     protected void update() {
-        if (!isMultiple) {
-            resultsResetCleanup();
-        }
+        resultsResetCleanup();
 
         setDefaultText();
         resultClearHighlight();
@@ -869,7 +868,8 @@ public class ChosenImpl {
                 SafeHtml html = fromTrustedString(option.getHtml());
                 return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
             } else {
-                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, option.getText());
+                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
+                        option.getText());
             }
 
         }
@@ -1146,11 +1146,32 @@ public class ChosenImpl {
 
     private void resultsResetCleanup() {
         selectedValues = new ArrayList<String>();
+
+        if (isMultiple) {
+            populateMultipleSelectedValues();
+        } else {
+            populateSingleSelectedValues();
+        }
+    }
+
+    private void populateSingleSelectedValues() {
         String currentValue = $selectElement.val();
         if (currentValue != null && !currentValue.isEmpty()) {
             selectedValues.add(currentValue);
         }
         selectedItem.find("abbr").remove();
+    }
+
+    private void populateMultipleSelectedValues() {
+        for (SelectItem selectItem : selectItems) {
+            if (!selectItem.isGroup()) {
+                OptionItem optionItem = (OptionItem) selectItem;
+
+                if (optionItem.isSelected()) {
+                    selectedValues.add(optionItem.getValue());
+                }
+            }
+        }
     }
 
     private void resultsSearch() {
