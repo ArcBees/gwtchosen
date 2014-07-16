@@ -187,11 +187,11 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         return ensureChosenHandlers().addHandler(HidingDropDownEvent.getType(),
                 handler);
     }
-    
+
     /**
      * Appends an item to the end of the list, adding the supplied class name to its class attribute. Equivalent to
      * calling {@code addStyledItem(label, value, className, 0)}.
-     * 
+     *
      * @param label the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
      * @param className the class name to add to this item (pass {@code null} to add no class name)
@@ -208,7 +208,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * <p>
      * For example, a call:
      * <p>
-     * {@code 
+     * {@code
      * addStyledItem("My Item", "item1", "highlighted", 1);
      * }
      * <p>
@@ -217,7 +217,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * {@code
      * <option value="item1" class="highlighted" style="padding-left: 15px;" >My Item</option>
      * }
-     * 
+     *
      * @param label the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
      * @param className the class name to add to this item (pass {@code null} to add no class name)
@@ -278,10 +278,10 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public void addItemToGroup(String item, String value, int groupIndex) {
         insertItemToGroup(item, value, groupIndex, -1);
     }
-    
+
     /**
      * Adds an item to the group specified by its index.
-     * 
+     *
      * @param label the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
      * @param className the class name to add to this item (pass {@code null} to add no class name)
@@ -295,7 +295,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @param label the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
      * @param className the class name to add to this item (pass {@code null} to add no class name)
-     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation) 
+     * @param indentLevel the number of times to indent the item from the left (pass 0 for no indentation)
      * @param groupIndex the index of the optGroup where the item will be inserted
      */
     public void addStyledItemToGroup(String label, String value, String className, int indentLevel, int groupIndex) {
@@ -493,7 +493,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             int itemIndex) {
         insertItemToGroup(item, null, value, groupIndex, itemIndex);
     }
-    
+
     /**
      * @param item the item label to display to the user
      * @param value the value of the item, meaningful in the context of an HTML form
@@ -517,7 +517,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             int itemIndex) {
         insertStyledItemToGroup(item, value, className, null /* dir */, indentLevel, groupIndex, itemIndex);
     }
-    
+
     /**
      * Inserts an item into a group at the specified location. Additionally, the item can have an extra class name as
      * well as indent level assigned to it.
@@ -665,6 +665,12 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     @Override
     public void setSelectedIndex(int index) {
         super.setSelectedIndex(index);
+        update();
+    }
+
+    @Override
+    public void setItemSelected(int index, boolean selected) {
+        super.setItemSelected(index, selected);
         update();
     }
 
