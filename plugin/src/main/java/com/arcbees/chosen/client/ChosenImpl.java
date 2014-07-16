@@ -530,7 +530,7 @@ public class ChosenImpl {
                 && !resultsShowing) {
             resultsShow();
         }
-        return false;
+        return true;
     }
 
     private void clearBackstroke() {
@@ -1400,6 +1400,9 @@ public class ChosenImpl {
         isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
 
         String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
+
+        // recopy classes present on the select element
+        cssClasses += " " +  selectElement.getClassName();
 
         GQuery containerTemp =
                 $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
