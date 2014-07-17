@@ -682,6 +682,16 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         options.setHighlightSearchTerm(highlightSearchTerm);
     }
 
+    @Override
+    protected com.google.gwt.user.client.Element getStyleElement() {
+        GQuery chosenElement = getChosenElement();
+        if (!chosenElement.isEmpty()) {
+            return chosenElement.get(0).cast();
+        }
+
+        return super.getStyleElement();
+    }
+
     /**
      * Select all options with value present in <code>values</code> array and update the component.
      * @param values

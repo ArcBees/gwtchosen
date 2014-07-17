@@ -529,7 +529,7 @@ public class ChosenImpl {
                 && !resultsShowing) {
             resultsShow();
         }
-        return false;
+        return true;
     }
 
     private void clearBackstroke() {
@@ -1193,7 +1193,7 @@ public class ChosenImpl {
             return false;
         }
 
-        int ddTop = isMultiple ? container.height() : container.height() - 1;
+        int ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
 
         fireEvent(new ShowingDropDownEvent(this));
 
@@ -1421,6 +1421,9 @@ public class ChosenImpl {
         isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
 
         String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
+
+        // recopy classes present on the select element
+        cssClasses += " " +  selectElement.getClassName();
 
         GQuery containerTemp =
                 $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
