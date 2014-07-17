@@ -1193,7 +1193,7 @@ public class ChosenImpl {
             return false;
         }
 
-        int ddTop = isMultiple ? container.height() : container.height() - 1;
+        int ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
 
         fireEvent(new ShowingDropDownEvent(this));
 
