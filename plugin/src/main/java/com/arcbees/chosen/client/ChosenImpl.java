@@ -426,6 +426,18 @@ public class ChosenImpl {
 
         });
 
+        $(searchField).on("paste", new Function() {
+            @Override
+            public void f() {
+                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                    @Override
+                    public void execute() {
+                        resultsSearch();
+                    }
+                });
+            }
+        });
+
         if (isMultiple) {
             searchChoices.click(new Function() {
                 @Override
