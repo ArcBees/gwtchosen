@@ -426,15 +426,10 @@ public class ChosenImpl {
 
         });
 
-        $(searchField).on("paste", new Function() {
+        searchField.on("paste", new Function() {
             @Override
             public void f() {
-                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                    @Override
-                    public void execute() {
-                        resultsSearch();
-                    }
-                });
+                doSearch();
             }
         });
 
@@ -464,6 +459,15 @@ public class ChosenImpl {
                 }
             });
         }
+    }
+
+    private void doSearch() {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                resultsSearch();
+            }
+        });
     }
 
     private void blurTest() {
