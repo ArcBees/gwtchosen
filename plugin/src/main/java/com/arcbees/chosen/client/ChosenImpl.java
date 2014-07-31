@@ -1521,7 +1521,7 @@ public class ChosenImpl {
         } else {
             closeField();
         }
-        return false;
+        return true;
     }
 
     private void winnowResults(boolean isShowing) {
