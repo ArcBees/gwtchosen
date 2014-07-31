@@ -433,6 +433,13 @@ public class ChosenImpl {
             }
         });
 
+        searchField.on("drop", new Function() {
+            @Override
+            public void f() {
+                doSearch();
+            }
+        });
+
         if (isMultiple) {
             searchChoices.click(new Function() {
                 @Override
