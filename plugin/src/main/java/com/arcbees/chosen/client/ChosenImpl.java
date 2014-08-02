@@ -315,7 +315,9 @@ public class ChosenImpl {
     }
 
     protected void update() {
-        resultsResetCleanup();
+        if (!isMultiple()) {
+            resultsResetCleanup();
+        }
 
         setDefaultText();
         resultClearHighlight();
@@ -1057,6 +1059,8 @@ public class ChosenImpl {
         SafeHtmlBuilder content = new SafeHtmlBuilder();
         SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
 
+        selectedValues = new ArrayList<String>();
+
         for (SelectItem item : selectItems) {
             if (item.isGroup()) {
                 SafeHtml result = resultAddGroup((GroupItem) item);
@@ -1079,14 +1083,21 @@ public class ChosenImpl {
                     content.append(optionHtml);
                 }
 
-                if (optionItem.isSelected() && isMultiple) {
-                    choiceBuild(optionItem);
-                } else if (optionItem.isSelected() && !isMultiple) {
-                    selectedItem.removeClass(css.chznDefault()).find("span").text(optionItem.getText());
-                    if (allowSingleDeselect) {
-                        singleDeselectControlBuild();
+                if (optionItem.isSelected()) {
+                    if (isMultiple) {
+                        choiceBuild(optionItem);
+                    } else {
+                        selectedItem.removeClass(css.chznDefault()).find("span").text(optionItem.getText());
+                        if (allowSingleDeselect) {
+                            singleDeselectControlBuild();
+                        }
+
+                        selectedValues.clear();
                     }
+
+                    selectedValues.add(optionItem.getValue());
                 }
+
             }
         }
 
@@ -1142,8 +1153,11 @@ public class ChosenImpl {
 
     private void resultsReset(Event e) {
         OptionElement firstoption = selectElement.getOptions().getItem(0);
+        selectedValues = new ArrayList<String>();
+
         if (firstoption != null) {
             firstoption.setSelected(true);
+            selectedValues.add(firstoption.getValue());
         }
 
         selectedItem.find("span").text(defaultText);
@@ -1161,20 +1175,6 @@ public class ChosenImpl {
     }
 
     private void resultsResetCleanup() {
-        selectedValues = new ArrayList<String>();
-
-        if (isMultiple) {
-            populateMultipleSelectedValues();
-        } else {
-            populateSingleSelectedValues();
-        }
-    }
-
-    private void populateSingleSelectedValues() {
-        String currentValue = $selectElement.val();
-        if (currentValue != null && !currentValue.isEmpty()) {
-            selectedValues.add(currentValue);
-        }
         selectedItem.find("abbr").remove();
     }
 
