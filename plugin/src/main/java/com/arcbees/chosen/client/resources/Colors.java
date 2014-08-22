@@ -1,9 +1,5 @@
 package com.arcbees.chosen.client.resources;
 
-import com.google.common.css.compiler.gssfunctions.GssFunctions;
-
-import java.util.Arrays;
-
 public class Colors {
     // -> Default theme
     public static final String C_PRIMARY = "#fff";

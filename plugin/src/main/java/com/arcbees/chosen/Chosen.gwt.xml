@@ -3,6 +3,7 @@
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.0/distro-source/core/src/gwt-module.dtd">
 <module>
     <inherits name='com.google.gwt.query.Query' />
+    <inherits name="com.google.gwt.resources.GssResource"/>
 
     <replace-with class="com.arcbees.chosen.client.ChosenImpl">
         <when-type-assignable class="com.arcbees.chosen.client.ChosenImpl" />

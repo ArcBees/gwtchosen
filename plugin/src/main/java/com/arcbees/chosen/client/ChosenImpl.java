@@ -67,10 +67,10 @@ public class ChosenImpl {
     public static interface ChozenTemplate extends SafeHtmlTemplates {
         public ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
-        @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3}\" " +
+        @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3} {6}\" " +
                 "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
         SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
-                String searchChoiceCloseClass, String rel, String value);
+                String searchChoiceCloseClass, String rel, String value, String iconClose);
 
         @Template("<div id=\"{0}\" class=\"{1}\"></div>")
         SafeHtml container(String id, String cssClasses);
@@ -82,11 +82,12 @@ public class ChosenImpl {
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
                 SafeStyles offsets);
 
-        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b></b></div></a><div " +
-                "class=\"{3}\" style=\"{6}\"><div class=\"{4}\"><input type=\"text\" autocomplete=\"off\" /></div><ul" +
+        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b class=\"{7}\"></b></div></a><div " +
+                "class=\"{3}\" style=\"{6}\"><div class=\"{4} {8}\"><input type=\"text\" autocomplete=\"off\" /></div><ul" +
                 " class=\"{5}\"></ul></div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets);
+                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
+                String iconArrow, String iconSearch);
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
@@ -504,7 +505,7 @@ public class ChosenImpl {
         choices++;
         SafeHtml html = fromTrustedString(option.getHtml());
         searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(), html,
-                css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue()).asString());
+                css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue(), css.iconCross()).asString());
         $('#' + choiceId).find("a").click(new Function() {
             public boolean f(final Event e) {
                 choiceDestroyLinkClick(e);
@@ -1463,7 +1464,7 @@ public class ChosenImpl {
         } else {
             containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
                     css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
-                    ssb.toSafeStyles())
+                    ssb.toSafeStyles(), css.iconArrow(), css.iconSearch())
                     .asString());
         }
 
@@ -1511,7 +1512,7 @@ public class ChosenImpl {
     private void singleDeselectControlBuild() {
         if (allowSingleDeselect && selectedItem.find("abbr").isEmpty()) {
             selectedItem.find("span").first().after(
-                    "<abbr class=\"" + css.searchChoiceClose() + "\"></abbr>");
+                    "<abbr class=\"" + css.searchChoiceClose() + " " + css.iconCross() + "\"></abbr>");
         }
     }
 

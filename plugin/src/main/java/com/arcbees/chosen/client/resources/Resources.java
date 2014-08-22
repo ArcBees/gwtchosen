@@ -20,10 +20,21 @@ import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
 
-  @Source({"colors.gss", "mixins.gss", "chozen.gss"})
-  ChozenCss css();
+    // TODO: import mixins from GSS on Steroids once available
 
-  @Source("chosen-sprite.png")
-  DataResource chosenSprite();
+    @Source({"colors.gss", "mixins.gss", "icons/icons.gss", "chozen.gss"})
+    ChozenCss css();
+
+    @Source("icons/icons.ttf")
+    DataResource iconsTtf();
+
+    @Source("icons/icons.eot")
+    DataResource iconsEot();
+
+    @Source("icons/icons.svg")
+    DataResource iconsSvg();
+
+    @Source("icons/icons.woff")
+    DataResource iconsWoff();
   
 }
