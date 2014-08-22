@@ -70,7 +70,7 @@ public class ChosenImpl {
         @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3} {6}\" " +
                 "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
         SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
-                String searchChoiceCloseClass, String rel, String value, String iconClose);
+                String searchChoiceCloseClass, String rel, String value, String iconCloseClass);
 
         @Template("<div id=\"{0}\" class=\"{1}\"></div>")
         SafeHtml container(String id, String cssClasses);
@@ -87,7 +87,7 @@ public class ChosenImpl {
                 " class=\"{5}\"></ul></div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
                 String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
-                String iconArrow, String iconSearch);
+                String iconArrowClass, String iconSearchClass);
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
