@@ -259,5 +259,15 @@
             <chzn:ChosenListBox ui:field="teamChosen"/>
         </div>
 
+        <div class="span6">
+            <p>Value List box</p>
+            <chzn:ChosenValueListBox ui:field="chosenValueListBox"/>
+        </div>
+
+        <div class="span6">
+            <p>Multiple Value List box</p>
+            <chzn:MultipleChosenValueListBox ui:field="multipleChosenValueListBox"/>
+        </div>
+
     </g:HTMLPanel>
 </ui:UiBinder> 

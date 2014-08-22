@@ -39,7 +39,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt.version}</version>
                 <configuration>
                     <mode>htmlunit</mode>
                     <testTimeOut>180</testTimeOut>
@@ -75,13 +74,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>gwtchosen</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.gwtquery</groupId>
-            <artifactId>gwtquery</artifactId>
-            <version>${gwtquery.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

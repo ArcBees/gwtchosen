@@ -163,6 +163,5 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
-
     }
 }
