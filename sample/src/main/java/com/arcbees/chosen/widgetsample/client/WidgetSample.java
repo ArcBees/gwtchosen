@@ -205,12 +205,11 @@ public class WidgetSample implements EntryPoint {
         teamChosen.setWidth("300px");
 
         chosenValueListBox.setAcceptableValues(Lists.newArrayList(Choices.values()));
-        chosenValueListBox.setValue(null);
+        chosenValueListBox.setValue(Choices.THIRD);
 
         multipleChosenValueListBox.setAcceptableValues(Lists.newArrayList(Choices.values()));
         multipleChosenValueListBox.setValue(Lists.newArrayList(Choices.FIFTH, Choices.FIRST, Choices.FOURTH));
 
-        multipleChosenValueListBox.setAcceptableValues(Lists.newArrayList(Choices.FIFTH, Choices.FIRST));
         bind();
     }
 
