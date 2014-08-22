@@ -1,0 +1,91 @@
+@provide 'mixins';
+
+/**
+ * Border Radius
+ */
+
+@defmixin borderradius(TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT) {
+    -webkit-border-top-left-radius: TOP_LEFT;
+    -webkit-border-top-right-radius: TOP_RIGHT;
+    -webkit-border-bottom-right-radius: BOTTOM_RIGHT;
+    -webkit-border-bottom-left-radius: BOTTOM_LEFT;
+    -moz-border-radius-topleft: TOP_LEFT;
+    -moz-border-radius-topright: TOP_RIGHT;
+    -moz-border-radius-bottomright: BOTTOM_RIGHT;
+    -moz-border-radius-bottomleft: BOTTOM_LEFT;
+    border-top-left-radius: TOP_LEFT;
+    border-top-right-radius: TOP_RIGHT;
+    border-bottom-right-radius: BOTTOM_RIGHT;
+    border-bottom-left-radius: BOTTOM_LEFT;
+}
+
+@defmixin borderradius_b(BOTTOM) {
+    -webkit-border-radius: 0 0 BOTTOM BOTTOM;
+    -moz-border-right: 0 0 BOTTOM BOTTOM;
+    border-radius: 0 0 BOTTOM BOTTOM;
+}
+
+@defmixin rounded(SIZE) {
+    -webkit-border-radius: SIZE;
+    -moz-border-radius: SIZE;
+    border-radius: SIZE;
+}
+
+/**
+ * Gradient
+ */
+
+@defmixin gradient(FIRST_COLOR, SECOND_COLOR) {
+    background: FIRST_COLOR; /* Old browsers */
+    /* @alternate */ background: -moz-linear-gradient(top, FIRST_COLOR 0%, SECOND_COLOR 100%); /* FF3.6+ */
+    /* @alternate */ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,FIRST_COLOR), color-stop(100%,SECOND_COLOR)); /* Chrome,Safari4+ */
+    /* @alternate */ background: -webkit-linear-gradient(top, FIRST_COLOR 0%,SECOND_COLOR 100%); /* Chrome10+,Safari5.1+ */
+    /* @alternate */ background: -o-linear-gradient(top, FIRST_COLOR 0%,SECOND_COLOR 100%); /* Opera 11.10+ */
+    /* @alternate */ background: -ms-linear-gradient(top, FIRST_COLOR 0%,SECOND_COLOR 100%); /* IE10+ */
+    /* @alternate */ background: linear-gradient(to bottom, FIRST_COLOR 0%,SECOND_COLOR 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='FIRST_COLOR', endColorstr='SECOND_COLOR',GradientType=0 ); /* IE6-9 */
+}
+
+@defmixin gradient_h(FIRST_COLOR, SECOND_COLOR) {
+    background: FIRST_COLOR; /* Old browsers */
+    /* @alternate */ background: -moz-linear-gradient(left, FIRST_COLOR 0%, SECOND_COLOR 100%); /* FF3.6+ */
+    /* @alternate */ background: -webkit-gradient(linear, left top, right top, color-stop(0%, FIRST_COLOR), color-stop(100%, SECOND_COLOR)); /* Chrome,Safari4+ */
+    /* @alternate */ background: -webkit-linear-gradient(left, FIRST_COLOR 0%, SECOND_COLOR 100%); /* Chrome10+,Safari5.1+ */
+    /* @alternate */ background: -o-linear-gradient(left, FIRST_COLOR 0%, SECOND_COLOR 100%); /* Opera 11.10+ */
+    /* @alternate */ background: -ms-linear-gradient(left, FIRST_COLOR 0%, SECOND_COLOR 100%); /* IE10+ */
+    /* @alternate */ background: linear-gradient(to right, FIRST_COLOR 0%, SECOND_COLOR 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='FIRST_COLOR', endColorstr='SECOND_COLOR', GradientType=1); /* IE6-8 */
+}
+
+/**
+ * Shadow
+ */
+
+/* used */
+@defmixin shadow(HORIZONTAL, VERTICAL, BLUR, ALPHA) {
+    -webkit-box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    -moz-box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+    box-shadow: HORIZONTAL VERTICAL BLUR rgba(0, 0, 0, ALPHA);
+}
+
+@defmixin shadow_inner_color(HORIZONTAL, VERTICAL, BLUR, SPREAD, COLOR) {
+    -webkit-box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    -moz-box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+    box-shadow: inset HORIZONTAL VERTICAL BLUR SPREAD COLOR;
+}
+
+@defmixin shadow_none() {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+/**
+ * Background-clip
+ */
+
+@defmixin bgclip_pb() {
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}

@@ -1,0 +1,17 @@
+@provide 'colors';
+
+@def C_PRIMARY                  eval("com.arcbees.chosen.client.resources.Colors.C_PRIMARY");
+@def C_PRIMARY_STEP1            eval("com.arcbees.chosen.client.resources.Colors.C_PRIMARY_STEP1");
+@def C_PRIMARY_STEP2            eval("com.arcbees.chosen.client.resources.Colors.C_PRIMARY_STEP2");
+@def C_PRIMARY_STEP3            eval("com.arcbees.chosen.client.resources.Colors.C_PRIMARY_STEP3");
+@def C_SECONDARY                eval("com.arcbees.chosen.client.resources.Colors.C_SECONDARY");
+@def C_SECONDARY_LIGHT          eval("com.arcbees.chosen.client.resources.Colors.C_SECONDARY_LIGHT");
+@def C_SECONDARY_DARK           eval("com.arcbees.chosen.client.resources.Colors.C_SECONDARY_DARK");
+@def C_CHOICE                   eval("com.arcbees.chosen.client.resources.Colors.C_CHOICE");
+@def C_CHOICE_STEP1             eval("com.arcbees.chosen.client.resources.Colors.C_CHOICE_STEP1");
+@def C_CHOICE_STEP2             eval("com.arcbees.chosen.client.resources.Colors.C_CHOICE_STEP2");
+@def C_CHOICE_STEP3             eval("com.arcbees.chosen.client.resources.Colors.C_CHOICE_STEP3");
+@def C_TEXT                     eval("com.arcbees.chosen.client.resources.Colors.C_TEXT");
+@def C_TEXT_LIGHT               eval("com.arcbees.chosen.client.resources.Colors.C_TEXT_LIGHT");
+@def C_BORDER                   eval("com.arcbees.chosen.client.resources.Colors.C_BORDER");
+@def C_HIGHLIGHT                eval("com.arcbees.chosen.client.resources.Colors.C_HIGHLIGHT");

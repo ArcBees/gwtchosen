@@ -102,6 +102,11 @@
             <version>${gwtquery.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.jdramaix</groupId>
+            <artifactId>gssresource</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

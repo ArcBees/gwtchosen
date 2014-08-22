@@ -20,7 +20,7 @@ import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
 
-  @Source("chozen.css")
+  @Source({"colors.gss", "mixins.gss", "chozen.gss"})
   ChozenCss css();
 
   @Source("chosen-sprite.png")

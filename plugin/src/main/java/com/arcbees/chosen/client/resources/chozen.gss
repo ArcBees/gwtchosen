@@ -1,0 +1,496 @@
+@def CHOSEN_SPRITE_URL resourceUrl("chosenSprite");
+@def INDENT 15px;
+
+.chzn-container {
+    font-size: 13px;
+
+    display: inline-block;
+    zoom: 1;
+
+    position: relative;
+}
+
+.chzn-container .chzn-drop {
+    background: C_PRIMARY;
+
+    border: 1px solid C_BORDER;
+    border-top: 0;
+
+    position: absolute;
+    top: 29px;
+    left: 0;
+    z-index: 1010;
+
+    @mixin shadow(0, 4px, 5px, 0.15);
+}
+
+.chzn-container-single .chzn-single {
+    color: C_TEXT;
+    background-color: C_PRIMARY;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='C_PRIMARY', endColorstr='C_PRIMARY_STEP2', GradientType=0 );
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, C_PRIMARY), color-stop(50%, C_PRIMARY_STEP1), color-stop(52%, C_PRIMARY_STEP2), color-stop(100%, C_PRIMARY_STEP1));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, C_PRIMARY 20%, C_PRIMARY_STEP1 50%, C_PRIMARY_STEP2 52%, C_PRIMARY_STEP1 100%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, C_PRIMARY 20%, C_PRIMARY_STEP1 50%, C_PRIMARY_STEP2 52%, C_PRIMARY_STEP1 100%);
+    /* @alternate */ background-image: -o-linear-gradient(top, C_PRIMARY 20%, C_PRIMARY_STEP1 50%, C_PRIMARY_STEP2 52%, C_PRIMARY_STEP1 100%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, C_PRIMARY 20%, C_PRIMARY_STEP1 50%, C_PRIMARY_STEP2 52%, C_PRIMARY_STEP1 100%);
+    /* @alternate */ background-image: linear-gradient(top, C_PRIMARY 20%, C_PRIMARY_STEP1 50%, C_PRIMARY_STEP2 52%, C_PRIMARY_STEP1 100%);
+    line-height: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+
+    display: block;
+    overflow: hidden;
+    height: 23px;
+    padding: 0 0 0 8px;
+    border: 1px solid C_BORDER;
+
+    position: relative;
+
+    -webkit-box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    @mixin bgclip_pb();
+    @mixin rounded(5px);
+}
+
+.chzn-container-single .chzn-default {
+    color: C_TEXT_LIGHT;
+}
+
+.chzn-container-single .chzn-single span {
+    white-space: nowrap;
+
+    display: block;
+    overflow: hidden;
+    margin-right: 26px;
+
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.chzn-container-single .chzn-single abbr {
+    background: CHOSEN_SPRITE_URL right top no-repeat;
+    font-size: 1px;
+
+    display: block;
+    width: 12px;
+    height: 13px;
+
+    position: absolute;
+    right: 26px;
+    top: 6px;
+}
+
+.chzn-container-single .chzn-single abbr:hover {
+    background-position: right -11px;
+}
+
+.chzn-container-single.chzn-disabled .chzn-single abbr:hover {
+    background-position: right top;
+}
+
+.chzn-container-single .chzn-single div {
+    display: block;
+    height: 100%;
+    width: 18px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.chzn-container-single .chzn-single div b {
+    background: CHOSEN_SPRITE_URL no-repeat 0 0;
+
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.chzn-container-single .chzn-search {
+    white-space: nowrap;
+
+    padding: 3px 4px;
+    margin: 0;
+
+    position: relative;
+    z-index: 1010;
+}
+
+.chzn-container-single .chzn-search input {
+    background: C_PRIMARY CHOSEN_SPRITE_URL no-repeat 100% -22px;
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, C_CHOICE_STEP2), color-stop(15%, C_PRIMARY));
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, -webkit-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, -moz-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, -o-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, -ms-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL no-repeat 100% -22px, linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
+    font-family: sans-serif;
+    font-size: 1em;
+
+    margin: 1px 0;
+    padding: 4px 20px 4px 5px;
+    border: 1px solid C_BORDER;
+    outline: 0;
+}
+
+.chzn-container-single .chzn-drop {
+    @mixin borderradius(0, 0, 4px, 4px);
+    @mixin bgclip_pb();
+}
+
+.chzn-container-single-nosearch .chzn-search input {
+    position: absolute;
+    left: -9000px;
+}
+
+.chzn-container-multi .chzn-choices {
+    background-color: C_PRIMARY;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, C_PRIMARY_STEP2), color-stop(15%, C_PRIMARY));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, C_PRIMARY_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, C_PRIMARY_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background-image: -o-linear-gradient(top, C_PRIMARY_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, C_PRIMARY_STEP2 1%, C_PRIMARY 15%);
+    /* @alternate */ background-image: linear-gradient(top, C_PRIMARY_STEP2 1%, C_PRIMARY 15%);
+
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: auto !important;
+    /* @alternate */ height: 1%;
+    border: 1px solid C_BORDER;
+
+    position: relative;
+
+    cursor: text;
+}
+
+.chzn-container-multi .chzn-choices li {
+    float: left;
+    list-style: none;
+}
+
+.chzn-container-multi .chzn-choices .search-field {
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
+}
+
+.chzn-container-multi .chzn-choices .search-field input {
+    color: C_TEXT;
+    background: transparent !important;
+    font-family: sans-serif;
+    font-size: 100%;
+
+    height: 15px;
+    padding: 5px;
+    margin: 1px 0;
+    border: 0 !important;
+    outline: 0;
+
+    @mixin shadow_none();
+}
+
+.chzn-container-multi .chzn-choices .search-field .default {
+    color: C_TEXT_LIGHT;
+}
+
+.chzn-container-multi .chzn-choices .search-choice {
+    color: C_TEXT;
+    background-color: C_CHOICE_STEP3;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='C_CHOICE', endColorstr='C_CHOICE_STEP2', GradientType=0 );
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, C_CHOICE), color-stop(50%, C_CHOICE_STEP1), color-stop(52%, C_CHOICE_STEP3), color-stop(100%, C_CHOICE_STEP2));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, C_CHOICE 20%, C_CHOICE_STEP1 50%, C_CHOICE_STEP3 52%, C_CHOICE_STEP2 100%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, C_CHOICE 20%, C_CHOICE_STEP1 50%, C_CHOICE_STEP3 52%, C_CHOICE_STEP2 100%);
+    /* @alternate */ background-image: -o-linear-gradient(top, C_CHOICE 20%, C_CHOICE_STEP1 50%, C_CHOICE_STEP3 52%, C_CHOICE_STEP2 100%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, C_CHOICE 20%, C_CHOICE_STEP1 50%, C_CHOICE_STEP3 52%, C_CHOICE_STEP2 100%);
+    /* @alternate */ background-image: linear-gradient(top, C_CHOICE 20%, C_CHOICE_STEP1 50%, C_CHOICE_STEP3 52%, C_CHOICE_STEP2 100%);
+    line-height: 13px;
+
+    padding: 3px 20px 3px 5px;
+    margin: 3px 0 3px 5px;
+    border: 1px solid C_BORDER;
+
+    position: relative;
+
+    -webkit-box-shadow: 0 0 2px C_PRIMARY inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 2px C_PRIMARY inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 2px C_PRIMARY inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    @mixin rounded(3px);
+    @mixin bgclip_pb();
+
+    cursor: default;
+}
+
+.chzn-container-multi .chzn-choices .search-choice-focus {
+    background: C_CHOICE_STEP3;
+}
+
+.chzn-container-multi .chzn-choices .search-choice .search-choice-close {
+    background: CHOSEN_SPRITE_URL right top no-repeat;
+    font-size: 1px;
+
+    display: block;
+    width: 12px;
+    height: 13px;
+
+    position: absolute;
+    right: 3px;
+    top: 4px;
+}
+
+.chzn-container-multi .chzn-choices .search-choice .search-choice-close:hover {
+    background-position: right -11px;
+}
+
+.chzn-container-multi .chzn-choices .search-choice-focus .search-choice-close {
+    background-position: right -11px;
+}
+
+.chzn-container .chzn-results {
+    margin: 0 4px 4px 0;
+    padding: 0 0 0 4px;
+    max-height: 240px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    position: relative;
+}
+
+.chzn-container-multi .chzn-results {
+    margin: -1px 0 0;
+    padding: 0;
+}
+
+.chzn-container .chzn-results li {
+    color: C_TEXT;
+    line-height: 15px;
+
+    display: none;
+    padding: 5px 6px;
+    margin: 0;
+
+    list-style: none;
+}
+
+.chzn-container .chzn-results .active-result {
+    cursor: pointer;
+    display: list-item;
+}
+
+.chzn-container .chzn-results .found-result {
+    padding-left: 6px !important;
+}
+
+.chzn-container .chzn-results .highlighted {
+    color: C_PRIMARY;
+    background-color: C_SECONDARY;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3875d7', endColorstr='#2a62bc', GradientType=0 );
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, C_SECONDARY), color-stop(90%, C_SECONDARY_DARK));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -o-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+}
+
+.chzn-container .chzn-results li em {
+    background: C_HIGHLIGHT;
+    font-style: normal;
+}
+
+.chzn-container .chzn-results .highlighted em {
+    background: transparent;
+}
+
+.chzn-container .chzn-results .no-results {
+    background: C_CHOICE_STEP1;
+
+    display: list-item;
+}
+
+.chzn-container .chzn-results .group-result {
+    color: C_TEXT_LIGHT;
+    font-weight: bold;
+
+    cursor: default;
+}
+
+.chzn-container .chzn-results .group-option {
+    padding-left: INDENT;
+}
+
+.chzn-container-multi .chzn-drop .result-selected {
+    display: none;
+}
+
+.chzn-container .chzn-results-scroll {
+    background: C_PRIMARY;
+    text-align: center;
+
+    margin: 0 4px;
+    width: 321px;
+
+    position: absolute;
+    z-index: 1;
+}
+
+.chzn-container .chzn-results-scroll span {
+    text-indent: -5000px;
+
+    display: inline-block;
+    height: 17px;
+    width: 9px;
+}
+
+.chzn-container .chzn-results-scroll-down {
+    bottom: 0;
+}
+
+.chzn-container .chzn-results-scroll-down span {
+    background: CHOSEN_SPRITE_URL no-repeat -4px -3px;
+}
+
+.chzn-container .chzn-results-scroll-up span {
+    background: CHOSEN_SPRITE_URL no-repeat -22px -3px;
+}
+
+.chzn-container-active .chzn-single {
+    border: 1px solid C_SECONDARY_LIGHT;
+
+    @mixin shadow(0, 0, 5px, 0.3);
+}
+
+.chzn-container-active .chzn-single-with-drop {
+    background-color: C_CHOICE_STEP2;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='C_CHOICE_STEP2', endColorstr='C_CHOICE', GradientType=0 );
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, C_CHOICE_STEP2), color-stop(80%, C_CHOICE));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, C_CHOICE_STEP2 20%, C_CHOICE 80%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, C_CHOICE_STEP2 20%, C_CHOICE 80%);
+    /* @alternate */ background-image: -o-linear-gradient(top, C_CHOICE_STEP2 20%, C_CHOICE 80%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, C_CHOICE_STEP2 20%, C_CHOICE 80%);
+    /* @alternate */ background-image: linear-gradient(top, C_CHOICE_STEP2 20%, C_CHOICE 80%);
+
+    border: 1px solid C_BORDER;
+
+    @mixin shadow_inner_color(0, 1px, 0, 0, C_PRIMARY);
+    @mixin borderradius_b(0);
+}
+
+.chzn-container-active .chzn-single-with-drop div {
+    background: transparent;
+    border-left: none;
+}
+
+.chzn-container-active .chzn-single-with-drop div b {
+    background-position: -18px 1px;
+}
+
+.chzn-container-active .chzn-choices {
+    border: 1px solid C_SECONDARY_LIGHT;
+
+    @mixin shadow(0, 0, 5px, 0.3);
+}
+
+.chzn-container-active .chzn-choices .search-field input {
+    color: C_TEXT_LIGHT !important;
+}
+
+.chzn-disabled {
+    opacity: 0.5 !important;
+
+    cursor: default;
+}
+
+.chzn-disabled .chzn-single {
+    cursor: default;
+}
+
+.chzn-disabled .chzn-choices .search-choice .search-choice-close {
+    cursor: default;
+}
+
+.chzn-rtl {
+    text-align: right;
+}
+
+.chzn-rtl .chzn-single {
+    padding: 0 8px 0 0;
+
+    overflow: visible;
+}
+
+.chzn-rtl .chzn-single span {
+    margin-left: 26px;
+    margin-right: 0;
+
+    direction: rtl;
+}
+
+.chzn-rtl .chzn-single div {
+    left: 3px;
+    right: auto;
+}
+
+.chzn-rtl .chzn-single abbr {
+    left: 26px;
+    right: auto;
+}
+
+.chzn-rtl .chzn-choices .search-field input {
+    direction: rtl;
+}
+
+.chzn-rtl .chzn-choices li {
+    float: right;
+}
+
+.chzn-rtl .chzn-choices .search-choice {
+    padding: 3px 5px 3px 19px;
+    margin: 3px 5px 3px 0;
+}
+
+.chzn-rtl .chzn-choices .search-choice .search-choice-close {
+    background-position: right top;
+
+    left: 4px;
+    right: auto;
+}
+
+.chzn-rtl.chzn-container-single .chzn-results {
+    margin: 0 0 4px 4px;
+    padding: 0 4px 0 0;
+}
+
+.chzn-rtl .chzn-results .group-option {
+    padding-left: 0;
+    padding-right: INDENT;
+}
+
+.chzn-rtl.chzn-container-active .chzn-single-with-drop div {
+    border-right: none;
+}
+
+.chzn-rtl .chzn-search input {
+    background: C_CHOICE_STEP2 CHOSEN_SPRITE_URL no-repeat -38px -22px;
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, C_CHOICE_STEP2), color-stop(15%, C_CHOICE));
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, -webkit-linear-gradient(top, C_CHOICE_STEP2 1%, C_CHOICE 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, -moz-linear-gradient(top, C_CHOICE_STEP2 1%, C_CHOICE 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, -o-linear-gradient(top, C_CHOICE_STEP2 1%, C_CHOICE 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, -ms-linear-gradient(top, C_CHOICE_STEP2 1%, C_CHOICE 15%);
+    /* @alternate */ background: CHOSEN_SPRITE_URL  no-repeat -38px -22px, linear-gradient(top, C_CHOICE_STEP2 1%, C_CHOICE 15%);
+
+    padding: 4px 5px 4px 20px;
+
+    direction: rtl;
+}
+
+.chzn-rtl.chzn-container-single-nosearch .chzn-search input {
+    position: absolute;
+    right: -9000px;
+}
+
+.chzn-done {
+}
