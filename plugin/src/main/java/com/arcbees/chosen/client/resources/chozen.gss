@@ -142,7 +142,7 @@
 }
 
 .chzn-container-single .chzn-search input {
-    /* @alternate */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, C_CHOICE_STEP2), color-stop(15%, C_PRIMARY));
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, C_CHOICE_STEP2), color-stop(15%, C_PRIMARY));
     /* @alternate */ background: -webkit-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
     /* @alternate */ background: -moz-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
     /* @alternate */ background: -o-linear-gradient(top, C_CHOICE_STEP2 1%, C_PRIMARY 15%);
