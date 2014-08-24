@@ -1393,9 +1393,11 @@ public class ChosenImpl {
             css = GWT.<Resources>create(Resources.class).css();
         }
 
-        if (!INJECTED_RESOURCES.contains(options.getResources().getClass())) {
+        Class<?> resourceClass = options.getResources() != null ? options.getResources().getClass() : Resources.class;
+
+        if (!INJECTED_RESOURCES.contains(resourceClass)) {
             StyleInjector.inject(css.getText(), true);
-            INJECTED_RESOURCES.add(options.getResources().getClass());
+            INJECTED_RESOURCES.add(resourceClass);
         }
 
         resultsFilter = options.getResultFilter();

@@ -68,8 +68,9 @@
 
     <properties>
         <gwt.version>2.6.0</gwt.version>
-        <gwtquery.version>1.4.1</gwtquery.version>
+        <gwtquery.version>1.4.2</gwtquery.version>
         <junit.version>4.11</junit.version>
+        <guava.version>17.0</guava.version>
 
         <!-- maven -->
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -208,11 +209,29 @@
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
             <version>${gwt.version}</version>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-codeserver</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.gwtquery</groupId>
             <artifactId>gwtquery</artifactId>
             <version>${gwtquery.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
