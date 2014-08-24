@@ -42,18 +42,34 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     private Set<T> selectedValues;
     private TakesValueEditor<List<T>> editor;
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null 
+     */
     public MultipleChosenValueListBox(Renderer<T> renderer) {
         this(renderer, new ChosenOptions());
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code options} is null
+     */
     public MultipleChosenValueListBox(Renderer<T> renderer, ChosenOptions options) {
         this(renderer, new SimpleKeyProvider<T>(), options);
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code keyProvider} is null
+     */
     public MultipleChosenValueListBox(Renderer<T> renderer, ProvidesKey<T> keyProvider) {
         this(renderer, keyProvider, new ChosenOptions());
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code keyProvider} is null
+     * @throws java.lang.NullPointerException if {@code options} is null
+     */
     public MultipleChosenValueListBox(Renderer<T> renderer, ProvidesKey<T> keyProvider, ChosenOptions options) {
         super(keyProvider, options);
 

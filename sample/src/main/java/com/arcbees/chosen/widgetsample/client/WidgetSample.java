@@ -95,13 +95,11 @@ public class WidgetSample implements EntryPoint {
 
         public void onHidingDropdown(HidingDropDownEvent event) {
             log("HidingDropDownEvent", "");
-
         }
 
         public void onChange(ChosenChangeEvent event) {
             String additional = (event.isSelection() ? ": selection of " : ": deselection of ") + event.getValue();
             log("ChangeEvent on", additional);
-
         }
 
         @Override
@@ -140,7 +138,6 @@ public class WidgetSample implements EntryPoint {
     MultipleChosenValueListBox<Choices> multipleChosenValueListBox;
 
     public void onModuleLoad() {
-
         if (!ChosenListBox.isSupported()) {
             $("#browserWarning").show();
         }
@@ -186,7 +183,6 @@ public class WidgetSample implements EntryPoint {
     }
 
     private void init() {
-
         teamChosen.addGroup(teamsGroup[0]);
 
         // init options for teamchosen
@@ -212,5 +208,4 @@ public class WidgetSample implements EntryPoint {
 
         bind();
     }
-
 }

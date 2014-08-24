@@ -37,18 +37,34 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     private TakesValueEditor<T> editor;
     private T value;
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     */
     public ChosenValueListBox(Renderer<T> renderer) {
         this(renderer, new ChosenOptions());
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code options} is null
+     */
     public ChosenValueListBox(Renderer<T> renderer, ChosenOptions options) {
         this(renderer, new SimpleKeyProvider<T>(), options);
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code keyProvider} is null
+     */
     public ChosenValueListBox(Renderer<T> renderer, ProvidesKey<T> keyProvider) {
         this(renderer, keyProvider, new ChosenOptions());
     }
 
+    /**
+     * @throws java.lang.NullPointerException if {@code renderer} is null
+     * @throws java.lang.NullPointerException if {@code keyProvider} is null
+     * @throws java.lang.NullPointerException if {@code options} is null
+     */
     public ChosenValueListBox(Renderer<T> renderer, ProvidesKey<T> keyProvider, ChosenOptions options) {
         super(keyProvider, options);
 
