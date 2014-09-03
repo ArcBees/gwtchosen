@@ -103,7 +103,7 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
      * You can only pass {#code null} to reset the value of the component if and only if @{code null} is in the
      * accepted values list.
      * <p/>
-     * See {@link #acceptValue(Object)} in order to test if a value can be accepted by the component.
+     * See {@link #isAccepted(Object)} in order to test if a value can be accepted by the component.
      */
     @Override
     public void setValue(T newValue) {
@@ -114,7 +114,7 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
      * Set the value of the component. This method throws an IllegalStateException if the value isn't  part of the
      * accepted values.
      * <p/>
-     * See {@link #acceptValue(Object)} in order to test if a value can be accepted by the component.
+     * See {@link #isAccepted(Object)} in order to test if a value can be accepted by the component.
      * <p/>
      * If the {@code fireEvent} is set to true, a {@link com.google.gwt.event.logical.shared.ValueChangeEvent} will be
      * fired.
@@ -158,7 +158,7 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     }
 
     private void setValue(T newValue, boolean fireEvents, boolean update) {
-        Preconditions.checkState(acceptValue(newValue), "This value is not in the acceptable values " +
+        Preconditions.checkState(isAccepted(newValue), "This value is not in the acceptable values " +
                 "list of this component");
 
         if (Objects.equals(newValue, value)) {
