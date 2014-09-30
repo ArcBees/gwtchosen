@@ -42,6 +42,8 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     private Set<T> selectedValues;
     private TakesValueEditor<List<T>> editor;
 
+    private List<String> lastValueIndex;
+
     /**
      * @throws java.lang.NullPointerException if {@code renderer} is null 
      */
@@ -157,8 +159,12 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
                 valueIndex.add("" + index);
             }
         }
-
-        getChosenListBox().setSelectedValue(valueIndex.toArray(new String[valueIndex.size()]));
+        if (lastValueIndex != null) {
+            this.lastValueIndex.removeAll(valueIndex);
+            getChosenListBox().setSelectedValue(false, lastValueIndex.toArray(new String[lastValueIndex.size()]));
+        }
+        this.lastValueIndex = valueIndex;
+        getChosenListBox().setSelectedValue(true, valueIndex.toArray(new String[valueIndex.size()]));
     }
 
     @Override
@@ -171,13 +177,8 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     private void setValue(List<T> values, boolean fireEvent, boolean update) {
         checkValuesAcceptability(values);
 
-        int oldSize = selectedValues.size();
-
+        selectedValues.clear();
         selectedValues.addAll(values);
-
-        if (selectedValues.size() == oldSize) {
-            return;
-        }
 
         if (update) {
             updateChosenListBox();
