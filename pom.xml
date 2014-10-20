@@ -67,7 +67,7 @@
     </ciManagement>
 
     <properties>
-        <gwt.version>2.6.0</gwt.version>
+        <gwt.version>2.6.1</gwt.version>
         <gwtquery.version>1.4.2</gwtquery.version>
         <junit.version>4.11</junit.version>
         <guava.version>17.0</guava.version>
@@ -204,11 +204,6 @@
             <artifactId>gwt-dev</artifactId>
             <version>${gwt.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <version>${gwt.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
