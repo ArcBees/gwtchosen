@@ -696,12 +696,12 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * Select all options with value present in <code>values</code> array and update the component.
      * @param values
      */
-    public void setSelectedValue(String... values) {
+    public void setSelectedValue(boolean selected, String... values) {
         for (String value : values){
             Element element = $("option[value='" + value + "']", this).get(0);
 
             if (element != null) {
-                OptionElement.as(element).setSelected(true);
+                OptionElement.as(element).setSelected(selected);
             }
         }
         update();
