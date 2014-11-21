@@ -5,6 +5,8 @@
     <inherits name='com.google.gwt.query.Query' />
     <inherits name="com.google.common.collect.Collect"/>
 
+    <set-configuration-property name="CssResource.enableGss" value="true" />
+
     <replace-with class="com.arcbees.chosen.client.ChosenImpl">
         <when-type-assignable class="com.arcbees.chosen.client.ChosenImpl" />
     </replace-with>
@@ -13,4 +15,4 @@
         <when-property-is name="user.agent" value="ie6" />
     </replace-with>
 </module>
-    
+
