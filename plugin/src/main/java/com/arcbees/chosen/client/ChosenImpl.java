@@ -436,6 +436,13 @@ public class ChosenImpl {
             }
         });
 
+        searchField.on("drop", new Function() {
+            @Override
+            public void f() {
+                doSearch();
+            }
+        });
+
         if (isMultiple) {
             searchChoices.click(new Function() {
                 @Override
@@ -1390,9 +1397,11 @@ public class ChosenImpl {
             injectedResource = Resources.class;
         }
 
-        if (!INJECTED_RESOURCES.contains(injectedResource)) {
+        Class<?> resourceClass = options.getResources() != null ? options.getResources().getClass() : Resources.class;
+
+        if (!INJECTED_RESOURCES.contains(resourceClass)) {
             StyleInjector.inject(css.getText(), true);
-            INJECTED_RESOURCES.add(injectedResource);
+            INJECTED_RESOURCES.add(resourceClass);
         }
 
         resultsFilter = options.getResultFilter();

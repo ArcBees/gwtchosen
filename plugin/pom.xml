@@ -45,50 +45,15 @@
                     </excludes>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwt.version}</version>
-                <configuration>
-                    <mode>htmlunit</mode>
-                    <testTimeOut>180</testTimeOut>
-                    <!-- With multiple tests use GwtTestSuite.java for speed -->
-                    <!-- <includes>**/*GwtTestSuite.java</includes> -->
-                    <includes>**/*GwtTest.java</includes>
-
-                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
-                    <logLevel>${gwt.loglevel}</logLevel>
-                    <style>${gwt.outputstyle}</style>
-
-                    <module>com.arcbees.chosen.Chosen</module>
-  
-                </configuration>
-                
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <version>${gwt.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -100,6 +65,12 @@
             <groupId>com.googlecode.gwtquery</groupId>
             <artifactId>gwtquery</artifactId>
             <version>${gwtquery.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>${guava.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
