@@ -1,4 +1,4 @@
-@provide 'colors';
+@provide 'chosen-colors';
 
 @def C_PRIMARY                  #fff;
 @def C_PRIMARY_STEP1            #f4f4f4;

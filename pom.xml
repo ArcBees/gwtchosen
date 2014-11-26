@@ -67,10 +67,11 @@
     </ciManagement>
 
     <properties>
-        <gwt.version>2.6.1</gwt.version>
+        <gwt.version>2.7.0</gwt.version>
         <gwtquery.version>1.4.2</gwtquery.version>
         <junit.version>4.11</junit.version>
         <guava.version>17.0</guava.version>
+        <gsss.version>1.0-SNAPSHOT</gsss.version>
 
         <!-- maven -->
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -227,6 +228,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-gwt</artifactId>
             <version>${guava.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gss</groupId>
+            <artifactId>gsss</artifactId>
+            <version>${gsss.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

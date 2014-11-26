@@ -1,3 +1,5 @@
+@provide 'chosen-icons';
+
 @def ICONS_TTF resourceUrl("iconsTtf");
 @def ICONS_EOT resourceUrl("iconsEot");
 @def ICONS_WOFF resourceUrl("iconsWoff");

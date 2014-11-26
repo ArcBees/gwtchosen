@@ -1,3 +1,6 @@
+@require "chosen-colors";
+@require "gsss-mixins";
+
 @def INDENT 15px;
 
 .chzn-container {
@@ -48,7 +51,7 @@
     -webkit-box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 3px C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
-    @mixin bgclip_pb();
+    @mixin bgclip();
     @mixin rounded(5px);
 }
 
@@ -159,7 +162,7 @@
 
 .chzn-container-single .chzn-drop {
     @mixin borderradius(0, 0, 4px, 4px);
-    @mixin bgclip_pb();
+    @mixin bgclip();
 }
 
 .chzn-container-single-nosearch .chzn-search input {
@@ -240,7 +243,7 @@
     -moz-box-shadow: 0 0 2px C_PRIMARY inset, 0 1px 0 rgba(0, 0, 0, 0.05);
     box-shadow: 0 0 2px C_PRIMARY inset, 0 1px 0 rgba(0, 0, 0, 0.05);
     @mixin rounded(3px);
-    @mixin bgclip_pb();
+    @mixin bgclip();
 
     cursor: default;
 }

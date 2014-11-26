@@ -15,9 +15,9 @@
  */
 package com.arcbees.chosen.client.resources;
 
-import com.google.gwt.resources.client.GssResource;
+import com.google.gwt.resources.client.CssResource;
 
-public interface ChozenCss extends GssResource {
+public interface ChozenCss extends CssResource {
 
   @ClassName("active-result")
   public String activeResult();
