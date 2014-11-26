@@ -112,7 +112,7 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
     /**
      * Return true if the value is part of the accepted values list of this component.
      */
-    public boolean acceptValue(T value) {
+    public boolean isAccepted(T value) {
         return valueKeyToIndex.containsKey(value);
     }
 

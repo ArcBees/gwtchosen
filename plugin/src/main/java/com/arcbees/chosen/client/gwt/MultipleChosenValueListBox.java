@@ -104,7 +104,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
      * Set the values of the component. This method throws an IllegalStateException if one of the values isn't part
      * of the accepted values.
      * <p/>
-     * See {@link #acceptValue(Object)} in order to test if a value can be accepted by the component.
+     * See {@link #isAccepted(Object)} in order to test if a value can be accepted by the component.
      */
     @Override
     public void setValue(List<T> values) {
@@ -115,7 +115,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
      * Set the values of the component. This method throws an IllegalStateException if one of the values isn't part
      * of the accepted values.
      * <p/>
-     * See {@link #acceptValue(Object)} in order to test if a value can be accepted by the component.
+     * See {@link #isAccepted(Object)} in order to test if a value can be accepted by the component.
      * <p/>
      * If the {@code fireEvent} is set to true, a {@link com.google.gwt.event.logical.shared.ValueChangeEvent} will be
      * fired.
@@ -192,7 +192,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         List<T> unacceptableValues = new ArrayList<T>();
 
         for (T value : values) {
-            if (!acceptValue(value)) {
+            if (!isAccepted(value)) {
                 unacceptableValues.add(value);
             }
         }
