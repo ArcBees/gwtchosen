@@ -1,0 +1,40 @@
+@provide 'chosen-icons';
+
+@def ICONS_TTF resourceUrl("iconsTtf");
+@def ICONS_EOT resourceUrl("iconsEot");
+@def ICONS_WOFF resourceUrl("iconsWoff");
+@def ICONS_SVG resourceUrl("iconsSvg");
+
+@font-face {
+    font-family: 'icons';
+    src: ICONS_EOT;
+    src: ICONS_WOFF format('woff'),
+    ICONS_TTF format('truetype'),
+    ICONS_SVG format('svg');
+}
+
+@external 'icon_*';
+
+[class^="icon_"],
+[class*=" icon_"] {
+	font-family: 'icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon_cross:before {
+	content: "\e600";
+}
+.icon_arrow:before {
+	content: "\e601";
+}
+.icon_search:before {
+	content: "\e602";
+}

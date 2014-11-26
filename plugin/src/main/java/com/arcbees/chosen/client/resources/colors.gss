@@ -1,0 +1,21 @@
+@provide 'chosen-colors';
+
+@def C_PRIMARY                  #fff;
+@def C_PRIMARY_STEP1            #f4f4f4;
+@def C_PRIMARY_STEP2            #eee;
+@def C_PRIMARY_STEP3            #e8e8e8;
+
+@def C_SECONDARY                #3875d7;
+@def C_SECONDARY_LIGHT          #5897fb;
+@def C_SECONDARY_DARK           #2a62bc;
+
+@def C_CHOICE                   C_PRIMARY;
+@def C_CHOICE_STEP1             C_PRIMARY_STEP1;
+@def C_CHOICE_STEP2             C_PRIMARY_STEP2;
+@def C_CHOICE_STEP3             C_PRIMARY_STEP3;
+
+@def C_TEXT                     #333;
+@def C_TEXT_LIGHT               #999;
+
+@def C_BORDER                   #aaa;
+@def C_HIGHLIGHT                #feffde;
