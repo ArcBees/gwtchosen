@@ -707,6 +707,15 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         update();
     }
 
+    /**
+     * Unselect all previously selected values.
+     */
+    public void unselectAll() {
+        for (Element selected : $("option:selected", this).elements()) {
+            OptionElement.as(selected).setSelected(false);
+        }
+    }
+
     @Override
     public void setVisible(boolean visible) {
         this.visible = visible;
@@ -767,5 +776,4 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
         return focusableElement;
     }
-
 }

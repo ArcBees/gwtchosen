@@ -124,6 +124,38 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         setValue(values, fireEvent, true);
     }
 
+    /**
+     * Unselect a specific value. This method does nothing if the <code>value</code> is not selected.
+     */
+    public void unselect(T value) {
+        unselect(value, false);
+    }
+
+    /**
+     * Unselect a specific value. This method does nothing if the <code>value</code> is not selected.
+     * <p>If the {@code fireEvent} is set to true, a {@link com.google.gwt.event.logical.shared.ValueChangeEvent} will
+     * be fired.
+     */
+    public void unselect(T value, boolean fireEvent) {
+         boolean removed = selectedValues.remove(value);
+
+        if (removed) {
+            updateChosenListBox();
+
+            if (fireEvent) {
+                ValueChangeEvent.fire(this, getValue());
+            }
+        }
+    }
+
+    /**
+     * Unselect all previously selected values
+     *
+     */
+    public void unselectAll() {
+        setValue(null);
+    }
+
     @Override
     protected ChosenListBox createChosenListBox(ChosenOptions options) {
         return new ChosenListBox(true, options);
@@ -131,9 +163,8 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
 
     @Override
     protected void deselectValue(T value) {
-        Preconditions.checkState(selectedValues.contains(value), "Value was not previously selected");
-
-        selectedValues.remove(value);
+        boolean removed = selectedValues.remove(value);
+        Preconditions.checkState(removed, "Value was not previously selected");
 
         ValueChangeEvent.fire(this, getValue());
     }
@@ -158,6 +189,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
             }
         }
 
+        getChosenListBox().unselectAll();
         getChosenListBox().setSelectedValue(valueIndex.toArray(new String[valueIndex.size()]));
     }
 
@@ -169,14 +201,12 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     }
 
     private void setValue(List<T> values, boolean fireEvent, boolean update) {
-        checkValuesAcceptability(values);
+        selectedValues.clear();
 
-        int oldSize = selectedValues.size();
+        if (values != null) {
+            checkValuesAcceptability(values);
 
-        selectedValues.addAll(values);
-
-        if (selectedValues.size() == oldSize) {
-            return;
+            selectedValues.addAll(values);
         }
 
         if (update) {
