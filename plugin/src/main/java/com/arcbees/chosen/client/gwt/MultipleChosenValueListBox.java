@@ -121,7 +121,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
      * fired.
      */
     public void setValue(List<T> values, boolean fireEvent) {
-        setValue(values, fireEvent, true);
+        setValue(values, fireEvent, false);
     }
 
     /**
@@ -171,7 +171,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
 
     @Override
     protected void selectValue(T value) {
-        setValue(Lists.newArrayList(value), true, false);
+        setValue(Lists.newArrayList(value), true, true);
     }
 
     @Override
@@ -200,8 +200,10 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         getChosenListBox().addItem(renderer.render(value), "" + index);
     }
 
-    private void setValue(List<T> values, boolean fireEvent, boolean update) {
-        selectedValues.clear();
+    private void setValue(List<T> values, boolean fireEvent, boolean fromComponent) {
+        if (!fromComponent) {
+            selectedValues.clear();
+        }
 
         if (values != null) {
             checkValuesAcceptability(values);
@@ -209,7 +211,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
             selectedValues.addAll(values);
         }
 
-        if (update) {
+        if (!fromComponent) {
             updateChosenListBox();
         }
 
