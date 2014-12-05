@@ -259,7 +259,12 @@ public class SelectParser {
             }
 
             item.value = option.getValue();
-            item.text = option.getText();
+
+            item.text = option.getLabel();
+            if (isNullOrEmpty(item.text)) {
+                item.text = option.getText();
+            }
+
             item.html = option.getInnerHTML();
             item.selected = option.isSelected();
             item.disabled = groupDisabled ? groupDisabled : option.isDisabled();
@@ -276,6 +281,10 @@ public class SelectParser {
 
         parsed.add(item);
         optionsIndex++;
+    }
+
+    private boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
     }
 
     private native String getCssText(Style s)/*-{
