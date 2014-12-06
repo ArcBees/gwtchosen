@@ -136,6 +136,9 @@ public class ChosenImpl {
                         String resultId = option.getDomId();
                         GQuery result = $("#" + resultId);
                         String optionContent = option.getHtml();
+                        if (optionContent == null || optionContent.trim().isEmpty()) {
+                            optionContent = option.getText();
+                        }
 
                         if (regex.test(optionContent)) {
                             found = true;
