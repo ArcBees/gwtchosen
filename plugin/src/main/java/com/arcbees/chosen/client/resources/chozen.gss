@@ -312,18 +312,18 @@
 
 .chzn-container .chzn-results .highlighted {
     color: CHZN_C_PRIMARY;
-    background-color: C_SECONDARY;
+    background-color: CHZN_C_SECONDARY;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3875d7', endColorstr='#2a62bc', GradientType=0 );
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, C_SECONDARY), color-stop(90%, C_SECONDARY_DARK));
-    /* @alternate */ background-image: -webkit-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
-    /* @alternate */ background-image: -moz-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
-    /* @alternate */ background-image: -o-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
-    /* @alternate */ background-image: -ms-linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
-    /* @alternate */ background-image: linear-gradient(top, C_SECONDARY 20%, C_SECONDARY_DARK 90%);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, CHZN_C_SECONDARY), color-stop(90%, CHZN_C_SECONDARY_DARK));
+    /* @alternate */ background-image: -webkit-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -moz-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -o-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: -ms-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
+    /* @alternate */ background-image: linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
 }
 
 .chzn-container .chzn-results li em {
-    background: C_HIGHLIGHT;
+    background: CHZN_C_HIGHLIGHT;
     font-style: normal;
 }
 
@@ -353,7 +353,7 @@
 }
 
 .chzn-container-active .chzn-single {
-    border: 1px solid C_SECONDARY_LIGHT;
+    border: 1px solid CHZN_C_SECONDARY_LIGHT;
 
     @mixin shadow(0, 0, 5px, 0.3);
 }
@@ -384,7 +384,7 @@
 }
 
 .chzn-container-active .chzn-choices {
-    border: 1px solid C_SECONDARY_LIGHT;
+    border: 1px solid CHZN_C_SECONDARY_LIGHT;
 
     @mixin shadow(0, 0, 5px, 0.3);
 }
