@@ -21,11 +21,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Ordering;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasEnabled;
@@ -46,6 +48,77 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         initWidget(createChosenListBox(options));
 
         getChosenListBox().addChosenChangeHandler(this);
+    }
+
+    /**
+     * Add a value to the acceptable values list. This method will update the component automatically. Please use
+     * {@link #addValues(java.util.List)} to add a list of values.
+     */
+    public void addValue(T value) {
+        doAddValue(value);
+
+        getChosenListBox().update();
+    }
+
+    /**
+     * Add values to the acceptable values list. This method will update the component automatically.
+     */
+    public void addValues(List<T> valuesToAdd) {
+        for (T value : valuesToAdd) {
+            doAddValue(value);
+        }
+
+        getChosenListBox().update();
+    }
+
+    /**
+     * Remove a value to the acceptable values list. This method will update the component automatically. Please use
+     * {@link #removeValues(java.util.List)} to remove a list of values.
+     * <p/>
+     * Calling this method will not reset the current selected value(s) except if this(ese) value(s) is(are) not in
+     * the accepted values list anymore.
+     */
+    public boolean removeValue(T value) {
+        Object key = keyProvider.getKey(value);
+
+        if (!valueKeyToIndex.containsKey(key)) {
+            return false;
+        }
+
+        int index = valueKeyToIndex.remove(key);
+        values.remove(index);
+        getChosenListBox().removeItem(index);
+
+        updateAfterRemoval();
+
+        return true;
+    }
+
+    /**
+     * Remove values to the acceptable values list. This method will update the component automatically.
+     * <p/>
+     * Calling this method will not reset the current selected value(s) except if this(ese) value(s) is(are) not in
+     * the accepted values list anymore.
+     */
+    public void removeValues(List<T> valuesToRemove) {
+        // we have to remove values in decreasing order of their related index. Otherwise, we will have to update
+        // the indexes map each time we remove an item and this method will perform in O(n2)
+        TreeSet<Integer> indexToRemove = new TreeSet<Integer>(Ordering.natural().reverse());
+
+        for (T value : valuesToRemove) {
+            Object key = keyProvider.getKey(value);
+            if (valueKeyToIndex.containsKey(key)) {
+                indexToRemove.add(valueKeyToIndex.get(key));
+            }
+        }
+
+        if (!indexToRemove.isEmpty()) {
+            for (int index : indexToRemove) {
+                removeItem(index);
+            }
+
+            updateAfterRemoval();
+        }
     }
 
     @Override
@@ -84,7 +157,7 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         listBox.clear(false);
 
         for (T nextNewValue : acceptableValues) {
-            addValue(nextNewValue);
+            doAddValue(nextNewValue);
         }
 
         updateChosenListBox();
@@ -149,12 +222,12 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
     protected abstract void updateChosenListBox();
 
     /**
-     * Add the item to the ChosenListBox. Overridde this method if you want to implement your custom way to add
+     * Add the item to the ChosenListBox. Override this method if you want to implement your custom way to add
      * the item in the ChosenListBox (setting a style class for the item for example)
      */
     protected abstract void addItemToChosenListBox(T value);
 
-    private void addValue(T value) {
+    private void doAddValue(T value) {
         Object key = keyProvider.getKey(value);
         Preconditions.checkState(!valueKeyToIndex.containsKey(key), "Duplicate value: %s", value);
 
@@ -162,5 +235,23 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         values.add(value);
 
         addItemToChosenListBox(value);
+    }
+
+    private void updateIndex() {
+        valueKeyToIndex.clear();
+
+        for (int i = 0; i < values.size(); i++) {
+            valueKeyToIndex.put(keyProvider.getKey(values.get(i)), i);
+        }
+    }
+
+    private void updateAfterRemoval() {
+        updateIndex();
+        updateChosenListBox();
+    }
+
+    private void removeItem(int index) {
+        values.remove(index);
+        getChosenListBox().removeItem(index);
     }
 }
