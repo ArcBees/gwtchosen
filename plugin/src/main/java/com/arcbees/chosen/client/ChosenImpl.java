@@ -326,7 +326,7 @@ public class ChosenImpl {
         setDefaultText();
         resultClearHighlight();
         resultSingleSelected = null;
-        resultsBuild();
+        resultsBuild(false);
     }
 
     private boolean activateField(Event e) {
@@ -1043,7 +1043,7 @@ public class ChosenImpl {
         }
     }
 
-    private void resultsBuild() {
+    private void resultsBuild(boolean init) {
         selectItems = new SelectParser().parse(selectElement);
 
         if (isMultiple && choices > 0) {
@@ -1059,7 +1059,7 @@ public class ChosenImpl {
             }
         }
 
-        rebuildResultItems(true);
+        rebuildResultItems(init);
     }
 
     public void rebuildResultItems() {
@@ -1504,7 +1504,7 @@ public class ChosenImpl {
             searchField.css("width", searchFieldWidth + "px");
         }
 
-        resultsBuild();
+        resultsBuild(true);
 
         setTabIndex();
 
