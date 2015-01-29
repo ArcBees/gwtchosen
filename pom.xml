@@ -78,6 +78,13 @@
         <maven.compiler.target>1.6</maven.compiler.target>
         <maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>2.12</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>2.17</maven-failsafe-plugin.version>
+        <jetty-maven-plugin.version>9.3.0.M1</jetty-maven-plugin.version>
+
+        <!-- testing -->
+        <junit.version>4.11</junit.version>
+        <selenium-java.version>2.41.0</selenium-java.version>
+        <assertj-core.version>1.7.0</assertj-core.version>
 
         <!-- GitHub Sites -->
         <github.version>0.9</github.version>
@@ -93,6 +100,7 @@
 
     <modules>
         <module>plugin</module>
+        <module>integration-test</module>
         <module>sample</module>
     </modules>
 
@@ -190,20 +198,39 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.arcbees</groupId>
+                <artifactId>gwtchosen</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>com.arcbees.gss</groupId>
                 <artifactId>gsss</artifactId>
                 <version>${gsss.version}</version>
+            </dependency>
+
+            <!-- Test deps -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-java</artifactId>
+                <version>${selenium-java.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>

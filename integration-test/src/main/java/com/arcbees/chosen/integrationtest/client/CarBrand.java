@@ -14,17 +14,24 @@
  * the License.
  */
 
-package com.arcbees.chosen.client;
+package com.arcbees.chosen.integrationtest.client;
 
-import com.google.gwt.junit.client.GWTTestCase;
-
-public class CompileGwtTest extends GWTTestCase {
-    @Override
-    public String getModuleName() {
-        return "com.arcbees.chosen.Chosen";
-    }
-
-    public void testSandbox() {
-        assertTrue(true);
-    }
+public enum CarBrand {
+    TOYOTA,
+    HONDA,
+    MERCEDES,
+    FORD,
+    HYUNDAI,
+    FERRARI,
+    BMW,
+    TESLA,
+    AUDI,
+    BENTLEY,
+    CADILLAC,
+    CHEVROLET,
+    CHRYSLER,
+    DODGE,
+    MITSUBISHI,
+    JAGUAR,
+    JEEP
 }
