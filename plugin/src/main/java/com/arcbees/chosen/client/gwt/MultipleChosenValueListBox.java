@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -43,7 +43,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     private TakesValueEditor<List<T>> editor;
 
     /**
-     * @throws java.lang.NullPointerException if {@code renderer} is null 
+     * @throws java.lang.NullPointerException if {@code renderer} is null
      */
     public MultipleChosenValueListBox(Renderer<T> renderer) {
         this(renderer, new ChosenOptions());
