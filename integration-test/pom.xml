@@ -55,6 +55,10 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>gwt-maven-plugin</artifactId>
                         <version>${gwt.version}</version>
+                        <configuration>
+                            <runTarget>index.html</runTarget>
+                            <port>8080</port>
+                        </configuration>
                         <executions>
                             <execution>
                                 <configuration>

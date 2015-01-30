@@ -16,22 +16,8 @@
 
 package com.arcbees.chosen.integrationtest.client;
 
-public enum CarBrand {
-    TOYOTA,
-    HONDA,
-    MERCEDES,
-    FORD,
-    HYUNDAI,
-    FERRARI,
-    BMW,
-    TESLA,
-    AUDI,
-    BENTLEY,
-    CADILLAC,
-    CHEVROLET,
-    CHRYSLER,
-    DODGE,
-    MITSUBISHI,
-    JAGUAR,
-    JEEP
+public abstract class TestCase implements Runnable {
+    public String getToken() {
+        return getClass().getSimpleName();
+    }
 }
