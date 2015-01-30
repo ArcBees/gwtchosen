@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.HideCurrentValue;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -36,12 +37,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ChooseOption());
         registerTestCase(new HideEmptyValues());
         registerTestCase(new ShowNonEmptyValues());
-    }
-
-    private void registerTestCase(TestCase testCase) {
-        assert !testCaseMap.containsKey(testCase.getToken());
-
-        testCaseMap.put(testCase.getToken(), testCase);
+        registerTestCase(new HideCurrentValue());
     }
 
     @Override
@@ -56,5 +52,11 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         String token = event.getValue();
         TestCase testCase = testCaseMap.get(token);
         testCase.run();
+    }
+
+    private void registerTestCase(TestCase testCase) {
+        assert !testCaseMap.containsKey(testCase.getToken());
+
+        testCaseMap.put(testCase.getToken(), testCase);
     }
 }

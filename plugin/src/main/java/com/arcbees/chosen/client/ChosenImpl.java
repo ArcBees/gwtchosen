@@ -1220,7 +1220,13 @@ public class ChosenImpl {
             return false;
         }
 
-        int ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
+        int ddTop;
+
+        if (options.isHideCurrentValue()) {
+            ddTop = 0;
+        } else {
+            ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
+        }
 
         fireEvent(new ShowingDropDownEvent(this));
 
@@ -1291,6 +1297,7 @@ public class ChosenImpl {
         searchField.css("width", w + "px");
 
         int ddTop = container.height();
+        GQuery.console.info("ddTop (searchFieldScale): " + ddTop);
         dropdown.css("top", ddTop + "px");
     }
 

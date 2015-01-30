@@ -21,19 +21,12 @@ import java.util.EnumSet;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class ChooseOption extends TestCase {
-    public static final AbstractRenderer<CarBrand> RENDERER = new AbstractRenderer<CarBrand>() {
-        @Override
-        public String render(CarBrand object) {
-            if (object == null) {
-                return "";
-            }
-            return object.name();
-        }
-    };
+    public static final AbstractRenderer<CarBrand> RENDERER = new DefaultCarRenderer();
 
     @Override
     public void run() {

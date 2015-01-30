@@ -30,6 +30,7 @@ import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.HideCurrentValue;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -42,39 +43,57 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 
-public class SampleIT {
+public class ChosenIT {
     private static final String ROOT = "http://localhost:8080";
     private static final int TIME_OUT_IN_SECONDS = 20;
     private final WebDriver webDriver = new ChromeDriver();
 
     @Test
     public void chooseOption() throws Throwable {
+        // Given
         loadTestCase(new ChooseOption());
         String fordRender = ChooseOption.RENDERER.render(FORD);
 
+        // When
         clickOptionWithDisplayString(fordRender);
 
+        // Then
         assertThat(getSelectedOptionText()).isEqualTo(fordRender);
     }
 
     @Test
     public void hideEmptyValues() {
+        // Given
         loadTestCase(new HideEmptyValues());
 
+        // Then
         Set<String> options = getOptions();
-
         assertThat(options).isEqualTo(CarBrand.getAllNames(HideEmptyValues.RENDERER));
     }
 
     @Test
     public void showNonEmptyValues() {
+        // Given
         loadTestCase(new ShowNonEmptyValues());
 
+        // Then
         Set<String> options = getOptions();
-
         Set<String> allNames = CarBrand.getAllNames(ShowNonEmptyValues.RENDERER);
         allNames.add(ShowNonEmptyValues.RENDERER.render(null));
         assertThat(options).isEqualTo(allNames);
+    }
+
+    @Test
+    public void hideCurrentValue() {
+        // Given
+        loadTestCase(new HideCurrentValue());
+
+        // When
+        openDropDown();
+
+        // Then
+        WebElement dropDown = getDropDown();
+        assertThat(dropDown.getCssValue("top")).isEqualTo("0px");
     }
 
     @After
@@ -103,6 +122,12 @@ public class SampleIT {
         String xpath = String.format("//li[text()='%s']", displayString);
         WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
         li.click();
+    }
+
+    private WebElement getDropDown() {
+        String xpath = "//div[@class='com-arcbees-chosen-client-resources-ChozenCss-chzn-drop']";
+
+        return webDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
     }
 
     private void openDropDown() {
