@@ -25,12 +25,12 @@ public class MaxSelectedEvent extends ChosenEvent<MaxSelectedEvent.MaxSelectedHa
 
     public static Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
 
-    public static Type<MaxSelectedHandler> getType() {
-        return TYPE;
-    }
-
     public MaxSelectedEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<MaxSelectedHandler> getType() {
+        return TYPE;
     }
 
     @Override

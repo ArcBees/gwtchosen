@@ -25,12 +25,12 @@ public class ReadyEvent extends ChosenEvent<ReadyEvent.ReadyHandler> {
 
     public static Type<ReadyHandler> TYPE = new Type<ReadyHandler>();
 
-    public static Type<ReadyHandler> getType() {
-        return TYPE;
-    }
-
     public ReadyEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<ReadyHandler> getType() {
+        return TYPE;
     }
 
     @Override

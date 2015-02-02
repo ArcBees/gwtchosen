@@ -65,8 +65,7 @@ public class ChosenOptions {
     }
 
     /**
-     * provide the {@code ResultFilter} instance used to filter the data
-     * @return
+     * provide the {@code ResultFilter} instance used to filter the data.
      */
     public ResultsFilter getResultFilter() {
         return resultFilter;
@@ -101,7 +100,6 @@ public class ChosenOptions {
      * used in "multiple select" mode or when a custom ResultFilter is used.
      *
      * @param disableSearchThreshold
-     * @return
      */
     public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
         this.disableSearchThreshold = disableSearchThreshold;
