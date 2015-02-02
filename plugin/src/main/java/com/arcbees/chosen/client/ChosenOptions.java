@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -86,7 +86,7 @@ public class ChosenOptions {
     public boolean isSingleBackstrokeDelete() {
         return singleBackstrokeDelete;
     }
-    
+
     public boolean isHighlightSearchTerm() {
         return highlightSearchTerm;
     }
@@ -151,7 +151,7 @@ public class ChosenOptions {
         this.singleBackstrokeDelete = singleBackstrokeDelete;
         return this;
     }
-    
+
     public void setHighlightSearchTerm(boolean highlightSearchTerm) {
         this.highlightSearchTerm = highlightSearchTerm;
     }
