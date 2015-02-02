@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,28 +16,45 @@
 
 package com.arcbees.chosen.integrationtest.client;
 
-import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.arcbees.chosen.client.gwt.ChosenValueListBox;
-import com.google.common.base.CaseFormat;
+import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ChosenSampleIntegrationTests implements EntryPoint {
+public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHandler<String> {
+    private final Map<String, TestCase> testCaseMap;
+
+    public ChosenSampleIntegrationTests() {
+        testCaseMap = new HashMap<String, TestCase>();
+        registerTestCase(new ChooseOption());
+        registerTestCase(new HideEmptyValues());
+        registerTestCase(new ShowNonEmptyValues());
+    }
+
+    private void registerTestCase(TestCase testCase) {
+        assert !testCaseMap.containsKey(testCase.getToken());
+
+        testCaseMap.put(testCase.getToken(), testCase);
+    }
+
     @Override
     public void onModuleLoad() {
-        RootPanel rootPanel = RootPanel.get();
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(new AbstractRenderer<CarBrand>() {
-            @Override
-            public String render(CarBrand object) {
-                return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, object.name());
-            }
-        });
+        History.addValueChangeHandler(this);
+        History.fireCurrentHistoryState();
+    }
 
-        listBox.setAcceptableValues(EnumSet.allOf(CarBrand.class));
-        listBox.setValue(CarBrand.AUDI);
-
-        rootPanel.add(listBox);
+    @Override
+    public void onValueChange(ValueChangeEvent<String> event) {
+        RootPanel.get().clear();
+        String token = event.getValue();
+        TestCase testCase = testCaseMap.get(token);
+        testCase.run();
     }
 }

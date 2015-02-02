@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,22 +16,8 @@
 
 package com.arcbees.chosen.integrationtest.client;
 
-public enum CarBrand {
-    TOYOTA,
-    HONDA,
-    MERCEDES,
-    FORD,
-    HYUNDAI,
-    FERRARI,
-    BMW,
-    TESLA,
-    AUDI,
-    BENTLEY,
-    CADILLAC,
-    CHEVROLET,
-    CHRYSLER,
-    DODGE,
-    MITSUBISHI,
-    JAGUAR,
-    JEEP
+public abstract class TestCase implements Runnable {
+    public String getToken() {
+        return getClass().getSimpleName();
+    }
 }
