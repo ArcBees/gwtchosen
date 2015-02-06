@@ -26,11 +26,6 @@ import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-/**
- * This test makes sure that when null values are rendered as empty string (""),
- * then the empty string will not be displayed in the dropdown options.
- */
-
 public class HideEmptyValues extends TestCase {
     public static final Renderer<CarBrand> RENDERER = new AbstractRenderer<CarBrand>() {
         @Override
