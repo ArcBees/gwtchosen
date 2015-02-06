@@ -28,18 +28,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 
 public class SampleIT {
@@ -77,9 +80,24 @@ public class SampleIT {
         assertThat(options).isEqualTo(allNames);
     }
 
+    @Test
+    public void allowSingleDeselect() {
+        loadTestCase(new AllowSingleDeselect());
+        clickOption(CADILLAC, AllowSingleDeselect.RENDERER);
+
+        deselect();
+
+        assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
+    }
+
     @After
     public void after() {
         webDriver.quit();
+    }
+
+    private void deselect() {
+        WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.tagName("abbr")));
+        abbr.click();
     }
 
     private Set<String> getOptions() {
@@ -97,12 +115,18 @@ public class SampleIT {
         return new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS);
     }
 
+    private <T extends Enum<T>> void clickOption(T val, Renderer<T> renderer) {
+        clickOptionWithDisplayString(renderer.render(val));
+    }
+
     private void clickOptionWithDisplayString(String displayString) {
         openDropDown();
 
         String xpath = String.format("//li[text()='%s']", displayString);
         WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
         li.click();
+
+        assertThat(getSelectedOptionText()).isEqualTo(displayString);
     }
 
     private void openDropDown() {

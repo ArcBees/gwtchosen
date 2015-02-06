@@ -19,6 +19,7 @@ package com.arcbees.chosen.integrationtest.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
@@ -36,6 +37,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ChooseOption());
         registerTestCase(new HideEmptyValues());
         registerTestCase(new ShowNonEmptyValues());
+        registerTestCase(new AllowSingleDeselect());
     }
 
     private void registerTestCase(TestCase testCase) {
