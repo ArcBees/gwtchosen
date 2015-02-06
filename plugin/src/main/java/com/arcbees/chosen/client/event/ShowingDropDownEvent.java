@@ -25,12 +25,12 @@ public class ShowingDropDownEvent extends ChosenEvent<ShowingDropDownEvent.Showi
 
     public static Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
 
-    public static Type<ShowingDropDownHandler> getType() {
-        return TYPE;
-    }
-
     public ShowingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<ShowingDropDownHandler> getType() {
+        return TYPE;
     }
 
     @Override
