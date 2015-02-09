@@ -25,11 +25,11 @@ public class UpdatedEvent extends GwtEvent<UpdatedEvent.UpdatedHandler> {
 
     public static Type<UpdatedHandler> TYPE = new Type<UpdatedHandler>();
 
-    public static Type<UpdatedHandler> getType() {
-        return TYPE;
+    public UpdatedEvent() {
     }
 
-    public UpdatedEvent() {
+    public static Type<UpdatedHandler> getType() {
+        return TYPE;
     }
 
     @Override

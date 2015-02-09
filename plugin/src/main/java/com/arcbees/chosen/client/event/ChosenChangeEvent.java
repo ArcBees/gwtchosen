@@ -24,10 +24,6 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         void onChange(ChosenChangeEvent event);
     }
 
-    public static Type<ChosenChangeHandler> getType() {
-        return TYPE;
-    }
-
     public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
 
     private final int index;
@@ -44,6 +40,10 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         this.value = value;
         this.index = index;
         this.selection = selection;
+    }
+
+    public static Type<ChosenChangeHandler> getType() {
+        return TYPE;
     }
 
     @Override
@@ -67,5 +67,4 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
     protected void dispatch(ChosenChangeHandler handler) {
         handler.onChange(this);
     }
-
 }

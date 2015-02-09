@@ -87,9 +87,7 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     }
 
     /**
-     * Get the selected value of the component
-     *
-     * @return
+     * Get the selected value of the component.
      */
     @Override
     public T getValue() {

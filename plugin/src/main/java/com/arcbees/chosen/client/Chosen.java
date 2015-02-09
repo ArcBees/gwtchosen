@@ -24,19 +24,9 @@ import com.google.gwt.query.client.plugins.Plugin;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * Chosen for GwtQuery
+ * Chosen for GwtQuery.
  */
 public class Chosen extends GQuery {
-
-    /**
-     * Indicate if the current browser is supported by the plugin or not.
-     *
-     * @return
-     */
-    public static boolean isSupported() {
-        return GWT.<ChosenImpl>create(ChosenImpl.class).isSupported();
-    }
-
     // A shortcut to the class
     public static final Class<Chosen> Chosen = GQuery.registerPlugin(Chosen.class,
             new Plugin<Chosen>() {
@@ -50,6 +40,15 @@ public class Chosen extends GQuery {
     // Initialization
     public Chosen(GQuery gq) {
         super(gq);
+    }
+
+    /**
+     * Indicate if the current browser is supported by the plugin or not.
+     *
+     * @return
+     */
+    public static boolean isSupported() {
+        return GWT.<ChosenImpl>create(ChosenImpl.class).isSupported();
     }
 
     public Chosen chosen() {
@@ -69,7 +68,6 @@ public class Chosen extends GQuery {
                 ChosenImpl impl = GWT.create(ChosenImpl.class);
                 impl.init(SelectElement.as(e), options, eventBus);
                 $(e).data(CHOSEN_DATA_KEY, impl);
-
             }
         }
         return this;
@@ -77,7 +75,6 @@ public class Chosen extends GQuery {
 
     public Chosen chosen(EventBus eventBus) {
         return chosen(null, eventBus);
-
     }
 
     public Chosen destroy() {
@@ -102,7 +99,6 @@ public class Chosen extends GQuery {
         ChosenImpl impl = data(CHOSEN_DATA_KEY, ChosenImpl.class);
 
         return impl != null ? impl.getOptions() : null;
-
     }
 
     public Chosen update() {

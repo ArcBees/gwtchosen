@@ -25,12 +25,12 @@ public class HidingDropDownEvent extends ChosenEvent<HidingDropDownEvent.HidingD
 
     public static Type<HidingDropDownHandler> TYPE = new Type<HidingDropDownHandler>();
 
-    public static Type<HidingDropDownHandler> getType() {
-        return TYPE;
-    }
-
     public HidingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<HidingDropDownHandler> getType() {
+        return TYPE;
     }
 
     @Override

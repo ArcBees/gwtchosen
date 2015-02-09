@@ -67,7 +67,6 @@ public class WidgetSample implements EntryPoint {
 
         public MyEventHandlers(String id) {
             this.elementId = id;
-
         }
 
         private void log(String eventName, String additional) {
@@ -78,7 +77,6 @@ public class WidgetSample implements EntryPoint {
 
         public void onReady(ReadyEvent event) {
             log("ReadyEvent", "");
-
         }
 
         public void onMaxSelected(MaxSelectedEvent event) {
@@ -87,7 +85,6 @@ public class WidgetSample implements EntryPoint {
 
         public void onShowingDropDown(ShowingDropDownEvent event) {
             log("ShowingDropDownEvent", "");
-
         }
 
         public void onHidingDropdown(HidingDropDownEvent event) {

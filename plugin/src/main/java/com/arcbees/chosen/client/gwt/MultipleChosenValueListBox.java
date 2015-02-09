@@ -137,7 +137,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
      * be fired.
      */
     public void unselect(T value, boolean fireEvent) {
-         boolean removed = selectedValues.remove(value);
+        boolean removed = selectedValues.remove(value);
 
         if (removed) {
             updateChosenListBox();
@@ -149,8 +149,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     }
 
     /**
-     * Unselect all previously selected values
-     *
+     * Unselect all previously selected values.
      */
     public void unselectAll() {
         setValue(null);

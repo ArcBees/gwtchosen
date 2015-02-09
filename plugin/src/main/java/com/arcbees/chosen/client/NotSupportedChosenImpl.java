@@ -19,7 +19,7 @@ import com.google.gwt.dom.client.SelectElement;
 import com.google.web.bindery.event.shared.EventBus;
 
 /**
- * Implementation for IE6/IE7, simply do nothing
+ * Implementation for IE6/IE7, simply do nothing.
  *
  * @author Julien Dramaix (julien.dramaix@gmail.com)
  */
