@@ -183,12 +183,6 @@ public class ChosenIT {
         assertThat(getSelectedOptionText()).isEqualTo(displayString);
     }
 
-    private WebElement getDropDown() {
-        String xpath = "//div[@class='com-arcbees-chosen-client-resources-ChozenCss-chzn-drop']";
-
-        return webDriverWait().until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-    }
-
     private void openDropDown() {
         String xpath = "//div[@id='chozen_container__0_chzn']/a";
         WebElement btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
