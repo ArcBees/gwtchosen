@@ -42,12 +42,6 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new TabNavigation());
     }
 
-    private void registerTestCase(TestCase testCase) {
-        assert !testCaseMap.containsKey(testCase.getToken());
-
-        testCaseMap.put(testCase.getToken(), testCase);
-    }
-
     @Override
     public void onModuleLoad() {
         History.addValueChangeHandler(this);
@@ -60,5 +54,11 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         String token = event.getValue();
         TestCase testCase = testCaseMap.get(token);
         testCase.run();
+    }
+
+    private void registerTestCase(TestCase testCase) {
+        assert !testCaseMap.containsKey(testCase.getToken());
+
+        testCaseMap.put(testCase.getToken(), testCase);
     }
 }

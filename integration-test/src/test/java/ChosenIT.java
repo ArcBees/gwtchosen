@@ -50,18 +50,21 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 
-public class SampleIT {
-    private static final String ROOT = "http://localhost:8080";
+public class ChosenIT {
+    private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
     private final WebDriver webDriver = new ChromeDriver();
 
     @Test
     public void chooseOption() throws Throwable {
+        // Given
         loadTestCase(new ChooseOption());
         String fordRender = ChooseOption.RENDERER.render(FORD);
 
+        // When
         clickOptionWithDisplayString(fordRender);
 
+        // Then
         assertThat(getSelectedOptionText()).isEqualTo(fordRender);
     }
 
@@ -71,10 +74,11 @@ public class SampleIT {
      */
     @Test
     public void hideEmptyValues() {
+        // Given
         loadTestCase(new HideEmptyValues());
 
+        // Then
         Set<String> options = getOptions();
-
         assertThat(options).isEqualTo(CarBrand.getAllNames(HideEmptyValues.RENDERER));
     }
 
@@ -84,10 +88,11 @@ public class SampleIT {
      */
     @Test
     public void showNonEmptyValues() {
+        // Given
         loadTestCase(new ShowNonEmptyValues());
 
+        // Then
         Set<String> options = getOptions();
-
         Set<String> allNames = CarBrand.getAllNames(ShowNonEmptyValues.RENDERER);
         allNames.add(ShowNonEmptyValues.RENDERER.render(null));
         assertThat(options).isEqualTo(allNames);
@@ -98,11 +103,14 @@ public class SampleIT {
      */
     @Test
     public void allowSingleDeselect() {
+        // Given
         loadTestCase(new AllowSingleDeselect());
         clickOption(CADILLAC, AllowSingleDeselect.RENDERER);
 
+        // When
         deselect();
 
+        // Then
         assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
     }
 
@@ -111,8 +119,10 @@ public class SampleIT {
      */
     @Test
     public void tabNavigation() throws InterruptedException {
+        // Given
         loadTestCase(new TabNavigation());
 
+        // When
         webDriverWait().until(elementToBeClickable(By.id("firstTextBox")));
 
         webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
@@ -124,6 +134,7 @@ public class SampleIT {
 
         final WebElement inputBox = getInput();
 
+        // Then
         webDriverWait().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(@Nullable WebDriver input) {

@@ -14,21 +14,16 @@
  * the License.
  */
 
-package com.arcbees.chosen.client.event;
+package com.arcbees.chosen.integrationtest.client.domain;
 
-import com.arcbees.chosen.client.ChosenImpl;
-import com.google.gwt.event.shared.EventHandler;
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.text.shared.AbstractRenderer;
 
-public abstract class ChosenEvent<H extends EventHandler> extends GwtEvent<H> {
-
-    private ChosenImpl chosen;
-
-    public ChosenEvent(ChosenImpl chosen) {
-        this.chosen = chosen;
-    }
-
-    public ChosenImpl getChosen() {
-        return chosen;
+public class DefaultCarRenderer extends AbstractRenderer<CarBrand> {
+    @Override
+    public String render(CarBrand object) {
+        if (object == null) {
+            return "";
+        }
+        return object.name();
     }
 }
