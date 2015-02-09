@@ -7,4 +7,6 @@
     <set-property name="user.agent" value="safari"/>
 
     <entry-point class="com.arcbees.chosen.integrationtest.client.ChosenSampleIntegrationTests"/>
+
+    <set-configuration-property name="CssResource.style" value="stable"/>
 </module>

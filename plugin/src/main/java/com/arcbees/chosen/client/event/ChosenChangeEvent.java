@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -24,10 +24,6 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         void onChange(ChosenChangeEvent event);
     }
 
-    public static Type<ChosenChangeHandler> getType() {
-        return TYPE;
-    }
-
     public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
 
     private final int index;
@@ -44,6 +40,10 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         this.value = value;
         this.index = index;
         this.selection = selection;
+    }
+
+    public static Type<ChosenChangeHandler> getType() {
+        return TYPE;
     }
 
     @Override
@@ -67,5 +67,4 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
     protected void dispatch(ChosenChangeHandler handler) {
         handler.onChange(this);
     }
-
 }

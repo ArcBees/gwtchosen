@@ -8,7 +8,6 @@
         <version>2.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Chosen gQuery plugin example</name>
     <artifactId>chosen-sample</artifactId>
     <packaging>war</packaging>
 
@@ -54,8 +53,10 @@
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
 
                     <runTarget>ChosenSample.html</runTarget>
-                    <module>com.arcbees.chosen.sample.ChosenSample</module>
-                    <module>com.arcbees.chosen.widgetsample.WidgetSample</module>
+                    <modules>
+                        <module>com.arcbees.chosen.sample.ChosenSample</module>
+                        <module>com.arcbees.chosen.widgetsample.WidgetSample</module>
+                    </modules>
                 </configuration>
                 <executions>
                     <execution>
@@ -63,6 +64,40 @@
                             <goal>test</goal>
                             <goal>compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>${github.version}</version>
+                <configuration>
+                    <repositoryOwner>ArcBees</repositoryOwner>
+                    <repositoryName>gwtchosen</repositoryName>
+                    <message>Creating site for ${project.version}</message>
+                    <server>github</server>
+                    <outputDirectory>${webappDirectory}</outputDirectory>
+                    <dryRun>false</dryRun>
+                    <excludes>
+                        <exclude>WEB-INF/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
                     </execution>
                 </executions>
             </plugin>

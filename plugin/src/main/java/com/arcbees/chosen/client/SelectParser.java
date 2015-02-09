@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -29,7 +29,7 @@ import com.google.gwt.dom.client.Style;
 public class SelectParser {
     public static class GroupItem extends SelectItem {
 
-        private int children = 0;
+        private int children;
         private String label;
 
         public int getChildren() {
@@ -161,7 +161,7 @@ public class SelectParser {
         }
     }
 
-    public static abstract class SelectItem {
+    public abstract static class SelectItem {
         protected int arrayIndex;
         protected boolean disabled;
         protected String domId;
@@ -187,7 +187,6 @@ public class SelectParser {
         public void setDomId(String domId) {
             this.domId = domId;
         }
-
     }
 
     private int optionsIndex;
@@ -196,7 +195,6 @@ public class SelectParser {
     public SelectParser() {
         optionsIndex = 0;
         parsed = new ArrayList<SelectItem>();
-
     }
 
     public List<SelectItem> parse(SelectElement select) {
@@ -228,7 +226,6 @@ public class SelectParser {
                 addOption(OptionElement.as((Element) n), position, group.isDisabled());
             }
         }
-
     }
 
     private void addNode(Node child) {
@@ -276,7 +273,6 @@ public class SelectParser {
         } else {
             item.empty = true;
             item.groupArrayIndex = -1;
-
         }
 
         parsed.add(item);

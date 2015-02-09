@@ -10,7 +10,6 @@
 
     <artifactId>gwtchosen</artifactId>
     <packaging>jar</packaging>
-    <name>Chosen plugin for gQuery</name>
     <description>GwtChosen is the GWT port of the Chosen javascript plugin that makes long, unwieldy select boxes much more user-friendly.</description>
 
     <properties>

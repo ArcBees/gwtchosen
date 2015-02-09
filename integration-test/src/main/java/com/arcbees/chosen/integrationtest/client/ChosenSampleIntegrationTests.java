@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,10 +19,12 @@ package com.arcbees.chosen.integrationtest.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.HideCurrentValue;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -37,6 +39,8 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ChooseOption());
         registerTestCase(new HideEmptyValues());
         registerTestCase(new ShowNonEmptyValues());
+        registerTestCase(new AllowSingleDeselect());
+        registerTestCase(new TabNavigation());
         registerTestCase(new HideCurrentValue());
     }
 

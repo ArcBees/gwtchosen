@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,12 +25,12 @@ public class ShowingDropDownEvent extends ChosenEvent<ShowingDropDownEvent.Showi
 
     public static Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
 
-    public static Type<ShowingDropDownHandler> getType() {
-        return TYPE;
-    }
-
     public ShowingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<ShowingDropDownHandler> getType() {
+        return TYPE;
     }
 
     @Override

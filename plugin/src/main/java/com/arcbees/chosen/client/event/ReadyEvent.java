@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,12 +25,12 @@ public class ReadyEvent extends ChosenEvent<ReadyEvent.ReadyHandler> {
 
     public static Type<ReadyHandler> TYPE = new Type<ReadyHandler>();
 
-    public static Type<ReadyHandler> getType() {
-        return TYPE;
-    }
-
     public ReadyEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<ReadyHandler> getType() {
+        return TYPE;
     }
 
     @Override

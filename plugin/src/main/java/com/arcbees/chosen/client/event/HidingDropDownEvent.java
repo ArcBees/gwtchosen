@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,12 +25,12 @@ public class HidingDropDownEvent extends ChosenEvent<HidingDropDownEvent.HidingD
 
     public static Type<HidingDropDownHandler> TYPE = new Type<HidingDropDownHandler>();
 
-    public static Type<HidingDropDownHandler> getType() {
-        return TYPE;
-    }
-
     public HidingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<HidingDropDownHandler> getType() {
+        return TYPE;
     }
 
     @Override

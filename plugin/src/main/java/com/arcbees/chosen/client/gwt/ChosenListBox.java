@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -57,39 +57,6 @@ import static com.arcbees.chosen.client.Chosen.Chosen;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
-
-    /**
-     * Indicates of the ChosenListBox is supported by the current browser. If
-     * not (IE6/7), we fall back on normal select element.
-     *
-     * @return
-     */
-    public static boolean isSupported() {
-        return com.arcbees.chosen.client.Chosen.isSupported();
-    }
-
-    /**
-     * Creates a ChosenListBox widget that wraps an existing &lt;select&gt;
-     * element.
-     * <p/>
-     * This element must already be attached to the document. If the element is
-     * removed from the document, you must call
-     * {@link RootPanel#detachNow(Widget)}.
-     *
-     * @param element the element to be wrapped
-     * @return list box
-     */
-    public static ChosenListBox wrap(Element element) {
-        assert Document.get().getBody().isOrHasChild(element);
-
-        ChosenListBox listBox = new ChosenListBox(element);
-
-        listBox.onAttach();
-        RootPanel.detachOnWindowClose(listBox);
-
-        return listBox;
-    }
-
     private static String OPTGROUP_TAG = "optgroup";
 
     private EventBus chznHandlerManager;
@@ -141,8 +108,40 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     /**
+     * Indicates of the ChosenListBox is supported by the current browser. If
+     * not (IE6/7), we fall back on normal select element.
+     *
+     * @return
+     */
+    public static boolean isSupported() {
+        return com.arcbees.chosen.client.Chosen.isSupported();
+    }
+
+    /**
+     * Creates a ChosenListBox widget that wraps an existing &lt;select&gt;
+     * element.
+     * <p/>
+     * This element must already be attached to the document. If the element is
+     * removed from the document, you must call
+     * {@link RootPanel#detachNow(Widget)}.
+     *
+     * @param element the element to be wrapped
+     * @return list box
+     */
+    public static ChosenListBox wrap(Element element) {
+        assert Document.get().getBody().isOrHasChild(element);
+
+        ChosenListBox listBox = new ChosenListBox(element);
+
+        listBox.onAttach();
+        RootPanel.detachOnWindowClose(listBox);
+
+        return listBox;
+    }
+
+    /**
      * Deprecated, use {@link #addChosenChangeHandler(ChosenChangeHandler)}
-     * instead
+     * instead.
      */
     @Override
     @Deprecated
@@ -329,7 +328,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
 
     public void clear(boolean update) {
         $(getElement()).html("");
-        if (update){
+        if (update) {
             update();
         }
     }
@@ -384,7 +383,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * In case of multiple ChosenListBox, please use {@link #getValues()} instead.
      * @return
      */
-    public String getValue(){
+    public String getValue() {
         String[] values = getValues();
 
         return values != null && values.length > 0 ?  values[0] : null;
@@ -439,7 +438,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      */
     public void insertGroup(String label, String id, int index) {
         GQuery optGroup = $("<optgroup></optgroup>").attr("label", label);
-        if (id != null){
+        if (id != null) {
             optGroup.attr("id", id);
         }
         GQuery select = $(getElement());
@@ -477,7 +476,6 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      */
     public void insertItemToGroup(String item, int groupIndex, int itemIndex) {
         insertItemToGroup(item, null, item, groupIndex, itemIndex);
-
     }
 
     /**
@@ -537,6 +535,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      */
     public void insertStyledItemToGroup(String item, String value, String className, Direction dir, int indentLevel,
             int groupIndex, int itemIndex) {
+        int pos = groupIndex;
         if (indentLevel < 0) {
             throw new IllegalArgumentException("[indentLevel] must be non-negative.");
         }
@@ -550,11 +549,11 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
             return;
         }
 
-        if (groupIndex < 0 || groupIndex > groupCount - 1) {
-            groupIndex = groupCount - 1;
+        if (pos < 0 || pos > groupCount - 1) {
+            pos = groupCount - 1;
         }
 
-        GQuery optgroup = optgroupList.eq(groupIndex);
+        GQuery optgroup = optgroupList.eq(pos);
 
         OptionElement option = Document.get().createOptionElement();
 
@@ -596,7 +595,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
         return options.isSingleBackstrokeDelete();
     }
 
-    public void removeGroup(int index){
+    public void removeGroup(int index) {
         $(OPTGROUP_TAG, getElement()).eq(index).remove();
         update();
     }
@@ -606,16 +605,15 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * To set an id to an optgroup, use {@link #insertGroup(String, String, int)} or {@link #addGroup(String, String)}
      * @param id
      */
-    public void removeGroupById(String id){
+    public void removeGroupById(String id) {
         $("#" + id, getElement()).remove();
         update();
     }
 
     /**
-     * Remove all optgroup (and the children options) with a label matching <code>label</code> argument
-     * @param label
+     * Remove all optgroup (and the children options) with a label matching <code>label</code> argument.
      */
-    public void removeGroupByLabel(String label){
+    public void removeGroupByLabel(String label) {
         $(OPTGROUP_TAG + "[label='" + label + "']", getElement()).remove();
         update();
     }
@@ -697,7 +695,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @param values
      */
     public void setSelectedValue(String... values) {
-        for (String value : values){
+        for (String value : values) {
             Element element = $("option[value='" + value + "']", this).get(0);
 
             if (element != null) {

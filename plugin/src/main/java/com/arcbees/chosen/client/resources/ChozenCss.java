@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,95 +19,95 @@ import com.google.gwt.resources.client.CssResource;
 
 public interface ChozenCss extends CssResource {
 
-  @ClassName("active-result")
-  public String activeResult();
+    @ClassName("active-result")
+    String activeResult();
 
-  @ClassName("found-result")
-  public String foundResult();
+    @ClassName("found-result")
+    String foundResult();
 
-  @ClassName("chzn-choices")
-  public String chznChoices();
+    @ClassName("chzn-choices")
+    String chznChoices();
 
-  @ClassName("chzn-container")
-  public String chznContainer();
+    @ClassName("chzn-container")
+    String chznContainer();
 
-  @ClassName("chzn-container-active")
-  public String chznContainerActive();
+    @ClassName("chzn-container-active")
+    String chznContainerActive();
 
-  @ClassName("chzn-container-multi")
-  public String chznContainerMulti();
+    @ClassName("chzn-container-multi")
+    String chznContainerMulti();
 
-  @ClassName("chzn-container-single")
-  public String chznContainerSingle();
+    @ClassName("chzn-container-single")
+    String chznContainerSingle();
 
-  @ClassName("chzn-container-single-nosearch")
-  public String chznContainerSingleNoSearch();
+    @ClassName("chzn-container-single-nosearch")
+    String chznContainerSingleNoSearch();
 
-  @ClassName("chzn-default")
-  public String chznDefault();
+    @ClassName("chzn-default")
+    String chznDefault();
 
-  @ClassName("chzn-disabled")
-  public String chznDisabled();
+    @ClassName("chzn-disabled")
+    String chznDisabled();
 
-  @ClassName("chzn-done")
-  public String chznDone();
+    @ClassName("chzn-done")
+    String chznDone();
 
-  @ClassName("chzn-drop")
-  public String chznDrop();
+    @ClassName("chzn-drop")
+    String chznDrop();
 
-  @ClassName("chzn-results")
-  public String chznResults();
+    @ClassName("chzn-results")
+    String chznResults();
 
-  @ClassName("chzn-rtl")
-  public String chznRtl();
+    @ClassName("chzn-rtl")
+    String chznRtl();
 
-  @ClassName("chzn-search")
-  public String chznSearch();
+    @ClassName("chzn-search")
+    String chznSearch();
 
-  @ClassName("chzn-single")
-  public String chznSingle();
+    @ClassName("chzn-single")
+    String chznSingle();
 
-  @ClassName("chzn-single-with-drop")
-  public String chznSingleWithDrop();
+    @ClassName("chzn-single-with-drop")
+    String chznSingleWithDrop();
 
-  @ClassName("default")
-  public String defaultClass();
+    @ClassName("default")
+    String defaultClass();
 
-  @ClassName("group-option")
-  public String groupOption();
+    @ClassName("group-option")
+    String groupOption();
 
-  @ClassName("group-result")
-  public String groupResult();
+    @ClassName("group-result")
+    String groupResult();
 
-  @ClassName("highlighted")
-  public String highlighted();
+    @ClassName("highlighted")
+    String highlighted();
 
-  @ClassName("no-results")
-  public String noResults();
+    @ClassName("no-results")
+    String noResults();
 
-  @ClassName("result-selected")
-  public String resultSelected();
+    @ClassName("result-selected")
+    String resultSelected();
 
-  @ClassName("search-choice")
-  public String searchChoice();
+    @ClassName("search-choice")
+    String searchChoice();
 
-  @ClassName("search-choice-close")
-  public String searchChoiceClose();
+    @ClassName("search-choice-close")
+    String searchChoiceClose();
 
-  @ClassName("search-choice-focus")
-  public String searchChoiceFocus();
+    @ClassName("search-choice-focus")
+    String searchChoiceFocus();
 
-  @ClassName("search-field")
-  public String searchField();
+    @ClassName("search-field")
+    String searchField();
 
-  @ClassName("icon_cross")
-  public String iconCross();
+    @ClassName("icon_cross")
+    String iconCross();
 
-  @ClassName("icon_arrow")
-  public String iconArrow();
+    @ClassName("icon_arrow")
+    String iconArrow();
 
-  @ClassName("icon_search")
-  public String iconSearch();
+    @ClassName("icon_search")
+    String iconSearch();
 
-  public int indent();
+    int indent();
 }

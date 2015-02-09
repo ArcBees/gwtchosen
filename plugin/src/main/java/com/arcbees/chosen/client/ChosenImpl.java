@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -64,8 +64,8 @@ import static com.google.gwt.query.client.GQuery.document;
 import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
 public class ChosenImpl {
-    public static interface ChozenTemplate extends SafeHtmlTemplates {
-        public ChozenTemplate templates = GWT.create(ChozenTemplate.class);
+    public interface ChozenTemplate extends SafeHtmlTemplates {
+        ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
         @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3} {6}\" " +
                 "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
@@ -82,9 +82,9 @@ public class ChosenImpl {
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
                 SafeStyles offsets);
 
-        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b class=\"{7}\"></b></div></a><div " +
-                "class=\"{3}\" style=\"{6}\"><div class=\"{4} {8}\"><input type=\"text\" autocomplete=\"off\" /></div><ul" +
-                " class=\"{5}\"></ul></div>")
+        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b " +
+                "class=\"{7}\"></b></div></a><div class=\"{3}\" style=\"{6}\"><div class=\"{4} {8}\">" +
+                "<input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
                 String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
                 String iconArrowClass, String iconSearchClass);
@@ -194,12 +194,12 @@ public class ChosenImpl {
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
 
     private static final String TABINDEX_PROPERTY = "tabindex";
-    private static int idCounter = 0;
+    private static int idCounter;
 
     private GQuery $selectElement;
     private Function activateAction;
-    private boolean activeField = false;
-    private boolean allowSingleDeselect = false;
+    private boolean activeField;
+    private boolean allowSingleDeselect;
     private int backstrokeLength;
     private int choices;
     private Function clickTestAction;
@@ -215,14 +215,14 @@ public class ChosenImpl {
     private boolean isMultiple;
     private boolean isRTL;
     private boolean customFilter;
-    private boolean mouseOnContainer = false;
+    private boolean mouseOnContainer;
     private ChosenOptions options;
     private GQuery pendingBackstroke;
     private boolean pendingDestroyClick;
     private GQuery resultHighlight;
     private GQuery resultSingleSelected;
     private String resultsNoneFound;
-    private boolean resultsShowing = false;
+    private boolean resultsShowing;
     private GQuery searchChoices;
     private GQuery searchContainer;
     private GQuery searchField;
@@ -266,8 +266,7 @@ public class ChosenImpl {
     }
 
     /**
-     * Return the highlighted result or null if the
-     * @return
+     * Return the highlighted result or null if the.
      */
     public GQuery getResultHighlight() {
         return resultHighlight;
@@ -348,7 +347,6 @@ public class ChosenImpl {
             @Override
             public boolean f(Event e) {
                 return containerMouseDown(e);
-
             }
 
         });
@@ -381,7 +379,6 @@ public class ChosenImpl {
             @Override
             public boolean f(Event e) {
                 return searchResultsMouseUp(e);
-
             }
         });
 
@@ -396,7 +393,6 @@ public class ChosenImpl {
             @Override
             public boolean f(Event e) {
                 return searchResultsMouseOut(e);
-
             }
         });
 
@@ -458,7 +454,6 @@ public class ChosenImpl {
                 @Override
                 public boolean f(Event e) {
                     return inputFocus(e);
-
                 }
 
             });
@@ -657,7 +652,7 @@ public class ChosenImpl {
 
     private int getSideBorderPadding(GQuery elmt, boolean isHidden) {
         if (isHidden) {
-            //bug in gquery when one parent of the element is hidden
+            // bug in gquery when one parent of the element is hidden
             return (int) (elmt.cur("padding-left", true) + elmt.cur("padding-right",
                     true) + elmt.cur("border-left-width", true) + elmt.cur("border-right-width", true));
         }
@@ -711,7 +706,6 @@ public class ChosenImpl {
             }
 
             resultDoHighlight(nextSibling);
-
         }
 
         if (!resultsShowing) {
@@ -858,7 +852,6 @@ public class ChosenImpl {
 
     private void resultActivate(GQuery query) {
         query.addClass(css.activeResult());
-
     }
 
     private SafeHtml resultAddGroup(GroupItem group) {
@@ -900,7 +893,6 @@ public class ChosenImpl {
                 return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
                         option.getText());
             }
-
         }
         return null;
     }
@@ -958,7 +950,6 @@ public class ChosenImpl {
 
         selectedValues = newValues;
     }
-
 
     private void resultDoHighlight(GQuery el) {
         if (el == null || el.length() == 0 || isDetached(el)) {
@@ -1108,7 +1099,6 @@ public class ChosenImpl {
 
                     selectedValues.add(optionItem.getValue());
                 }
-
             }
         }
 
@@ -1276,9 +1266,8 @@ public class ChosenImpl {
                 new StringBuilder("position:absolute; " + (isRTL ? "right" : "left") + ": -1000px; top: -1000px; " +
                         "visibility:hidden;");
         String[] styleToCopy =
-                {
-                        "font-size", "font-style", "font-weight", "font-family", "line-height",
-                        "text-transform", "letter-spacing"};
+                {"font-size", "font-style", "font-weight", "font-family", "line-height", "text-transform",
+                        "letter-spacing"};
 
         for (String style : styleToCopy) {
             styleBlock.append(style).append(':').append(searchField.css(style));
@@ -1369,7 +1358,6 @@ public class ChosenImpl {
         } else {
             resultsNoneFound = "No results match";
         }
-
     }
 
     private void setDefaultValues() {
@@ -1442,8 +1430,8 @@ public class ChosenImpl {
         containerId = buildContainerId();
         fWidth = $selectElement.outerWidth();
 
-        //Temporary fix. IIf the select element is inside a hidden container
-        //GQuery cannot get the size of the select element.
+        // Temporary fix. IIf the select element is inside a hidden container
+        // GQuery cannot get the size of the select element.
         if (fWidth == 0) {
             $("body").append("<div id='gwt_chosen_temp_div' style='display:block;position:absolute;" + (isRTL ?
                     "right" : "left") + ":-9000px; visibility:hidden'> </div>");
@@ -1454,7 +1442,6 @@ public class ChosenImpl {
 
             tempDiv.remove();
             isHidden = fWidth > 0;
-
         }
 
         isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
@@ -1507,7 +1494,8 @@ public class ChosenImpl {
             searchContainer = container.find("div." + css.chznSearch()).first();
             selectedItem = container.find("." + css.chznSingle()).first();
             int searchFieldWidth =
-                    ddWidth - getSideBorderPadding(searchContainer, isHidden) - getSideBorderPadding(searchField, isHidden);
+                    ddWidth - getSideBorderPadding(searchContainer, isHidden)
+                            - getSideBorderPadding(searchField, isHidden);
             searchField.css("width", searchFieldWidth + "px");
         }
 
@@ -1590,7 +1578,7 @@ public class ChosenImpl {
     private GQuery getFirstActive() {
         for (Element element : searchResults.elements()) {
             GQuery gq = $(element);
-            if(gq.hasClass(css.activeResult())) {
+            if (gq.hasClass(css.activeResult())) {
                 return gq;
             }
         }

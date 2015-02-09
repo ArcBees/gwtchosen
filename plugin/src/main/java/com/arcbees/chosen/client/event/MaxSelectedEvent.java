@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,12 +25,12 @@ public class MaxSelectedEvent extends ChosenEvent<MaxSelectedEvent.MaxSelectedHa
 
     public static Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
 
-    public static Type<MaxSelectedHandler> getType() {
-        return TYPE;
-    }
-
     public MaxSelectedEvent(ChosenImpl chosen) {
         super(chosen);
+    }
+
+    public static Type<MaxSelectedHandler> getType() {
+        return TYPE;
     }
 
     @Override

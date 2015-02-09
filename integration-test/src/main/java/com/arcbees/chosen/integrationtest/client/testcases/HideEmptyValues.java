@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -25,11 +25,6 @@ import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
-
-/**
- * This test makes sure that when null values are rendered as empty string (""),
- * then the empty string will not be displayed in the dropdown options.
- */
 
 public class HideEmptyValues extends TestCase {
     public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();

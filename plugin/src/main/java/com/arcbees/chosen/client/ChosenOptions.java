@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -66,8 +66,7 @@ public class ChosenOptions {
     }
 
     /**
-     * provide the {@code ResultFilter} instance used to filter the data
-     * @return
+     * provide the {@code ResultFilter} instance used to filter the data.
      */
     public ResultsFilter getResultFilter() {
         return resultFilter;
@@ -106,7 +105,6 @@ public class ChosenOptions {
      * used in "multiple select" mode or when a custom ResultFilter is used.
      *
      * @param disableSearchThreshold
-     * @return
      */
     public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
         this.disableSearchThreshold = disableSearchThreshold;

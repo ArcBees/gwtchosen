@@ -1,5 +1,5 @@
 /**
- * Copyright 2014 ArcBees Inc.
+ * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -43,7 +43,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     private TakesValueEditor<List<T>> editor;
 
     /**
-     * @throws java.lang.NullPointerException if {@code renderer} is null 
+     * @throws java.lang.NullPointerException if {@code renderer} is null
      */
     public MultipleChosenValueListBox(Renderer<T> renderer) {
         this(renderer, new ChosenOptions());
@@ -137,7 +137,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
      * be fired.
      */
     public void unselect(T value, boolean fireEvent) {
-         boolean removed = selectedValues.remove(value);
+        boolean removed = selectedValues.remove(value);
 
         if (removed) {
             updateChosenListBox();
@@ -149,8 +149,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     }
 
     /**
-     * Unselect all previously selected values
-     *
+     * Unselect all previously selected values.
      */
     public void unselectAll() {
         setValue(null);
