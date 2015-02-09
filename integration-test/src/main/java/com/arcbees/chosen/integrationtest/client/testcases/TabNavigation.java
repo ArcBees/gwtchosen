@@ -16,37 +16,44 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import java.util.List;
-
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.google.common.collect.Lists;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.text.shared.Renderer;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ShowNonEmptyValues extends TestCase {
+public class TabNavigation extends TestCase {
+    interface Binder extends UiBinder<HTMLPanel, TabNavigation> {
+    }
+
     public static final Renderer<CarBrand> RENDERER = new AbstractRenderer<CarBrand>() {
         @Override
         public String render(CarBrand object) {
             if (object == null) {
-                return "Placeholder for null";
+                return "";
             }
             return object.name();
         }
     };
 
+    static String getPlaceHolderId() {
+        return "chosenPlaceholder";
+    }
+
     @Override
     public void run() {
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER);
+        ChosenValueListBox<CarBrand> chosenValueListBox = new ChosenValueListBox<CarBrand>(RENDERER);
+        chosenValueListBox.setAcceptableValues(Lists.newArrayList(CarBrand.values()));
 
-        List<CarBrand> carBrands = Lists.newArrayList(CarBrand.values());
-        carBrands.add(0, null);
-        listBox.setAcceptableValues(carBrands);
+        Binder binder = GWT.create(Binder.class);
+        HTMLPanel panel = binder.createAndBindUi(this);
+        panel.addAndReplaceElement(chosenValueListBox, getPlaceHolderId());
 
-        listBox.setValue(null);
-
-        RootPanel.get().add(listBox);
+        RootPanel.get().add(panel);
     }
 }
