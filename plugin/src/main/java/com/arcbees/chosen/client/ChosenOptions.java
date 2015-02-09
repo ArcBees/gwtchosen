@@ -31,7 +31,6 @@ public class ChosenOptions {
     private boolean searchContains;
     private boolean singleBackstrokeDelete;
     private boolean highlightSearchTerm;
-    private boolean hideCurrentValue;
     private ResultsFilter resultFilter;
 
     public ChosenOptions() {
@@ -90,10 +89,6 @@ public class ChosenOptions {
 
     public boolean isHighlightSearchTerm() {
         return highlightSearchTerm;
-    }
-
-    public boolean isHideCurrentValue() {
-        return hideCurrentValue;
     }
 
     public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
@@ -156,11 +151,6 @@ public class ChosenOptions {
         return this;
     }
 
-    public ChosenOptions setHideCurrentValue(boolean hideCurrentValue) {
-        this.hideCurrentValue = hideCurrentValue;
-        return this;
-    }
-
     public void setHighlightSearchTerm(boolean highlightSearchTerm) {
         this.highlightSearchTerm = highlightSearchTerm;
     }
@@ -172,6 +162,5 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
-        hideCurrentValue = false;
     }
 }

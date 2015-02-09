@@ -33,7 +33,6 @@ import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
-import com.arcbees.chosen.integrationtest.client.testcases.HideCurrentValue;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
@@ -99,29 +98,19 @@ public class ChosenIT {
         assertThat(options).isEqualTo(allNames);
     }
 
-    @Test
-    public void hideCurrentValue() {
-        // Given
-        loadTestCase(new HideCurrentValue());
-
-        // When
-        openDropDown();
-
-        // Then
-        WebElement dropDown = getDropDown();
-        assertThat(dropDown.getCssValue("top")).isEqualTo("0px");
-    }
-
     /**
      * Goal: ensure allowSingleDeselect is working properly.
      */
     @Test
     public void allowSingleDeselect() {
+        // Given
         loadTestCase(new AllowSingleDeselect());
         clickOption(CADILLAC, AllowSingleDeselect.RENDERER);
 
+        // When
         deselect();
 
+        // Then
         assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
     }
 
@@ -130,8 +119,10 @@ public class ChosenIT {
      */
     @Test
     public void tabNavigation() throws InterruptedException {
+        // Given
         loadTestCase(new TabNavigation());
 
+        // When
         webDriverWait().until(elementToBeClickable(By.id("firstTextBox")));
 
         webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
@@ -143,6 +134,7 @@ public class ChosenIT {
 
         final WebElement inputBox = getInput();
 
+        // Then
         webDriverWait().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(@Nullable WebDriver input) {

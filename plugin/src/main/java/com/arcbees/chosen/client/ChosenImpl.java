@@ -1210,13 +1210,7 @@ public class ChosenImpl {
             return false;
         }
 
-        int ddTop;
-
-        if (options.isHideCurrentValue()) {
-            ddTop = 0;
-        } else {
-            ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
-        }
+        int ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
 
         fireEvent(new ShowingDropDownEvent(this));
 
