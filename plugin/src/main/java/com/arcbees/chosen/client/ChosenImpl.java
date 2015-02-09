@@ -1280,7 +1280,6 @@ public class ChosenImpl {
         searchField.css("width", w + "px");
 
         int ddTop = container.height();
-        GQuery.console.info("ddTop (searchFieldScale): " + ddTop);
         dropdown.css("top", ddTop + "px");
     }
 
