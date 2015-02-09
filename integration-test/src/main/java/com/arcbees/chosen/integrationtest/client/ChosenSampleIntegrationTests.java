@@ -19,9 +19,11 @@ package com.arcbees.chosen.integrationtest.client;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -36,6 +38,8 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ChooseOption());
         registerTestCase(new HideEmptyValues());
         registerTestCase(new ShowNonEmptyValues());
+        registerTestCase(new AllowSingleDeselect());
+        registerTestCase(new TabNavigation());
     }
 
     private void registerTestCase(TestCase testCase) {

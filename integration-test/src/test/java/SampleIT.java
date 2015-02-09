@@ -17,9 +17,12 @@
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,18 +31,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 
 public class SampleIT {
@@ -57,6 +65,10 @@ public class SampleIT {
         assertThat(getSelectedOptionText()).isEqualTo(fordRender);
     }
 
+    /**
+     * This test makes sure that when null values are rendered as empty string (""),
+     * then the empty string will not be displayed in the dropdown options.
+     */
     @Test
     public void hideEmptyValues() {
         loadTestCase(new HideEmptyValues());
@@ -66,6 +78,10 @@ public class SampleIT {
         assertThat(options).isEqualTo(CarBrand.getAllNames(HideEmptyValues.RENDERER));
     }
 
+    /**
+     * This test makes sure that when null values are rendered as a non-empty string,
+     * then that exact non-empty string will be displayed in the dropdown options.
+     */
     @Test
     public void showNonEmptyValues() {
         loadTestCase(new ShowNonEmptyValues());
@@ -77,9 +93,58 @@ public class SampleIT {
         assertThat(options).isEqualTo(allNames);
     }
 
+    /**
+     * Goal: ensure allowSingleDeselect is working properly.
+     */
+    @Test
+    public void allowSingleDeselect() {
+        loadTestCase(new AllowSingleDeselect());
+        clickOption(CADILLAC, AllowSingleDeselect.RENDERER);
+
+        deselect();
+
+        assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
+    }
+
+    /**
+     * Goal: verify that tab navigation is possible when Chosen is within a form.
+     */
+    @Test
+    public void tabNavigation() throws InterruptedException {
+        loadTestCase(new TabNavigation());
+
+        webDriverWait().until(elementToBeClickable(By.id("firstTextBox")));
+
+        webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
+        webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
+
+        // at this point, focus is on the Chosen widget
+        final String searchText = "ferr";
+        webDriver.switchTo().activeElement().sendKeys(searchText);
+
+        final WebElement inputBox = getInput();
+
+        webDriverWait().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(@Nullable WebDriver input) {
+                String value = inputBox.getAttribute("value");
+                return value != null && value.equals(searchText);
+            }
+        });
+    }
+
     @After
     public void after() {
         webDriver.quit();
+    }
+
+    private WebDriverWait webDriverWait() {
+        return new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS);
+    }
+
+    private void deselect() {
+        WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.tagName("abbr")));
+        abbr.click();
     }
 
     private Set<String> getOptions() {
@@ -93,8 +158,8 @@ public class SampleIT {
         }));
     }
 
-    private WebDriverWait webDriverWait() {
-        return new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS);
+    private <T extends Enum<T>> void clickOption(T val, Renderer<T> renderer) {
+        clickOptionWithDisplayString(renderer.render(val));
     }
 
     private void clickOptionWithDisplayString(String displayString) {
@@ -103,6 +168,8 @@ public class SampleIT {
         String xpath = String.format("//li[text()='%s']", displayString);
         WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
         li.click();
+
+        assertThat(getSelectedOptionText()).isEqualTo(displayString);
     }
 
     private void openDropDown() {
@@ -117,6 +184,13 @@ public class SampleIT {
         WebElement span = webDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 
         return span.getText();
+    }
+
+    private WebElement getInput() {
+        String xpath = "//div[@class='com-arcbees-chosen-client-resources-ChozenCss-chzn-search " +
+                "icon_search']/input[@type='text']";
+
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
     }
 
     private void loadTestCase(TestCase testCase) {

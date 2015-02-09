@@ -16,8 +16,9 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
@@ -26,26 +27,30 @@ import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class ShowNonEmptyValues extends TestCase {
+public class AllowSingleDeselect extends TestCase {
     public static final Renderer<CarBrand> RENDERER = new AbstractRenderer<CarBrand>() {
         @Override
         public String render(CarBrand object) {
             if (object == null) {
-                return "Placeholder for null";
+                return "";
             }
             return object.name();
         }
     };
 
+    public static final String PLACEHOLDER = "Some placeholder";
+
     @Override
     public void run() {
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER);
+        ChosenOptions chosenOptions = new ChosenOptions();
+        chosenOptions.setPlaceholderText(PLACEHOLDER);
+        chosenOptions.setAllowSingleDeselect(true);
 
-        List<CarBrand> carBrands = Lists.newArrayList(CarBrand.values());
-        carBrands.add(0, null);
-        listBox.setAcceptableValues(carBrands);
+        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER, chosenOptions);
 
-        listBox.setValue(null);
+        ArrayList<CarBrand> acceptableValues = Lists.newArrayList(CarBrand.values());
+        acceptableValues.add(0, null);
+        listBox.setAcceptableValues(acceptableValues);
 
         RootPanel.get().add(listBox);
     }
