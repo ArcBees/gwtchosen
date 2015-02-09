@@ -5,20 +5,20 @@
     <title>GwtQuery: Chosen plugin example</title>
     <link rel="stylesheet" href="bootstrap.css" />
     <script language="javascript" src="ChosenSample/ChosenSample.nocache.js"></script>
-    
+
     <style type="text/css">
         body {
             padding-bottom: 70px;
         }
-        
+
         .header {
             margin: 25px 0px;
         }
-        
+
         .header h1 {
             margin-bottom: 15px;
         }
-        
+
         .header p {
             font-size: 18px;
             font-weight: 200;
@@ -48,7 +48,7 @@
                 available as a GwtQuery plugin or as a widget.
             </p>
         </header>
-        
+
         <div id="browserWarning" class="alert" style="display: none;">
               <strong>Oooops, your browser is not supported.</strong> we cannot enhance the select elements with this browser.<br />
               Please try a modern browser !
@@ -1076,7 +1076,7 @@
                     <p>With one line of java code :</p>
                     <pre>import static com.google.gwt.query.client.GQuery.$;
 import static com.arcbees.chosen.client.Chosen.Chosen;
-...    
+...
 <strong>$(".selectToEnHance").as(Chosen).chosen();</strong>
                     </pre>
                 </div>
@@ -1118,7 +1118,7 @@ chzn.setMaxSelectedOptions(5);
 chzn.setPlaceholderText("Choose your country...");
 </pre>
                     <p>
-                        Check <a href="widgetsample/index.html">this complete example</a>
+                        Check <a href="WidgetSample.html">this complete example</a>
                         for more code
                     </p>
 
@@ -1249,7 +1249,7 @@ chzn.setPlaceholderText("Choose your country...");
             <div class="row">
             <div class="span12">
                     <p>The <code>ChosenListBox</code> supports the optgroups as well:</p>
-                    
+
 <pre>
 //add a optgroup
 chzn.addGroup("NFC EAST");
@@ -1259,7 +1259,7 @@ chzn.insertGroup("NFC EAST", 2);
 chzn.addItemToGroup("Dallas Cowboys");
 //add an item at the end to the second optgroup
 chzn.addItemToGroup("Chicago Bears", 1);
-//insert the item in the 4th position of the second optgroup 
+//insert the item in the 4th position of the second optgroup
 chzn.insertItemToGroup("Dallas Cowboys", 1, 3);
 </pre>
                 </div>
@@ -1318,7 +1318,7 @@ chzn.insertItemToGroup("Dallas Cowboys", 1, 3);
         <div class="row">
             <div class="span12">
             <p>
-                The <code>ChosenListBox</code> widget allows you to programmatically construct option hierarchies of arbitrary depth 
+                The <code>ChosenListBox</code> widget allows you to programmatically construct option hierarchies of arbitrary depth
                 within or outside of groups, as well as add CSS class names to individual options:
             </p>
             </div>
@@ -1398,7 +1398,7 @@ chzn.setAllowSingleDeselect(true);
                     </p>
                     <pre>ChosenOptions options = new ChosenOptions();
 options.setPlaceholderTextSingle("Choose a country...");
-options.setPlaceholderTextMultiple("Choose countries..."); 
+options.setPlaceholderTextMultiple("Choose countries...");
 
 //using the widget
 ChosenListBox chzn = new ChosenListBox();
@@ -1658,7 +1658,7 @@ $(".chzn-select, .enhance").as(Chosen).chosen(eventBus);</pre>
                         widget exposes needed method for listening to the events:
                     </p>
                     <pre>ChosenListBox chzn = new ChosenListBox();
-    
+
 chzn.addHidingDropDownHandler(new HidingDropDownHandler() {
 
   public void onHidingDropdown(HidingDropDownEvent event) {
@@ -1668,7 +1668,7 @@ chzn.addHidingDropDownHandler(new HidingDropDownHandler() {
 
 </pre>
                     <p>
-                        Check this <a href="widgetsample/index.html">example</a> in order
+                        Check this <a href="WidgetSample.html">example</a> in order
                         to know how and when the different events are fired.
                     </p>
 
@@ -1788,13 +1788,13 @@ ChosenListBox chzn = new ChosenListBox(true, options);
                     </p>
                     <pre>
 boolean chosenSupport = Chosen.isSupported();
-//or 
+//or
 boolean chosenSupport = ChosenListBox.isSupported();
                     </pre>
                 </div>
             </div>
         </section>
-        
+
         <section>
             <div class="page-header">
                 <h2>Setup</h2>
@@ -1825,7 +1825,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
             &lt;scope>provided&lt;/scope>
         &lt;/dependency>
     &lt;/dependencies>
-&lt;/build>    
+&lt;/build>
        </pre>
                 </div>
                 <div class="span5">
@@ -1834,7 +1834,7 @@ boolean chosenSupport = ChosenListBox.isSupported();
                         Download <a href="http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar">the last stable jar file</a> and put it in your claspath.
                     </p>
                 </div>
-                
+
                 <div class="span12">
                     <p>
                         Then you need to inherit the plugin in your Module.gwt.xml file:
@@ -1845,8 +1845,8 @@ boolean chosenSupport = ChosenListBox.isSupported();
                 </div>
             </div>
         </section>
-        
-        
+
+
         <section>
             <div class="page-header">
                 <h2>Credits</h2>

@@ -57,7 +57,12 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 2. `mvn gwt:run -Pintegration-test`
 3. Open your browser to `http://127.0.0.1:8080/#{test case token}`
 
-#FAQ
+##Uploading docs and demos
+0. Add your Github credentials to `~/.m2/settings.xml`
+1. `cd sample`
+2. `mvn clean install site`
+
+This will upload the docs site to branch `gh-pages` to be served at `http://arcbees.github.io/gwtchosen`.
 
 ##Credits
 * The initial chosen javascript plugin was built by [Harvest](http://www.getharvest.com/).
