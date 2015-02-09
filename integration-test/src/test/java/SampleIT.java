@@ -94,7 +94,7 @@ public class SampleIT {
     }
 
     /**
-     * Goal: ensure allowSingleDeselect is working properly
+     * Goal: ensure allowSingleDeselect is working properly.
      */
     @Test
     public void allowSingleDeselect() {
@@ -107,7 +107,7 @@ public class SampleIT {
     }
 
     /**
-     * Goal: verify that tab navigation is possible when Chosen is within a form
+     * Goal: verify that tab navigation is possible when Chosen is within a form.
      */
     @Test
     public void tabNavigation() throws InterruptedException {
