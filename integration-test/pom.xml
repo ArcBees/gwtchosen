@@ -42,6 +42,11 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <testPort>${allocated-port}</testPort>
+                            </systemPropertyVariables>
+                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
@@ -51,14 +56,11 @@
                             </execution>
                         </executions>
                     </plugin>
+
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>gwt-maven-plugin</artifactId>
                         <version>${gwt.version}</version>
-                        <configuration>
-                            <runTarget>index.html</runTarget>
-                            <port>8080</port>
-                        </configuration>
                         <executions>
                             <execution>
                                 <configuration>
@@ -72,6 +74,27 @@
                     </plugin>
 
                     <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>port-allocator-maven-plugin</artifactId>
+                        <version>${port-allocator-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>allocate-ports</goal>
+                                </goals>
+                                <configuration>
+                                    <ports>
+                                        <port>
+                                            <name>allocated-port</name>
+                                        </port>
+                                    </ports>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
                         <version>${jetty-maven-plugin.version}</version>
@@ -80,6 +103,9 @@
                             <webAppSourceDirectory>
                                 ${project.build.directory}/${project.build.finalName}
                             </webAppSourceDirectory>
+                            <httpConnector>
+                                <port>${allocated-port}</port>
+                            </httpConnector>
                         </configuration>
                         <executions>
                             <execution>

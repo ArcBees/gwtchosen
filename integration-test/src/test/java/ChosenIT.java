@@ -51,7 +51,7 @@ import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 
 public class ChosenIT {
-    private static final String ROOT = "http://localhost:8080";
+    private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
     private final WebDriver webDriver = new ChromeDriver();
 
