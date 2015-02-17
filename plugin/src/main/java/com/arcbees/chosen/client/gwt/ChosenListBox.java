@@ -338,7 +338,7 @@ public class  ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
 
-        update();
+        forceRedraw();
     }
 
     public void forceRedraw() {
