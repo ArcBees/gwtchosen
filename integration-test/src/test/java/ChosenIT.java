@@ -36,6 +36,12 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementLowerEdge;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementUpperEdge;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoLowerEdge;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoUpperEdge;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Down;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Up;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -144,6 +150,118 @@ public class ChosenIT {
         });
     }
 
+    /**
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.UP},
+     * the dropdown is displayed above the input box.
+     */
+    @Test
+    public void dropdownPosition_up() {
+        // Given
+        loadTestCase(new Up());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsAbove();
+    }
+
+    /**
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.DOWN},
+     * the dropdown is displayed below the input box.
+     */
+    @Test
+    public void dropdownPosition_down() {
+        // Given
+        loadTestCase(new Down());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsBelow();
+    }
+
+    /**
+     * Tests that when
+     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     *  - No boundaries are set
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of the browser window
+     *
+     * the dropdown will be displayed below the input box.
+     */
+    @Test
+    public void dropdownPosition_autoUpperEdge() {
+        // Given
+        loadTestCase(new AutoUpperEdge());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsBelow();
+    }
+
+    /**
+     * Tests that when
+     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     *  - No boundaries are set
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of the browser window
+     *
+     * the dropdown will be displayed above the input box.
+     */
+    @Test
+    public void dropdownPosition_autoLowerEdge() {
+        // Given
+        loadTestCase(new AutoLowerEdge());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsAbove();
+    }
+
+    /**
+     * Tests that when
+     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     *  - Boundaries are set to particular DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of that DOM element
+     *
+     * the dropdown will be displayed below the input box.
+     */
+    @Test
+    public void dropdownPosition_autoElementUpperEdge() {
+        // Given
+        loadTestCase(new AutoElementUpperEdge());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsBelow();
+    }
+
+    /**
+     * Tests that when
+     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     *  - Boundaries are set to particular DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of that DOM element
+     *
+     * the dropdown will be displayed above the input box.
+     */
+    @Test
+    public void dropdownPosition_autoElementLowerEdge() {
+        // Given
+        loadTestCase(new AutoElementLowerEdge());
+
+        // When
+        openDropDown();
+
+        // When
+        assertDropdownIsAbove();
+    }
+
     @After
     public void after() {
         webDriver.quit();
@@ -206,5 +324,28 @@ public class ChosenIT {
 
     private void loadTestCase(TestCase testCase) {
         webDriver.get(ROOT + "/#" + testCase.getToken());
+    }
+
+    private WebElement getDropdown() {
+        return webDriverWait().until(presenceOfElementLocated(
+                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-drop")));
+    }
+
+    private int getDropdownTop() {
+        WebElement dropdown = getDropdown();
+        String topString = dropdown.getCssValue("top");
+        return Integer.parseInt(topString.replaceAll("px", ""));
+    }
+
+    private void assertDropdownIsBelow() {
+        int top = getDropdownTop();
+
+        assertThat(top).isPositive();
+    }
+
+    private void assertDropdownIsAbove() {
+        int top = getDropdownTop();
+
+        assertThat(top).isNegative();
     }
 }
