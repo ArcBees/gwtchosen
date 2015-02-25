@@ -1179,18 +1179,6 @@ public class ChosenImpl {
         selectedItem.find("abbr").remove();
     }
 
-    private void populateMultipleSelectedValues() {
-        for (SelectItem selectItem : selectItems) {
-            if (!selectItem.isGroup()) {
-                OptionItem optionItem = (OptionItem) selectItem;
-
-                if (optionItem.isSelected()) {
-                    selectedValues.add(optionItem.getValue());
-                }
-            }
-        }
-    }
-
     private void resultsSearch() {
         if (resultsShowing) {
             winnowResults(false);
@@ -1264,7 +1252,7 @@ public class ChosenImpl {
                         "letter-spacing"};
 
         for (String style : styleToCopy) {
-            styleBlock.append(style).append(':').append(searchField.css(style));
+            styleBlock.append(style).append(':').append(searchField.css(style)).append(";");
         }
 
         GQuery div = $("<div />").attr("style", styleBlock.toString()).text(searchField.val());
