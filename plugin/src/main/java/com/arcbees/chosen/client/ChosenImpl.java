@@ -1102,8 +1102,9 @@ public class ChosenImpl {
             }
         }
 
+        searchFieldDisabled();
+
         if (init) {
-            searchFieldDisabled();
             showSearchFieldDefault();
             searchFieldScale();
         }
@@ -1241,7 +1242,6 @@ public class ChosenImpl {
             if (!isMultiple) {
                 selectedItem.unbind("focus", activateAction);
             }
-
         } else {
             container.removeClass(css.chznDisabled());
             InputElement.as(searchField.get(0)).setDisabled(false);
