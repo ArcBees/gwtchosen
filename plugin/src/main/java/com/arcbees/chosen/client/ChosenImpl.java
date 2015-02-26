@@ -685,7 +685,7 @@ public class ChosenImpl {
     }
 
     private void keydownArrow() {
-        if (isResultHighlighted()) {
+        if (isNotResultHighlighted()) {
             activateFirstResult();
         } else if (resultsShowing) {
             // TODO should be replaced by :
@@ -763,7 +763,7 @@ public class ChosenImpl {
     private void keyupArrow() {
         if (!resultsShowing && !isMultiple) {
             resultsShow();
-        } else if (isResultHighlighted()) {
+        } else if (isNotResultHighlighted()) {
             activateLastResult();
         } else if (resultHighlight != null) {
             // TODO should be replaced by :
@@ -802,7 +802,7 @@ public class ChosenImpl {
         return searchResults.find("li." + css.activeResult());
     }
 
-    private boolean isResultHighlighted() {
+    private boolean isNotResultHighlighted() {
         return resultHighlight == null || isDetached(resultHighlight);
     }
 
@@ -1237,7 +1237,7 @@ public class ChosenImpl {
                 }
                 break;
             default:
-                ddTop = 0;
+                ddTop = positionDown();
                 break;
         }
 
