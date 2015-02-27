@@ -84,6 +84,7 @@
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
         <maven-checkstyle-plugin.version>2.13</maven-checkstyle-plugin.version>
         <port-allocator-maven-plugin.version>1.2</port-allocator-maven-plugin.version>
+        <testutils.version>1.2</testutils.version>
 
         <!-- testing -->
         <junit.version>4.11</junit.version>
@@ -246,6 +247,12 @@
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.arcbees</groupId>
+                <artifactId>testutils</artifactId>
+                <version>${testutils.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
