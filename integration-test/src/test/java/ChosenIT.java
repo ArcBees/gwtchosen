@@ -186,12 +186,12 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of the browser window
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoUpperEdge() {
+    public void dropdownPosition_autoNoBoundariesEnoughSpace() {
         // Given
         loadTestCase(new AutoUpperEdge());
 
@@ -206,12 +206,12 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of the browser window
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoLowerEdge() {
+    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() {
         // Given
         loadTestCase(new AutoLowerEdge());
 
@@ -226,12 +226,12 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of that DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoElementUpperEdge() {
+    public void dropdownPosition_autoWithBoundariesEnoughSpace() {
         // Given
         loadTestCase(new AutoElementUpperEdge());
 
@@ -246,12 +246,12 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of that DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoElementLowerEdge() {
+    public void dropdownPosition_autoWithBoundariesHasNotEnoughSpace() {
         // Given
         loadTestCase(new AutoElementLowerEdge());
 
