@@ -1223,11 +1223,11 @@ public class ChosenImpl {
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
         switch (dropdownPosition.getPosition()) {
-            case DOWN:
-                ddTop = positionDown();
+            case BELOW:
+                ddTop = positionBelow();
                 break;
-            case UP:
-                ddTop = positionUp();
+            case ABOVE:
+                ddTop = positionAbove();
                 break;
             case AUTO:
                 if (dropdownPosition.getBoundaries() == null) {
@@ -1237,7 +1237,7 @@ public class ChosenImpl {
                 }
                 break;
             default:
-                ddTop = positionDown();
+                ddTop = positionBelow();
                 break;
         }
 
@@ -1252,7 +1252,7 @@ public class ChosenImpl {
         int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
 
         int spaceBelow = ddContainer.outerHeight() - spaceAbove - container.outerHeight();
-        return spaceAbove > spaceBelow ? positionUp() : positionDown();
+        return spaceAbove > spaceBelow ? positionAbove() : positionBelow();
     }
 
     private int positionRelativeToWindow() {
@@ -1260,18 +1260,18 @@ public class ChosenImpl {
         int ddHeight = dropdown.outerHeight();
         int spaceBelow = Window.getClientHeight() - container.offset().top - container.outerHeight();
         if (spaceBelow < ddHeight) {
-            top = positionUp();
+            top = positionAbove();
         } else {
-            top = positionDown();
+            top = positionBelow();
         }
         return top;
     }
 
-    private int positionUp() {
+    private int positionAbove() {
         return -dropdown.outerHeight();
     }
 
-    private int positionDown() {
+    private int positionBelow() {
         return isMultiple ? container.outerHeight() : container.outerHeight() - 1;
     }
 

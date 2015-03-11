@@ -36,12 +36,12 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementLowerEdge;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementUpperEdge;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoLowerEdge;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoUpperEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Down;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Up;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Below;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -151,13 +151,13 @@ public class ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.UP},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.ABOVE},
      * the dropdown is displayed above the input box.
      */
     @Test
-    public void dropdownPosition_up() {
+    public void dropdownPosition_above() {
         // Given
-        loadTestCase(new Up());
+        loadTestCase(new Above());
 
         // When
         openDropDown();
@@ -167,13 +167,13 @@ public class ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.DOWN},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.BELOW},
      * the dropdown is displayed below the input box.
      */
     @Test
-    public void dropdownPosition_down() {
+    public void dropdownPosition_below() {
         // Given
-        loadTestCase(new Down());
+        loadTestCase(new Below());
 
         // When
         openDropDown();
