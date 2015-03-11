@@ -24,23 +24,27 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class AutoLowerEdge extends TestCase {
-    @UiTemplate("Auto.ui.xml")
-    public interface Binder extends UiBinder<Widget, AutoLowerEdge> {
+public class AutoWithBoundariesHasNotEnoughSpace extends TestCase {
+    @UiTemplate("AutoElement.ui.xml")
+    public interface Binder extends UiBinder<Widget, AutoWithBoundariesHasNotEnoughSpace> {
     }
 
     @UiField(provided = true)
     ChosenValueListBox listBox;
+    @UiField(provided = true)
+    SimplePanel container;
 
     @Override
     public void run() {
+        container = new SimplePanel();
         Binder binder = GWT.create(Binder.class);
-        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto());
+        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto(container.getElement()));
         RootPanel.get().add(binder.createAndBindUi(this));
-        $(listBox).siblings("div").css("bottom", "0");
+        $(listBox).siblings("div").css("bottom", "50px");
     }
 }

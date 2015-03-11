@@ -36,12 +36,12 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementLowerEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementUpperEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoLowerEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoUpperEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Down;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Up;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasNotEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasNotEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Below;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -151,13 +151,13 @@ public class ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.UP},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.ABOVE},
      * the dropdown is displayed above the input box.
      */
     @Test
-    public void dropdownPosition_up() {
+    public void dropdownPosition_above() {
         // Given
-        loadTestCase(new Up());
+        loadTestCase(new Above());
 
         // When
         openDropDown();
@@ -167,13 +167,13 @@ public class ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.DOWN},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.BELOW},
      * the dropdown is displayed below the input box.
      */
     @Test
-    public void dropdownPosition_down() {
+    public void dropdownPosition_below() {
         // Given
-        loadTestCase(new Down());
+        loadTestCase(new Below());
 
         // When
         openDropDown();
@@ -186,14 +186,14 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of the browser window
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoUpperEdge() {
+    public void dropdownPosition_autoNoBoundariesHasEnoughSpace() {
         // Given
-        loadTestCase(new AutoUpperEdge());
+        loadTestCase(new AutoNoBoundariesHasEnoughSpace());
 
         // When
         openDropDown();
@@ -206,14 +206,14 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of the browser window
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoLowerEdge() {
+    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() {
         // Given
-        loadTestCase(new AutoLowerEdge());
+        loadTestCase(new AutoNoBoundariesHasNotEnoughSpace());
 
         // When
         openDropDown();
@@ -226,14 +226,14 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the upper edge of that DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoElementUpperEdge() {
+    public void dropdownPosition_autoWithBoundariesHasEnoughSpace() {
         // Given
-        loadTestCase(new AutoElementUpperEdge());
+        loadTestCase(new AutoWithBoundariesHasEnoughSpace());
 
         // When
         openDropDown();
@@ -246,14 +246,14 @@ public class ChosenIT {
      * Tests that when
      *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
      *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} is near the lower edge of that DOM element
+     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoElementLowerEdge() {
+    public void dropdownPosition_autoWithBoundariesHasNotEnoughSpace() {
         // Given
-        loadTestCase(new AutoElementLowerEdge());
+        loadTestCase(new AutoWithBoundariesHasNotEnoughSpace());
 
         // When
         openDropDown();

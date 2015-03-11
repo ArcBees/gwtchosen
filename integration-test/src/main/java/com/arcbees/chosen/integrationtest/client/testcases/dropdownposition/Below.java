@@ -26,9 +26,9 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class Up extends TestCase {
-    @UiTemplate("UpDown.ui.xml")
-    public interface Binder extends UiBinder<Widget, Up> {
+public class Below extends TestCase {
+    @UiTemplate("AboveBelow.ui.xml")
+    public interface Binder extends UiBinder<Widget, Below> {
     }
 
     @UiField(provided = true)
@@ -37,7 +37,7 @@ public class Up extends TestCase {
     @Override
     public void run() {
         Binder binder = GWT.create(Binder.class);
-        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.up());
+        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.below());
 
         RootPanel.get().add(binder.createAndBindUi(this));
     }

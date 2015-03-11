@@ -171,6 +171,6 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
-        dropdownPosition = DropdownPosition.down();
+        dropdownPosition = DropdownPosition.below();
     }
 }

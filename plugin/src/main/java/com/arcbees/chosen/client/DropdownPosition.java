@@ -20,7 +20,7 @@ import com.google.gwt.dom.client.Element;
 
 public class DropdownPosition {
     public enum Position {
-        DOWN, UP, AUTO
+        BELOW, ABOVE, AUTO
     }
 
     private final Position position;
@@ -31,12 +31,12 @@ public class DropdownPosition {
         this.boundaries = boundaries;
     }
 
-    public static DropdownPosition up() {
-        return new DropdownPosition(Position.UP, null);
+    public static DropdownPosition above() {
+        return new DropdownPosition(Position.ABOVE, null);
     }
 
-    public static DropdownPosition down() {
-        return new DropdownPosition(Position.DOWN, null);
+    public static DropdownPosition below() {
+        return new DropdownPosition(Position.BELOW, null);
     }
 
     public static DropdownPosition auto() {

@@ -24,27 +24,21 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import static com.google.gwt.query.client.GQuery.$;
-
-public class AutoElementUpperEdge extends TestCase {
-    @UiTemplate("AutoElement.ui.xml")
-    public interface Binder extends UiBinder<Widget, AutoElementUpperEdge> {
+public class Above extends TestCase {
+    @UiTemplate("AboveBelow.ui.xml")
+    public interface Binder extends UiBinder<Widget, Above> {
     }
 
     @UiField(provided = true)
     ChosenValueListBox listBox;
-    @UiField(provided = true)
-    SimplePanel container;
 
     @Override
     public void run() {
-        container = new SimplePanel();
         Binder binder = GWT.create(Binder.class);
-        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto(container.getElement()));
+        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.above());
+
         RootPanel.get().add(binder.createAndBindUi(this));
-        $(listBox).siblings("div").css("top", "0");
     }
 }
