@@ -71,3 +71,10 @@ This will upload the docs site to branch `gh-pages` to be served at `http://arcb
 * Concept and development by [Patrick Filler](http://patrickfiller.com/).
 * Design and CSS by [Matthew Lettini](http://matthewlettini.com/)
 * The GWT port of Chosen was built by [Julien Dramaix](https://plus.google.com/u/0/103916508880440628637)
+
+##Thanks to
+[![Arcbees.com](http://i.imgur.com/HDf1qfq.png)](http://arcbees.com)
+
+[![Atlassian](http://i.imgur.com/BKkj8Rg.png)](https://www.atlassian.com/)
+
+[![IntelliJ](https://lh6.googleusercontent.com/--QIIJfKrjSk/UJJ6X-UohII/AAAAAAAAAVM/cOW7EjnH778/s800/banner_IDEA.png)](http://www.jetbrains.com/idea/index.html)

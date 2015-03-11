@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
@@ -46,6 +47,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ShowNonEmptyValues());
         registerTestCase(new AllowSingleDeselect());
         registerTestCase(new TabNavigation());
+        registerTestCase(new EnabledDisabled());
         registerTestCase(new Above());
         registerTestCase(new Below());
         registerTestCase(new AutoNoBoundariesHasEnoughSpace());

@@ -31,6 +31,10 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.arcbees</groupId>
+            <artifactId>testutils</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>

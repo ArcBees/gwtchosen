@@ -23,6 +23,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -33,6 +34,7 @@ import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
@@ -42,6 +44,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Auto
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasEnoughSpace;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasNotEnoughSpace;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Below;
+import com.arcbees.test.ByDebugId;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -49,6 +52,7 @@ import com.google.common.collect.Sets;
 import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
@@ -148,6 +152,41 @@ public class ChosenIT {
                 return value != null && value.equals(searchText);
             }
         });
+    }
+
+    /**
+     * This test asserts that a {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} can be enabled/disabled
+     * successfully.
+     */
+    @Test
+    public void enabledDisabled() {
+        // Given
+        loadTestCase(new EnabledDisabled());
+        String disabledClassName = "com-arcbees-chosen-client-resources-ChozenCss-chzn-disabled";
+
+        // When
+        WebElement disableButton = webDriverWait().until(presenceOfElementLocated(
+                ByDebugId.id(EnabledDisabled.DISABLE_DEBUG_ID)));
+        disableButton.click();
+
+        // Then
+        webDriverWait().until(presenceOfElementLocated(
+                By.className(disabledClassName)));
+
+        // When
+        WebElement enableButton = webDriverWait().until(presenceOfElementLocated(
+                ByDebugId.id(EnabledDisabled.ENABLE_DEBUG_ID)));
+        enableButton.click();
+
+        // Then
+        try {
+            int quickTimeout = 1; // we don't want this test to wait for too long
+            new WebDriverWait(webDriver, quickTimeout).until(presenceOfElementLocated(
+                    By.className(disabledClassName)));
+            fail("The ChosenValueListBox shouldn't be enabled at this point");
+        } catch (TimeoutException e) {
+            // success, element should be absent from DOM
+        }
     }
 
     /**

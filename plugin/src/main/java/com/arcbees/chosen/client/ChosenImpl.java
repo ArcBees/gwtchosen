@@ -1111,8 +1111,9 @@ public class ChosenImpl {
             }
         }
 
+        searchFieldDisabled();
+
         if (init) {
-            searchFieldDisabled();
             showSearchFieldDefault();
             searchFieldScale();
         }
@@ -1308,7 +1309,7 @@ public class ChosenImpl {
                         "letter-spacing"};
 
         for (String style : styleToCopy) {
-            styleBlock.append(style).append(':').append(searchField.css(style));
+            styleBlock.append(style).append(':').append(searchField.css(style)).append(";");
         }
 
         GQuery div = $("<div />").attr("style", styleBlock.toString()).text(searchField.val());
