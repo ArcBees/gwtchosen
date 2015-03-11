@@ -25,6 +25,12 @@ import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasNotEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasNotEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Below;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -42,6 +48,12 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new AllowSingleDeselect());
         registerTestCase(new TabNavigation());
         registerTestCase(new EnabledDisabled());
+        registerTestCase(new Above());
+        registerTestCase(new Below());
+        registerTestCase(new AutoNoBoundariesHasEnoughSpace());
+        registerTestCase(new AutoNoBoundariesHasNotEnoughSpace());
+        registerTestCase(new AutoWithBoundariesHasEnoughSpace());
+        registerTestCase(new AutoWithBoundariesHasNotEnoughSpace());
     }
 
     @Override

@@ -56,6 +56,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
@@ -281,6 +282,10 @@ public class ChosenImpl {
         return true;
     }
 
+    public void rebuildResultItems() {
+        rebuildResultItems(false);
+    }
+
     protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
         this.selectElement = element;
         this.options = options;
@@ -348,7 +353,6 @@ public class ChosenImpl {
             public boolean f(Event e) {
                 return containerMouseDown(e);
             }
-
         });
 
         container.mouseup(new Function() {
@@ -356,7 +360,6 @@ public class ChosenImpl {
             public boolean f(Event e) {
                 return containerMouseUp(e);
             }
-
         });
 
         container.mouseenter(new Function() {
@@ -417,7 +420,6 @@ public class ChosenImpl {
             public boolean f(Event e) {
                 return keyupChecker(e);
             }
-
         });
 
         searchField.keydown(new Function() {
@@ -425,7 +427,6 @@ public class ChosenImpl {
             public boolean f(Event e) {
                 return keydownChecker(e);
             }
-
         });
 
         searchField.on("paste", new Function() {
@@ -448,16 +449,13 @@ public class ChosenImpl {
                 public boolean f(Event e) {
                     return choicesClick(e);
                 }
-
             });
             searchField.focus(new Function() {
                 @Override
                 public boolean f(Event e) {
                     return inputFocus(e);
                 }
-
             });
-
         } else {
             container.click(new Function() {
                 @Override
@@ -516,7 +514,6 @@ public class ChosenImpl {
                 choiceDestroyLinkClick(e);
                 return false;
             }
-
         });
     }
 
@@ -610,7 +607,6 @@ public class ChosenImpl {
             }
 
             activateField(e);
-
         } else {
             pendingDestroyClick = false;
         }
@@ -689,11 +685,8 @@ public class ChosenImpl {
     }
 
     private void keydownArrow() {
-        if (resultHighlight == null || isDetached(resultHighlight)) {
-            GQuery firstActive = searchResults.find("li." + css.activeResult()).first();
-            if (firstActive != null) {
-                resultDoHighlight(firstActive);
-            }
+        if (isNotResultHighlighted()) {
+            activateFirstResult();
         } else if (resultsShowing) {
             // TODO should be replaced by :
             // GQuery nextSibling = resultHighlight.nextAll("li."+css.activeResult()).first();
@@ -770,6 +763,8 @@ public class ChosenImpl {
     private void keyupArrow() {
         if (!resultsShowing && !isMultiple) {
             resultsShow();
+        } else if (isNotResultHighlighted()) {
+            activateLastResult();
         } else if (resultHighlight != null) {
             // TODO should be replaced by :
             // GQuery prevSibs = resultHighlight.prevAll("li." + css.activeResult());
@@ -791,6 +786,24 @@ public class ChosenImpl {
                 resultClearHighlight();
             }
         }
+    }
+
+    private void activateLastResult() {
+        GQuery lastActive = getActiveResults().last();
+        resultDoHighlight(lastActive);
+    }
+
+    private void activateFirstResult() {
+        GQuery firstActive = getActiveResults().first();
+        resultDoHighlight(firstActive);
+    }
+
+    private GQuery getActiveResults() {
+        return searchResults.find("li." + css.activeResult());
+    }
+
+    private boolean isNotResultHighlighted() {
+        return resultHighlight == null || isDetached(resultHighlight);
     }
 
     private boolean keyupChecker(Event e) {
@@ -1053,10 +1066,6 @@ public class ChosenImpl {
         rebuildResultItems(init);
     }
 
-    public void rebuildResultItems() {
-        rebuildResultItems(false);
-    }
-
     private void rebuildResultItems(boolean init) {
         SafeHtmlBuilder content = new SafeHtmlBuilder();
         SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
@@ -1199,11 +1208,8 @@ public class ChosenImpl {
             return false;
         }
 
-        int ddTop = isMultiple ? container.outerHeight() : container.outerHeight() - 1;
-
         fireEvent(new ShowingDropDownEvent(this));
 
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
         resultsShowing = true;
 
         searchField.focus();
@@ -1212,6 +1218,57 @@ public class ChosenImpl {
         winnowResults(true);
 
         return true;
+    }
+
+    private int calculateDropdownTop() {
+        int ddTop;
+        DropdownPosition dropdownPosition = options.getDropdownPosition();
+        switch (dropdownPosition.getPosition()) {
+            case BELOW:
+                ddTop = positionBelow();
+                break;
+            case ABOVE:
+                ddTop = positionAbove();
+                break;
+            case AUTO:
+                if (dropdownPosition.getBoundaries() == null) {
+                    ddTop = positionRelativeToWindow();
+                } else {
+                    ddTop = positionRelativeToBoundaries();
+                }
+                break;
+            default:
+                ddTop = positionBelow();
+                break;
+        }
+
+        return ddTop;
+    }
+
+    private int positionRelativeToBoundaries() {
+        DropdownPosition dropdownPosition = options.getDropdownPosition();
+        GQuery ddContainer = $(dropdownPosition.getBoundaries());
+        int ddContainerOffsetTop = ddContainer.offset().top;
+        int containerOffsetTop = container.offset().top;
+        int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
+
+        int spaceBelow = ddContainer.outerHeight() - spaceAbove - container.outerHeight();
+        int ddHeight = dropdown.outerHeight();
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
+    }
+
+    private int positionRelativeToWindow() {
+        int ddHeight = dropdown.outerHeight();
+        int spaceBelow = Window.getClientHeight() - container.offset().top - container.outerHeight();
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
+    }
+
+    private int positionAbove() {
+        return -dropdown.outerHeight();
+    }
+
+    private int positionBelow() {
+        return isMultiple ? container.outerHeight() : container.outerHeight() - 1;
     }
 
     private void resultsToggle() {
@@ -1367,13 +1424,10 @@ public class ChosenImpl {
 
         choices = 0;
 
-        Class injectedResource;
         if (options.getResources() != null) {
             css = options.getResources().css();
-            injectedResource = options.getResources().getClass();
         } else {
             css = GWT.<Resources>create(Resources.class).css();
-            injectedResource = Resources.class;
         }
 
         Class<?> resourceClass = options.getResources() != null ? options.getResources().getClass() : Resources.class;
@@ -1430,7 +1484,7 @@ public class ChosenImpl {
         String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
         // recopy classes present on the select element
-        cssClasses += " " +  selectElement.getClassName();
+        cssClasses += " " + selectElement.getClassName();
 
         GQuery containerTemp =
                 $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
@@ -1523,6 +1577,12 @@ public class ChosenImpl {
         searchText = SafeHtmlUtils.htmlEscape(searchText);
 
         resultsFilter.filter(searchText, this, isShowing);
+
+        int ddTop = calculateDropdownTop();
+        if (ddTop < 0) {
+            dropdown.prepend(searchResults);
+        }
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
     }
 
     private void winnowResultsClear() {

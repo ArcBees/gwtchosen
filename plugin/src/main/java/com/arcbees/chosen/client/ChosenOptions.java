@@ -19,7 +19,6 @@ package com.arcbees.chosen.client;
 import com.arcbees.chosen.client.resources.Resources;
 
 public class ChosenOptions {
-
     private boolean allowSingleDeselect;
     private int disableSearchThreshold;
     private int maxSelectedOptions;
@@ -32,6 +31,7 @@ public class ChosenOptions {
     private boolean singleBackstrokeDelete;
     private boolean highlightSearchTerm;
     private ResultsFilter resultFilter;
+    private DropdownPosition dropdownPosition;
 
     public ChosenOptions() {
         setDefault();
@@ -89,6 +89,10 @@ public class ChosenOptions {
 
     public boolean isHighlightSearchTerm() {
         return highlightSearchTerm;
+    }
+
+    public DropdownPosition getDropdownPosition() {
+        return dropdownPosition;
     }
 
     public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
@@ -151,6 +155,11 @@ public class ChosenOptions {
         return this;
     }
 
+    public ChosenOptions setDropdownPosition(DropdownPosition dropdownPosition) {
+        this.dropdownPosition = dropdownPosition;
+        return this;
+    }
+
     public void setHighlightSearchTerm(boolean highlightSearchTerm) {
         this.highlightSearchTerm = highlightSearchTerm;
     }
@@ -162,5 +171,6 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
+        dropdownPosition = DropdownPosition.below();
     }
 }

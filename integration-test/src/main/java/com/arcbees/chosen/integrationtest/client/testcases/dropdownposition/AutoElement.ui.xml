@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:gwt="urn:import:com.arcbees.chosen.client.gwt">
+    <ui:style gss="true" field="style">
+        .root {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .container {
+            position: relative;
+            outline: 2px solid blue;
+            width: 50%;
+            height: 50%;
+            margin: 11% auto;
+        }
+
+        .listbox {
+            position: absolute !important;
+        }
+    </ui:style>
+    <g:HTMLPanel ui:field="root" styleName="{style.root}">
+        <g:SimplePanel styleName="{style.container}" ui:field="container">
+            <g:HTMLPanel>
+                <gwt:ChosenValueListBox ui:field="listBox" styleName="{style.listbox}"/>
+            </g:HTMLPanel>
+        </g:SimplePanel>
+    </g:HTMLPanel>
+</ui:UiBinder>
