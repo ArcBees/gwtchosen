@@ -37,10 +37,10 @@ import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementLowerEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoElementUpperEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoLowerEdge;
-import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoUpperEdge;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasNotEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasEnoughSpace;
+import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoWithBoundariesHasNotEnoughSpace;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Below;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -191,9 +191,9 @@ public class ChosenIT {
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoNoBoundariesEnoughSpace() {
+    public void dropdownPosition_autoNoBoundariesHasEnoughSpace() {
         // Given
-        loadTestCase(new AutoUpperEdge());
+        loadTestCase(new AutoNoBoundariesHasEnoughSpace());
 
         // When
         openDropDown();
@@ -213,7 +213,7 @@ public class ChosenIT {
     @Test
     public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() {
         // Given
-        loadTestCase(new AutoLowerEdge());
+        loadTestCase(new AutoNoBoundariesHasNotEnoughSpace());
 
         // When
         openDropDown();
@@ -231,9 +231,9 @@ public class ChosenIT {
      * the dropdown will be displayed below the input box.
      */
     @Test
-    public void dropdownPosition_autoWithBoundariesEnoughSpace() {
+    public void dropdownPosition_autoWithBoundariesHasEnoughSpace() {
         // Given
-        loadTestCase(new AutoElementUpperEdge());
+        loadTestCase(new AutoWithBoundariesHasEnoughSpace());
 
         // When
         openDropDown();
@@ -253,7 +253,7 @@ public class ChosenIT {
     @Test
     public void dropdownPosition_autoWithBoundariesHasNotEnoughSpace() {
         // Given
-        loadTestCase(new AutoElementLowerEdge());
+        loadTestCase(new AutoWithBoundariesHasNotEnoughSpace());
 
         // When
         openDropDown();

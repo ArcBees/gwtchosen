@@ -29,9 +29,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class AutoElementLowerEdge extends TestCase {
+public class AutoWithBoundariesHasEnoughSpace extends TestCase {
     @UiTemplate("AutoElement.ui.xml")
-    public interface Binder extends UiBinder<Widget, AutoElementLowerEdge> {
+    public interface Binder extends UiBinder<Widget, AutoWithBoundariesHasEnoughSpace> {
     }
 
     @UiField(provided = true)
@@ -45,6 +45,6 @@ public class AutoElementLowerEdge extends TestCase {
         Binder binder = GWT.create(Binder.class);
         listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto(container.getElement()));
         RootPanel.get().add(binder.createAndBindUi(this));
-        $(listBox).siblings("div").css("bottom", "0");
+        $(listBox).siblings("div").css("top", "0");
     }
 }
