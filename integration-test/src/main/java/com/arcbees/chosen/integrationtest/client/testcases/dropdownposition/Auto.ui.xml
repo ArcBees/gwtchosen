@@ -12,7 +12,6 @@
 
         .listbox {
             position: absolute !important;
-            right: 0;
         }
     </ui:style>
     <g:HTMLPanel ui:field="root" styleName="{style.root}">

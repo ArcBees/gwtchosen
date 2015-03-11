@@ -1252,19 +1252,14 @@ public class ChosenImpl {
         int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
 
         int spaceBelow = ddContainer.outerHeight() - spaceAbove - container.outerHeight();
-        return spaceAbove > spaceBelow ? positionAbove() : positionBelow();
+        int ddHeight = dropdown.outerHeight();
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
     }
 
     private int positionRelativeToWindow() {
-        int top;
         int ddHeight = dropdown.outerHeight();
         int spaceBelow = Window.getClientHeight() - container.offset().top - container.outerHeight();
-        if (spaceBelow < ddHeight) {
-            top = positionAbove();
-        } else {
-            top = positionBelow();
-        }
-        return top;
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
     }
 
     private int positionAbove() {

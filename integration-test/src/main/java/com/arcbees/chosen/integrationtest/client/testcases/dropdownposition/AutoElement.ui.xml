@@ -14,7 +14,7 @@
             position: relative;
             outline: 2px solid blue;
             width: 50%;
-            height: 20%;
+            height: 50%;
             margin: 11% auto;
         }
 

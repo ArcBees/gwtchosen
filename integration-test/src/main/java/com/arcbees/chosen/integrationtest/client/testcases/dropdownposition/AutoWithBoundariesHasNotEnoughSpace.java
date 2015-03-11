@@ -45,6 +45,6 @@ public class AutoWithBoundariesHasNotEnoughSpace extends TestCase {
         Binder binder = GWT.create(Binder.class);
         listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto(container.getElement()));
         RootPanel.get().add(binder.createAndBindUi(this));
-        $(listBox).siblings("div").css("bottom", "0");
+        $(listBox).siblings("div").css("bottom", "50px");
     }
 }
