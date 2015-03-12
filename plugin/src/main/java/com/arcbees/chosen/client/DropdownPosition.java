@@ -18,6 +18,16 @@ package com.arcbees.chosen.client;
 
 import com.google.gwt.dom.client.Element;
 
+/**
+ * After discussing with Julien, we agreed that this class should be removed. Instead, we're going to add 3 fields in
+ * ChosenOptions:
+ *
+ *  1) Position (BELOW, ABOVE, AUTO)
+ *  2) Element dropdownBoundaries
+ *  3) Un provider de Element (type exact à déterminer) au cas ou dropdownBoundaries n'est pas dans la DOM au moment
+ *  de construire les ChosenOptions
+ */
+
 public class DropdownPosition {
     public enum Position {
         BELOW, ABOVE, AUTO
