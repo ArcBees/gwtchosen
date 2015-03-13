@@ -1212,10 +1212,11 @@ public class ChosenImpl {
 
         resultsShowing = true;
 
-        searchField.focus();
         searchField.val(searchField.val());
 
         winnowResults(true);
+
+        searchField.focus();
 
         return true;
     }
@@ -1223,7 +1224,10 @@ public class ChosenImpl {
     private int calculateDropdownTop() {
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
-        switch (dropdownPosition.getPosition()) {
+        if (dropdownPosition == null) {
+            dropdownPosition = DropdownPosition.BELOW;
+        }
+        switch (dropdownPosition) {
             case BELOW:
                 ddTop = positionBelow();
                 break;
@@ -1231,7 +1235,7 @@ public class ChosenImpl {
                 ddTop = positionAbove();
                 break;
             case AUTO:
-                if (dropdownPosition.getBoundaries() == null) {
+                if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
                     ddTop = positionRelativeToWindow();
                 } else {
                     ddTop = positionRelativeToBoundaries();
@@ -1246,8 +1250,11 @@ public class ChosenImpl {
     }
 
     private int positionRelativeToBoundaries() {
-        DropdownPosition dropdownPosition = options.getDropdownPosition();
-        GQuery ddContainer = $(dropdownPosition.getBoundaries());
+        Element dropdownBoundaries = options.getDropdownBoundaries();
+        if (dropdownBoundaries == null) {
+            dropdownBoundaries = options.getDropdownBoundariesProvider().getDropdownBoundaries();
+        }
+        GQuery ddContainer = $(dropdownBoundaries);
         int ddContainerOffsetTop = ddContainer.offset().top;
         int containerOffsetTop = container.offset().top;
         int spaceAbove = containerOffsetTop - ddContainerOffsetTop;

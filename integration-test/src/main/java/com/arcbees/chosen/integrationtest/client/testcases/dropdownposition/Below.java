@@ -37,7 +37,7 @@ public class Below extends TestCase {
     @Override
     public void run() {
         Binder binder = GWT.create(Binder.class);
-        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.below());
+        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.BELOW, null, null);
 
         RootPanel.get().add(binder.createAndBindUi(this));
     }

@@ -19,18 +19,23 @@ package com.arcbees.chosen.integrationtest.client.testcases.dropdownposition;
 import java.util.EnumSet;
 
 import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.DropdownBoundariesProvider;
 import com.arcbees.chosen.client.DropdownPosition;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.text.shared.AbstractRenderer;
 
 public class DropdownPositionTestHelper {
     public static final AbstractRenderer<CarBrand> RENDERER = new DefaultCarRenderer();
 
-    public static ChosenValueListBox buildSample(DropdownPosition dropdownPosition) {
+    public static ChosenValueListBox buildSample(DropdownPosition dropdownPosition, Element dropdownBoundaries,
+                                                 DropdownBoundariesProvider dropdownBoundariesProvider) {
         ChosenOptions options = new ChosenOptions();
         options.setDropdownPosition(dropdownPosition);
+        options.setDropdownBoundaries(dropdownBoundaries);
+        options.setDropdownBoundariesProvider(dropdownBoundariesProvider);
 
         return buildListbox(options);
     }

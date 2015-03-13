@@ -17,6 +17,7 @@
 package com.arcbees.chosen.client;
 
 import com.arcbees.chosen.client.resources.Resources;
+import com.google.gwt.dom.client.Element;
 
 public class ChosenOptions {
     private boolean allowSingleDeselect;
@@ -32,6 +33,8 @@ public class ChosenOptions {
     private boolean highlightSearchTerm;
     private ResultsFilter resultFilter;
     private DropdownPosition dropdownPosition;
+    private Element dropdownBoundaries;
+    private DropdownBoundariesProvider dropdownBoundariesProvider;
 
     public ChosenOptions() {
         setDefault();
@@ -95,6 +98,14 @@ public class ChosenOptions {
         return dropdownPosition;
     }
 
+    public Element getDropdownBoundaries() {
+        return dropdownBoundaries;
+    }
+
+    public DropdownBoundariesProvider getDropdownBoundariesProvider() {
+        return dropdownBoundariesProvider;
+    }
+
     public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
         this.allowSingleDeselect = allowSingleDeselect;
         return this;
@@ -155,8 +166,44 @@ public class ChosenOptions {
         return this;
     }
 
+    /**
+     * Sets the positioning of the dropdown.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}, dropdown will be displayed below the input
+     * box.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#ABOVE}, dropdown will be displayed above the input
+     * box.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#AUTO}, dropdown will be displayed below the input
+     * box only if there's enough vertical space between the input box and the bottom of the
+     * {@link com.arcbees.chosen.client.ChosenOptions#dropdownBoundaries}. Otherwise, the dropdown will be displayed
+     * above the input box.
+     *
+     * If not set, it will default to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}.
+     */
     public ChosenOptions setDropdownPosition(DropdownPosition dropdownPosition) {
         this.dropdownPosition = dropdownPosition;
+        return this;
+    }
+
+    /**
+     * When {@link com.arcbees.chosen.client.ChosenOptions#dropdownPosition} is set to
+     * {@link com.arcbees.chosen.client.DropdownPosition#AUTO}, this element will be used to calculate the available
+     * vertical space below the dropdown.
+     */
+    public ChosenOptions setDropdownBoundaries(Element dropdownBoundaries) {
+        this.dropdownBoundaries = dropdownBoundaries;
+        return this;
+    }
+
+    /**
+     * See {@link com.arcbees.chosen.client.ChosenOptions#setDropdownBoundaries(com.google.gwt.dom.client.Element)}.
+     * Useful for cases when the {@link com.arcbees.chosen.client.ChosenOptions#dropdownBoundaries} cannot be defined
+     * when the Chosen widget is built.
+     *
+     * {@link com.arcbees.chosen.client.ChosenOptions#setDropdownBoundaries(com.google.gwt.dom.client.Element)} will
+     * have priority over this setting.
+     */
+    public ChosenOptions setDropdownBoundariesProvider(DropdownBoundariesProvider dropdownBoundariesProvider) {
+        this.dropdownBoundariesProvider = dropdownBoundariesProvider;
         return this;
     }
 
@@ -171,6 +218,6 @@ public class ChosenOptions {
         singleBackstrokeDelete = false;
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
-        dropdownPosition = DropdownPosition.below();
+        dropdownPosition = DropdownPosition.BELOW;
     }
 }

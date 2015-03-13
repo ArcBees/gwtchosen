@@ -16,10 +16,12 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases.dropdownposition;
 
+import com.arcbees.chosen.client.DropdownBoundariesProvider;
 import com.arcbees.chosen.client.DropdownPosition;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
@@ -43,7 +45,12 @@ public class AutoWithBoundariesHasNotEnoughSpace extends TestCase {
     public void run() {
         container = new SimplePanel();
         Binder binder = GWT.create(Binder.class);
-        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.auto(container.getElement()));
+        listBox = DropdownPositionTestHelper.buildSample(DropdownPosition.AUTO, null, new DropdownBoundariesProvider() {
+            @Override
+            public Element getDropdownBoundaries() {
+                return container.getElement();
+            }
+        });
         RootPanel.get().add(binder.createAndBindUi(this));
         $(listBox).siblings("div").css("bottom", "50px");
     }
