@@ -1212,10 +1212,11 @@ public class ChosenImpl {
 
         resultsShowing = true;
 
-        searchField.focus();
         searchField.val(searchField.val());
 
         winnowResults(true);
+
+        searchField.focus();
 
         return true;
     }
