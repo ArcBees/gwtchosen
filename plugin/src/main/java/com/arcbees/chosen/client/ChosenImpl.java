@@ -1216,6 +1216,12 @@ public class ChosenImpl {
 
         winnowResults(true);
 
+        int ddTop = calculateDropdownTop();
+        if (ddTop < 0) {
+            dropdown.prepend(searchResults);
+        }
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+
         searchField.focus();
 
         return true;
@@ -1578,12 +1584,6 @@ public class ChosenImpl {
         searchText = SafeHtmlUtils.htmlEscape(searchText);
 
         resultsFilter.filter(searchText, this, isShowing);
-
-        int ddTop = calculateDropdownTop();
-        if (ddTop < 0) {
-            dropdown.prepend(searchResults);
-        }
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
     }
 
     private void winnowResultsClear() {
