@@ -16,6 +16,7 @@
 
 package com.arcbees.chosen.sample.client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.arcbees.chosen.client.ChosenImpl;
@@ -24,10 +25,16 @@ import com.arcbees.chosen.client.ResultsFilter;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.SelectParser.SelectItem;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
+import com.arcbees.chosen.client.gwt.MultipleChosenValueListBox;
+import com.google.common.collect.Lists;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.text.shared.AbstractRenderer;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import static com.arcbees.chosen.client.Chosen.Chosen;
@@ -166,5 +173,104 @@ public class ChosenSample implements EntryPoint {
         options.setResultFilter(new ServerSideSimulatorResultFilter());
         final ChosenListBox serverChosenListBox = new ChosenListBox(false, options);
         RootPanel.get("serverChozen").add(serverChosenListBox);
+
+        class Test {
+            String display;
+
+            public Test(String display) {
+                this.display = display;
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                return display.equals(((Test)obj).display);
+            }
+
+            @Override
+            public int hashCode() {
+                return display.hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return display;
+            }
+        }
+
+        final List<Test> firstList = Lists.newArrayList(new Test("test1"), new Test("test2"), new Test("test3"),
+                new Test("test4"));
+        final List<Test> secondList = Lists.newArrayList(new Test("test5"), new Test("test6"), new Test("test7"));
+        List<Test> all = new ArrayList<Test>();
+        all.addAll(firstList);
+        all.addAll(secondList);
+
+        final MultipleChosenValueListBox<Test> testMultipleChosenValueListBox = new MultipleChosenValueListBox<Test>(new AbstractRenderer<Test>() {
+
+            @Override
+            public String render(Test test) {
+                return test != null ? test.display : "";
+            }
+        });
+
+        testMultipleChosenValueListBox.setAcceptableValues(all);
+
+        final List<Test> current = new ArrayList<Test>(firstList);
+        testMultipleChosenValueListBox.setValue(current);
+
+        RootPanel.get().add(testMultipleChosenValueListBox);
+
+        Button exch = new Button("setValue");
+        exch.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                boolean first = current.size() == firstList.size();
+                current.clear();
+
+                if (first) {
+                    current.addAll(secondList);
+                } else {
+                    current.addAll(firstList);
+                }
+                testMultipleChosenValueListBox.setValue(current);
+            }
+        });
+
+        Button clear = new Button("add values");
+        clear.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                testMultipleChosenValueListBox.addValues(Lists.newArrayList(new Test("added1"), new Test("added2")));
+            }
+        });
+
+        Button removeFirst = new Button("add value");
+        removeFirst.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                testMultipleChosenValueListBox.addValue(new Test("added"));
+            }
+        });
+
+        Button removeLast = new Button("remove value");
+        removeLast.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                testMultipleChosenValueListBox.removeValue(new Test("added"));
+            }
+        });
+
+        Button getValues = new Button("remove values");
+        getValues.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                testMultipleChosenValueListBox.removeValues(Lists.newArrayList(new Test("added1"), new Test("added2")));
+            }
+        });
+
+        RootPanel.get().add(clear);
+        RootPanel.get().add(exch);
+        RootPanel.get().add(removeFirst);
+        RootPanel.get().add(removeLast);
+        RootPanel.get().add(getValues);
     }
 }
