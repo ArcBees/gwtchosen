@@ -1219,12 +1219,12 @@ public class ChosenImpl {
 
         winnowResults(true);
 
-        searchField.focus();
-
         int ddTop = calculateDropdownTop();
         if (ddTop < 0) {
             dropdown.prepend(searchResults);
+            container.addClass(css.resultAbove());
         }
+
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
 
         searchField.focus();
@@ -1337,10 +1337,6 @@ public class ChosenImpl {
         }
 
         searchField.css("width", w + "px");
-
-        // The height of the main input can have changed.
-        int ddTop = calculateDropdownTop();
-        dropdown.css("top", ddTop + "px");
     }
 
     private boolean searchResultsMouseOut(Event e) {
@@ -1592,12 +1588,6 @@ public class ChosenImpl {
         searchText = SafeHtmlUtils.htmlEscape(searchText);
 
         resultsFilter.filter(searchText, this, isShowing);
-
-        int ddTop = calculateDropdownTop();
-        if (ddTop < 0) {
-            dropdown.prepend(searchResults);
-        }
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
     }
 
     private void winnowResultsClear() {
