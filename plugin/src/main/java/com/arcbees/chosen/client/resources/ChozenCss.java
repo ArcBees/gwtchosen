@@ -110,5 +110,8 @@ public interface ChozenCss extends CssResource {
     @ClassName("icon_search")
     String iconSearch();
 
+    @ClassName("result-above")
+    String resultAbove();
+
     int indent();
 }

@@ -483,7 +483,7 @@ public class ChosenImpl {
     }
 
     private String buildContainerId() {
-        String id = null;
+        String id;
         String selectElementId = selectElement.getId();
 
         if (selectElementId != null && selectElementId.length() > 0) {
@@ -1159,6 +1159,9 @@ public class ChosenImpl {
 
         dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
         dropdown.css("top", VERTICAL_OFFSET + "px");
+
+        container.removeClass(css.resultAbove());
+
         resultsShowing = false;
     }
 
@@ -1218,19 +1221,22 @@ public class ChosenImpl {
 
         searchField.focus();
 
+        int ddTop = calculateDropdownTop();
+        if (ddTop < 0) {
+            dropdown.prepend(searchResults);
+        }
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+
+        searchField.focus();
+
         return true;
     }
 
     private int calculateDropdownTop() {
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
-        if (dropdownPosition == null) {
-            dropdownPosition = DropdownPosition.BELOW;
-        }
+
         switch (dropdownPosition) {
-            case BELOW:
-                ddTop = positionBelow();
-                break;
             case ABOVE:
                 ddTop = positionAbove();
                 break;
@@ -1241,6 +1247,7 @@ public class ChosenImpl {
                     ddTop = positionRelativeToBoundaries();
                 }
                 break;
+            case BELOW:
             default:
                 ddTop = positionBelow();
                 break;
@@ -1331,7 +1338,8 @@ public class ChosenImpl {
 
         searchField.css("width", w + "px");
 
-        int ddTop = container.height();
+        // The height of the main input can have changed.
+        int ddTop = calculateDropdownTop();
         dropdown.css("top", ddTop + "px");
     }
 
