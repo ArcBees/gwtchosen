@@ -483,7 +483,7 @@ public class ChosenImpl {
     }
 
     private String buildContainerId() {
-        String id = null;
+        String id;
         String selectElementId = selectElement.getId();
 
         if (selectElementId != null && selectElementId.length() > 0) {
@@ -1159,6 +1159,9 @@ public class ChosenImpl {
 
         dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
         dropdown.css("top", VERTICAL_OFFSET + "px");
+
+        container.removeClass(css.resultAbove());
+
         resultsShowing = false;
     }
 
@@ -1216,6 +1219,14 @@ public class ChosenImpl {
 
         winnowResults(true);
 
+        int ddTop = calculateDropdownTop();
+        if (ddTop < 0) {
+            dropdown.prepend(searchResults);
+            container.addClass(css.resultAbove());
+        }
+
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+
         searchField.focus();
 
         return true;
@@ -1224,13 +1235,8 @@ public class ChosenImpl {
     private int calculateDropdownTop() {
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
-        if (dropdownPosition == null) {
-            dropdownPosition = DropdownPosition.BELOW;
-        }
+
         switch (dropdownPosition) {
-            case BELOW:
-                ddTop = positionBelow();
-                break;
             case ABOVE:
                 ddTop = positionAbove();
                 break;
@@ -1241,6 +1247,7 @@ public class ChosenImpl {
                     ddTop = positionRelativeToBoundaries();
                 }
                 break;
+            case BELOW:
             default:
                 ddTop = positionBelow();
                 break;
@@ -1330,9 +1337,6 @@ public class ChosenImpl {
         }
 
         searchField.css("width", w + "px");
-
-        int ddTop = container.height();
-        dropdown.css("top", ddTop + "px");
     }
 
     private boolean searchResultsMouseOut(Event e) {
@@ -1584,12 +1588,6 @@ public class ChosenImpl {
         searchText = SafeHtmlUtils.htmlEscape(searchText);
 
         resultsFilter.filter(searchText, this, isShowing);
-
-        int ddTop = calculateDropdownTop();
-        if (ddTop < 0) {
-            dropdown.prepend(searchResults);
-        }
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
     }
 
     private void winnowResultsClear() {

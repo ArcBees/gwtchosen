@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.client.ChosenOptions;
+import com.arcbees.chosen.client.DropdownPosition;
 import com.arcbees.chosen.client.ResultsFilter;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.SelectParser.SelectItem;
@@ -124,6 +125,9 @@ public class ChosenSample implements EntryPoint {
 
         $("#noResultsText").as(Chosen).chosen(
                 new ChosenOptions().setNoResultsText("Ooops, nothing was found:"));
+
+        $("#dropdownPosition").as(Chosen).chosen(
+                new ChosenOptions().setDropdownPosition(DropdownPosition.ABOVE));
 
         final ChosenListBox chzn = new ChosenListBox();
         chzn.addItem("item 1");
