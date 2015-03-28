@@ -483,7 +483,7 @@ public class ChosenImpl {
     }
 
     private String buildContainerId() {
-        String id = null;
+        String id;
         String selectElementId = selectElement.getId();
 
         if (selectElementId != null && selectElementId.length() > 0) {
@@ -1159,6 +1159,9 @@ public class ChosenImpl {
 
         dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
         dropdown.css("top", VERTICAL_OFFSET + "px");
+
+        container.removeClass(css.resultAbove());
+
         resultsShowing = false;
     }
 
@@ -1219,7 +1222,9 @@ public class ChosenImpl {
         int ddTop = calculateDropdownTop();
         if (ddTop < 0) {
             dropdown.prepend(searchResults);
+            container.addClass(css.resultAbove());
         }
+
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
 
         searchField.focus();
@@ -1230,20 +1235,19 @@ public class ChosenImpl {
     private int calculateDropdownTop() {
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
-        switch (dropdownPosition.getPosition()) {
-            case BELOW:
-                ddTop = positionBelow();
-                break;
+
+        switch (dropdownPosition) {
             case ABOVE:
                 ddTop = positionAbove();
                 break;
             case AUTO:
-                if (dropdownPosition.getBoundaries() == null) {
+                if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
                     ddTop = positionRelativeToWindow();
                 } else {
                     ddTop = positionRelativeToBoundaries();
                 }
                 break;
+            case BELOW:
             default:
                 ddTop = positionBelow();
                 break;
@@ -1253,8 +1257,11 @@ public class ChosenImpl {
     }
 
     private int positionRelativeToBoundaries() {
-        DropdownPosition dropdownPosition = options.getDropdownPosition();
-        GQuery ddContainer = $(dropdownPosition.getBoundaries());
+        Element dropdownBoundaries = options.getDropdownBoundaries();
+        if (dropdownBoundaries == null) {
+            dropdownBoundaries = options.getDropdownBoundariesProvider().getDropdownBoundaries();
+        }
+        GQuery ddContainer = $(dropdownBoundaries);
         int ddContainerOffsetTop = ddContainer.offset().top;
         int containerOffsetTop = container.offset().top;
         int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
@@ -1330,9 +1337,6 @@ public class ChosenImpl {
         }
 
         searchField.css("width", w + "px");
-
-        int ddTop = container.height();
-        dropdown.css("top", ddTop + "px");
     }
 
     private boolean searchResultsMouseOut(Event e) {

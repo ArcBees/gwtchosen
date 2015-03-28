@@ -16,6 +16,8 @@
 
 package com.arcbees.chosen.client;
 
-public enum DropdownPosition {
-    BELOW, ABOVE, AUTO
+import com.google.gwt.dom.client.Element;
+
+public interface DropdownBoundariesProvider {
+    Element getDropdownBoundaries();
 }
