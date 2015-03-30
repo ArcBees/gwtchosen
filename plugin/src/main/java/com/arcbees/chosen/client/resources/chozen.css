@@ -24,6 +24,15 @@
   box-shadow        : 0 4px 5px rgba(0,0,0,.15);
   z-index: 1010;
 }
+/* Result above */
+.result-above.chzn-container .chzn-drop {
+  border-top: 1px solid #aaa;
+  border-bottom: 0;
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,.15);
+  -moz-box-shadow   : 0 0 5px rgba(0,0,0,.15);
+  -o-box-shadow     : 0 0 5px rgba(0,0,0,.15);
+  box-shadow        : 0 0 5px rgba(0,0,0,.15);
+}
 /* @end */
 
 @url CHOSEN_SPRITE_URL chosenSprite; 
@@ -414,6 +423,3 @@
 /*To make the gwt compiler happy*/
 .chzn-done{}
 }
-
-/* TODO JASON */
-.result-above{}

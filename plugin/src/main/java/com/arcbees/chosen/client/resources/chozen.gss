@@ -26,6 +26,14 @@
     @mixin shadow(0, 4px, 5px, 0.15);
 }
 
+/* Result above */
+.result-above.chzn-container .chzn-drop {
+    border-top: 1px solid CHZN_C_BORDER;
+    border-bottom: 0;
+
+    @mixin shadow(0, 0, 5px, 0.15);
+}
+
 .chzn-container-single .chzn-single {
     color: CHZN_C_TEXT;
     background-color: CHZN_C_PRIMARY;
@@ -490,8 +498,4 @@
 }
 
 .chzn-done {
-}
-
-/* TODO JASON */
-.result-above{
 }
