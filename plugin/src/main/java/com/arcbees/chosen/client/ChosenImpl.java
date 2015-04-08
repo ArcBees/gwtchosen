@@ -1239,7 +1239,6 @@ public class ChosenImpl {
         }
 
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
-
     }
 
     private int calculateDropdownTop() {
