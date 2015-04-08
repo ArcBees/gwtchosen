@@ -185,6 +185,8 @@ public class ChosenImpl {
             } else {
                 chosen.winnowResultsSetHighlight();
             }
+
+            chosen.positionDropdownResult();
         }
     }
 
@@ -1121,8 +1123,11 @@ public class ChosenImpl {
             // keep the html select element synchronized with the new result.
             $selectElement.html(optionsHtml.toSafeHtml().asString());
         }
-
         searchResults.html(content.toSafeHtml().asString());
+
+        if (resultsShowing) {
+            positionDropdownResult();
+        }
     }
 
     private SafeHtml createOption(OptionItem item) {
@@ -1219,6 +1224,14 @@ public class ChosenImpl {
 
         winnowResults(true);
 
+        positionDropdownResult();
+
+        searchField.focus();
+
+        return true;
+    }
+
+    private void positionDropdownResult() {
         int ddTop = calculateDropdownTop();
         if (ddTop < 0) {
             dropdown.prepend(searchResults);
@@ -1227,9 +1240,6 @@ public class ChosenImpl {
 
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
 
-        searchField.focus();
-
-        return true;
     }
 
     private int calculateDropdownTop() {
