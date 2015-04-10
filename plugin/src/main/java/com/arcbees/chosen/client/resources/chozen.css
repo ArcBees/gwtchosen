@@ -289,6 +289,9 @@
   background: #f4f4f4;
   display: list-item;
 }
+.result-above.chzn-container .chzn-results .no-results {
+  border-top: 1px solid #aaa;
+}
 .chzn-container .chzn-results .group-result {
   cursor: default;
   color: #999;
