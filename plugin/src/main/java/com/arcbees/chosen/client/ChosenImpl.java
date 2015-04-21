@@ -186,7 +186,9 @@ public class ChosenImpl {
                 chosen.winnowResultsSetHighlight();
             }
 
-            chosen.positionDropdownResult();
+            if (isShowing) {
+                chosen.positionDropdownResult();
+            }
         }
     }
 
@@ -1199,7 +1201,7 @@ public class ChosenImpl {
 
     private void resultsSearch() {
         if (resultsShowing) {
-            winnowResults(false);
+            winnowResults(resultsShowing);
         } else {
             resultsShow();
         }
