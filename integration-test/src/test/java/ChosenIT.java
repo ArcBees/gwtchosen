@@ -314,7 +314,6 @@ public class ChosenIT {
     @Test
     public void deselectOption_dropdownNotShowing() {
         // Given
-
         loadTestCase(new SimpleMultiValueListBox());
         clickOption(CarBrand.AUDI, new DefaultCarRenderer());
 
