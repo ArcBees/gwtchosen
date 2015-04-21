@@ -320,7 +320,7 @@ public class ChosenIT {
         // When
         deselectOption(CarBrand.AUDI, new DefaultCarRenderer());
 
-        // When
+        // Then
         assertDropdownIsClosed();
     }
 
