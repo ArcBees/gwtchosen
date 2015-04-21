@@ -32,11 +32,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
@@ -83,9 +85,10 @@ public class ChosenIT {
      * then the empty string will not be displayed in the dropdown options.
      */
     @Test
-    public void hideEmptyValues() {
+    public void hideEmptyValues() throws InterruptedException {
         // Given
         loadTestCase(new HideEmptyValues());
+        openDropDown();
 
         // Then
         Set<String> options = getOptions();
@@ -100,6 +103,7 @@ public class ChosenIT {
     public void showNonEmptyValues() {
         // Given
         loadTestCase(new ShowNonEmptyValues());
+        openDropDown();
 
         // Then
         Set<String> options = getOptions();
@@ -301,6 +305,25 @@ public class ChosenIT {
         assertDropdownIsAbove();
     }
 
+    /**
+     * Tests that when
+     *  - we deselect an option to a multiple chosen list box.
+     *
+     * the dropdown with the choices aren't displayed
+     */
+    @Test
+    public void deselectOption_dropdownNotShowing() {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+        clickOption(CarBrand.AUDI, new DefaultCarRenderer());
+
+        // When
+        deselectOption(CarBrand.AUDI, new DefaultCarRenderer());
+
+        // Then
+        assertDropdownIsClosed();
+    }
+
     @After
     public void after() {
         webDriver.quit();
@@ -312,6 +335,15 @@ public class ChosenIT {
 
     private void deselect() {
         WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.tagName("abbr")));
+        abbr.click();
+    }
+
+    /**
+     * Deselect an option previously selected. Work only with multiple chosen list box.
+     */
+    private <T extends Enum<T>> void deselectOption(T val,  Renderer<T> renderer) {
+        String xpath = String.format("//li[span/text()='%s']/a", renderer.render(val));
+        WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
         abbr.click();
     }
 
@@ -341,14 +373,14 @@ public class ChosenIT {
     }
 
     private void openDropDown() {
-        String xpath = "//div[@id='chozen_container__0_chzn']/a";
+        String xpath = "//div[@id='chozen_container__0_chzn']";
         WebElement btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
 
         btn.click();
     }
 
     private String getSelectedOptionText() {
-        String xpath = "//div[@id='chozen_container__0_chzn']/a/span";
+        String xpath = "//div[@id='chozen_container__0_chzn']//span[1]";
         WebElement span = webDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 
         return span.getText();
@@ -385,6 +417,10 @@ public class ChosenIT {
     private void assertDropdownIsAbove() {
         int top = getDropdownTop();
 
-        assertThat(top).isNegative();
+        assertThat(top).isNegative().isNotEqualTo(-9000);
+    }
+
+    private void assertDropdownIsClosed() {
+        assertThat(getDropdownTop()).isEqualTo(-9000);
     }
 }
