@@ -1252,7 +1252,10 @@ public class ChosenImpl {
                 ddTop = positionAbove();
                 break;
             case AUTO:
-                if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
+                if (container.hasClass(css.resultAbove())) {
+                    // if dropdown is already above, let it there.
+                    ddTop = positionAbove();
+                } else if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
                     ddTop = positionRelativeToWindow();
                 } else {
                     ddTop = positionRelativeToBoundaries();
