@@ -41,7 +41,7 @@ public class SimpleValueListBox extends TestCase {
         this(new ChosenOptions(), false);
     }
 
-    public SimpleValueListBox(boolean addNullValue) {
+    protected SimpleValueListBox(boolean addNullValue) {
         this(new ChosenOptions(), addNullValue);
     }
 
