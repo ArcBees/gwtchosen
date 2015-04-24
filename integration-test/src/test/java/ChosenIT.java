@@ -263,14 +263,13 @@ public class ChosenIT {
 
         // Then
         assertDropdownIsAbove();
-        
-        // When 
+
+        // When
         searchOn("Audi");
 
         // Then
         assertDropdownIsAbove();
     }
-    
 
     /**
      * Tests that when
