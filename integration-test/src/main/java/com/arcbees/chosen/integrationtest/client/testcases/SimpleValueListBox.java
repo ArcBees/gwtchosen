@@ -16,10 +16,12 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.arcbees.chosen.client.ChosenOptions;
-import com.arcbees.chosen.client.gwt.MultipleChosenValueListBox;
+import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
@@ -27,31 +29,47 @@ import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class SimpleMultiValueListBox extends TestCase {
+public class SimpleValueListBox extends TestCase {
     public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
 
     private final ChosenOptions options;
-    private MultipleChosenValueListBox<CarBrand> listBox;
+    private final boolean addNullValue;
 
-    public SimpleMultiValueListBox() {
-        this(new ChosenOptions());
+    private ChosenValueListBox<CarBrand> listBox;
+
+    public SimpleValueListBox() {
+        this(new ChosenOptions(), false);
     }
 
-    protected SimpleMultiValueListBox(ChosenOptions options) {
+    public SimpleValueListBox(boolean addNullValue) {
+        this(new ChosenOptions(), addNullValue);
+    }
+
+    protected SimpleValueListBox(ChosenOptions options, boolean addNullValue) {
         this.options = options;
+        this.addNullValue = addNullValue;
     }
 
     @Override
     public void run() {
-        listBox = new MultipleChosenValueListBox<CarBrand>(RENDERER, options);
+        listBox = new ChosenValueListBox<CarBrand>(getRenderer(), options);
 
-        listBox.setAcceptableValues(Lists.newArrayList(CarBrand.values()));
+        List<CarBrand> acceptableValues = Lists.newArrayList(CarBrand.values());
+        if (addNullValue) {
+            acceptableValues.add(0, null);
+        }
+
+        listBox.setAcceptableValues(acceptableValues);
 
         RootPanel.get().add(listBox);
     }
 
     @Nullable
-    protected MultipleChosenValueListBox<CarBrand> getListBox() {
+    protected ChosenValueListBox<CarBrand> getListBox() {
         return listBox;
+    }
+
+    protected Renderer<CarBrand> getRenderer() {
+        return RENDERER;
     }
 }

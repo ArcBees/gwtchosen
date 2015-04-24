@@ -16,34 +16,25 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import com.arcbees.chosen.client.gwt.ChosenValueListBox;
-import com.arcbees.chosen.integrationtest.client.TestCase;
-import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
-import com.google.common.collect.Lists;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class EnabledDisabled extends TestCase {
-    public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
-
+public class EnabledDisabled extends SimpleValueListBox {
     public static final String ENABLE_DEBUG_ID = "enable";
     public static final String DISABLE_DEBUG_ID = "disable";
 
     @Override
     public void run() {
-        final ChosenValueListBox<CarBrand> chosenValueListBox = new ChosenValueListBox<CarBrand>(RENDERER);
-        chosenValueListBox.setAcceptableValues(Lists.newArrayList(CarBrand.values()));
+        super.run();
 
         Button enableButton = new Button("Enable");
         enableButton.ensureDebugId(ENABLE_DEBUG_ID);
         enableButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                chosenValueListBox.setEnabled(true);
+                getListBox().setEnabled(true);
             }
         });
 
@@ -52,10 +43,10 @@ public class EnabledDisabled extends TestCase {
         disableButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                chosenValueListBox.setEnabled(false);
+                getListBox().setEnabled(false);
             }
         });
-        RootPanel.get().add(chosenValueListBox);
+
         RootPanel.get().add(enableButton);
         RootPanel.get().add(disableButton);
     }

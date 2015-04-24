@@ -16,34 +16,19 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import java.util.ArrayList;
-
 import com.arcbees.chosen.client.ChosenOptions;
-import com.arcbees.chosen.client.gwt.ChosenValueListBox;
-import com.arcbees.chosen.integrationtest.client.TestCase;
-import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
-import com.google.common.collect.Lists;
-import com.google.gwt.text.shared.Renderer;
-import com.google.gwt.user.client.ui.RootPanel;
 
-public class AllowSingleDeselect extends TestCase {
-    public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
-
+public class AllowSingleDeselect extends SimpleValueListBox {
     public static final String PLACEHOLDER = "Some placeholder";
 
-    @Override
-    public void run() {
+    private static ChosenOptions createChosenOption() {
         ChosenOptions chosenOptions = new ChosenOptions();
         chosenOptions.setPlaceholderText(PLACEHOLDER);
         chosenOptions.setAllowSingleDeselect(true);
+        return chosenOptions;
+    }
 
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER, chosenOptions);
-
-        ArrayList<CarBrand> acceptableValues = Lists.newArrayList(CarBrand.values());
-        acceptableValues.add(0, null);
-        listBox.setAcceptableValues(acceptableValues);
-
-        RootPanel.get().add(listBox);
+    public AllowSingleDeselect() {
+        super(createChosenOption(), true);
     }
 }
