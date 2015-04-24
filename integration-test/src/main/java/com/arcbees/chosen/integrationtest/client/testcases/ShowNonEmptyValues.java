@@ -16,17 +16,11 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import java.util.List;
-
-import com.arcbees.chosen.client.gwt.ChosenValueListBox;
-import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.text.shared.Renderer;
-import com.google.gwt.user.client.ui.RootPanel;
 
-public class ShowNonEmptyValues extends TestCase {
+public class ShowNonEmptyValues extends SimpleValueListBox {
     public static final Renderer<CarBrand> RENDERER = new AbstractRenderer<CarBrand>() {
         @Override
         public String render(CarBrand object) {
@@ -37,16 +31,19 @@ public class ShowNonEmptyValues extends TestCase {
         }
     };
 
+    public ShowNonEmptyValues() {
+        super(true /* addNullValue */);
+    }
+
     @Override
     public void run() {
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER);
+        super.run();
 
-        List<CarBrand> carBrands = Lists.newArrayList(CarBrand.values());
-        carBrands.add(0, null);
-        listBox.setAcceptableValues(carBrands);
+        getListBox().setValue(null);
+    }
 
-        listBox.setValue(null);
-
-        RootPanel.get().add(listBox);
+    @Override
+    protected Renderer<CarBrand> getRenderer() {
+        return RENDERER;
     }
 }

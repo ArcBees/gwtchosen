@@ -16,27 +16,13 @@
 
 package com.arcbees.chosen.integrationtest.client.testcases;
 
-import java.util.EnumSet;
-
-import com.arcbees.chosen.client.gwt.ChosenValueListBox;
-import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
-import com.google.gwt.text.shared.AbstractRenderer;
-import com.google.gwt.user.client.ui.RootPanel;
 
-public class ChooseOption extends TestCase {
-    public static final AbstractRenderer<CarBrand> RENDERER = new DefaultCarRenderer();
-
+public class ChooseOption extends SimpleValueListBox {
     @Override
     public void run() {
-        RootPanel rootPanel = RootPanel.get();
+        super.run();
 
-        ChosenValueListBox<CarBrand> listBox = new ChosenValueListBox<CarBrand>(RENDERER);
-
-        listBox.setAcceptableValues(EnumSet.allOf(CarBrand.class));
-        listBox.setValue(CarBrand.AUDI);
-
-        rootPanel.add(listBox);
+        getListBox().setValue(CarBrand.AUDI);
     }
 }
