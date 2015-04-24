@@ -21,14 +21,14 @@ import com.arcbees.chosen.client.ChosenOptions;
 public class AllowSingleDeselect extends SimpleValueListBox {
     public static final String PLACEHOLDER = "Some placeholder";
 
+    public AllowSingleDeselect() {
+        super(createChosenOption(), true);
+    }
+
     private static ChosenOptions createChosenOption() {
         ChosenOptions chosenOptions = new ChosenOptions();
         chosenOptions.setPlaceholderText(PLACEHOLDER);
         chosenOptions.setAllowSingleDeselect(true);
         return chosenOptions;
-    }
-
-    public AllowSingleDeselect() {
-        super(createChosenOption(), true);
     }
 }
