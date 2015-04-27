@@ -411,7 +411,7 @@ public class ChosenIT {
 
     /**
      * Tests that the <code>searchContains</code> option is set to true, the search will match words containing the
-     * query.
+     * query.c
      */
     @Test
     public void searchContains_filterOnPartialMatch() {
@@ -543,7 +543,7 @@ public class ChosenIT {
     private void openDropDown() {
         WebElement btn;
 
-        if (getInput().isDisplayed()) { // multiple
+        if (isMultipleChosenComponent()) {
             btn = getInput();
         } else { // single
             String xpath = "//div[@id='chozen_container__0_chzn']";
@@ -612,5 +612,13 @@ public class ChosenIT {
     private void searchOn(String searchText) {
         getInput().clear();
         getInput().sendKeys(searchText);
+    }
+
+    private boolean isMultipleChosenComponent() {
+        List<WebElement> multiContainer = webDriver.findElements(By.className
+                ("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
+
+        return multiContainer.size() != 0;
+
     }
 }
