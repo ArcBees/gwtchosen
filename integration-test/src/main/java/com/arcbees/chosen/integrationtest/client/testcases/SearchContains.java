@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 ArcBees Inc.
+ * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,19 +14,18 @@
  * the License.
  */
 
-package com.arcbees.chosen.integrationtest.client.domain;
+package com.arcbees.chosen.integrationtest.client.testcases;
 
-import com.google.gwt.text.shared.AbstractRenderer;
-import com.google.gwt.text.shared.Renderer;
+import com.arcbees.chosen.client.ChosenOptions;
 
-public class DefaultCarRenderer extends AbstractRenderer<CarBrand> {
-    public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
+public class SearchContains extends SimpleValueListBox {
+    public SearchContains() {
+        super(createChosenOption(), false);
+    }
 
-    @Override
-    public String render(CarBrand object) {
-        if (object == null) {
-            return "";
-        }
-        return object.name();
+    private static ChosenOptions createChosenOption() {
+        ChosenOptions chosenOptions = new ChosenOptions();
+        chosenOptions.setSearchContains(true);
+        return chosenOptions;
     }
 }
