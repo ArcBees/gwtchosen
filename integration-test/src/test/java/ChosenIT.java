@@ -411,7 +411,7 @@ public class ChosenIT {
 
     /**
      * Tests that the <code>searchContains</code> option is set to true, the search will match words containing the
-     * query.c
+     * query.
      */
     @Test
     public void searchContains_filterOnPartialMatch() {
@@ -615,8 +615,8 @@ public class ChosenIT {
     }
 
     private boolean isMultipleChosenComponent() {
-        List<WebElement> multiContainer = webDriver.findElements(By.className
-                ("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
+        List<WebElement> multiContainer = webDriver.findElements(
+                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
 
         return multiContainer.size() != 0;
     }
