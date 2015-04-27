@@ -203,13 +203,12 @@
                             </goals>
                             <phase>site</phase>
                         </execution>
-                        <!-- <execution>
-                            <id>attach-javadocs2</id>
-                            <phase>performRelease</phase>
+                        <execution>
+                            <id>attach-javadocs</id>
                             <goals>
-                                <goal>aggregate</goal>
+                                <goal>jar</goal>
                             </goals>
-                        </execution> -->
+                        </execution>
                     </executions>
                 </plugin>
             </plugins>
