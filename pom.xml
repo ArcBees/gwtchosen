@@ -11,7 +11,7 @@
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen-project</artifactId>
     <packaging>pom</packaging>
-    <version>2.1</version>
+    <version>2.2-SNAPSHOT</version>
     <inceptionYear>2012</inceptionYear>
     <url>https://github.com/arcbees/gwtchosen</url>
 
