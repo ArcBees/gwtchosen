@@ -1490,6 +1490,7 @@ public class ChosenImpl {
         containerId = buildContainerId();
         fWidth = $selectElement.outerWidth();
 
+        isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
         // Temporary fix. IIf the select element is inside a hidden container
         // GQuery cannot get the size of the select element.
         if (fWidth == 0) {
@@ -1503,8 +1504,6 @@ public class ChosenImpl {
             tempDiv.remove();
             isHidden = fWidth > 0;
         }
-
-        isRTL = LocaleInfo.getCurrentLocale().isRTL() || $selectElement.hasClass("chzn-rtl");
 
         String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
