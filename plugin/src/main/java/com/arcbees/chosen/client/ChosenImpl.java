@@ -1505,8 +1505,6 @@ public class ChosenImpl {
             isHidden = fWidth > 0;
         }
 
-
-
         String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
 
         // recopy classes present on the select element
