@@ -205,7 +205,7 @@ public class ChosenIT {
         // When
         openDropDown();
 
-        // When
+        // Then
         assertDropdownIsAbove();
     }
 
@@ -221,7 +221,7 @@ public class ChosenIT {
         // When
         openDropDown();
 
-        // When
+        // Then
         assertDropdownIsBelow();
     }
 
@@ -241,7 +241,7 @@ public class ChosenIT {
         // When
         openDropDown();
 
-        // When
+        // Then
         assertDropdownIsBelow();
     }
 
@@ -254,14 +254,20 @@ public class ChosenIT {
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() {
+    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() throws InterruptedException {
         // Given
         loadTestCase(new AutoNoBoundariesHasNotEnoughSpace());
 
         // When
         openDropDown();
 
+        // Then
+        assertDropdownIsAbove();
+
         // When
+        searchOn("Audi");
+
+        // Then
         assertDropdownIsAbove();
     }
 
@@ -281,7 +287,7 @@ public class ChosenIT {
         // When
         openDropDown();
 
-        // When
+        // Then
         assertDropdownIsBelow();
     }
 
@@ -291,7 +297,7 @@ public class ChosenIT {
      *  - Boundaries are set to particular DOM element
      *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
-     * the dropdown will be displayed above the input box.
+     * the dropdown will be displayed above the input box and will not move when filtering the options.
      */
     @Test
     public void dropdownPosition_autoWithBoundariesHasNotEnoughSpace() {
@@ -301,7 +307,7 @@ public class ChosenIT {
         // When
         openDropDown();
 
-        // When
+        // Then
         assertDropdownIsAbove();
     }
 
@@ -422,5 +428,9 @@ public class ChosenIT {
 
     private void assertDropdownIsClosed() {
         assertThat(getDropdownTop()).isEqualTo(-9000);
+    }
+
+    private void searchOn(String searchText) {
+        getInput().sendKeys(searchText);
     }
 }

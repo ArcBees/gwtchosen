@@ -25,6 +25,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
@@ -56,6 +57,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new AutoWithBoundariesHasEnoughSpace());
         registerTestCase(new AutoWithBoundariesHasNotEnoughSpace());
         registerTestCase(new SimpleMultiValueListBox());
+        registerTestCase(new SimpleValueListBox());
     }
 
     @Override
