@@ -619,6 +619,5 @@ public class ChosenIT {
                 ("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
 
         return multiContainer.size() != 0;
-
     }
 }
