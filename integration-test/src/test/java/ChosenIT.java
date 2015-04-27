@@ -601,12 +601,11 @@ public class ChosenIT {
     private void assertDropdownIsAbove() {
         int top = getDropdownTop();
 
-        assertThat(getDropdown().isDisplayed()).isTrue();
-        assertThat(top).isNegative();
+        assertThat(top).isNegative().isNotEqualTo(-9000);
     }
 
     private void assertDropdownIsClosed() {
-        assertThat(getDropdown().isDisplayed()).isFalse();
+        assertThat(getDropdownTop()).isEqualTo(-9000);
     }
 
     private void searchOn(String searchText) {
