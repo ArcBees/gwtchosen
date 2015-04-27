@@ -24,14 +24,13 @@ import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class SimpleValueListBox extends TestCase {
-    public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
+import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
+public class SimpleValueListBox extends TestCase {
     private final ChosenOptions options;
     private final boolean addNullValue;
 

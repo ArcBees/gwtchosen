@@ -27,18 +27,21 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
+import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SingleBackstrokeDelete;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.AutoNoBoundariesHasEnoughSpace;
@@ -59,8 +62,14 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.BMW;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
+import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
@@ -71,7 +80,7 @@ public class ChosenIT {
     public void chooseOption() throws Throwable {
         // Given
         loadTestCase(new ChooseOption());
-        String fordRender = ChooseOption.RENDERER.render(FORD);
+        String fordRender = RENDERER.render(FORD);
 
         // When
         clickOptionWithDisplayString(fordRender);
@@ -85,14 +94,14 @@ public class ChosenIT {
      * then the empty string will not be displayed in the dropdown options.
      */
     @Test
-    public void hideEmptyValues() throws InterruptedException {
+    public void hideEmptyValues() {
         // Given
         loadTestCase(new HideEmptyValues());
         openDropDown();
 
         // Then
         Set<String> options = getOptions();
-        assertThat(options).isEqualTo(CarBrand.getAllNames(HideEmptyValues.RENDERER));
+        assertThat(options).isEqualTo(CarBrand.getAllNames(RENDERER));
     }
 
     /**
@@ -119,10 +128,10 @@ public class ChosenIT {
     public void allowSingleDeselect() {
         // Given
         loadTestCase(new AllowSingleDeselect());
-        clickOption(CADILLAC, AllowSingleDeselect.RENDERER);
+        clickOption(CADILLAC, RENDERER);
 
         // When
-        deselect();
+        singleDeselect();
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
@@ -132,7 +141,7 @@ public class ChosenIT {
      * Goal: verify that tab navigation is possible when Chosen is within a form.
      */
     @Test
-    public void tabNavigation() throws InterruptedException {
+    public void tabNavigation() {
         // Given
         loadTestCase(new TabNavigation());
 
@@ -227,10 +236,10 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
-     *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
-     *
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - No boundaries are set
+     * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
+     * <p/>
      * the dropdown will be displayed below the input box.
      */
     @Test
@@ -247,14 +256,14 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
-     *  - No boundaries are set
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
-     *
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - No boundaries are set
+     * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
+     * <p/>
      * the dropdown will be displayed above the input box.
      */
     @Test
-    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() throws InterruptedException {
+    public void dropdownPosition_autoNoBoundariesHasNotEnoughSpace() {
         // Given
         loadTestCase(new AutoNoBoundariesHasNotEnoughSpace());
 
@@ -273,10 +282,10 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
-     *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
-     *
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - Boundaries are set to particular DOM element
+     * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
+     * <p/>
      * the dropdown will be displayed below the input box.
      */
     @Test
@@ -293,10 +302,10 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     *  - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
-     *  - Boundaries are set to particular DOM element
-     *  - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
-     *
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - Boundaries are set to particular DOM element
+     * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
+     * <p/>
      * the dropdown will be displayed above the input box and will not move when filtering the options.
      */
     @Test
@@ -313,21 +322,174 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     *  - we deselect an option to a multiple chosen list box.
-     *
+     * - we deselect an option to a multiple chosen list box.
+     * <p/>
      * the dropdown with the choices aren't displayed
      */
     @Test
     public void deselectOption_dropdownNotShowing() {
         // Given
         loadTestCase(new SimpleMultiValueListBox());
-        clickOption(CarBrand.AUDI, new DefaultCarRenderer());
+        clickOption(CarBrand.AUDI, RENDERER);
 
         // When
-        deselectOption(CarBrand.AUDI, new DefaultCarRenderer());
+        deselectOption(CarBrand.AUDI, RENDERER);
 
         // Then
         assertDropdownIsClosed();
+    }
+
+    /**
+     * Tests that we can remove the last option with two backspaces.
+     */
+    @Test
+    public void doubleBackstroke_removeLastOption() {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+        clickOption(AUDI, RENDERER);
+        clickOption(BMW, RENDERER);
+
+        // When
+        getInput().sendKeys(Keys.BACK_SPACE);
+
+        // Then last option not disabled
+        assertThat(getSelectedOptionTexts()).isEqualTo(Lists.newArrayList(RENDERER.render(AUDI), RENDERER.render(BMW)));
+
+        // When
+        getInput().sendKeys(Keys.BACK_SPACE);
+
+        // Then
+        assertThat(getSelectedOptionTexts()).isEqualTo(Lists.newArrayList(RENDERER.render(AUDI)));
+    }
+
+    /**
+     * Tests that we can remove the last option with one backspace of the option <code>singleBackstrokeDelete</code> is
+     * enabled.
+     */
+    @Test
+    public void singleBackstrokeDelete_removeLastOption() {
+        // Given
+        loadTestCase(new SingleBackstrokeDelete());
+
+        // When
+        clickOption(AUDI, RENDERER);
+        clickOption(BMW, RENDERER);
+
+        // Then
+        assertThat(getSelectedOptionTexts()).isEqualTo(Lists.newArrayList(RENDERER.render(AUDI), RENDERER.render(BMW)));
+
+        // When
+        getInput().sendKeys(Keys.BACK_SPACE);
+
+        // Then
+        assertThat(getSelectedOptionTexts()).isEqualTo(Lists.newArrayList(RENDERER.render(AUDI)));
+    }
+
+    /**
+     * Tests that when user enters text on the search, the component filters the options.
+     */
+    @Test
+    public void search_single_reduceOptions() {
+        // Given
+        loadTestCase(new SimpleValueListBox());
+
+        // When
+        openDropDown();
+
+        // Then
+        assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
+
+        // When
+        String audi = RENDERER.render(AUDI);
+        searchOn(audi);
+
+        Set<String> options = getOptions();
+
+        assertThat(options.size()).isEqualTo(1);
+        assertThat(options).contains(audi);
+    }
+
+    /**
+     * Tests that the <code>searchContains</code> option is set to true, the search will match words containing the
+     * query.
+     */
+    @Test
+    public void searchContains_filterOnPartialMatch() {
+        // Given
+        loadTestCase(new SearchContains());
+
+        // When
+        openDropDown();
+
+        // Then
+        assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
+
+        // When
+        String audi = RENDERER.render(AUDI);
+        searchOn(audi.substring(1));
+
+        Set<String> options = getOptions();
+
+        assertThat(options.size()).isEqualTo(1);
+        assertThat(options).contains(audi);
+    }
+
+    /**
+     * Tests the <code>maxSelectedOptions</code> option.
+     */
+    @Test
+    public void maxSelectedOptions_optionsNotSelectableAnymore() {
+        // Given
+        loadTestCase(new MaxSelectedOptions());
+
+        // When
+        clickOption(MERCEDES, RENDERER);
+        clickOption(TOYOTA, RENDERER);
+        clickOption(HONDA, RENDERER);
+
+        openDropDown();
+
+        // Then
+        assertDropdownIsClosed();
+    }
+
+    /**
+     * Tests that when user enters text on the search, the component (multiple) filters the options.
+     */
+    @Test
+    public void search_multiple_reduceOptions() {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+
+        // When
+        openDropDown();
+
+        // Then
+        assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
+
+        // When
+        String audi = RENDERER.render(AUDI);
+        searchOn(audi);
+
+        Set<String> options = getOptions();
+
+        assertThat(options.size()).isEqualTo(1);
+        assertThat(options).contains(audi);
+    }
+
+    /**
+     * Tests the disableSearchThreshold options.
+     */
+    @Test
+    public void disableSearchThreshold_searchInputNotVisible() {
+        // Given
+        loadTestCase(new DisableSearchThreshold());
+
+        // When
+        openDropDown();
+
+        // Then
+        assertThat(getInput().isDisplayed()).isFalse();
     }
 
     @After
@@ -339,7 +501,7 @@ public class ChosenIT {
         return new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS);
     }
 
-    private void deselect() {
+    private void singleDeselect() {
         WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.tagName("abbr")));
         abbr.click();
     }
@@ -347,15 +509,15 @@ public class ChosenIT {
     /**
      * Deselect an option previously selected. Work only with multiple chosen list box.
      */
-    private <T extends Enum<T>> void deselectOption(T val,  Renderer<T> renderer) {
+    private <T extends Enum<T>> void deselectOption(T val, Renderer<T> renderer) {
         String xpath = String.format("//li[span/text()='%s']/a", renderer.render(val));
         WebElement abbr = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
         abbr.click();
     }
 
     private Set<String> getOptions() {
-        String xpath = "//ul/li";
-        List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.xpath(xpath)));
+        String cssSelector = "li.com-arcbees-chosen-client-resources-ChozenCss-active-result";
+        List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.cssSelector(cssSelector)));
         return Sets.newHashSet(Lists.transform(options, new Function<WebElement, String>() {
             @Override
             public String apply(WebElement input) {
@@ -372,29 +534,44 @@ public class ChosenIT {
         openDropDown();
 
         String xpath = String.format("//li[text()='%s']", displayString);
-        WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
-        li.click();
 
-        assertThat(getSelectedOptionText()).isEqualTo(displayString);
+        WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
+
+        li.click();
     }
 
     private void openDropDown() {
-        String xpath = "//div[@id='chozen_container__0_chzn']";
-        WebElement btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
+        WebElement btn;
 
+        if (getInput().isDisplayed()) { // multiple
+            btn = getInput();
+        } else { // single
+            String xpath = "//div[@id='chozen_container__0_chzn']";
+            btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
+        }
         btn.click();
     }
 
     private String getSelectedOptionText() {
-        String xpath = "//div[@id='chozen_container__0_chzn']//span[1]";
-        WebElement span = webDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        List<String> selectedOptions = getSelectedOptionTexts();
 
-        return span.getText();
+        return selectedOptions.isEmpty() ? null : selectedOptions.get(0);
+    }
+
+    private List<String> getSelectedOptionTexts() {
+        String xpath = "//div[@id='chozen_container__0_chzn']//span";
+
+        List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.xpath(xpath)));
+        return Lists.transform(options, new Function<WebElement, String>() {
+            @Override
+            public String apply(WebElement element) {
+                return element.getText();
+            }
+        });
     }
 
     private WebElement getInput() {
-        String xpath = "//div[@class='com-arcbees-chosen-client-resources-ChozenCss-chzn-search " +
-                "icon_search']/input[@type='text']";
+        String xpath = "//div[@id='chozen_container__0_chzn']//input[@type='text']";
 
         return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
     }
@@ -417,20 +594,23 @@ public class ChosenIT {
     private void assertDropdownIsBelow() {
         int top = getDropdownTop();
 
+        assertThat(getDropdown().isDisplayed()).isTrue();
         assertThat(top).isPositive();
     }
 
     private void assertDropdownIsAbove() {
         int top = getDropdownTop();
 
-        assertThat(top).isNegative().isNotEqualTo(-9000);
+        assertThat(getDropdown().isDisplayed()).isTrue();
+        assertThat(top).isNegative();
     }
 
     private void assertDropdownIsClosed() {
-        assertThat(getDropdownTop()).isEqualTo(-9000);
+        assertThat(getDropdown().isDisplayed()).isFalse();
     }
 
     private void searchOn(String searchText) {
+        getInput().clear();
         getInput().sendKeys(searchText);
     }
 }

@@ -22,14 +22,13 @@ import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.gwt.MultipleChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer;
 import com.google.common.collect.Lists;
-import com.google.gwt.text.shared.Renderer;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class SimpleMultiValueListBox extends TestCase {
-    public static final Renderer<CarBrand> RENDERER = new DefaultCarRenderer();
+import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
+public class SimpleMultiValueListBox extends TestCase {
     private final ChosenOptions options;
     private MultipleChosenValueListBox<CarBrand> listBox;
 
@@ -44,6 +43,8 @@ public class SimpleMultiValueListBox extends TestCase {
     @Override
     public void run() {
         listBox = new MultipleChosenValueListBox<CarBrand>(RENDERER, options);
+
+        listBox.getElement().getStyle().setWidth(500, Unit.PX);
 
         listBox.setAcceptableValues(Lists.newArrayList(CarBrand.values()));
 
