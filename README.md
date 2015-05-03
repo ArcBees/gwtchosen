@@ -10,17 +10,16 @@
 * [Widget Sample](http://arcbees.github.com/gwtchosen/widgetsample/index.html)
 
 ##Stable version
-* [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix)
+* [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.arcbees.gwtchosen)
 
 ##Maven Configuration
-Find the the available jars in [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.github.jdramaix).
 
 ### Release:
 ```xml
 <dependency>
-    <groupId>com.github.jdramaix</groupId>
+    <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>1.2.0</version>
+    <version>2.1</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,13 +37,10 @@ Find the the available jars in [Maven Central](http://search.maven.org/#search%7
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
-
-##Previous Versions
-* [GwtChosen 1.1.0](http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar)
 
 #Contributor
 
