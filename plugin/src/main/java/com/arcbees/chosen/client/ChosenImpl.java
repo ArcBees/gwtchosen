@@ -61,7 +61,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import static com.google.gwt.query.client.GQuery.$;
-import static com.google.gwt.query.client.GQuery.console;
 import static com.google.gwt.query.client.GQuery.document;
 import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
@@ -1043,13 +1042,6 @@ public class ChosenImpl {
 
         int highTop = resultHighlight.position().top + searchResults.scrollTop();
         int highBottom = highTop + resultHighlight.outerHeight();
-
-        console.log("============");
-        console.log("searchResultHeight: " + searchResultHeight);
-        console.log("visibleTop: " + visibleTop);
-        console.log("visibleBottom: " + visibleBottom);
-        console.log("highTop: " + highTop);
-        console.log("highBottom: " + highBottom);
 
         if (highBottom >= visibleBottom) {
             int toScroll = highBottom - searchResultHeight;
