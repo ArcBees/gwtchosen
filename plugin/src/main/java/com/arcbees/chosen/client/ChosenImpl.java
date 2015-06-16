@@ -69,61 +69,64 @@ public class ChosenImpl {
         ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
         @Template("<li class=\"{1}\" id=\"{0}\">" +
-                    "<span>{2}</span>" +
-                    "<a href=\"javascript:void(0)\" class=\"{3} {6}\" rel=\"{4}\" data-chosen-value=\"{5}\"></a>" +
-                  "</li>")
-        SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
+                "<span>{2}</span>" +
+                "<a href=\"javascript:void(0)\" class=\"{3} {6}\" rel=\"{4}\" data-chosen-value=\"{5}\"></a>" +
+                "</li>")
+        SafeHtml choice(
+                String id, String searchChoiceClass, SafeHtml content,
                 String searchChoiceCloseClass, String rel, String value, String iconCloseClass);
 
         @Template("<div id=\"{0}\" class=\"{1}\"></div>")
         SafeHtml container(String id, String cssClasses);
 
         @Template("<ul class=\"{0}\">" +
-                    "<li class=\"{1}\">" +
-                       "<input type=\"text\" value=\"{2}\" class=\"{3}\" " + "autocomplete=\"off\"" +
-                          "style=\"width:25px;\"/>" +
-                    "</li>" +
-                  "</ul>" +
-                  "<div class=\"{4}\" style=\"{6}\">" +
-                    "<ul class=\"{5}\"></ul>" +
-                  "</div>")
-        SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
+                "<li class=\"{1}\">" +
+                "<input type=\"text\" value=\"{2}\" class=\"{3}\" " + "autocomplete=\"off\"" +
+                "style=\"width:25px;\"/>" +
+                "</li>" +
+                "</ul>" +
+                "<div class=\"{4}\" style=\"{6}\">" +
+                "<ul class=\"{5}\"></ul>" +
+                "</div>")
+        SafeHtml contentMultiple(
+                String chznChoicesClass, String chznSearchFieldClass,
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
                 SafeStyles offsets);
 
         @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\">" +
-                    "<span>{2}</span>" +
-                    "<div>" +
-                      "<b class=\"{7}\"></b>" +
-                    "</div>" +
-                  "</a>" +
-                  "<div class=\"{3}\" style=\"{6}\">" +
-                    "<div class=\"{4} {8}\">" +
-                      "<input type=\"text\" autocomplete=\"off\" />" +
-                    "</div>" +
-                    "<ul class=\"{5}\"></ul>" +
-                  "</div>")
-        SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
+                "<span>{2}</span>" +
+                "<div>" +
+                "<b class=\"{7}\"></b>" +
+                "</div>" +
+                "</a>" +
+                "<div class=\"{3}\" style=\"{6}\">" +
+                "<div class=\"{4} {8}\">" +
+                "<input type=\"text\" autocomplete=\"off\" />" +
+                "</div>" +
+                "<ul class=\"{5}\"></ul>" +
+                "</div>")
+        SafeHtml contentSingle(
+                String chznSingleClass, String chznDefaultClass, String defaultText,
                 String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
                 String iconArrowClass, String iconSearchClass);
 
         @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\">" +
-                    "<span>{2}</span>" +
-                    "<div>" +
-                      "<b class=\"{7}\"></b>" +
-                    "</div>" +
-                  "</a>" +
-                  "<div class=\"{3}\" style=\"{6}\">" +
-                    "<div class=\"{4}\">" +
-                      "<input type=\"text\" autocomplete=\"off\" />" +
-                      "<i class=\"{8}\" role=\"close\"></i>" +
-                    "</div>" +
-                    "<ul class=\"{5}\"></ul>" +
-                  "</div>")
-        SafeHtml contentMobile(String chznSingleClass, String chznDefaultClass, String defaultText,
+                "<span>{2}</span>" +
+                "<div>" +
+                "<b class=\"{7}\"></b>" +
+                "</div>" +
+                "</a>" +
+                "<div class=\"{3}\" style=\"{6}\">" +
+                "<div class=\"{4}\">" +
+                "<input type=\"text\" autocomplete=\"off\" />" +
+                "<i class=\"{8}\" role=\"close\"></i>" +
+                "</div>" +
+                "<ul class=\"{5}\"></ul>" +
+                "</div>")
+        SafeHtml contentMobile(
+                String chznSingleClass, String chznDefaultClass, String defaultText,
                 String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
                 String iconArrowClass, String iconCloseClass);
-
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
@@ -1591,7 +1594,6 @@ public class ChosenImpl {
         String containerClass = isMobile ? css.chznMobileContainer() : css.chznContainer();
 
         String cssClasses = isRTL ? containerClass + " " + css.chznRtl() : containerClass;
-
 
         // recopy classes present on the select element
         cssClasses += " " + selectElement.getClassName();
