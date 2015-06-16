@@ -35,6 +35,7 @@ public class ChosenOptions {
     private DropdownPosition dropdownPosition;
     private Element dropdownBoundaries;
     private DropdownBoundariesProvider dropdownBoundariesProvider;
+    private int mobileViewportMaxWidth;
 
     public ChosenOptions() {
         setDefault();
@@ -104,6 +105,10 @@ public class ChosenOptions {
 
     public DropdownBoundariesProvider getDropdownBoundariesProvider() {
         return dropdownBoundariesProvider;
+    }
+
+    public int getMobileViewportMaxWidth() {
+        return mobileViewportMaxWidth;
     }
 
     public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
@@ -207,6 +212,20 @@ public class ChosenOptions {
         return this;
     }
 
+    /**
+     * Set the max width threshold below which the component will consider to be displayed on mobile device.
+     * <p>
+     * If you want to disable the mobile layout of the component on every device, set the
+     * <code>mobileViewportMaxWidth</code> to -1.
+     * <p>
+     * The component is responsiveonly if you define a viewport in your html file, example:
+     * &lt;meta name="viewport" content="width=device-width, initial-scale=1">
+     * @param mobileViewportMaxWidth
+     */
+    public void setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
+        this.mobileViewportMaxWidth = mobileViewportMaxWidth;
+    }
+
     public void setHighlightSearchTerm(boolean highlightSearchTerm) {
         this.highlightSearchTerm = highlightSearchTerm;
     }
@@ -219,5 +238,6 @@ public class ChosenOptions {
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
         dropdownPosition = DropdownPosition.BELOW;
+        mobileViewportMaxWidth = 649;
     }
 }

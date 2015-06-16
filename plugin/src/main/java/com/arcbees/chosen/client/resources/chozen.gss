@@ -3,7 +3,8 @@
 
 @def INDENT 15px;
 
-.chzn-container {
+.chzn-container,
+.chzn-mobile-container {
     font-size: 13px;
 
     display: inline-block;
@@ -24,6 +25,56 @@
     z-index: 1010;
 
     @mixin shadow(0, 4px, 5px, 0.15);
+}
+
+/* Mobile layout */
+.chzn-mobile-container .chzn-drop {
+    background: CHZN_C_PRIMARY;
+
+    border: 1px solid CHZN_C_BORDER;
+    border-top: 0;
+
+    position: fixed;
+    z-index: 1010;
+
+    @mixin shadow(0, 4px, 5px, 0.15);
+}
+
+.chzn-mobile-container .chzn-drop ul {
+    width: 100%;
+    height: 90%;
+    overflow-x: auto;
+    text-overflow : ellipsis;
+
+    position: relative;
+
+    /* flex layout allow us to rearrange the item (and put the selected items first) independently of the DOM flow */
+    /* flex is supported by mobile browsers */
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+.chzn-mobile-container .chzn-results li {
+    color: CHZN_C_TEXT;
+    line-height: 30px;
+
+    display: none;
+    padding: 5px 6px;
+    margin: 0;
+
+    list-style: none;
+}
+
+.chzn-mobile-container .chzn-results .active-result {
+    cursor: pointer;
+    display: list-item;
+}
+
+.chzn-mobile-container .result-selected {
+    order: -1;
 }
 
 /* Result above */

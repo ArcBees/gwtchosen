@@ -53,6 +53,9 @@ public interface ChozenCss extends CssResource {
     @ClassName("chzn-done")
     String chznDone();
 
+    @ClassName("chzn-mobile-container")
+    String chznMobileContainer();
+
     @ClassName("chzn-drop")
     String chznDrop();
 

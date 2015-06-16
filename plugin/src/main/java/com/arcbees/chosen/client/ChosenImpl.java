@@ -61,6 +61,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import static com.google.gwt.query.client.GQuery.$;
+import static com.google.gwt.query.client.GQuery.console;
 import static com.google.gwt.query.client.GQuery.document;
 import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
@@ -68,27 +69,62 @@ public class ChosenImpl {
     public interface ChozenTemplate extends SafeHtmlTemplates {
         ChozenTemplate templates = GWT.create(ChozenTemplate.class);
 
-        @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3} {6}\" " +
-                "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
+        @Template("<li class=\"{1}\" id=\"{0}\">" +
+                    "<span>{2}</span>" +
+                    "<a href=\"javascript:void(0)\" class=\"{3} {6}\" rel=\"{4}\" data-chosen-value=\"{5}\"></a>" +
+                  "</li>")
         SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
                 String searchChoiceCloseClass, String rel, String value, String iconCloseClass);
 
         @Template("<div id=\"{0}\" class=\"{1}\"></div>")
         SafeHtml container(String id, String cssClasses);
 
-        @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" " +
-                "autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"{6}\"><ul " +
-                "class=\"{5}\"></ul></div>")
+        @Template("<ul class=\"{0}\">" +
+                    "<li class=\"{1}\">" +
+                       "<input type=\"text\" value=\"{2}\" class=\"{3}\" " + "autocomplete=\"off\"" +
+                          "style=\"width:25px;\"/>" +
+                    "</li>" +
+                  "</ul>" +
+                  "<div class=\"{4}\" style=\"{6}\">" +
+                    "<ul class=\"{5}\"></ul>" +
+                  "</div>")
         SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
                 String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
                 SafeStyles offsets);
 
-        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b " +
-                "class=\"{7}\"></b></div></a><div class=\"{3}\" style=\"{6}\"><div class=\"{4} {8}\">" +
-                "<input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
+        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\">" +
+                    "<span>{2}</span>" +
+                    "<div>" +
+                      "<b class=\"{7}\"></b>" +
+                    "</div>" +
+                  "</a>" +
+                  "<div class=\"{3}\" style=\"{6}\">" +
+                    "<div class=\"{4} {8}\">" +
+                      "<input type=\"text\" autocomplete=\"off\" />" +
+                    "</div>" +
+                    "<ul class=\"{5}\"></ul>" +
+                  "</div>")
         SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
                 String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
                 String iconArrowClass, String iconSearchClass);
+
+        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\">" +
+                    "<span>{2}</span>" +
+                    "<div>" +
+                      "<b class=\"{7}\"></b>" +
+                    "</div>" +
+                  "</a>" +
+                  "<div class=\"{3}\" style=\"{6}\">" +
+                    "<div class=\"{4}\">" +
+                      "<input type=\"text\" autocomplete=\"off\" />" +
+                      "<i class=\"{8}\" role=\"close\"></i>" +
+                    "</div>" +
+                    "<ul class=\"{5}\"></ul>" +
+                  "</div>")
+        SafeHtml contentMobile(String chznSingleClass, String chznDefaultClass, String defaultText,
+                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
+                String iconArrowClass, String iconCloseClass);
+
 
         @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
         SafeHtml group(String id, String groupResultClass, String content);
@@ -237,6 +273,8 @@ public class ChosenImpl {
     private GQuery selectedItem;
     private HandlerRegistration updateEventHandlerRegistration;
     private ResultsFilter resultsFilter;
+    private boolean isMobile;
+    private boolean isResultClick;
 
     public GQuery getContainer() {
         return container;
@@ -295,11 +333,13 @@ public class ChosenImpl {
         this.options = options;
         this.eventBus = eventBus;
 
-        this.$selectElement = $(selectElement);
+        $selectElement = $(selectElement);
 
         setDefaultValues();
 
-        this.isMultiple = selectElement.isMultiple();
+        isMultiple = selectElement.isMultiple();
+
+        isMobile = isMobileDevice(options.getMobileViewportMaxWidth());
 
         setDefaultText();
 
@@ -388,6 +428,22 @@ public class ChosenImpl {
                 return searchResultsMouseUp(e);
             }
         });
+
+        if (isMobile) {
+            searchResults.mousedown(new Function() {
+                @Override
+                public void f() {
+                    searchResultMouseDown();
+                }
+            });
+
+            container.on("click", "i[role='close']", new Function() {
+                @Override
+                public void f() {
+                    resultsHide();
+                }
+            });
+        }
 
         searchResults.mouseover(new Function() {
             @Override
@@ -588,8 +644,9 @@ public class ChosenImpl {
         if (isDisabled) {
             return true;
         }
-        Element target = e.getEventTarget().cast();
-        GQuery $e = $(target);
+
+        Element mouseDownTarget = e.getEventTarget().cast();
+        GQuery $e = $(mouseDownTarget);
 
         boolean targetCloseLink = $e.hasClass(css.searchChoiceClose());
 
@@ -620,6 +677,7 @@ public class ChosenImpl {
 
     private boolean containerMouseUp(Event e) {
         Element target = e.getEventTarget().cast();
+
         GQuery $e = $(target);
 
         if (!$e.isEmpty() && "ABBR".equalsIgnoreCase($e.get(0).getNodeName()) && !isDisabled) {
@@ -817,7 +875,7 @@ public class ChosenImpl {
 
         switch (stroke) {
             case 8: // backspace
-                if (isMultiple && backstrokeLength < 1 && choices > 0) {
+                if (!isMobile && isMultiple && backstrokeLength < 1 && choices > 0) {
                     keydownBackstroke();
                 } else if (pendingBackstroke == null) {
                     resultClearHighlight();
@@ -979,15 +1037,22 @@ public class ChosenImpl {
 
         resultHighlight.addClass(css.highlighted());
 
-        int maxHeight = (int) searchResults.cur("maxHeight", true);
+        int searchResultHeight = searchResults.innerHeight();
         int visibleTop = searchResults.scrollTop();
-        int visibleBottom = maxHeight + visibleTop;
+        int visibleBottom = searchResultHeight + visibleTop;
 
         int highTop = resultHighlight.position().top + searchResults.scrollTop();
         int highBottom = highTop + resultHighlight.outerHeight();
 
+        console.log("============");
+        console.log("searchResultHeight: " + searchResultHeight);
+        console.log("visibleTop: " + visibleTop);
+        console.log("visibleBottom: " + visibleBottom);
+        console.log("highTop: " + highTop);
+        console.log("highBottom: " + highBottom);
+
         if (highBottom >= visibleBottom) {
-            int toScroll = highBottom - maxHeight;
+            int toScroll = highBottom - searchResultHeight;
             searchResults.scrollTop(toScroll > 0 ? toScroll : 0);
         } else if (highTop < visibleTop) {
             searchResults.scrollTop(highTop);
@@ -1167,6 +1232,10 @@ public class ChosenImpl {
         dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
         dropdown.css("top", VERTICAL_OFFSET + "px");
 
+        if (isMobile) {
+            dropdown.css("bottom", "").css(isRTL ? "left" : "right", "");
+        }
+
         container.removeClass(css.resultAbove());
 
         resultsShowing = false;
@@ -1241,9 +1310,17 @@ public class ChosenImpl {
         }
 
         dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+
+        if (isMobile) {
+            dropdown.css("bottom", "0").css(isRTL ? "left" : "right", "0");
+        }
     }
 
     private int calculateDropdownTop() {
+        if (isMobile) {
+            return 0;
+        }
+
         int ddTop;
         DropdownPosition dropdownPosition = options.getDropdownPosition();
 
@@ -1353,7 +1430,13 @@ public class ChosenImpl {
         searchField.css("width", w + "px");
     }
 
+    private void searchResultMouseDown() {
+        isResultClick = true;
+    }
+
     private boolean searchResultsMouseOut(Event e) {
+        isResultClick = false;
+
         Element targetEl = e.getEventTarget().cast();
         GQuery $e = $(targetEl);
 
@@ -1378,6 +1461,14 @@ public class ChosenImpl {
     }
 
     private boolean searchResultsMouseUp(Event e) {
+        if (isMobile && !isResultClick) {
+            // On mobile, the results appears above the container and this method can be called on the first user tap
+            // when he opens the component
+            return false;
+        }
+
+        isResultClick = false;
+
         Element targetEvent = e.getEventTarget().cast();
         GQuery $e = $(targetEvent);
 
@@ -1505,7 +1596,10 @@ public class ChosenImpl {
             isHidden = fWidth > 0;
         }
 
-        String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
+        String containerClass = isMobile ? css.chznMobileContainer() : css.chznContainer();
+
+        String cssClasses = isRTL ? containerClass + " " + css.chznRtl() : containerClass;
+
 
         // recopy classes present on the select element
         cssClasses += " " + selectElement.getClassName();
@@ -1521,17 +1615,25 @@ public class ChosenImpl {
         }
         ssb.top(VERTICAL_OFFSET, Style.Unit.PX);
 
-        if (isMultiple) {
-            containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
-                    css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(),
-                    ssb.toSafeStyles())
-                    .asString());
+        SafeHtml containerInner;
+        if (!isMobile) {
+            if (isMultiple) {
+                containerInner = ChozenTemplate.templates.contentMultiple(css.chznChoices(),
+                        css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(),
+                        ssb.toSafeStyles());
+            } else {
+                containerInner = ChozenTemplate.templates.contentSingle(css.chznSingle(),
+                        css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
+                        ssb.toSafeStyles(), css.iconArrow(), css.iconSearch());
+            }
         } else {
-            containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
+            // TODO close icon...
+            containerInner = ChozenTemplate.templates.contentMobile(css.chznSingle(),
                     css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
-                    ssb.toSafeStyles(), css.iconArrow(), css.iconSearch())
-                    .asString());
+                    ssb.toSafeStyles(), css.iconArrow(), css.iconCross());
         }
+
+        containerTemp.html(containerInner.asString());
 
         // insert container after the select elements
         $selectElement.hide().after(containerTemp);
@@ -1540,7 +1642,10 @@ public class ChosenImpl {
 
         dropdown = container.find("div." + css.chznDrop()).first();
         int ddWidth = fWidth - getSideBorderPadding(dropdown, isHidden);
-        dropdown.css(Properties.create("{\"width\": " + ddWidth + "px}"));
+
+        if (!isMobile) {
+            dropdown.css(Properties.create("{\"width\": " + ddWidth + "px}"));
+        }
 
         searchField = container.find("input").first();
         searchResults = container.find("ul." + css.chznResults()).first();
@@ -1552,10 +1657,12 @@ public class ChosenImpl {
         } else {
             searchContainer = container.find("div." + css.chznSearch()).first();
             selectedItem = container.find("." + css.chznSingle()).first();
-            int searchFieldWidth =
-                    ddWidth - getSideBorderPadding(searchContainer, isHidden)
-                            - getSideBorderPadding(searchField, isHidden);
-            searchField.css("width", searchFieldWidth + "px");
+            if (!isMobile) {
+                int searchFieldWidth =
+                        ddWidth - getSideBorderPadding(searchContainer, isHidden)
+                                - getSideBorderPadding(searchField, isHidden);
+                searchField.css("width", searchFieldWidth + "px");
+            }
         }
 
         resultsBuild(true);
@@ -1564,6 +1671,11 @@ public class ChosenImpl {
 
         fireEvent(new ReadyEvent(this));
     }
+
+    private native boolean isMobileDevice(int maxWidth) /*-{
+        var media = $wnd.matchMedia && $wnd.matchMedia("(max-width: " + maxWidth + "px)");
+        return media && media.matches;
+    }-*/;
 
     private void showSearchFieldDefault() {
         if (isMultiple && choices < 1 && !activeField) {
