@@ -71,6 +71,42 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         getChosenListBox().update();
     }
 
+    @Override
+    public int getTabIndex() {
+        return getChosenListBox().getTabIndex();
+    }
+
+    @Override
+    public void setTabIndex(int index) {
+        getChosenListBox().setTabIndex(index);
+    }
+
+    /**
+     * Return true if the value is part of the accepted values list of this component.
+     */
+    public boolean isAccepted(T value) {
+        return valueKeyToIndex.containsKey(value);
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return getChosenListBox().isEnabled();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        getChosenListBox().setEnabled(enabled);
+    }
+
+    @Override
+    public void onChange(ChosenChangeEvent event) {
+        if (event.isSelection()) {
+            selectValue(values.get(event.getIndex()));
+        } else {
+            deselectValue(values.get(event.getIndex()));
+        }
+    }
+
     /**
      * Remove a value to the acceptable values list. This method will update the component automatically. Please use
      * {@link #removeValues(java.util.List)} to remove a list of values.
@@ -121,26 +157,6 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         }
     }
 
-    @Override
-    public int getTabIndex() {
-        return getChosenListBox().getTabIndex();
-    }
-
-    @Override
-    public void setAccessKey(char key) {
-        getChosenListBox().setAccessKey(key);
-    }
-
-    @Override
-    public void setFocus(boolean focused) {
-        getChosenListBox().setFocus(focused);
-    }
-
-    @Override
-    public void setTabIndex(int index) {
-        getChosenListBox().setTabIndex(index);
-    }
-
     /**
      * Set the list of the values that will be accepted by the widget.
      * <p/>
@@ -164,30 +180,30 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
     }
 
     @Override
-    public boolean isEnabled() {
-        return getChosenListBox().isEnabled();
+    public void setAccessKey(char key) {
+        getChosenListBox().setAccessKey(key);
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        getChosenListBox().setEnabled(enabled);
-    }
-
-    @Override
-    public void onChange(ChosenChangeEvent event) {
-        if (event.isSelection()) {
-            selectValue(values.get(event.getIndex()));
-        } else {
-            deselectValue(values.get(event.getIndex()));
-        }
+    public void setFocus(boolean focused) {
+        getChosenListBox().setFocus(focused);
     }
 
     /**
-     * Return true if the value is part of the accepted values list of this component.
+     * Add the item to the ChosenListBox. Override this method if you want to implement your custom way to add
+     * the item in the ChosenListBox (setting a style class for the item for example)
      */
-    public boolean isAccepted(T value) {
-        return valueKeyToIndex.containsKey(value);
-    }
+    protected abstract void addItemToChosenListBox(T value);
+
+    /**
+     * Create the ChosenListBox component that will be used in this widget.
+     */
+    protected abstract ChosenListBox createChosenListBox(ChosenOptions options);
+
+    /**
+     * Method called when the user deselects a value with the ChosenListBox in multiple select mode.
+     */
+    protected abstract void deselectValue(T value);
 
     /**
      * Return the ChosenListBox used by this widget.
@@ -202,16 +218,6 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
     }
 
     /**
-     * Create the ChosenListBox component that will be used in this widget.
-     */
-    protected abstract ChosenListBox createChosenListBox(ChosenOptions options);
-
-    /**
-     * Method called when the user deselects a value with the ChosenListBox in multiple select mode.
-     */
-    protected abstract void deselectValue(T value);
-
-    /**
      * Method called when the user selects a value with the ChosenListBox.
      */
     protected abstract void selectValue(T value);
@@ -220,12 +226,6 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
      * Update the ChosenListBox with the value(s) set by the developer.
      */
     protected abstract void updateChosenListBox();
-
-    /**
-     * Add the item to the ChosenListBox. Override this method if you want to implement your custom way to add
-     * the item in the ChosenListBox (setting a style class for the item for example)
-     */
-    protected abstract void addItemToChosenListBox(T value);
 
     private void doAddValue(T value) {
         Object key = keyProvider.getKey(value);
@@ -237,12 +237,9 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         addItemToChosenListBox(value);
     }
 
-    private void updateIndex() {
-        valueKeyToIndex.clear();
-
-        for (int i = 0; i < values.size(); i++) {
-            valueKeyToIndex.put(keyProvider.getKey(values.get(i)), i);
-        }
+    private void removeItem(int index) {
+        values.remove(index);
+        getChosenListBox().removeItem(index);
     }
 
     private void updateAfterRemoval() {
@@ -250,8 +247,11 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
         updateChosenListBox();
     }
 
-    private void removeItem(int index) {
-        values.remove(index);
-        getChosenListBox().removeItem(index);
+    private void updateIndex() {
+        valueKeyToIndex.clear();
+
+        for (int i = 0; i < values.size(); i++) {
+            valueKeyToIndex.put(keyProvider.getKey(values.get(i)), i);
+        }
     }
 }

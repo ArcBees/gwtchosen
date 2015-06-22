@@ -16,7 +16,6 @@
 
 package com.arcbees.chosen.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.query.client.GQuery;
@@ -45,10 +44,11 @@ public class Chosen extends GQuery {
     /**
      * Indicate if the current browser is supported by the plugin or not.
      *
-     * @return
+     * @deprecated all browsers supported by GWT is supported by the plugin.
      */
+    @Deprecated
     public static boolean isSupported() {
-        return GWT.<ChosenImpl>create(ChosenImpl.class).isSupported();
+        return true;
     }
 
     public Chosen chosen() {
@@ -60,13 +60,14 @@ public class Chosen extends GQuery {
     }
 
     public Chosen chosen(final ChosenOptions options, final EventBus eventBus) {
+        ChosenImplFactory factory = new ChosenImplFactory();
 
         for (Element e : elements()) {
 
             if ("select".equalsIgnoreCase(e.getTagName()) && !$(e).hasClass("chzn-done")) {
-
-                ChosenImpl impl = GWT.create(ChosenImpl.class);
-                impl.init(SelectElement.as(e), options, eventBus);
+                SelectElement selectElement = SelectElement.as(e);
+                ChosenImpl impl = factory.createChosenImpl(selectElement, options);
+                impl.init(selectElement, options, eventBus);
                 $(e).data(CHOSEN_DATA_KEY, impl);
             }
         }

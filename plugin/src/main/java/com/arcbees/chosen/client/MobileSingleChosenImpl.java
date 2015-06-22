@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 ArcBees Inc.
+ * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,23 +16,5 @@
 
 package com.arcbees.chosen.client;
 
-import com.google.gwt.dom.client.SelectElement;
-import com.google.web.bindery.event.shared.EventBus;
-
-/**
- * Implementation for IE6/IE7, simply do nothing.
- *
- * @author Julien Dramaix (julien.dramaix@gmail.com)
- */
-public class NotSupportedChosenImpl extends ChosenImpl {
-
-    @Override
-    public boolean isSupported() {
-        return false;
-    }
-
-    @Override
-    protected void init(SelectElement e, ChosenOptions options, EventBus eventBus) {
-        // DO nothing
-    }
+public class MobileSingleChosenImpl extends AbstractMobileChosenImpl {
 }
