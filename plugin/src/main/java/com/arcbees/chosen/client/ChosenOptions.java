@@ -45,77 +45,6 @@ public class ChosenOptions {
         return disableSearchThreshold;
     }
 
-    public int getMaxSelectedOptions() {
-        return maxSelectedOptions;
-    }
-
-    public String getNoResultsText() {
-        return noResultsText;
-    }
-
-    public String getPlaceholderText() {
-        return placeholderText;
-    }
-
-    public String getPlaceholderTextMultiple() {
-        return placeholderTextMultiple;
-    }
-
-    public String getPlaceholderTextSingle() {
-        return placeholderTextSingle;
-    }
-
-    public Resources getResources() {
-        return resources;
-    }
-
-    /**
-     * provide the {@code ResultFilter} instance used to filter the data.
-     */
-    public ResultsFilter getResultFilter() {
-        return resultFilter;
-    }
-
-    /**
-     * Specify if the deselection is allowed on single selects.
-     */
-    public boolean isAllowSingleDeselect() {
-        return allowSingleDeselect;
-    }
-
-    public boolean isSearchContains() {
-        return searchContains;
-    }
-
-    public boolean isSingleBackstrokeDelete() {
-        return singleBackstrokeDelete;
-    }
-
-    public boolean isHighlightSearchTerm() {
-        return highlightSearchTerm;
-    }
-
-    public DropdownPosition getDropdownPosition() {
-        return dropdownPosition;
-    }
-
-    public Element getDropdownBoundaries() {
-        return dropdownBoundaries;
-    }
-
-    public DropdownBoundariesProvider getDropdownBoundariesProvider() {
-        return dropdownBoundariesProvider;
-    }
-
-    public int getMobileViewportMaxWidth() {
-        return mobileViewportMaxWidth;
-    }
-
-    public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
-        this.allowSingleDeselect = allowSingleDeselect;
-        return this;
-    }
-
     /**
      * Set the number of items needed to show and enable the search input. This option is when the Chosen component is
      * used in "multiple select" mode or when a custom ResultFilter is used.
@@ -127,66 +56,8 @@ public class ChosenOptions {
         return this;
     }
 
-    public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
-        this.maxSelectedOptions = maxSelectedOptions;
-        return this;
-    }
-
-    public ChosenOptions setNoResultsText(String noResultsText) {
-        this.noResultsText = noResultsText;
-        return this;
-    }
-
-    public ChosenOptions setPlaceholderText(String placeholderText) {
-        this.placeholderText = placeholderText;
-        return this;
-    }
-
-    public ChosenOptions setPlaceholderTextMultiple(String placeholderTextMultiple) {
-        this.placeholderTextMultiple = placeholderTextMultiple;
-        return this;
-    }
-
-    public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
-        this.placeholderTextSingle = placeholderTextSingle;
-        return this;
-    }
-
-    public ChosenOptions setResources(Resources resources) {
-        this.resources = resources;
-        return this;
-    }
-
-    public void setResultFilter(ResultsFilter resultFilter) {
-        this.resultFilter = resultFilter;
-    }
-
-    public ChosenOptions setSearchContains(boolean searchContains) {
-        this.searchContains = searchContains;
-        return this;
-    }
-
-    public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
-        this.singleBackstrokeDelete = singleBackstrokeDelete;
-        return this;
-    }
-
-    /**
-     * Sets the positioning of the dropdown.
-     * If set to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}, dropdown will be displayed below the input
-     * box.
-     * If set to {@link com.arcbees.chosen.client.DropdownPosition#ABOVE}, dropdown will be displayed above the input
-     * box.
-     * If set to {@link com.arcbees.chosen.client.DropdownPosition#AUTO}, dropdown will be displayed below the input
-     * box only if there's enough vertical space between the input box and the bottom of the
-     * {@link com.arcbees.chosen.client.ChosenOptions#dropdownBoundaries}. Otherwise, the dropdown will be displayed
-     * above the input box.
-     *
-     * If not set, it will default to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}.
-     */
-    public ChosenOptions setDropdownPosition(DropdownPosition dropdownPosition) {
-        this.dropdownPosition = dropdownPosition;
-        return this;
+    public Element getDropdownBoundaries() {
+        return dropdownBoundaries;
     }
 
     /**
@@ -199,11 +70,15 @@ public class ChosenOptions {
         return this;
     }
 
+    public DropdownBoundariesProvider getDropdownBoundariesProvider() {
+        return dropdownBoundariesProvider;
+    }
+
     /**
      * See {@link com.arcbees.chosen.client.ChosenOptions#setDropdownBoundaries(com.google.gwt.dom.client.Element)}.
      * Useful for cases when the {@link com.arcbees.chosen.client.ChosenOptions#dropdownBoundaries} cannot be defined
      * when the Chosen widget is built.
-     *
+     * <p/>
      * {@link com.arcbees.chosen.client.ChosenOptions#setDropdownBoundaries(com.google.gwt.dom.client.Element)} will
      * have priority over this setting.
      */
@@ -212,22 +87,148 @@ public class ChosenOptions {
         return this;
     }
 
+    public DropdownPosition getDropdownPosition() {
+        return dropdownPosition;
+    }
+
+    /**
+     * Sets the positioning of the dropdown.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}, dropdown will be displayed below the input
+     * box.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#ABOVE}, dropdown will be displayed above the input
+     * box.
+     * If set to {@link com.arcbees.chosen.client.DropdownPosition#AUTO}, dropdown will be displayed below the input
+     * box only if there's enough vertical space between the input box and the bottom of the
+     * {@link com.arcbees.chosen.client.ChosenOptions#dropdownBoundaries}. Otherwise, the dropdown will be displayed
+     * above the input box.
+     * <p/>
+     * If not set, it will default to {@link com.arcbees.chosen.client.DropdownPosition#BELOW}.
+     */
+    public ChosenOptions setDropdownPosition(DropdownPosition dropdownPosition) {
+        this.dropdownPosition = dropdownPosition;
+        return this;
+    }
+
+    public int getMaxSelectedOptions() {
+        return maxSelectedOptions;
+    }
+
+    public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
+        this.maxSelectedOptions = maxSelectedOptions;
+        return this;
+    }
+
+    public int getMobileViewportMaxWidth() {
+        return mobileViewportMaxWidth;
+    }
+
     /**
      * Set the max width threshold below which the component will consider to be displayed on mobile device.
-     * <p>
+     * <p/>
      * If you want to disable the mobile layout of the component on every device, set the
      * <code>mobileViewportMaxWidth</code> to -1.
-     * <p>
+     * <p/>
      * The component is responsiveonly if you define a viewport in your html file, example:
      * &lt;meta name="viewport" content="width=device-width, initial-scale=1">
+     *
      * @param mobileViewportMaxWidth
      */
     public void setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
         this.mobileViewportMaxWidth = mobileViewportMaxWidth;
     }
 
+    public String getNoResultsText() {
+        return noResultsText;
+    }
+
+    public ChosenOptions setNoResultsText(String noResultsText) {
+        this.noResultsText = noResultsText;
+        return this;
+    }
+
+    public String getPlaceholderText() {
+        return placeholderText;
+    }
+
+    public ChosenOptions setPlaceholderText(String placeholderText) {
+        this.placeholderText = placeholderText;
+        return this;
+    }
+
+    public String getPlaceholderTextMultiple() {
+        return placeholderTextMultiple;
+    }
+
+    public ChosenOptions setPlaceholderTextMultiple(String placeholderTextMultiple) {
+        this.placeholderTextMultiple = placeholderTextMultiple;
+        return this;
+    }
+
+    public String getPlaceholderTextSingle() {
+        return placeholderTextSingle;
+    }
+
+    public ChosenOptions setPlaceholderTextSingle(String placeholderTextSingle) {
+        this.placeholderTextSingle = placeholderTextSingle;
+        return this;
+    }
+
+    public Resources getResources() {
+        return resources;
+    }
+
+    public ChosenOptions setResources(Resources resources) {
+        this.resources = resources;
+        return this;
+    }
+
+    /**
+     * provide the {@code ResultFilter} instance used to filter the data.
+     */
+    public ResultsFilter getResultFilter() {
+        return resultFilter;
+    }
+
+    public void setResultFilter(ResultsFilter resultFilter) {
+        this.resultFilter = resultFilter;
+    }
+
+    /**
+     * Specify if the deselection is allowed on single selects.
+     */
+    public boolean isAllowSingleDeselect() {
+        return allowSingleDeselect;
+    }
+
+    public ChosenOptions setAllowSingleDeselect(Boolean allowSingleDeselect) {
+        this.allowSingleDeselect = allowSingleDeselect;
+        return this;
+    }
+
+    public boolean isHighlightSearchTerm() {
+        return highlightSearchTerm;
+    }
+
     public void setHighlightSearchTerm(boolean highlightSearchTerm) {
         this.highlightSearchTerm = highlightSearchTerm;
+    }
+
+    public boolean isSearchContains() {
+        return searchContains;
+    }
+
+    public ChosenOptions setSearchContains(boolean searchContains) {
+        this.searchContains = searchContains;
+        return this;
+    }
+
+    public boolean isSingleBackstrokeDelete() {
+        return singleBackstrokeDelete;
+    }
+
+    public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
+        this.singleBackstrokeDelete = singleBackstrokeDelete;
+        return this;
     }
 
     private void setDefault() {

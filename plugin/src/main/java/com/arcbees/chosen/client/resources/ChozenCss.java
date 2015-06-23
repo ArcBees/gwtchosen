@@ -23,9 +23,6 @@ public interface ChozenCss extends CssResource {
     @ClassName("active-result")
     String activeResult();
 
-    @ClassName("found-result")
-    String foundResult();
-
     @ClassName("chzn-choices")
     String chznChoices();
 
@@ -53,11 +50,11 @@ public interface ChozenCss extends CssResource {
     @ClassName("chzn-done")
     String chznDone();
 
-    @ClassName("chzn-mobile-container")
-    String chznMobileContainer();
-
     @ClassName("chzn-drop")
     String chznDrop();
+
+    @ClassName("chzn-mobile-container")
+    String chznMobileContainer();
 
     @ClassName("chzn-results")
     String chznResults();
@@ -77,6 +74,9 @@ public interface ChozenCss extends CssResource {
     @ClassName("default")
     String defaultClass();
 
+    @ClassName("found-result")
+    String foundResult();
+
     @ClassName("group-option")
     String groupOption();
 
@@ -86,8 +86,22 @@ public interface ChozenCss extends CssResource {
     @ClassName("highlighted")
     String highlighted();
 
+    @ClassName("icon_arrow")
+    String iconArrow();
+
+    @ClassName("icon_cross")
+    String iconCross();
+
+    @ClassName("icon_search")
+    String iconSearch();
+
+    int indent();
+
     @ClassName("no-results")
     String noResults();
+
+    @ClassName("result-above")
+    String resultAbove();
 
     @ClassName("result-selected")
     String resultSelected();
@@ -103,18 +117,4 @@ public interface ChozenCss extends CssResource {
 
     @ClassName("search-field")
     String searchField();
-
-    @ClassName("icon_cross")
-    String iconCross();
-
-    @ClassName("icon_arrow")
-    String iconArrow();
-
-    @ClassName("icon_search")
-    String iconSearch();
-
-    @ClassName("result-above")
-    String resultAbove();
-
-    int indent();
 }

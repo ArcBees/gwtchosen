@@ -44,7 +44,7 @@
     width: 100%;
     height: 90%;
     overflow-x: auto;
-    text-overflow : ellipsis;
+    text-overflow: ellipsis;
 
     position: relative;
 
@@ -68,7 +68,7 @@
     list-style: none;
 }
 
-.chzn-mobile-container .chzn-results .active-result {
+.chzn-mobile-container .chzn-results li.active-result {
     cursor: pointer;
     display: list-item;
 }
@@ -85,6 +85,7 @@
     @mixin shadow(0, 0, 5px, 0.15);
 }
 
+.chzn-mobile-container .chzn-single,
 .chzn-container-single .chzn-single {
     color: CHZN_C_TEXT;
     background-color: CHZN_C_PRIMARY;
@@ -114,10 +115,12 @@
     @mixin rounded(5px);
 }
 
+.chzn-mobile-container .chzn-default,
 .chzn-container-single .chzn-default {
     color: CHZN_C_TEXT_LIGHT;
 }
 
+.chzn-mobile-container .chzn-single span,
 .chzn-container-single .chzn-single span {
     white-space: nowrap;
 
@@ -130,6 +133,7 @@
     text-overflow: ellipsis;
 }
 
+.chzn-mobile-container .chzn-single abbr,
 .chzn-container-single .chzn-single abbr {
     font-size: 12px;
     color: CHZN_C_TEXT_LIGHT;
@@ -143,18 +147,22 @@
     top: 6px;
 }
 
+.chzn-mobile-container .chzn-single abbr::before,
 .chzn-container-single .chzn-single abbr::before {
     @mixin transition(all, 0.2s);
 }
 
+.chzn-mobile-container .chzn-single abbr:hover,
 .chzn-container-single .chzn-single abbr:hover {
     color: CHZN_C_TEXT;
 }
 
+.chzn-mobile-container.chzn-disabled .chzn-single abbr:hover,
 .chzn-container-single.chzn-disabled .chzn-single abbr:hover {
     color: CHZN_C_TEXT_LIGHT;
 }
 
+.chzn-mobile-container .chzn-single div,
 .chzn-container-single .chzn-single div {
     display: block;
     height: 100%;
@@ -165,6 +173,7 @@
     top: 0;
 }
 
+.chzn-mobile-container .chzn-single div b,
 .chzn-container-single .chzn-single div b {
     font-size: 140%;
 
@@ -175,6 +184,7 @@
     position: relative;
 }
 
+.chzn-mobile-container .chzn-single div b::before,
 .chzn-container-single .chzn-single div b::before {
     position: absolute;
     top: 3px;
@@ -340,7 +350,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    
+
     position: relative;
 }
 

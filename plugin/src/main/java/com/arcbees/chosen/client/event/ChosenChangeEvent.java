@@ -52,12 +52,12 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         return TYPE;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public int getIndex() {
         return index;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public boolean isSelection() {

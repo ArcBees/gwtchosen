@@ -37,21 +37,21 @@ public class SelectParser {
             return children;
         }
 
+        public void setChildren(int children) {
+            this.children = children;
+        }
+
         public String getLabel() {
             return label;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
         }
 
         @Override
         public boolean isGroup() {
             return true;
-        }
-
-        public void setChildren(int children) {
-            this.children = children;
-        }
-
-        public void setLabel(String label) {
-            this.label = label;
         }
     }
 
@@ -72,40 +72,80 @@ public class SelectParser {
             return arrayIndex;
         }
 
+        public void setArrayIndex(int arrayIndex) {
+            this.arrayIndex = arrayIndex;
+        }
+
         public String getClasses() {
             return classes;
+        }
+
+        public void setClasses(String classes) {
+            this.classes = classes;
         }
 
         public int getGroupArrayIndex() {
             return groupArrayIndex;
         }
 
+        public void setGroupArrayIndex(int groupArrayIndex) {
+            this.groupArrayIndex = groupArrayIndex;
+        }
+
         public String getHtml() {
             return html;
+        }
+
+        public void setHtml(String html) {
+            this.html = html;
         }
 
         public int getOptionsIndex() {
             return optionsIndex;
         }
 
+        public void setOptionsIndex(int optionsIndex) {
+            this.optionsIndex = optionsIndex;
+        }
+
         public String getStyle() {
             return style;
+        }
+
+        public void setStyle(String style) {
+            this.style = style;
         }
 
         public String getText() {
             return text;
         }
 
+        public void setText(String text) {
+            this.text = text;
+        }
+
         public String getValue() {
             return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
 
         public boolean isDisabled() {
             return disabled;
         }
 
+        public void setDisabled(boolean disabled) {
+            this.disabled = disabled;
+        }
+
         public boolean isEmpty() {
             return empty;
+        }
+
+        public void setEmpty(boolean empty) {
+            this.empty = empty;
         }
 
         @Override
@@ -117,48 +157,8 @@ public class SelectParser {
             return selected;
         }
 
-        public void setArrayIndex(int arrayIndex) {
-            this.arrayIndex = arrayIndex;
-        }
-
-        public void setClasses(String classes) {
-            this.classes = classes;
-        }
-
-        public void setDisabled(boolean disabled) {
-            this.disabled = disabled;
-        }
-
-        public void setEmpty(boolean empty) {
-            this.empty = empty;
-        }
-
-        public void setGroupArrayIndex(int groupArrayIndex) {
-            this.groupArrayIndex = groupArrayIndex;
-        }
-
-        public void setHtml(String html) {
-            this.html = html;
-        }
-
-        public void setOptionsIndex(int optionsIndex) {
-            this.optionsIndex = optionsIndex;
-        }
-
         public void setSelected(boolean selected) {
             this.selected = selected;
-        }
-
-        public void setStyle(String style) {
-            this.style = style;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
         }
     }
 
@@ -175,6 +175,10 @@ public class SelectParser {
             return domId;
         }
 
+        public void setDomId(String domId) {
+            this.domId = domId;
+        }
+
         public boolean isDisabled() {
             return disabled;
         }
@@ -184,10 +188,6 @@ public class SelectParser {
         }
 
         public abstract boolean isGroup();
-
-        public void setDomId(String domId) {
-            this.domId = domId;
-        }
     }
 
     private int optionsIndex;
@@ -280,11 +280,11 @@ public class SelectParser {
         optionsIndex++;
     }
 
-    private boolean isNullOrEmpty(String s) {
-        return s == null || s.isEmpty();
-    }
-
     private native String getCssText(Style s)/*-{
         return s.cssText;
     }-*/;
+
+    private boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
 }
