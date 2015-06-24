@@ -355,7 +355,7 @@ public abstract class ChosenImpl {
             resultsHide();
         }
 
-        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosen-value"));
+        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosensample-value"));
         link.parents("li").first().remove();
     }
 

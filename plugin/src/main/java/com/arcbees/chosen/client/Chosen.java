@@ -34,7 +34,7 @@ public class Chosen extends GQuery {
                 }
             });
 
-    public static String CHOSEN_DATA_KEY = "chosen";
+    public static String CHOSEN_DATA_KEY = "chosensample";
 
     // Initialization
     public Chosen(GQuery gq) {

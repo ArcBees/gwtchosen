@@ -65,14 +65,14 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     private boolean visible = true;
 
     /**
-     * Creates an empty chosen component in single selection mode.
+     * Creates an empty chosensample component in single selection mode.
      */
     public ChosenListBox() {
         this(false);
     }
 
     /**
-     * Creates an empty chosen component in single selection mode.
+     * Creates an empty chosensample component in single selection mode.
      */
     public ChosenListBox(ChosenOptions options) {
         this(false, options);
@@ -728,7 +728,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     /**
-     * Use this method to update the chosen list box (i.e. after insertion or
+     * Use this method to update the chosensample list box (i.e. after insertion or
      * removal of options)
      */
     public void update() {

@@ -26,7 +26,7 @@ public interface ChozenTemplate extends SafeHtmlTemplates {
 
     @Template("<li class=\"{1}\" id=\"{0}\">" +
             "<span>{2}</span>" +
-            "<a href=\"javascript:void(0)\" class=\"{3} {6}\" rel=\"{4}\" data-chosen-value=\"{5}\"></a>" +
+            "<a href=\"javascript:void(0)\" class=\"{3} {6}\" rel=\"{4}\" data-chosensample-value=\"{5}\"></a>" +
             "</li>")
     SafeHtml choice(
             String id, String searchChoiceClass, SafeHtml content,

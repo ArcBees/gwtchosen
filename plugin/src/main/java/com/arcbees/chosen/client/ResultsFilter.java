@@ -25,7 +25,7 @@ public interface ResultsFilter {
      * {@code isShowing} is set to true.
      *
      * @param searchText the text entered by the user
-     * @param chosen     the chosen component
+     * @param chosen     the chosensample component
      * @param isShowing  indicates of this method is called because we are revealing the options.
      */
     void filter(String searchText, ChosenImpl chosen, boolean isShowing);

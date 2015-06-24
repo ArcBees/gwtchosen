@@ -14,27 +14,35 @@
  * the License.
  */
 
-package com.arcbees.chosen.sample.client;
+package com.arcbees.chosen.sample.client.application.chosensample;
 
 import java.util.List;
 
 import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.client.ChosenOptions;
-import com.arcbees.chosen.client.DropdownPosition;
 import com.arcbees.chosen.client.ResultsFilter;
-import com.arcbees.chosen.client.SelectParser.OptionItem;
-import com.arcbees.chosen.client.SelectParser.SelectItem;
+import com.arcbees.chosen.client.SelectParser;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
-import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.RepeatingCommand;
-import com.google.gwt.query.client.Function;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 
-import static com.arcbees.chosen.client.Chosen.Chosen;
-import static com.google.gwt.query.client.GQuery.$;
+public class CustomFilteringView implements IsWidget {
+    interface Binder extends UiBinder<Widget, CustomFilteringView> {
+    }
 
-public class ChosenSample implements EntryPoint {
+    private static Binder binder = GWT.create(Binder.class);
+
+    @UiField
+    SimplePanel serverChozen;
+
+    private final Widget widget;
+
     public static class ServerSideSimulatorResultFilter implements ResultsFilter {
         private static final String[] NAMES = {
                 "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore",
@@ -71,15 +79,15 @@ public class ChosenSample implements EntryPoint {
             initialized = true;
 
             // filter the result asynchronously to simulate a call to a server
-            Scheduler.get().scheduleFixedPeriod(new RepeatingCommand() {
+            Scheduler.get().scheduleFixedPeriod(new Scheduler.RepeatingCommand() {
                 @Override
                 public boolean execute() {
-                    List<SelectItem> selectItems = chosen.getSelectItems();
+                    List<SelectParser.SelectItem> selectItems = chosen.getSelectItems();
                     selectItems.clear();
                     int arrayIndex = 0;
                     for (String name : NAMES) {
                         if (searchText != null && name.toUpperCase().startsWith(searchText.toUpperCase())) {
-                            OptionItem optionItem = new OptionItem();
+                            SelectParser.OptionItem optionItem = new SelectParser.OptionItem();
                             optionItem.setHtml("<div style='color:blue'>" + name + "</div>");
                             optionItem.setText(name);
                             optionItem.setValue(name);
@@ -91,7 +99,7 @@ public class ChosenSample implements EntryPoint {
                         }
                     }
 
-                    // warn chosen that the filtering is done.
+                    // warn chosensample that the filtering is done.
                     chosen.rebuildResultItems();
 
                     // stop the repeating command
@@ -101,74 +109,24 @@ public class ChosenSample implements EntryPoint {
         }
     }
 
-    public void onModuleLoad() {
+    public CustomFilteringView() {
+        widget = binder.createAndBindUi(this);
 
-        if (!com.arcbees.chosen.client.Chosen.isSupported()) {
-            $("#browserWarning").show();
-        }
-
-        $(".chzn-select, .enhance").as(Chosen).chosen();
-
-        $("#allowSingleDeselect").as(Chosen).chosen(new ChosenOptions().setAllowSingleDeselect(true));
-
-        $("#disableSearchThreshold").as(Chosen).chosen(
-                new ChosenOptions().setDisableSearchThreshold(10));
-
-        $("#searchContains").as(Chosen).chosen(
-                new ChosenOptions().setSearchContains(true));
-
-        $("#singleBackstrokeDelete").as(Chosen).chosen(
-                new ChosenOptions().setSingleBackstrokeDelete(true));
-
-        $("#maxSelectedOptions").as(Chosen).chosen(
-                new ChosenOptions().setMaxSelectedOptions(5));
-
-        $("#noResultsText").as(Chosen).chosen(
-                new ChosenOptions().setNoResultsText("Ooops, nothing was found:"));
-
-        $("#dropdownPosition").as(Chosen).chosen(
-                new ChosenOptions().setDropdownPosition(DropdownPosition.ABOVE));
-
-        final ChosenListBox chzn = new ChosenListBox();
-        chzn.addItem("item 1");
-        chzn.setWidth("250px");
-
-        RootPanel.get("updateChozen").add(chzn);
-
-        $("#updateButton").click(new Function() {
-            int i = 2;
-
+        widget.addAttachHandler(new AttachEvent.Handler() {
             @Override
-            public void f() {
-                for (int j = 0; j < 100; j++) {
-                    chzn.addItem("item " + i);
-                    i++;
+            public void onAttachOrDetach(AttachEvent attachEvent) {
+                if (attachEvent.isAttached()) {
+                    ChosenOptions options = new ChosenOptions();
+                    options.setResultFilter(new ServerSideSimulatorResultFilter());
+                    final ChosenListBox serverChosenListBox = new ChosenListBox(false, options);
+                    serverChozen.setWidget(serverChosenListBox);
                 }
-
-                chzn.update();
             }
         });
+    }
 
-        final ChosenListBox hcs = new ChosenListBox();
-        hcs.setWidth("350px");
-        hcs.setPlaceholderText("Navigate to...");
-        hcs.setTabIndex(9);
-        hcs.addItem("");
-        hcs.addStyledItem("Home", "home", null);
-        hcs.addGroup("ABOUT US");
-        hcs.addStyledItemToGroup("Press Releases", "press", null, 0);
-        hcs.addStyledItemToGroup("Contact Us", "about", null, 0);
-        hcs.addGroup("PRODUCTS");
-        hcs.addStyledItemToGroup("Tera-Magic", "tm", null, 0, 1);
-        hcs.addStyledItemToGroup("Tera-Magic Pro", "tmpro", null, 1, 1);
-        // Will be inserted before "Tera-Magic Pro" and custom-styled
-        hcs.insertStyledItemToGroup("Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1);
-        RootPanel.get("hierChozenSingle").add(hcs);
-
-        // custom filter
-        ChosenOptions options = new ChosenOptions();
-        options.setResultFilter(new ServerSideSimulatorResultFilter());
-        final ChosenListBox serverChosenListBox = new ChosenListBox(false, options);
-        RootPanel.get("serverChozen").add(serverChosenListBox);
+    @Override
+    public Widget asWidget() {
+        return widget;
     }
 }

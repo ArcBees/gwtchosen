@@ -175,7 +175,7 @@ public class ChosenIT {
     public void enabledDisabled() {
         // Given
         loadTestCase(new EnabledDisabled());
-        String disabledClassName = "com-arcbees-chosen-client-resources-ChozenCss-chzn-disabled";
+        String disabledClassName = "com-arcbees-chosensample-client-resources-ChozenCss-chzn-disabled";
 
         // When
         WebElement disableButton = webDriverWait().until(presenceOfElementLocated(
@@ -322,7 +322,7 @@ public class ChosenIT {
 
     /**
      * Tests that when
-     * - we deselect an option to a multiple chosen list box.
+     * - we deselect an option to a multiple chosensample list box.
      * <p/>
      * the dropdown with the choices aren't displayed
      */
@@ -507,7 +507,7 @@ public class ChosenIT {
     }
 
     /**
-     * Deselect an option previously selected. Work only with multiple chosen list box.
+     * Deselect an option previously selected. Work only with multiple chosensample list box.
      */
     private <T extends Enum<T>> void deselectOption(T val, Renderer<T> renderer) {
         String xpath = String.format("//li[span/text()='%s']/a", renderer.render(val));
@@ -516,7 +516,7 @@ public class ChosenIT {
     }
 
     private Set<String> getOptions() {
-        String cssSelector = "li.com-arcbees-chosen-client-resources-ChozenCss-active-result";
+        String cssSelector = "li.com-arcbees-chosensample-client-resources-ChozenCss-active-result";
         List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.cssSelector(cssSelector)));
         return Sets.newHashSet(Lists.transform(options, new Function<WebElement, String>() {
             @Override
@@ -582,7 +582,7 @@ public class ChosenIT {
 
     private WebElement getDropdown() {
         return webDriverWait().until(presenceOfElementLocated(
-                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-drop")));
+                By.className("com-arcbees-chosensample-client-resources-ChozenCss-chzn-drop")));
     }
 
     private int getDropdownTop() {
@@ -615,7 +615,7 @@ public class ChosenIT {
 
     private boolean isMultipleChosenComponent() {
         List<WebElement> multiContainer = webDriver.findElements(
-                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
+                By.className("com-arcbees-chosensample-client-resources-ChozenCss-chzn-container-multi"));
 
         return multiContainer.size() != 0;
     }

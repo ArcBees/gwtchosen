@@ -1,0 +1,23 @@
+@provide 'gsss-grid-settings';
+
+/* -- Settings --------------------------------------------- */
+
+/* -> Mobile - */
+@def MOBILE_MIN             0px;
+@def MOBILE_MAX             649px;
+@def MOBILE_MAX_COLUMNS     4; /* do not change */
+@def MOBILE_PADDING         0px;
+@def MOBILE_GUTTER          20px;
+
+/* -> Tablet - */
+@def TABLET_MIN             650px;
+@def TABLET_MAX             979px;
+@def TABLET_MAX_COLUMNS     8; /* do not change */
+@def TABLET_PADDING         0px;
+@def TABLET_GUTTER          18px;
+
+/* -> Desktop - */
+@def DESKTOP_MIN            980px;
+@def DESKTOP_MAX_COLUMNS    12; /* do not change */
+@def DESKTOP_PADDING        0px;
+@def DESKTOP_GUTTER         22px;
