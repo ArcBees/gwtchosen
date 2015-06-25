@@ -16,6 +16,11 @@
 
 package com.arcbees.chosen.client;
 
+import com.arcbees.chosen.client.SelectParser.OptionItem;
+import com.arcbees.chosen.client.event.ChosenChangeEvent;
+import com.arcbees.chosen.client.event.MaxSelectedEvent;
+import com.google.gwt.query.client.GQuery;
+
 public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     @Override
     public boolean isMultiple() {
@@ -28,5 +33,41 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
             choices = 0;
         }
         super.resultsBuild(init, defaultText, customFilter);
+    }
+
+    @Override
+    protected void addChoice(OptionItem item) {
+        if (maxSelectedOptionsReached()) {
+            fireEvent(new MaxSelectedEvent(this));
+        } else {
+            String optionSelector = "#" + getContainerId() + "_o_" + item.getArrayIndex();
+            choices++;
+
+            getSearchResults().find(optionSelector).addClass(getCss().resultSelected());
+
+            String selectedText;
+            if (choices > 1) {
+                selectedText =  getOptions().getManySelectedTextMultipleMobile();
+            } else {
+                selectedText =  getOptions().getOneSelectedTextMultipleMobile();
+            }
+
+            selectedText = selectedText.replace("{}", "" + choices);
+
+            getSelectedItem().find("span").text(selectedText);
+        }
+    }
+
+    protected void resultDeactivate(GQuery query, boolean selected) {
+        if (!selected) {
+            super.resultDeactivate(query, selected);
+        }
+    }
+
+    @Override
+    protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        if (oldValue == null || !oldValue.equals(newValue)) {
+            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
+        }
     }
 }

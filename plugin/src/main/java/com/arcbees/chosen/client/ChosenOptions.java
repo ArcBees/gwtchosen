@@ -36,6 +36,8 @@ public class ChosenOptions {
     private Element dropdownBoundaries;
     private DropdownBoundariesProvider dropdownBoundariesProvider;
     private int mobileViewportMaxWidth;
+    private String oneSelectedTextMultipleMobile;
+    private String manySelectedTextMultipleMobile;
 
     public ChosenOptions() {
         setDefault();
@@ -43,6 +45,14 @@ public class ChosenOptions {
 
     public int getDisableSearchThreshold() {
         return disableSearchThreshold;
+    }
+
+    public String getManySelectedTextMultipleMobile() {
+        return manySelectedTextMultipleMobile;
+    }
+
+    public String getOneSelectedTextMultipleMobile() {
+        return oneSelectedTextMultipleMobile;
     }
 
     /**
@@ -113,6 +123,10 @@ public class ChosenOptions {
         return maxSelectedOptions;
     }
 
+    public void setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
+        this.manySelectedTextMultipleMobile = manySelectedTextMultipleMobile;
+    }
+
     public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
         this.maxSelectedOptions = maxSelectedOptions;
         return this;
@@ -139,6 +153,10 @@ public class ChosenOptions {
 
     public String getNoResultsText() {
         return noResultsText;
+    }
+
+    public void setOneSelectedTextMultipleMobile(String oneSelectedTextMultipleMobile) {
+        this.oneSelectedTextMultipleMobile = oneSelectedTextMultipleMobile;
     }
 
     public ChosenOptions setNoResultsText(String noResultsText) {
@@ -240,5 +258,7 @@ public class ChosenOptions {
         highlightSearchTerm = true;
         dropdownPosition = DropdownPosition.BELOW;
         mobileViewportMaxWidth = 649;
+        oneSelectedTextMultipleMobile = "{} item selected";
+        manySelectedTextMultipleMobile = "{} items selected";
     }
 }

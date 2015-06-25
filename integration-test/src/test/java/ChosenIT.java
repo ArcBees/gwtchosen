@@ -32,7 +32,6 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
-import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
@@ -50,9 +49,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
-import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
-import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
-import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public abstract class ChosenIT {
@@ -141,25 +137,6 @@ public abstract class ChosenIT {
         // Then
         Set<String> options = getOptions();
         assertThat(options).isEqualTo(CarBrand.getAllNames(RENDERER));
-    }
-
-    /**
-     * Tests the <code>maxSelectedOptions</code> option.
-     */
-    @Test
-    public void maxSelectedOptions_optionsNotSelectableAnymore() {
-        // Given
-        loadTestCase(new MaxSelectedOptions());
-
-        // When
-        clickOption(MERCEDES, RENDERER);
-        clickOption(TOYOTA, RENDERER);
-        clickOption(HONDA, RENDERER);
-
-        openDropDown();
-
-        // Then
-        assertDropdownIsClosed();
     }
 
     /**
