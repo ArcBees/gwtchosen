@@ -74,25 +74,43 @@ public class MobileChosenIT extends ChosenIT {
     }
 
     /**
-     * Tests the <code>maxSelectedOptions</code> option.
+     * On mobile, we display the number of selected items.
+     */
+    @Test
+    public void multipleMobile_displayNumberOfSelectedItem() throws InterruptedException {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+        openDropDown();
+
+        // When
+        clickOption(MERCEDES, RENDERER);
+        clickOption(TOYOTA, RENDERER);
+
+        closeMobileDropDown();
+
+        // Then
+        assertThat(getSelectedOptionTexts()).hasSize(1);
+        assertThat(getSelectedOptionTexts().get(0)).isEqualTo("2 items selected");
+    }
+
+    /**
+     * Tests the <code>maxSelectedOptions</code> option. With mobile layout, we should be able to open the dropdown
+     * in order to deselect items.
      */
     @Test
     public void maxSelectedOptions_optionsNotSelectableAnymore() {
         // Given
         loadTestCase(new MaxSelectedOptions());
-
-        // When
         clickOption(MERCEDES, RENDERER);
         clickOption(TOYOTA, RENDERER);
         clickOption(HONDA, RENDERER);
-
         closeMobileDropDown();
 
+        // When
         openDropDown();
 
         // Then
-        // TODO should be able to open the dropdown in order to deselect items
-        assertDropdownIsClosed();
+        assertDropdownIsOpenWithMobileLayout();
     }
 
     /**

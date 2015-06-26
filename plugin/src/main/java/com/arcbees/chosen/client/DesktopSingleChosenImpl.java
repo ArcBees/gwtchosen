@@ -18,6 +18,7 @@ package com.arcbees.chosen.client;
 
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.safecss.shared.SafeStylesBuilder;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Event;
@@ -25,6 +26,7 @@ import com.google.web.bindery.event.shared.EventBus;
 
 public class DesktopSingleChosenImpl extends ChosenImpl {
     private Function activateAction;
+    private GQuery resultSingleSelected;
 
     @Override
     protected void bind() {
@@ -101,6 +103,15 @@ public class DesktopSingleChosenImpl extends ChosenImpl {
     }
 
     @Override
+    protected void resultDeactivate(GQuery query, boolean selected) {
+        super.resultDeactivate(query, selected);
+
+        if (selected) {
+            resultSingleSelected = query;
+        }
+    }
+
+    @Override
     protected void setupDisabledSearchField() {
         super.setupDisabledSearchField();
 
@@ -112,5 +123,21 @@ public class DesktopSingleChosenImpl extends ChosenImpl {
         super.setupEnabledSearchField();
 
         getSelectedItem().bind("focus", activateAction);
+    }
+
+    @Override
+    protected void update() {
+        resultSingleSelected = null;
+        super.update();
+    }
+
+    @Override
+    protected boolean beforeShowResult() {
+        getSelectedItem().addClass(getCss().chznSingleWithDrop());
+        if (resultSingleSelected != null) {
+            resultDoHighlight(resultSingleSelected);
+        }
+
+        return true;
     }
 }

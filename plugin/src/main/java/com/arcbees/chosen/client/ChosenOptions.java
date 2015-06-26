@@ -123,10 +123,6 @@ public class ChosenOptions {
         return maxSelectedOptions;
     }
 
-    public void setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
-        this.manySelectedTextMultipleMobile = manySelectedTextMultipleMobile;
-    }
-
     public ChosenOptions setMaxSelectedOptions(int maxSelectedOptions) {
         this.maxSelectedOptions = maxSelectedOptions;
         return this;
@@ -151,12 +147,32 @@ public class ChosenOptions {
         this.mobileViewportMaxWidth = mobileViewportMaxWidth;
     }
 
-    public String getNoResultsText() {
-        return noResultsText;
-    }
-
+    /**
+     * Set the text to use when one option is selected on a mobile multiple select.
+     * <p/>
+     * <code>{}</code> can be used in the text to indicate where to put the number of option selected (in this case 1).
+     * <p/>
+     * Ex:
+     *   options.setOneSelectedTextMultipleMobile("{} country selected");
+     */
     public void setOneSelectedTextMultipleMobile(String oneSelectedTextMultipleMobile) {
         this.oneSelectedTextMultipleMobile = oneSelectedTextMultipleMobile;
+    }
+
+    /**
+     * Set the text to use when several options are selected on a mobile multiple select.
+     * <p/>
+     * <code>{}</code> can be used in the text to indicate where to put the number of option selected.
+     * <p/>
+     * Ex:
+     *   options.setManySelectedTextMultipleMobile("{} countries selected");
+     */
+    public void setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
+        this.manySelectedTextMultipleMobile = manySelectedTextMultipleMobile;
+    }
+
+    public String getNoResultsText() {
+        return noResultsText;
     }
 
     public ChosenOptions setNoResultsText(String noResultsText) {

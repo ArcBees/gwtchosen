@@ -105,6 +105,15 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
     }
 
     @Override
+    protected boolean beforeShowResult() {
+        if (maxSelectedOptionsReached()) {
+            fireEvent(new MaxSelectedEvent(this));
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     protected void containerMouseDownImpl(Event e, GQuery element) {
         if (pendingDestroyClick) {
             pendingDestroyClick = false;

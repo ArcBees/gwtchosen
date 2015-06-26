@@ -27,7 +27,6 @@ import com.arcbees.chosen.client.SelectParser.SelectItem;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenEvent;
 import com.arcbees.chosen.client.event.HidingDropDownEvent;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.UpdatedEvent;
@@ -65,6 +64,7 @@ import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 public abstract class ChosenImpl {
     static final int BACKSPACE = 8;
     static final String TABINDEX_PROPERTY = "tabindex";
+
     private static final int TAB = 9;
     private static final int ENTER = 13;
     private static final int SHIFT = 16;
@@ -79,6 +79,7 @@ public abstract class ChosenImpl {
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
     private static int idCounter;
+
     protected boolean activeField;
     // TODO
     protected int choices;
@@ -101,9 +102,7 @@ public abstract class ChosenImpl {
     private boolean customFilter;
     private boolean mouseOnContainer;
     private ChosenOptions options;
-    private boolean pendingDestroyClick;
     private GQuery resultHighlight;
-    private GQuery resultSingleSelected;
     private String resultsNoneFound;
     private GQuery searchField;
     private GQuery searchResults;
@@ -152,15 +151,6 @@ public abstract class ChosenImpl {
 
     public boolean isMultiple() {
         return false;
-    }
-
-    /**
-     * Is the plugin support the current browser ?
-     *
-     * @return
-     */
-    public boolean isSupported() {
-        return true;
     }
 
     public void rebuildResultItems() {
@@ -552,7 +542,6 @@ public abstract class ChosenImpl {
     protected void resultSelect(Event e) {
         if (resultHighlight != null) {
             GQuery high = resultHighlight;
-            String highId = high.attr("id");
 
             resultClearHighlight();
 
@@ -560,8 +549,7 @@ public abstract class ChosenImpl {
 
             high.addClass(css.resultSelected());
 
-            int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
-            OptionItem item = (OptionItem) selectItems.get(position);
+            OptionItem item = getOptionItem(high);
             item.setSelected(true);
             OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
             if (option != null) {
@@ -581,6 +569,12 @@ public abstract class ChosenImpl {
 
             searchFieldScale(fWidth);
         }
+    }
+
+    protected OptionItem getOptionItem(GQuery result) {
+        String highId = result.attr("id");
+        int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
+        return (OptionItem) selectItems.get(position);
     }
 
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
@@ -640,13 +634,7 @@ public abstract class ChosenImpl {
     }
 
     protected boolean resultsShow() {
-        if (!isMultiple()) {
-            selectedItem.addClass(css.chznSingleWithDrop());
-            if (resultSingleSelected != null) {
-                resultDoHighlight(resultSingleSelected);
-            }
-        } else if (maxSelectedOptionsReached()) {
-            fireEvent(new MaxSelectedEvent(this));
+        if (!beforeShowResult()) {
             return false;
         }
 
@@ -662,6 +650,10 @@ public abstract class ChosenImpl {
 
         searchField.focus();
 
+        return true;
+    }
+
+    protected boolean beforeShowResult() {
         return true;
     }
 
@@ -720,7 +712,6 @@ public abstract class ChosenImpl {
     protected void update() {
         setDefaultText();
         resultClearHighlight();
-        resultSingleSelected = null;
         resultsBuild(false);
     }
 
@@ -762,7 +753,6 @@ public abstract class ChosenImpl {
             query.removeClass(getCss().activeResult(), getCss().foundResult());
         } else {
             searchResults.find("." + css.resultSelected()).removeClass(css.resultSelected());
-            resultSingleSelected = query;
             selectedItem.removeClass(css.chznDefault());
         }
     }
@@ -1165,7 +1155,7 @@ public abstract class ChosenImpl {
         searchFieldScale(fWidth);
     }
 
-    private void resultDoHighlight(GQuery el) {
+    protected void resultDoHighlight(GQuery el) {
         if (el == null || el.length() == 0 || isDetached(el)) {
             return;
         }

@@ -19,7 +19,9 @@ package com.arcbees.chosen.client;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
+import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.query.client.GQuery;
+import com.google.gwt.user.client.Event;
 
 public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     @Override
@@ -44,17 +46,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
             choices++;
 
             getSearchResults().find(optionSelector).addClass(getCss().resultSelected());
-
-            String selectedText;
-            if (choices > 1) {
-                selectedText =  getOptions().getManySelectedTextMultipleMobile();
-            } else {
-                selectedText =  getOptions().getOneSelectedTextMultipleMobile();
-            }
-
-            selectedText = selectedText.replace("{}", "" + choices);
-
-            getSelectedItem().find("span").text(selectedText);
         }
     }
 
@@ -65,9 +56,55 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     }
 
     @Override
+    protected void resultSelect(Event e) {
+        if (getResultHighlight() != null) {
+            OptionItem item = getOptionItem(getResultHighlight());
+
+            if (item.isSelected()) {
+                resultDeselect(item, getResultHighlight());
+            } else if (!maxSelectedOptionsReached()) {
+                super.resultSelect(e);
+            }
+        }
+    }
+
+    @Override
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
         if (oldValue == null || !oldValue.equals(newValue)) {
             fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
         }
+    }
+
+    private void resultDeselect(OptionItem item, GQuery element) {
+        choices--;
+
+        item.setSelected(false);
+
+        OptionElement option = getSelectElement().getOptions().getItem(item.getOptionsIndex());
+        if (option != null) {
+            option.setSelected(false);
+        }
+
+        element.removeClass(getCss().resultSelected());
+    }
+
+    @Override
+    protected void resultsHide() {
+        updateSelectedText();
+
+        super.resultsHide();
+    }
+
+    private void updateSelectedText() {
+        String selectedText;
+        if (choices > 1) {
+            selectedText =  getOptions().getManySelectedTextMultipleMobile();
+        } else {
+            selectedText =  getOptions().getOneSelectedTextMultipleMobile();
+        }
+
+        selectedText = selectedText.replace("{}", "" + choices);
+
+        getSelectedItem().find("span").text(selectedText);
     }
 }
