@@ -36,6 +36,8 @@ public class ChosenOptions {
     private Element dropdownBoundaries;
     private DropdownBoundariesProvider dropdownBoundariesProvider;
     private int mobileViewportMaxWidth;
+    private String oneSelectedTextMultipleMobile;
+    private String manySelectedTextMultipleMobile;
 
     public ChosenOptions() {
         setDefault();
@@ -43,6 +45,14 @@ public class ChosenOptions {
 
     public int getDisableSearchThreshold() {
         return disableSearchThreshold;
+    }
+
+    public String getManySelectedTextMultipleMobile() {
+        return manySelectedTextMultipleMobile;
+    }
+
+    public String getOneSelectedTextMultipleMobile() {
+        return oneSelectedTextMultipleMobile;
     }
 
     /**
@@ -135,6 +145,30 @@ public class ChosenOptions {
      */
     public void setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
         this.mobileViewportMaxWidth = mobileViewportMaxWidth;
+    }
+
+    /**
+     * Set the text to use when one option is selected on a mobile multiple select.
+     * <p/>
+     * <code>{}</code> can be used in the text to indicate where to put the number of option selected (in this case 1).
+     * <p/>
+     * Ex:
+     *   options.setOneSelectedTextMultipleMobile("{} country selected");
+     */
+    public void setOneSelectedTextMultipleMobile(String oneSelectedTextMultipleMobile) {
+        this.oneSelectedTextMultipleMobile = oneSelectedTextMultipleMobile;
+    }
+
+    /**
+     * Set the text to use when several options are selected on a mobile multiple select.
+     * <p/>
+     * <code>{}</code> can be used in the text to indicate where to put the number of option selected.
+     * <p/>
+     * Ex:
+     *   options.setManySelectedTextMultipleMobile("{} countries selected");
+     */
+    public void setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
+        this.manySelectedTextMultipleMobile = manySelectedTextMultipleMobile;
     }
 
     public String getNoResultsText() {
@@ -240,5 +274,7 @@ public class ChosenOptions {
         highlightSearchTerm = true;
         dropdownPosition = DropdownPosition.BELOW;
         mobileViewportMaxWidth = 649;
+        oneSelectedTextMultipleMobile = "{} item selected";
+        manySelectedTextMultipleMobile = "{} items selected";
     }
 }
