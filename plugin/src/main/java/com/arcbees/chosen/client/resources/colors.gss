@@ -18,4 +18,4 @@
 @def CHZN_C_TEXT_LIGHT               #999;
 
 @def CHZN_C_BORDER                   #aaa;
-@def CHZN_C_HIGHLIGHT                #feffde;
+@def CHZN_C_HIGHLIGHT                #e2e8f4;

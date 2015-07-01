@@ -46,12 +46,14 @@ public interface ChozenTemplate extends SafeHtmlTemplates {
             "<input type=\"text\" autocomplete=\"off\" />" +
             "<i class=\"{8}\" role=\"close\"></i>" +
             "</div>" +
+            "<div class=\"{9}\">" +
             "<ul class=\"{5}\"></ul>" +
+            "</div>" +
             "</div>")
     SafeHtml contentMobile(
             String chznSingleClass, String chznDefaultClass, String defaultText,
             String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
-            String iconArrowClass, String iconCloseClass);
+            String iconArrowClass, String iconCloseClass, String chznResultsHolderClass);
 
     @Template("<ul class=\"{0}\">" +
             "<li class=\"{1}\">" +

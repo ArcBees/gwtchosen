@@ -3,8 +3,7 @@
 
 @def INDENT 15px;
 
-.chzn-container,
-.chzn-mobile-container {
+.chzn-container {
     font-size: 13px;
 
     display: inline-block;
@@ -27,56 +26,6 @@
     @mixin shadow(0, 4px, 5px, 0.15);
 }
 
-/* Mobile layout */
-.chzn-mobile-container .chzn-drop {
-    background: CHZN_C_PRIMARY;
-
-    border: 1px solid CHZN_C_BORDER;
-    border-top: 0;
-
-    position: fixed;
-    z-index: 1010;
-
-    @mixin shadow(0, 4px, 5px, 0.15);
-}
-
-.chzn-mobile-container .chzn-drop ul {
-    width: 100%;
-    height: 90%;
-    overflow-x: auto;
-    text-overflow: ellipsis;
-
-    position: relative;
-
-    /* flex layout allow us to rearrange the item (and put the selected items first) independently of the DOM flow */
-    /* flex is supported by mobile browsers */
-    display: -webkit-flex;
-    display: flex;
-
-    -webkit-flex-direction: column;
-    flex-direction: column;
-}
-
-.chzn-mobile-container .chzn-results li {
-    color: CHZN_C_TEXT;
-    line-height: 30px;
-
-    display: none;
-    padding: 5px 6px;
-    margin: 0;
-
-    list-style: none;
-}
-
-.chzn-mobile-container .chzn-results li.active-result {
-    cursor: pointer;
-    display: list-item;
-}
-
-.chzn-mobile-container .result-selected {
-    order: -1;
-}
-
 /* Result above */
 .result-above.chzn-container .chzn-drop {
     border-top: 1px solid CHZN_C_BORDER;
@@ -85,7 +34,6 @@
     @mixin shadow(0, 0, 5px, 0.15);
 }
 
-.chzn-mobile-container .chzn-single,
 .chzn-container-single .chzn-single {
     color: CHZN_C_TEXT;
     background-color: CHZN_C_PRIMARY;
@@ -115,12 +63,10 @@
     @mixin rounded(5px);
 }
 
-.chzn-mobile-container .chzn-default,
 .chzn-container-single .chzn-default {
     color: CHZN_C_TEXT_LIGHT;
 }
 
-.chzn-mobile-container .chzn-single span,
 .chzn-container-single .chzn-single span {
     white-space: nowrap;
 
@@ -133,7 +79,6 @@
     text-overflow: ellipsis;
 }
 
-.chzn-mobile-container .chzn-single abbr,
 .chzn-container-single .chzn-single abbr {
     font-size: 12px;
     color: CHZN_C_TEXT_LIGHT;
@@ -147,22 +92,18 @@
     top: 6px;
 }
 
-.chzn-mobile-container .chzn-single abbr::before,
 .chzn-container-single .chzn-single abbr::before {
     @mixin transition(all, 0.2s);
 }
 
-.chzn-mobile-container .chzn-single abbr:hover,
 .chzn-container-single .chzn-single abbr:hover {
     color: CHZN_C_TEXT;
 }
 
-.chzn-mobile-container.chzn-disabled .chzn-single abbr:hover,
 .chzn-container-single.chzn-disabled .chzn-single abbr:hover {
     color: CHZN_C_TEXT_LIGHT;
 }
 
-.chzn-mobile-container .chzn-single div,
 .chzn-container-single .chzn-single div {
     display: block;
     height: 100%;
@@ -173,7 +114,6 @@
     top: 0;
 }
 
-.chzn-mobile-container .chzn-single div b,
 .chzn-container-single .chzn-single div b {
     font-size: 140%;
 
@@ -184,7 +124,6 @@
     position: relative;
 }
 
-.chzn-mobile-container .chzn-single div b::before,
 .chzn-container-single .chzn-single div b::before {
     position: absolute;
     top: 3px;

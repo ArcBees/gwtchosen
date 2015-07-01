@@ -49,7 +49,6 @@ body {
     width: 980px;
 
     position: relative;
-    z-index: 99;
 }
 
 @media (max-width: 979px) {
