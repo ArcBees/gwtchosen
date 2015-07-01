@@ -36,16 +36,10 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
     ApplicationView(
             Binder binder) {
         initWidget(binder.createAndBindUi(this));
-
-        bind();
     }
 
     @Override
     public void setInSlot(Object slot, IsWidget content) {
         main.setWidget(content);
-    }
-
-    private void bind() {
-        GQuery.console.log("BIND");
     }
 }

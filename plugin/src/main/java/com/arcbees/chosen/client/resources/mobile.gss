@@ -21,8 +21,6 @@
     z-index: 5100;
     top: 0;
     left: 0;
-
-    @mixin shadow(0, 4px, 5px, 0.15);
 }
 
 .chzn-mobile-container .chzn-search {
@@ -41,8 +39,18 @@
     font-size: 175%;
 
     position: absolute;
-    top: 12px;
+    top: 8px;
     right: 5px;
+}
+
+.chzn-mobile-container .chzn-search > i:hover {
+    cursor: pointer;
+    
+    @mixin scale(1.2, 1.2);
+}
+
+.chzn-mobile-container .chzn-search > i:active {
+    @mixin scale(.9, .9);
 }
 
 .chzn-mobile-container .chzn-results-holder {
@@ -110,6 +118,10 @@
 
     display: inline-block;
     margin-right: .5em;
+}
+
+.chzn-mobile-container.chzn-container-multi .result-selected:hover::before {
+    content: "\e600";
 }
 
 .chzn-mobile-container .chzn-single {

@@ -30,11 +30,5 @@ public class ChosensampleView extends ViewImpl implements ChosensamplePresenter.
     ChosensampleView(
             Binder binder) {
         initWidget(binder.createAndBindUi(this));
-
-        bind();
-    }
-
-    private void bind() {
-        GQuery.console.log("BIND");
     }
 }
