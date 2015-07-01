@@ -17,6 +17,7 @@
 package com.arcbees.chosen.client;
 
 import com.arcbees.chosen.client.SelectParser.OptionItem;
+import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -29,12 +30,14 @@ import com.google.gwt.user.client.Event;
 
 import static com.google.gwt.query.client.GQuery.$;
 import static com.google.gwt.query.client.GQuery.document;
+import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
 public class DesktopMultipleChosenImpl extends ChosenImpl {
     private static final int BACKSPACE = 8;
 
     private GQuery pendingBackstroke;
     private int backstrokeLength;
+    private boolean pendingDestroyClick;
 
     @Override
     public boolean isMultiple() {
@@ -82,18 +85,41 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
         return classes;
     }
 
-    @Override
-    protected void choiceBuild(OptionItem option) {
+    protected void addChoice(OptionItem option) {
         if (maxSelectedOptionsReached()) {
             fireEvent(new MaxSelectedEvent(this));
-            return;
         } else {
-            super.choiceBuild(option);
+            String choiceId = getContainerId() + "_c_" + option.getArrayIndex();
+            choices++;
+            SafeHtml html = fromTrustedString(option.getHtml());
+            searchContainer.before(ChozenTemplate.templates.choice(choiceId, getCss().searchChoice(), html,
+                    getCss().searchChoiceClose(), "" + option.getArrayIndex(), option.getValue(),
+                    getCss().iconCross()).asString());
+            $('#' + choiceId).find("a").click(new Function() {
+                public boolean f(final Event e) {
+                    choiceDestroyLinkClick(e);
+                    return false;
+                }
+            });
         }
     }
 
     @Override
+    protected boolean beforeShowResult() {
+        if (maxSelectedOptionsReached()) {
+            fireEvent(new MaxSelectedEvent(this));
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     protected void containerMouseDownImpl(Event e, GQuery element) {
+        if (pendingDestroyClick) {
+            pendingDestroyClick = false;
+            return;
+        }
+
         if (!activeField) {
             getSearchField().val("");
             $(document).click(clickTestAction);
@@ -106,6 +132,11 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
     @Override
     protected void deactiveTabIndexProperty() {
         // Do nothing
+    }
+
+    @Override
+    protected void resultDeactivate(GQuery query, boolean selected) {
+        query.removeClass(getCss().activeResult(), getCss().foundResult());
     }
 
     @Override
@@ -142,6 +173,17 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
         } else if (pendingBackstroke == null) {
             resultClearHighlight();
             resultsSearch();
+        }
+    }
+
+    @Override
+    protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        if (!metaKeyPressed) {
+            resultsHide();
+        }
+
+        if (oldValue == null || !oldValue.equals(newValue)) {
+            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
         }
     }
 
@@ -252,5 +294,16 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
             }, 50);
         }
         return false;
+    }
+
+    private void choiceDestroyLinkClick(Event e) {
+        e.preventDefault();
+        if (!isDisabled()) {
+            pendingDestroyClick = true;
+            Element target = e.getEventTarget().cast();
+            choiceDestroy($(target));
+        } else {
+            e.stopPropagation();
+        }
     }
 }

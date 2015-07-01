@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
+import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SingleBackstrokeDelete;
@@ -45,6 +46,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.BMW;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class DesktopChosenIT extends ChosenIT {
@@ -293,6 +297,25 @@ public class DesktopChosenIT extends ChosenIT {
                 return value != null && value.equals(searchText);
             }
         });
+    }
+
+    /**
+     * Tests the <code>maxSelectedOptions</code> option.
+     */
+    @Test
+    public void maxSelectedOptions_optionsNotSelectableAnymore() {
+        // Given
+        loadTestCase(new MaxSelectedOptions());
+
+        // When
+        clickOption(MERCEDES, RENDERER);
+        clickOption(TOYOTA, RENDERER);
+        clickOption(HONDA, RENDERER);
+
+        openDropDown();
+
+        // Then
+        assertDropdownIsClosed();
     }
 
     protected void openDropDown() {

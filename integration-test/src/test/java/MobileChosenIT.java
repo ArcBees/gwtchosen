@@ -21,12 +21,17 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class MobileChosenIT extends ChosenIT {
@@ -48,8 +53,64 @@ public class MobileChosenIT extends ChosenIT {
         openDropDown();
 
         // Then
-        assertMobileLayoutIsUsed();
+        assertDropdownIsOpenWithMobileLayout();
         assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
+    }
+
+    /**
+     * On mobile, we should be able to close the dropdown by clicking on the icon net to the input.
+     */
+    @Test
+    public void multipleMobile_closeDropdown() throws InterruptedException {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+        openDropDown();
+
+        // When
+        closeMobileDropDown();
+
+        // Then
+        assertDropdownIsClosed();
+    }
+
+    /**
+     * On mobile, we display the number of selected items.
+     */
+    @Test
+    public void multipleMobile_displayNumberOfSelectedItem() throws InterruptedException {
+        // Given
+        loadTestCase(new SimpleMultiValueListBox());
+        openDropDown();
+
+        // When
+        clickOption(MERCEDES, RENDERER);
+        clickOption(TOYOTA, RENDERER);
+
+        closeMobileDropDown();
+
+        // Then
+        assertThat(getSelectedOptionTexts()).hasSize(1);
+        assertThat(getSelectedOptionTexts().get(0)).isEqualTo("2 items selected");
+    }
+
+    /**
+     * Tests the <code>maxSelectedOptions</code> option. With mobile layout, we should be able to open the dropdown
+     * in order to deselect items.
+     */
+    @Test
+    public void maxSelectedOptions_optionsNotSelectableAnymore() {
+        // Given
+        loadTestCase(new MaxSelectedOptions());
+        clickOption(MERCEDES, RENDERER);
+        clickOption(TOYOTA, RENDERER);
+        clickOption(HONDA, RENDERER);
+        closeMobileDropDown();
+
+        // When
+        openDropDown();
+
+        // Then
+        assertDropdownIsOpenWithMobileLayout();
     }
 
     /**
@@ -82,7 +143,7 @@ public class MobileChosenIT extends ChosenIT {
         closeButton.click();
     }
 
-    private void assertMobileLayoutIsUsed() {
+    private void assertDropdownIsOpenWithMobileLayout() {
         int top = getDropdownTop();
         int bottom = getDropdownBottom();
 

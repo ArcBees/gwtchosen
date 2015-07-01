@@ -27,7 +27,6 @@ import com.arcbees.chosen.client.SelectParser.SelectItem;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenEvent;
 import com.arcbees.chosen.client.event.HidingDropDownEvent;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.UpdatedEvent;
@@ -65,6 +64,7 @@ import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 public abstract class ChosenImpl {
     static final int BACKSPACE = 8;
     static final String TABINDEX_PROPERTY = "tabindex";
+
     private static final int TAB = 9;
     private static final int ENTER = 13;
     private static final int SHIFT = 16;
@@ -79,6 +79,7 @@ public abstract class ChosenImpl {
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
     private static int idCounter;
+
     protected boolean activeField;
     // TODO
     protected int choices;
@@ -101,9 +102,7 @@ public abstract class ChosenImpl {
     private boolean customFilter;
     private boolean mouseOnContainer;
     private ChosenOptions options;
-    private boolean pendingDestroyClick;
     private GQuery resultHighlight;
-    private GQuery resultSingleSelected;
     private String resultsNoneFound;
     private GQuery searchField;
     private GQuery searchResults;
@@ -152,15 +151,6 @@ public abstract class ChosenImpl {
 
     public boolean isMultiple() {
         return false;
-    }
-
-    /**
-     * Is the plugin support the current browser ?
-     *
-     * @return
-     */
-    public boolean isSupported() {
-        return true;
     }
 
     public void rebuildResultItems() {
@@ -333,20 +323,6 @@ public abstract class ChosenImpl {
         return ddTop;
     }
 
-    protected void choiceBuild(OptionItem option) {
-        String choiceId = containerId + "_c_" + option.getArrayIndex();
-        choices++;
-        SafeHtml html = fromTrustedString(option.getHtml());
-        searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(), html,
-                css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue(), css.iconCross()).asString());
-        $('#' + choiceId).find("a").click(new Function() {
-            public boolean f(final Event e) {
-                choiceDestroyLinkClick(e);
-                return false;
-            }
-        });
-    }
-
     protected void choiceDestroy(GQuery link) {
         choices--;
         showSearchFieldDefault(defaultText);
@@ -373,10 +349,8 @@ public abstract class ChosenImpl {
             e.stopPropagation();
         }
 
-        if (!pendingDestroyClick && !targetCloseLink) {
+        if (!targetCloseLink) {
             containerMouseDownImpl(e, $e);
-        } else {
-            pendingDestroyClick = false;
         }
 
         return false;
@@ -408,6 +382,10 @@ public abstract class ChosenImpl {
 
     protected String getContainerClass() {
         return css.chznContainer();
+    }
+
+    protected String getContainerId() {
+        return containerId;
     }
 
     protected ChozenCss getCss() {
@@ -486,6 +464,10 @@ public abstract class ChosenImpl {
         return isRTL;
     }
 
+    protected boolean isDisabled() {
+        return isDisabled;
+    }
+
     protected boolean keydownChecker(Event e) {
         int stroke = e.getKeyCode();
         searchFieldScale(fWidth);
@@ -560,58 +542,52 @@ public abstract class ChosenImpl {
     protected void resultSelect(Event e) {
         if (resultHighlight != null) {
             GQuery high = resultHighlight;
-            String highId = high.attr("id");
 
             resultClearHighlight();
 
-            if (isMultiple()) {
-                resultDeactivate(high);
-            } else {
-                searchResults.find("." + css.resultSelected()).removeClass(css.resultSelected());
-                resultSingleSelected = high;
-                selectedItem.removeClass(css.chznDefault());
-            }
+            resultDeactivate(high, true);
 
             high.addClass(css.resultSelected());
 
-            int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
-            OptionItem item = (OptionItem) selectItems.get(position);
+            OptionItem item = getOptionItem(high);
             item.setSelected(true);
             OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
             if (option != null) {
                 option.setSelected(true);
             }
 
-            if (isMultiple()) {
-                choiceBuild(item);
-            } else {
-                selectedItem.find("span").text(item.getText());
-                if (allowSingleDeselect) {
-                    singleDeselectControlBuild();
-                }
-            }
-
-            if (!e.getMetaKey() || !isMultiple()) {
-                resultsHide();
-            }
+            addChoice(item);
 
             searchField.val("");
 
             String oldValue = getCurrentValue();
             String newValue = item.getValue();
 
-            if (!isMultiple()) {
-                selectedValues.clear();
-            }
-
             selectedValues.add(newValue);
 
-            if (isMultiple() || oldValue == null || !oldValue.equals($selectElement.val())) {
-                fireEvent(new ChosenChangeEvent(newValue, position, this));
-            }
+            onResultSelected(item, newValue, oldValue, e.getMetaKey());
 
             searchFieldScale(fWidth);
         }
+    }
+
+    protected OptionItem getOptionItem(GQuery result) {
+        String highId = result.attr("id");
+        int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
+        return (OptionItem) selectItems.get(position);
+    }
+
+    protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        resultsHide();
+    }
+
+    protected void addChoice(OptionItem item) {
+        selectedItem.find("span").text(item.getText());
+        if (allowSingleDeselect) {
+            singleDeselectControlBuild();
+        }
+
+        selectedValues.clear();
     }
 
     protected void resultsBuild(boolean init) {
@@ -658,13 +634,7 @@ public abstract class ChosenImpl {
     }
 
     protected boolean resultsShow() {
-        if (!isMultiple()) {
-            selectedItem.addClass(css.chznSingleWithDrop());
-            if (resultSingleSelected != null) {
-                resultDoHighlight(resultSingleSelected);
-            }
-        } else if (maxSelectedOptionsReached()) {
-            fireEvent(new MaxSelectedEvent(this));
+        if (!beforeShowResult()) {
             return false;
         }
 
@@ -680,6 +650,10 @@ public abstract class ChosenImpl {
 
         searchField.focus();
 
+        return true;
+    }
+
+    protected boolean beforeShowResult() {
         return true;
     }
 
@@ -738,7 +712,6 @@ public abstract class ChosenImpl {
     protected void update() {
         setDefaultText();
         resultClearHighlight();
-        resultSingleSelected = null;
         resultsBuild(false);
     }
 
@@ -772,7 +745,16 @@ public abstract class ChosenImpl {
     }
 
     void resultDeactivate(GQuery query) {
-        query.removeClass(css.activeResult(), css.foundResult());
+        resultDeactivate(query, false);
+    }
+
+    protected void resultDeactivate(GQuery query, boolean selected) {
+        if (!selected) {
+            query.removeClass(getCss().activeResult(), getCss().foundResult());
+        } else {
+            searchResults.find("." + css.resultSelected()).removeClass(css.resultSelected());
+            selectedItem.removeClass(css.chznDefault());
+        }
     }
 
     void winnowResultsSetHighlight() {
@@ -819,17 +801,6 @@ public abstract class ChosenImpl {
         id += "_chzn";
 
         return id;
-    }
-
-    private void choiceDestroyLinkClick(Event e) {
-        e.preventDefault();
-        if (!isDisabled) {
-            pendingDestroyClick = true;
-            Element target = e.getEventTarget().cast();
-            choiceDestroy($(target));
-        } else {
-            e.stopPropagation();
-        }
     }
 
     private void closeField() {
@@ -1100,16 +1071,7 @@ public abstract class ChosenImpl {
                 }
 
                 if (optionItem.isSelected()) {
-                    if (isMultiple()) {
-                        choiceBuild(optionItem);
-                    } else {
-                        selectedItem.removeClass(css.chznDefault()).find("span").text(optionItem.getText());
-                        if (allowSingleDeselect) {
-                            singleDeselectControlBuild();
-                        }
-
-                        selectedValues.clear();
-                    }
+                    addChoice(optionItem);
 
                     selectedValues.add(optionItem.getValue());
                 }
@@ -1193,7 +1155,7 @@ public abstract class ChosenImpl {
         searchFieldScale(fWidth);
     }
 
-    private void resultDoHighlight(GQuery el) {
+    protected void resultDoHighlight(GQuery el) {
         if (el == null || el.length() == 0 || isDetached(el)) {
             return;
         }
