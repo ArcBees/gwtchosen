@@ -86,25 +86,26 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     protected void maybeSelectResult(Event e) {
         // Do nothing
     }
-    
+
     @Override
     protected void resultSelect(Event e) {
         super.resultSelect(e);
-        
+
         searchResultsMouseOver(e);
         GQuery high = getResultHighlight();
         resultClearHighlight();
 
         high.removeClass(getCss().resultSelected());
-        
-        if(isMobileAnimated()) {
+
+        if (getOptions().isMobileAnimation()) {
             final String paddingTop = high.css("padding-top");
             final String paddingBottom = high.css("padding-bottom");
-            final int speed = getMobileAnimationSpeed();
+            final int speed = getOptions().getMobileAnimationSpeed();
 
             high.animate("height: 0, padding-top: 0, padding-bottom: 0", speed, new Function() {
                 public void f() {
-                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom, speed);
+                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom,
+                            speed);
                     $(this).addClass(getCss().resultSelected());
                 }
             });
@@ -119,15 +120,15 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
 
         String topPosition = getDropdown().css("top");
 
-        if(topPosition.equals("-9000px") && isMobileAnimated()) {
+        if (topPosition.equals("-9000px") && getOptions().isMobileAnimation()) {
             final int windowHeight = Window.getClientHeight();
-            int speed = getMobileAnimationSpeed();
-            
+            int speed = getOptions().getMobileAnimationSpeed();
+
             getDropdown()
                     .css("top", "0")
                     .css("left", "0")
                     .css("right", "0")
-                    .animate("top: 1000px, left: 0, right: 0", speed*2, new Function() {
+                    .animate("top: 1000px, left: 0, right: 0", speed * 2, new Function() {
                         public void f() {
                             getDropdown()
                                     .css("bottom", "")
@@ -162,10 +163,14 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        if (isMobileAnimated()) {
+        if (getOptions().isMobileAnimation()) {
             int windowHeight = Window.getClientHeight();
-            int speed = getMobileAnimationSpeed();
-            getDropdown().css("top", windowHeight + "px").css("bottom","0").animate("top: 0px", speed*2).css(isRTL() ? "left" : "right", "0");
+            int speed = getOptions().getMobileAnimationSpeed();
+            getDropdown()
+                    .css("top", windowHeight + "px")
+                    .css("bottom", "0")
+                    .css(isRTL() ? "left" : "right", "0")
+                    .animate("top: 0px", speed * 2);
         } else {
             getDropdown().css("bottom", "0").css(isRTL() ? "left" : "right", "0");
         }

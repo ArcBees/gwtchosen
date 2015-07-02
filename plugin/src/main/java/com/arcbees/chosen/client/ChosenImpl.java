@@ -76,8 +76,6 @@ public abstract class ChosenImpl {
     private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
     private static final int HORIZONTAL_OFFSET = -9000;
     private static final int VERTICAL_OFFSET = -9000;
-    private static final boolean MOBILE_ANIMATION = false;
-    private static final int MOBILE_ANIMATION_SPEED = 150;
     private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
     private static int idCounter;
@@ -154,10 +152,6 @@ public abstract class ChosenImpl {
     public boolean isMultiple() {
         return false;
     }
-    
-    public boolean isMobileAnimated() { return MOBILE_ANIMATION; }
-    
-    public int getMobileAnimationSpeed() { return MOBILE_ANIMATION_SPEED; }
 
     public void rebuildResultItems() {
         rebuildResultItems(false);
@@ -337,7 +331,7 @@ public abstract class ChosenImpl {
             resultsHide();
         }
 
-        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosensample-value"));
+        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosen-value"));
         link.parents("li").first().remove();
     }
 
@@ -753,7 +747,7 @@ public abstract class ChosenImpl {
     void resultDeactivate(GQuery query) {
         resultDeactivate(query, false);
     }
-    
+
     boolean searchResultsMouseOver(Event e) {
         Element targetEl = e.getEventTarget().cast();
         GQuery $e = $(targetEl);

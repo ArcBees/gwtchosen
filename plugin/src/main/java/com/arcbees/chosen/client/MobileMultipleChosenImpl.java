@@ -45,8 +45,7 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
             String optionSelector = "#" + getContainerId() + "_o_" + item.getArrayIndex();
             choices++;
 
-            // TODO: Is it really required? It's messing with the animation, and when it's commented I don't see any changes
-            //getSearchResults().find(optionSelector).addClass(getCss().resultSelected());
+            getSearchResults().find(optionSelector).addClass(getCss().resultSelected());
         }
     }
 

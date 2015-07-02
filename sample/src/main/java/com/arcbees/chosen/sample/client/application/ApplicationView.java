@@ -16,7 +16,6 @@
 
 package com.arcbees.chosen.sample.client.application;
 
-import com.google.gwt.query.client.GQuery;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.IsWidget;
