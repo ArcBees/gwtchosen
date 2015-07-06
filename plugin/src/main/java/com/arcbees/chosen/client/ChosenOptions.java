@@ -271,8 +271,9 @@ public class ChosenOptions {
         return mobileAnimation;
     }
 
-    public void setMobileAnimation(boolean mobileAnimation) {
+    public ChosenOptions setMobileAnimation(boolean mobileAnimation) {
         this.mobileAnimation = mobileAnimation;
+        return this;
     }
 
     public ChosenOptions setMobileAnimationSpeed(int mobileAnimationSpeed) {

@@ -99,7 +99,7 @@ public class CustomFilteringView implements IsWidget {
                         }
                     }
 
-                    // warn chosensample that the filtering is done.
+                    // warn chosen that the filtering is done.
                     chosen.rebuildResultItems();
 
                     // stop the repeating command
