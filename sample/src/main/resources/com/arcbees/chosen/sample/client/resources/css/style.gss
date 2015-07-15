@@ -210,6 +210,13 @@ textarea {
     z-index: 1000;
 }
 
+@media (max-width: 649px) {
+    .banner {
+        top: -10px;
+        right: -10px;
+    }
+}
+
 .section {
     
 }
