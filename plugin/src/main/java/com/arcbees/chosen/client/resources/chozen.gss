@@ -37,7 +37,7 @@
 .chzn-container-single .chzn-single {
     color: CHZN_C_TEXT;
     background-color: CHZN_C_PRIMARY;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='CHZN_C_PRIMARY', endColorstr='CHZN_C_PRIMARY_STEP2', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0 );
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, CHZN_C_PRIMARY), color-stop(50%, CHZN_C_PRIMARY_STEP1), color-stop(52%, CHZN_C_PRIMARY_STEP2), color-stop(100%, CHZN_C_PRIMARY_STEP1));
     /* @alternate */ background-image: -webkit-linear-gradient(top, CHZN_C_PRIMARY 20%, CHZN_C_PRIMARY_STEP1 50%, CHZN_C_PRIMARY_STEP2 52%, CHZN_C_PRIMARY_STEP1 100%);
     /* @alternate */ background-image: -moz-linear-gradient(top, CHZN_C_PRIMARY 20%, CHZN_C_PRIMARY_STEP1 50%, CHZN_C_PRIMARY_STEP2 52%, CHZN_C_PRIMARY_STEP1 100%);
@@ -61,6 +61,12 @@
     box-shadow: 0 0 3px CHZN_C_PRIMARY inset, 0 1px 1px rgba(0, 0, 0, 0.1);
     @mixin bgclip();
     @mixin rounded(5px);
+}
+
+@if (is("ie8") || is("ie9")) {
+    .chzn-container-single .chzn-single {
+        border-radius: 0;
+    }
 }
 
 .chzn-container-single .chzn-default {
@@ -232,7 +238,7 @@
 .chzn-container-multi .chzn-choices .search-choice {
     color: CHZN_C_TEXT;
     background-color: CHZN_C_CHOICE_STEP3;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='CHZN_C_CHOICE', endColorstr='CHZN_C_CHOICE_STEP2', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0 );
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, CHZN_C_CHOICE), color-stop(50%, CHZN_C_CHOICE_STEP1), color-stop(52%, CHZN_C_CHOICE_STEP3), color-stop(100%, CHZN_C_CHOICE_STEP2));
     /* @alternate */ background-image: -webkit-linear-gradient(top, CHZN_C_CHOICE 20%, CHZN_C_CHOICE_STEP1 50%, CHZN_C_CHOICE_STEP3 52%, CHZN_C_CHOICE_STEP2 100%);
     /* @alternate */ background-image: -moz-linear-gradient(top, CHZN_C_CHOICE 20%, CHZN_C_CHOICE_STEP1 50%, CHZN_C_CHOICE_STEP3 52%, CHZN_C_CHOICE_STEP2 100%);
@@ -321,7 +327,7 @@
 .chzn-container .chzn-results .highlighted {
     color: CHZN_C_PRIMARY;
     background-color: CHZN_C_SECONDARY;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3875d7', endColorstr='#2a62bc', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0 );
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, CHZN_C_SECONDARY), color-stop(90%, CHZN_C_SECONDARY_DARK));
     /* @alternate */ background-image: -webkit-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
     /* @alternate */ background-image: -moz-linear-gradient(top, CHZN_C_SECONDARY 20%, CHZN_C_SECONDARY_DARK 90%);
@@ -372,7 +378,7 @@
 
 .chzn-container-active .chzn-single-with-drop {
     background-color: CHZN_C_CHOICE_STEP2;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='CHZN_C_CHOICE_STEP2', endColorstr='CHZN_C_CHOICE', GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#ffffff', GradientType=0 );
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, CHZN_C_CHOICE_STEP2), color-stop(80%, CHZN_C_CHOICE));
     /* @alternate */ background-image: -webkit-linear-gradient(top, CHZN_C_CHOICE_STEP2 20%, CHZN_C_CHOICE 80%);
     /* @alternate */ background-image: -moz-linear-gradient(top, CHZN_C_CHOICE_STEP2 20%, CHZN_C_CHOICE 80%);
