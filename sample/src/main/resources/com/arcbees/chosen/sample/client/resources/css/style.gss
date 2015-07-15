@@ -284,3 +284,7 @@ textarea {
     border: dashed 1px lightGrey;
     border-left: solid 3px orange;
 }
+
+.breakable {
+    word-break: break-all;
+}

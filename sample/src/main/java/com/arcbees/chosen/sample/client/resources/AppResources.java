@@ -39,6 +39,8 @@ public interface AppResources extends ClientBundle {
         String header();
 
         String tableholder();
+
+        String breakable();
     }
 
     @Source("css/normalize.gss")

@@ -85,7 +85,7 @@
             <p>
                 GwtChosen uses the GWT event system for firing these events. In
                 order to listen to them, you have to pass an instance of
-                <code>com.google.web.bindery.event.shared.EventBus</code>
+                <code class="{res.style.breakable}">com.google.web.bindery.event.shared.EventBus</code>
                 when you call chosen:
             </p>
             <pre>EventBus eventBus = new SimpleEventBus();
