@@ -1,0 +1,125 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section} {res.grid.row}">
+
+        <div class="{res.grid.col} {res.grid.col_full}">
+            <h2 class="{res.style.section__title}">Events</h2>
+
+            <p>Chosen fires a number of events that you can listen for.</p>
+            <div class="{res.style.tableholder}">
+                <table class="{res.style.table}">
+                    <thead>
+                        <tr>
+                            <th>Event name</th>
+                            <th>Description</th>
+                            <th>Properties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <code>ChosenChangeEvent</code>
+                            </td>
+                            <td>Event fired when the user selects or deselects an
+                                option.
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <code>isSelection()</code>
+                                        returns a boolean
+                                        indicating if the event was fired on a selection (true) or a
+                                        deselection (false)
+                                    </li>
+                                    <li>
+                                        <code>getValue()</code>
+                                        returns the selected or
+                                        deselected value (can be null)
+                                    </li>
+
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>HidingDropDownEvent</code>
+                            </td>
+                            <td>Event fired when the drop down is hiding.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>MaxSelectedEvent</code>
+                            </td>
+                            <td>Event fired when the maximum number of options defined
+                                by the option
+                                <code>maxSelectedOptions</code>
+                                is reached on a
+                                multiple select box.
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>ReadyEvent</code>
+                            </td>
+                            <td>Event fired when all html defining the chosen
+                                component is ready.
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>ShowingDropDownEvent</code>
+                            </td>
+                            <td>Event fired when the drop down is showing.</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>
+                GwtChosen uses the GWT event system for firing these events. In
+                order to listen to them, you have to pass an instance of
+                <code class="{res.style.breakable}">com.google.web.bindery.event.shared.EventBus</code>
+                when you call chosen:
+            </p>
+            <pre>EventBus eventBus = new SimpleEventBus();
+eventBus.addHandler(HidingDropDownEvent.getType(), new HidingDropDownHandler() {
+
+    public void onHidingDropdown(HidingDropDownEvent event) {
+        // Do something when choices are hiding
+    }
+
+});
+
+$(".chzn-select, .enhance").as(Chosen).chosen(eventBus);</pre>
+            <p>
+                The
+                <code>ChosenListBox</code>
+                widget exposes needed method for listening to the events:
+            </p>
+            <pre>ChosenListBox chzn = new ChosenListBox();
+
+chzn.addHidingDropDownHandler(new HidingDropDownHandler() {
+
+    public void onHidingDropdown(HidingDropDownEvent event) {
+        // Do something when choices are hiding
+    }
+
+});</pre>
+            <p>
+                Check this
+                <a href="WidgetSample.html">example</a>
+                in order
+                to know how and when the different events are fired.
+            </p>
+            
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

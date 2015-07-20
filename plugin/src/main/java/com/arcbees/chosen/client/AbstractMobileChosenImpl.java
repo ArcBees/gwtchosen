@@ -17,9 +17,13 @@
 package com.arcbees.chosen.client;
 
 import com.google.gwt.query.client.Function;
+import com.google.gwt.query.client.GQuery;
 import com.google.gwt.safecss.shared.SafeStylesBuilder;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
+
+import static com.google.gwt.query.client.GQuery.$;
 
 public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     private boolean isResultClick;
@@ -56,7 +60,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         // TODO close icon...
         return ChozenTemplate.templates.contentMobile(getCss().chznSingle(),
                 getCss().chznDefault(), defaultText, getCss().chznDrop(), getCss().chznSearch(), getCss().chznResults(),
-                ssb.toSafeStyles(), getCss().iconArrow(), getCss().iconCross());
+                ssb.toSafeStyles(), getCss().iconArrow(), getCss().iconCross(), getCss().chznResultsHolder());
     }
 
     @Override
@@ -84,10 +88,58 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     }
 
     @Override
+    protected void resultSelect(Event e) {
+        super.resultSelect(e);
+
+        searchResultsMouseOver(e);
+        GQuery high = getResultHighlight();
+        resultClearHighlight();
+
+        high.removeClass(getCss().resultSelected());
+
+        if (getOptions().isMobileAnimation()) {
+            final String paddingTop = high.css("padding-top");
+            final String paddingBottom = high.css("padding-bottom");
+            final int speed = getOptions().getMobileAnimationSpeed();
+
+            high.animate("height: 0, padding-top: 0, padding-bottom: 0", speed, new Function() {
+                public void f() {
+                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom,
+                            speed);
+                    $(this).addClass(getCss().resultSelected());
+                }
+            });
+        } else {
+            high.addClass(getCss().resultSelected());
+        }
+    }
+
+    @Override
     protected void resultsHide() {
         super.resultsHide();
 
-        getDropdown().css("bottom", "").css(isRTL() ? "left" : "right", "");
+        String topPosition = getDropdown().css("top");
+
+        if (topPosition.equals("-9000px") && getOptions().isMobileAnimation()) {
+            final int windowHeight = Window.getClientHeight();
+            int speed = getOptions().getMobileAnimationSpeed();
+
+            getDropdown()
+                    .css("top", "0")
+                    .css("left", "0")
+                    .css("right", "0")
+                    .animate("top: 1000px, left: 0, right: 0", speed * 2, new Function() {
+                        public void f() {
+                            getDropdown()
+                                    .css("bottom", "")
+                                    .css(isRTL() ? "left" : "right", "")
+                                    .css("top", windowHeight + 20 + "px")
+                                    .css(isRTL() ? "right" : "left", "-9000px");
+                        }
+                    });
+        } else {
+            getDropdown().css("bottom", "").css(isRTL() ? "left" : "right", "");
+        }
     }
 
     @Override
@@ -111,7 +163,17 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        getDropdown().css("bottom", "0").css(isRTL() ? "left" : "right", "0");
+        if (getOptions().isMobileAnimation()) {
+            int windowHeight = Window.getClientHeight();
+            int speed = getOptions().getMobileAnimationSpeed();
+            getDropdown()
+                    .css("top", windowHeight + "px")
+                    .css("bottom", "0")
+                    .css(isRTL() ? "left" : "right", "0")
+                    .animate("top: 0px", speed * 2);
+        } else {
+            getDropdown().css("bottom", "0").css(isRTL() ? "left" : "right", "0");
+        }
     }
 
     private void searchResultMouseDown() {

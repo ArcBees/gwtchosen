@@ -40,3 +40,7 @@
 .icon_search:before {
     content: "\e602";
 }
+
+.icon_check:before {
+    content: "\f00c";
+}

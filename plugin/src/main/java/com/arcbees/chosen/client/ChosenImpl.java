@@ -748,6 +748,19 @@ public abstract class ChosenImpl {
         resultDeactivate(query, false);
     }
 
+    boolean searchResultsMouseOver(Event e) {
+        Element targetEl = e.getEventTarget().cast();
+        GQuery $e = $(targetEl);
+
+        GQuery target =
+                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
+        if (!target.isEmpty()) {
+            resultDoHighlight(target);
+        }
+
+        return false;
+    }
+
     protected void resultDeactivate(GQuery query, boolean selected) {
         if (!selected) {
             query.removeClass(getCss().activeResult(), getCss().foundResult());
@@ -1163,7 +1176,6 @@ public abstract class ChosenImpl {
         resultClearHighlight();
 
         resultHighlight = el;
-
         resultHighlight.addClass(css.highlighted());
 
         int searchResultHeight = searchResults.innerHeight();
@@ -1208,19 +1220,6 @@ public abstract class ChosenImpl {
         } else {
             resultsShow();
         }
-    }
-
-    private boolean searchResultsMouseOver(Event e) {
-        Element targetEl = e.getEventTarget().cast();
-        GQuery $e = $(targetEl);
-
-        GQuery target =
-                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
-        if (!target.isEmpty()) {
-            resultDoHighlight(target);
-        }
-
-        return false;
     }
 
     private void setDefaultText() {

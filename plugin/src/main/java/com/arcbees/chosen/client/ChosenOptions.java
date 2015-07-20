@@ -38,6 +38,8 @@ public class ChosenOptions {
     private int mobileViewportMaxWidth;
     private String oneSelectedTextMultipleMobile;
     private String manySelectedTextMultipleMobile;
+    private boolean mobileAnimation;
+    private int mobileAnimationSpeed;
 
     public ChosenOptions() {
         setDefault();
@@ -265,6 +267,24 @@ public class ChosenOptions {
         return this;
     }
 
+    public boolean isMobileAnimation() {
+        return mobileAnimation;
+    }
+
+    public ChosenOptions setMobileAnimation(boolean mobileAnimation) {
+        this.mobileAnimation = mobileAnimation;
+        return this;
+    }
+
+    public ChosenOptions setMobileAnimationSpeed(int mobileAnimationSpeed) {
+        this.mobileAnimationSpeed = mobileAnimationSpeed;
+        return this;
+    }
+
+    public int getMobileAnimationSpeed() {
+        return this.mobileAnimationSpeed;
+    }
+
     private void setDefault() {
         allowSingleDeselect = false;
         disableSearchThreshold = 0;
@@ -276,5 +296,7 @@ public class ChosenOptions {
         mobileViewportMaxWidth = 649;
         oneSelectedTextMultipleMobile = "{} item selected";
         manySelectedTextMultipleMobile = "{} items selected";
+        mobileAnimation = true;
+        mobileAnimationSpeed = 150;
     }
 }

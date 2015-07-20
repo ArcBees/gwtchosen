@@ -117,4 +117,7 @@ public interface ChozenCss extends CssResource {
 
     @ClassName("search-field")
     String searchField();
+
+    @ClassName("chzn-results-holder")
+    String chznResultsHolder();
 }
