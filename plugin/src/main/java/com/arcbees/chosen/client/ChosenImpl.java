@@ -30,7 +30,7 @@ import com.arcbees.chosen.client.event.HidingDropDownEvent;
 import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.UpdatedEvent;
-import com.arcbees.chosen.client.resources.ChozenCss;
+import com.arcbees.chosen.client.resources.ChosenCss;
 import com.arcbees.chosen.client.resources.Resources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -76,7 +76,7 @@ public abstract class ChosenImpl {
     private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
     private static final int HORIZONTAL_OFFSET = -9000;
     private static final int VERTICAL_OFFSET = -9000;
-    private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
+    private static final String DEFAULT_CONTAINER_ID = "chosen_container__";
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
     private static int idCounter;
 
@@ -91,7 +91,7 @@ public abstract class ChosenImpl {
     private boolean allowSingleDeselect;
     private GQuery container;
     private String containerId;
-    private ChozenCss css;
+    private ChosenCss css;
     private List<String> selectedValues = new ArrayList<String>();
     private String defaultText;
     private GQuery dropdown;
@@ -388,7 +388,7 @@ public abstract class ChosenImpl {
         return containerId;
     }
 
-    protected ChozenCss getCss() {
+    protected ChosenCss getCss() {
         return css;
     }
 
@@ -717,7 +717,7 @@ public abstract class ChosenImpl {
 
     void noResults(String terms) {
         GQuery noResults =
-                $(ChozenTemplate.templates.noResults(css.noResults(), resultsNoneFound).asString());
+                $(ChosenTemplate.templates.noResults(css.noResults(), resultsNoneFound).asString());
         noResults.find("span").html(terms);
 
         searchResults.append(noResults);
@@ -1116,7 +1116,7 @@ public abstract class ChosenImpl {
     private SafeHtml resultAddGroup(GroupItem group) {
         if (!group.isDisabled()) {
             group.domId = containerId + "_g_" + group.getArrayIndex();
-            return ChozenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
+            return ChosenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
         } else {
             return null;
         }
@@ -1131,9 +1131,9 @@ public abstract class ChosenImpl {
             SafeStyles safeStyles = SafeStylesUtils.fromTrustedString(option.getStyle());
             if (option.getHtml() != null && !option.getHtml().trim().isEmpty()) {
                 SafeHtml html = fromTrustedString(option.getHtml());
-                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
+                return ChosenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
             } else {
-                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
+                return ChosenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
                         option.getText());
             }
         }
@@ -1333,7 +1333,7 @@ public abstract class ChosenImpl {
         cssClasses += " " + selectElement.getClassName();
 
         GQuery containerTemp =
-                $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
+                $(ChosenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
 
         final SafeStylesBuilder ssb = new SafeStylesBuilder();
         if (isRTL) {

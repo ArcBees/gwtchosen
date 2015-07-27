@@ -60,7 +60,7 @@ ChosenListBox chzn = new ChosenListBox(true, options);</pre>
                 
             <p>Example: Start typing some characters to see the list of items</p>
             
-            <g:SimplePanel ui:field="serverChozen"/>
+            <g:SimplePanel ui:field="serverChosen"/>
         </div>
 
     </g:HTMLPanel>

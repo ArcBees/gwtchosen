@@ -130,13 +130,13 @@ public class MobileChosenIT extends ChosenIT {
     }
 
     protected void openDropDown() {
-        String xpath = "//div[@id='chozen_container__0_chzn']";
+        String xpath = "//div[@id='chosen_container__0_chzn']";
         WebElement btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
         btn.click();
     }
 
     private void closeMobileDropDown() {
-        String xpath = "//div[@id='chozen_container__0_chzn']//i[@role='close']";
+        String xpath = "//div[@id='chosen_container__0_chzn']//i[@role='close']";
 
         WebElement closeButton = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
 

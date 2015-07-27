@@ -38,7 +38,7 @@ public class UpdatingDynamicallyView implements IsWidget {
     @UiField
     ButtonElement updateButton;
     @UiField
-    SimplePanel updateChozen;
+    SimplePanel updateChosen;
 
     private final Widget widget;
 
@@ -53,7 +53,7 @@ public class UpdatingDynamicallyView implements IsWidget {
                     final ChosenListBox chzn = new ChosenListBox();
                     chzn.addItem("item 1");
 
-                    updateChozen.setWidget(chzn);
+                    updateChosen.setWidget(chzn);
 
                     $(updateButton).click(new Function() {
                         int i = 2;

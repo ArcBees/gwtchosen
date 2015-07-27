@@ -97,7 +97,7 @@ public abstract class ChosenIT {
     public void enabledDisabled() {
         // Given
         loadTestCase(new EnabledDisabled());
-        String disabledClassName = "com-arcbees-chosen-client-resources-ChozenCss-chzn-disabled";
+        String disabledClassName = "com-arcbees-chosen-client-resources-ChosenCss-chzn-disabled";
 
         // When
         WebElement disableButton = webDriverWait().until(presenceOfElementLocated(
@@ -246,7 +246,7 @@ public abstract class ChosenIT {
 
     protected WebElement getDropdown() {
         return webDriverWait().until(presenceOfElementLocated(
-                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-drop")));
+                By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-drop")));
     }
 
     protected int getDropdownTop() {
@@ -256,13 +256,13 @@ public abstract class ChosenIT {
     }
 
     protected WebElement getInput() {
-        String xpath = "//div[@id='chozen_container__0_chzn']//input[@type='text']";
+        String xpath = "//div[@id='chosen_container__0_chzn']//input[@type='text']";
 
         return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
     }
 
     protected Set<String> getOptions() {
-        String cssSelector = "li.com-arcbees-chosen-client-resources-ChozenCss-active-result";
+        String cssSelector = "li.com-arcbees-chosen-client-resources-ChosenCss-active-result";
         List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.cssSelector(cssSelector)));
         return Sets.newHashSet(Lists.transform(options, new Function<WebElement, String>() {
             @Override
@@ -279,7 +279,7 @@ public abstract class ChosenIT {
     }
 
     protected List<String> getSelectedOptionTexts() {
-        String xpath = "//div[@id='chozen_container__0_chzn']//span";
+        String xpath = "//div[@id='chosen_container__0_chzn']//span";
 
         List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.xpath(xpath)));
         return Lists.transform(options, new Function<WebElement, String>() {
@@ -292,7 +292,7 @@ public abstract class ChosenIT {
 
     protected boolean isMobileChosenComponent() {
         List<WebElement> multiContainer = webDriver.findElements(
-                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-mobile-container"));
+                By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-mobile-container"));
 
         return multiContainer.size() != 0;
     }
@@ -329,7 +329,7 @@ public abstract class ChosenIT {
 
     protected boolean isMultipleChosenComponent() {
         List<WebElement> multiContainer = webDriver.findElements(
-                By.className("com-arcbees-chosen-client-resources-ChozenCss-chzn-container-multi"));
+                By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-container-multi"));
 
         return multiContainer.size() != 0;
     }
