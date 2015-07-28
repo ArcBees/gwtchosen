@@ -39,7 +39,7 @@ public class CustomFilteringView implements IsWidget {
     private static Binder binder = GWT.create(Binder.class);
 
     @UiField
-    SimplePanel serverChozen;
+    SimplePanel serverChosen;
 
     private final Widget widget;
 
@@ -119,7 +119,7 @@ public class CustomFilteringView implements IsWidget {
                     ChosenOptions options = new ChosenOptions();
                     options.setResultFilter(new ServerSideSimulatorResultFilter());
                     final ChosenListBox serverChosenListBox = new ChosenListBox(false, options);
-                    serverChozen.setWidget(serverChosenListBox);
+                    serverChosen.setWidget(serverChosenListBox);
                 }
             }
         });

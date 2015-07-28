@@ -21,8 +21,8 @@ import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 
-public interface ChozenTemplate extends SafeHtmlTemplates {
-    ChozenTemplate templates = GWT.create(ChozenTemplate.class);
+public interface ChosenTemplate extends SafeHtmlTemplates {
+    ChosenTemplate templates = GWT.create(ChosenTemplate.class);
 
     @Template("<li class=\"{1}\" id=\"{0}\">" +
             "<span>{2}</span>" +

@@ -69,7 +69,7 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
 
     @Override
     protected SafeHtml buildContainerHtml(String defaultText, SafeStylesBuilder ssb) {
-        return ChozenTemplate.templates.contentMultiple(getCss().chznChoices(),
+        return ChosenTemplate.templates.contentMultiple(getCss().chznChoices(),
                 getCss().searchField(), defaultText, getCss().defaultClass(), getCss().chznDrop(),
                 getCss().chznResults(), ssb.toSafeStyles());
     }
@@ -92,7 +92,7 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
             String choiceId = getContainerId() + "_c_" + option.getArrayIndex();
             choices++;
             SafeHtml html = fromTrustedString(option.getHtml());
-            searchContainer.before(ChozenTemplate.templates.choice(choiceId, getCss().searchChoice(), html,
+            searchContainer.before(ChosenTemplate.templates.choice(choiceId, getCss().searchChoice(), html,
                     getCss().searchChoiceClose(), "" + option.getArrayIndex(), option.getValue(),
                     getCss().iconCross()).asString());
             $('#' + choiceId).find("a").click(new Function() {

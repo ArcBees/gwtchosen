@@ -19,7 +19,7 @@
                     within or outside of groups, as well as add CSS class names to individual options:
                 </p>
             </div>
-            <g:SimplePanel styleName="{res.grid.col} {res.grid.col_1_3}" ui:field="hierChozenSingle"/>
+            <g:SimplePanel styleName="{res.grid.col} {res.grid.col_1_3}" ui:field="hierChosenSingle"/>
         </div>
 
         <div class="{res.grid.row}">

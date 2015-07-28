@@ -38,7 +38,7 @@ myChosenListBox.update();</pre>
                 <p>Example:</p>
             </div>
             <div class="{res.grid.col} {res.grid.col_1_3}">
-                <g:SimplePanel ui:field="updateChozen"/>
+                <g:SimplePanel ui:field="updateChosen"/>
             </div>
             <div class="{res.grid.col} {res.grid.col_2_3}">
                 <button ui:field="updateButton" class="btn btn-primary">Add 100 items</button>

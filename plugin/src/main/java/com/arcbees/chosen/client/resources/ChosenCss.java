@@ -18,8 +18,7 @@ package com.arcbees.chosen.client.resources;
 
 import com.google.gwt.resources.client.CssResource;
 
-public interface ChozenCss extends CssResource {
-
+public interface ChosenCss extends CssResource {
     @ClassName("active-result")
     String activeResult();
 
@@ -95,8 +94,6 @@ public interface ChozenCss extends CssResource {
     @ClassName("icon_search")
     String iconSearch();
 
-    int indent();
-
     @ClassName("no-results")
     String noResults();
 
@@ -120,4 +117,6 @@ public interface ChozenCss extends CssResource {
 
     @ClassName("chzn-results-holder")
     String chznResultsHolder();
+
+    int indent();
 }

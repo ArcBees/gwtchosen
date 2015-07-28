@@ -58,7 +58,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     @Override
     protected SafeHtml buildContainerHtml(String defaultText, SafeStylesBuilder ssb) {
         // TODO close icon...
-        return ChozenTemplate.templates.contentMobile(getCss().chznSingle(),
+        return ChosenTemplate.templates.contentMobile(getCss().chznSingle(),
                 getCss().chznDefault(), defaultText, getCss().chznDrop(), getCss().chznSearch(), getCss().chznResults(),
                 ssb.toSafeStyles(), getCss().iconArrow(), getCss().iconCross(), getCss().chznResultsHolder());
     }

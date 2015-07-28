@@ -21,11 +21,11 @@ import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
     @Source({"com/arcbees/gsss/mixin/client/mixins.gss",
-            "colors.gss",
+            "css/colors.gss",
             "icons/icons.gss",
-            "chozen.gss",
-            "mobile.gss"})
-    ChozenCss css();
+            "css/chosen.gss",
+            "css/mobile.gss"})
+    ChosenCss css();
 
     @Source("icons/icons.eot")
     DataResource iconsEot();

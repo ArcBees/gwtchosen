@@ -324,7 +324,7 @@ public class DesktopChosenIT extends ChosenIT {
         if (isMultipleChosenComponent()) {
             btn = getInput();
         } else { // single
-            String xpath = "//div[@id='chozen_container__0_chzn']";
+            String xpath = "//div[@id='chosen_container__0_chzn']";
             btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
         }
         btn.click();

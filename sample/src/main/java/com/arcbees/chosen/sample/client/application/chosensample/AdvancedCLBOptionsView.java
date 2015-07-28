@@ -32,7 +32,7 @@ public class AdvancedCLBOptionsView implements IsWidget {
     private static Binder binder = GWT.create(Binder.class);
 
     @UiField
-    SimplePanel hierChozenSingle;
+    SimplePanel hierChosenSingle;
 
     private final Widget widget;
 
@@ -56,7 +56,7 @@ public class AdvancedCLBOptionsView implements IsWidget {
                     hcs.addStyledItemToGroup("Tera-Magic Pro", "tmpro", null, 1, 1);
                     // Will be inserted before "Tera-Magic Pro" and custom-styled
                     hcs.insertStyledItemToGroup("Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1);
-                    hierChozenSingle.setWidget(hcs);
+                    hierChosenSingle.setWidget(hcs);
                 }
             }
         });

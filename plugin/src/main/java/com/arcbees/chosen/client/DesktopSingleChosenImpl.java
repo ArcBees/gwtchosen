@@ -43,7 +43,7 @@ public class DesktopSingleChosenImpl extends ChosenImpl {
 
     @Override
     protected SafeHtml buildContainerHtml(String defaultText, SafeStylesBuilder ssb) {
-        return ChozenTemplate.templates.contentSingle(getCss().chznSingle(),
+        return ChosenTemplate.templates.contentSingle(getCss().chznSingle(),
                 getCss().chznDefault(), defaultText, getCss().chznDrop(), getCss().chznSearch(), getCss().chznResults(),
                 ssb.toSafeStyles(), getCss().iconArrow(), getCss().iconSearch());
     }
