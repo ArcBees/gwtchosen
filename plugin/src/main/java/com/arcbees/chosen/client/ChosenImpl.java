@@ -84,6 +84,7 @@ public abstract class ChosenImpl {
     private static int idCounter;
 
     protected boolean activeField;
+    protected boolean allowSingleDeselect;
     // TODO
     protected int choices;
     protected Function clickTestAction;
@@ -230,6 +231,8 @@ public abstract class ChosenImpl {
         if (eventBus != null) {
             updateEventHandlerRegistration =
                     eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
+
+                        @Override
                         public void onUpdated() {
                             update();
                         }
@@ -1288,7 +1291,10 @@ public abstract class ChosenImpl {
         mouseOnContainer = false;
         resultsShowing = false;
 
-        choices = 0;
+        NodeList<OptionElement> optionsList = selectElement.getOptions();
+        allowSingleDeselect =
+                options.isAllowSingleDeselect() && optionsList.getLength() > 0
+                        && "".equals(optionsList.getItem(0).getValue());
 
         if (options.getResources() != null) {
             css = options.getResources().css();
