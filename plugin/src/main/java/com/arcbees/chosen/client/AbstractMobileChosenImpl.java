@@ -167,7 +167,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        if (getOptions().isMobileAnimation() && ! getDropdown().hasClass(getCss().isOpen())) {
+        if (getOptions().isMobileAnimation() && !getDropdown().hasClass(getCss().isOpen())) {
             int windowHeight = Window.getClientHeight();
             int speed = getOptions().getMobileAnimationSpeed();
             getDropdown()
