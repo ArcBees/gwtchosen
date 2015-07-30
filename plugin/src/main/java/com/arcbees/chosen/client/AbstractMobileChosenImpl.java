@@ -89,9 +89,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
 
     @Override
     protected void resultSelect(Event e) {
-        String searchValue = getSearchField().val();
         super.resultSelect(e);
-        getSearchField().val(searchValue);
 
         searchResultsMouseOver(e);
         GQuery high = getResultHighlight();
@@ -168,7 +166,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        if (getOptions().isMobileAnimation() && ! getDropdown().hasClass(getCss().isOpen())) {
+        if (getOptions().isMobileAnimation() && !getDropdown().hasClass(getCss().isOpen())) {
             int windowHeight = Window.getClientHeight();
             int speed = getOptions().getMobileAnimationSpeed();
             getDropdown()
