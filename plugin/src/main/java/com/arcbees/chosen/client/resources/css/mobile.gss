@@ -109,6 +109,7 @@
 }
 
 .chzn-mobile-container .result-selected {
+    -webkit-order: -1;
     order: -1;
 }
 
