@@ -558,7 +558,7 @@ public abstract class ChosenImpl {
 
             addChoice(item);
 
-            searchField.val("");
+            winnowResultsClear();
 
             String oldValue = getCurrentValue();
             String newValue = item.getValue();
