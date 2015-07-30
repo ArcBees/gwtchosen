@@ -118,5 +118,8 @@ public interface ChosenCss extends CssResource {
     @ClassName("chzn-results-holder")
     String chznResultsHolder();
 
+    @ClassName("is-open")
+    String isOpen();
+
     int indent();
 }

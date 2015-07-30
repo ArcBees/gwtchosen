@@ -140,6 +140,8 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         } else {
             getDropdown().css("bottom", "").css(isRTL() ? "left" : "right", "");
         }
+
+        getDropdown().removeClass(getCss().isOpen());
     }
 
     @Override
@@ -163,7 +165,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        if (getOptions().isMobileAnimation()) {
+        if (getOptions().isMobileAnimation() && ! getDropdown().hasClass(getCss().isOpen())) {
             int windowHeight = Window.getClientHeight();
             int speed = getOptions().getMobileAnimationSpeed();
             getDropdown()
@@ -174,6 +176,8 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         } else {
             getDropdown().css("bottom", "0").css(isRTL() ? "left" : "right", "0");
         }
+
+        getDropdown().addClass(getCss().isOpen());
     }
 
     private void searchResultMouseDown() {

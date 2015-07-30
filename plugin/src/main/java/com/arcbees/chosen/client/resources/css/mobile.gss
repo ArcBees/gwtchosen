@@ -221,3 +221,5 @@
 
     @mixin transition(all, 0.2s);
 }
+
+.chzn-mobile-container .is-open {}
