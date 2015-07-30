@@ -144,6 +144,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         }
 
         getDropdown().removeClass(getCss().isOpen());
+        getSearchField().blur();
     }
 
     @Override
