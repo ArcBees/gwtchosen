@@ -153,11 +153,6 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         return super.searchResultsMouseOut(e);
     }
 
-//    @Override
-//    protected boolean activateField(Event e) {
-//        return false;
-//    }
-
     @Override
     protected boolean searchResultsMouseUp(Event e) {
         if (!isResultClick) {
