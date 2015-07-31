@@ -99,21 +99,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
 
         high.removeClass(getCss().resultSelected());
 
-        if (getOptions().isMobileAnimation()) {
-            final String paddingTop = high.css("padding-top");
-            final String paddingBottom = high.css("padding-bottom");
-            final int speed = getOptions().getMobileAnimationSpeed();
-
-            high.animate("height: 0, padding-top: 0, padding-bottom: 0", speed, new Function() {
-                public void f() {
-                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom,
-                            speed);
-                    $(this).addClass(getCss().resultSelected());
-                }
-            });
-        } else {
-            high.addClass(getCss().resultSelected());
-        }
+        animateListItem(high, true);
     }
 
     @Override
@@ -185,5 +171,23 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
 
     private void searchResultMouseDown() {
         isResultClick = true;
+    }
+    
+    public void animateListItem(GQuery item, final Boolean addClass) {
+        if (getOptions().isMobileAnimation()) {
+            final String paddingTop = item.css("padding-top");
+            final String paddingBottom = item.css("padding-bottom");
+            final int speed = getOptions().getMobileAnimationSpeed();
+
+            item.animate("height: 0, padding-top: 0, padding-bottom: 0", speed, new Function() {
+                public void f() {
+                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom,
+                            speed);
+                    $(this).toggleClass(getCss().resultSelected(), addClass);
+                }
+            });
+        } else {
+            $(this).toggleClass(getCss().resultSelected(), addClass);
+        }
     }
 }

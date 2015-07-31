@@ -87,22 +87,8 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         if (option != null) {
             option.setSelected(false);
         }
-
-        if (getOptions().isMobileAnimation()) {
-            final String paddingTop = element.css("padding-top");
-            final String paddingBottom = element.css("padding-bottom");
-            final int speed = getOptions().getMobileAnimationSpeed();
-
-            element.animate("height: 0, padding-top: 0, padding-bottom: 0", speed, new Function() {
-                public void f() {
-                    $(this).animate("height: auto, padding-top: " + paddingTop + ", padding-bottom: " + paddingBottom,
-                            speed);
-                    $(this).removeClass(getCss().resultSelected());
-                }
-            });
-        } else {
-            element.removeClass(getCss().resultSelected());
-        }
+        
+        animateListItem(element, false);
     }
 
     @Override
