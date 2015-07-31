@@ -112,8 +112,6 @@ public abstract class ChosenImpl {
     private HandlerRegistration updateEventHandlerRegistration;
     private ResultsFilter resultsFilter;
 
-    // protected boolean isMobile;
-
     public GQuery getContainer() {
         return container;
     }
@@ -366,7 +364,9 @@ public abstract class ChosenImpl {
             resultsToggle();
         }
 
-        activateField(e);
+        if (!element.hasClass(css.activeResult())) {
+            activateField(e);
+        }
     }
 
     protected void deactiveTabIndexProperty() {
@@ -558,7 +558,7 @@ public abstract class ChosenImpl {
 
             addChoice(item);
 
-            searchField.val("");
+            winnowResultsClear();
 
             String oldValue = getCurrentValue();
             String newValue = item.getValue();
@@ -1176,7 +1176,7 @@ public abstract class ChosenImpl {
         resultClearHighlight();
 
         resultHighlight = el;
-        resultHighlight.addClass(css.highlighted());
+        el.addClass(css.highlighted());
 
         int searchResultHeight = searchResults.innerHeight();
         int visibleTop = searchResults.scrollTop();

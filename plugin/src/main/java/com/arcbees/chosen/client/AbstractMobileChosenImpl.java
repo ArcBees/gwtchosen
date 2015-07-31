@@ -91,9 +91,10 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     protected void resultSelect(Event e) {
         super.resultSelect(e);
 
-        searchResultsMouseOver(e);
         GQuery high = getResultHighlight();
+        searchResultsMouseOver(e);
         resultClearHighlight();
+        resultsSearch();
 
         high.removeClass(getCss().resultSelected());
 
@@ -140,6 +141,9 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         } else {
             getDropdown().css("bottom", "").css(isRTL() ? "left" : "right", "");
         }
+
+        getDropdown().removeClass(getCss().isOpen());
+        getSearchField().blur();
     }
 
     @Override
@@ -147,6 +151,11 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         isResultClick = false;
         return super.searchResultsMouseOut(e);
     }
+
+//    @Override
+//    protected boolean activateField(Event e) {
+//        return false;
+//    }
 
     @Override
     protected boolean searchResultsMouseUp(Event e) {
@@ -163,7 +172,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     void positionDropdownResult() {
         super.positionDropdownResult();
 
-        if (getOptions().isMobileAnimation()) {
+        if (getOptions().isMobileAnimation() && !getDropdown().hasClass(getCss().isOpen())) {
             int windowHeight = Window.getClientHeight();
             int speed = getOptions().getMobileAnimationSpeed();
             getDropdown()
@@ -174,6 +183,8 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         } else {
             getDropdown().css("bottom", "0").css(isRTL() ? "left" : "right", "0");
         }
+
+        getDropdown().addClass(getCss().isOpen());
     }
 
     private void searchResultMouseDown() {

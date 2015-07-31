@@ -197,6 +197,12 @@ textarea {
     border-radius: S_BORDER_RADIUS;
 }
 
+@media (max-width: 649px) {
+    .header {
+        margin-top: 3em;
+    }
+}
+
 .header > p {
     font-family: F_PRIMARY_LIGHT;
 }
@@ -210,16 +216,7 @@ textarea {
     z-index: 1000;
 }
 
-@media (max-width: 649px) {
-    .banner {
-        top: -10px;
-        right: -10px;
-    }
-}
-
-.section {
-    
-}
+.section {}
 
 .section__title {
     padding-bottom: 5px;
