@@ -89,9 +89,10 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
 
     @Override
     protected void resultSelect(Event e) {
+        GQuery high = getResultHighlight();
+        
         super.resultSelect(e);
 
-        GQuery high = getResultHighlight();
         searchResultsMouseOver(e);
         resultClearHighlight();
         resultsSearch();
