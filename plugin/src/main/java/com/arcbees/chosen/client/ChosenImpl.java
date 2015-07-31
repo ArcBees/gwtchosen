@@ -570,6 +570,10 @@ public abstract class ChosenImpl {
 
             selectedValues.add(newValue);
 
+            if (!isMultiple() && allowSingleDeselect) {
+                singleDeselectControlBuild();
+            }
+
             onResultSelected(item, newValue, oldValue, e.getMetaKey());
 
             searchFieldScale(fWidth);
@@ -1397,7 +1401,8 @@ public abstract class ChosenImpl {
     }
 
     private void singleDeselectControlBuild() {
-        if (isAllowSingleDeselect() && selectedItem.find("abbr").isEmpty()) {
+        if (allowSingleDeselect && selectedItem.find("abbr").isEmpty()
+                && getCurrentValue() != null && !"".equals(getCurrentValue())) {
             selectedItem.find("span").first().after(
                     "<abbr class=\"" + css.searchChoiceClose() + " " + css.iconCross() + "\"></abbr>");
         }
