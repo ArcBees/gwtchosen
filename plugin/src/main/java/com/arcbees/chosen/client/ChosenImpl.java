@@ -1397,7 +1397,8 @@ public abstract class ChosenImpl {
     }
 
     private void singleDeselectControlBuild() {
-        if (isAllowSingleDeselect() && selectedItem.find("abbr").isEmpty()) {
+        if (isAllowSingleDeselect() && selectedItem.find("abbr").isEmpty()
+                && getCurrentValue() != null && !"".equals(getCurrentValue())) {
             selectedItem.find("span").first().after(
                     "<abbr class=\"" + css.searchChoiceClose() + " " + css.iconCross() + "\"></abbr>");
         }
