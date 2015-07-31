@@ -66,6 +66,7 @@ import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRendere
 public abstract class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
+    private static final String CHOSEN_XPATH = "//div[@id='chozen_container__0_chzn']";
 
     protected final WebDriver webDriver = new ChromeDriver();
 
@@ -106,6 +107,22 @@ public abstract class ChosenIT {
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
+        assertThat(getChosen().findElements(By.tagName("abbr"))).isEmpty();
+    }
+
+    /**
+     * Goal: ensure allowSingleDeselect shows the X/cross when there is a value.
+     */
+    @Test
+    public void allowSingleDeselect_visibleOnSelection() {
+        // Given
+        loadTestCase(new AllowSingleDeselect());
+
+        // When
+        clickOption(CADILLAC, RENDERER);
+
+        // Then
+        assertThat(getChosen().findElements(By.tagName("abbr"))).isNotEmpty();
     }
 
     /**
@@ -412,6 +429,28 @@ public abstract class ChosenIT {
                 return element.getText();
             }
         });
+    }
+
+    private WebElement getChosen() {
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(CHOSEN_XPATH)));
+    }
+
+    private List<WebElement> getSelectedOptions() {
+        String xpath = CHOSEN_XPATH + "//span";
+
+        List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.xpath(xpath)));
+        return Lists.transform(options, new Function<WebElement, WebElement>() {
+            @Override
+            public WebElement apply(WebElement element) {
+                return element;
+            }
+        });
+    }
+
+    private WebElement getSelectedOption() {
+        List<WebElement> selectedOption = getSelectedOptions();
+
+        return selectedOption.isEmpty() ? null : selectedOption.get(0);
     }
 
     protected boolean isMobileChosenComponent() {
