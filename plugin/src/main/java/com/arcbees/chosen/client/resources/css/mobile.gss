@@ -15,7 +15,7 @@
 
     border: 1px solid CHZN_C_BORDER;
     border-top: 0;
-    padding: 25px 5% 0;
+    padding: 25px 0 0;
 
     position: fixed;
     z-index: 5100;
@@ -30,9 +30,9 @@
 }
 
 .chzn-mobile-container .chzn-search > input {
-    width: calc(100% - 60px);
+    width: calc(100% - 80px);
     padding: 10px;
-    margin-right: 15px;
+    margin: 0 15px;
 }
 
 .chzn-mobile-container .chzn-search > i {
@@ -40,7 +40,7 @@
 
     position: absolute;
     top: 8px;
-    right: 5px;
+    right: 10px;
 }
 
 .chzn-mobile-container .chzn-search > i:hover {
@@ -56,11 +56,11 @@
 .chzn-mobile-container .chzn-results-holder {
     overflow: auto;
     height: calc(100% - 110px);
-    width: 90%;
+    width: 100%;
 
     position: absolute;
     top: 80px;
-    left: 5%;
+    left: 0;
 }
 
 .chzn-mobile-container .chzn-results {
@@ -109,6 +109,7 @@
 }
 
 .chzn-mobile-container .result-selected {
+    -webkit-order: -1;
     order: -1;
 }
 
