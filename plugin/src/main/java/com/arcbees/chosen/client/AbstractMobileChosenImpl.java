@@ -91,9 +91,10 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     protected void resultSelect(Event e) {
         super.resultSelect(e);
 
-        searchResultsMouseOver(e);
         GQuery high = getResultHighlight();
+        searchResultsMouseOver(e);
         resultClearHighlight();
+        resultsSearch();
 
         high.removeClass(getCss().resultSelected());
 
@@ -142,6 +143,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         }
 
         getDropdown().removeClass(getCss().isOpen());
+        getSearchField().blur();
     }
 
     @Override
@@ -149,6 +151,11 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         isResultClick = false;
         return super.searchResultsMouseOut(e);
     }
+
+//    @Override
+//    protected boolean activateField(Event e) {
+//        return false;
+//    }
 
     @Override
     protected boolean searchResultsMouseUp(Event e) {
