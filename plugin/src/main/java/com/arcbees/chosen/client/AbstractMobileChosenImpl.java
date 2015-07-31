@@ -97,8 +97,6 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         resultClearHighlight();
         resultsSearch();
 
-        high.removeClass(getCss().resultSelected());
-
         animateListItem(high, true);
     }
 
@@ -106,9 +104,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     protected void resultsHide() {
         super.resultsHide();
 
-        String topPosition = getDropdown().css("top");
-
-        if (topPosition.equals("-9000px") && getOptions().isMobileAnimation()) {
+        if (getDropdown().hasClass(getCss().isOpen()) && getOptions().isMobileAnimation()) {
             final int windowHeight = Window.getClientHeight();
             int speed = getOptions().getMobileAnimationSpeed();
 
