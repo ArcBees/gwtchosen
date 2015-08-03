@@ -20,11 +20,8 @@ import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.dom.client.OptionElement;
-import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.Event;
-
-import static com.google.gwt.query.client.GQuery.$;
 
 public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     @Override
@@ -87,7 +84,7 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         if (option != null) {
             option.setSelected(false);
         }
-        
+
         animateListItem(element, false);
     }
 

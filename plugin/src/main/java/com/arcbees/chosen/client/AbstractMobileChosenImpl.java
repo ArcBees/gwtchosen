@@ -90,7 +90,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     @Override
     protected void resultSelect(Event e) {
         GQuery high = getResultHighlight();
-        
+
         super.resultSelect(e);
 
         searchResultsMouseOver(e);
@@ -168,7 +168,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     private void searchResultMouseDown() {
         isResultClick = true;
     }
-    
+
     public void animateListItem(GQuery item, final Boolean addClass) {
         if (getOptions().isMobileAnimation()) {
             final String paddingTop = item.css("padding-top");
