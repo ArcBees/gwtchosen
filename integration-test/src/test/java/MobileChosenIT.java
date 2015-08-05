@@ -36,6 +36,8 @@ import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class MobileChosenIT extends ChosenIT {
+    private static final String IS_OPEN = "com-arcbees-chosen-client-resources-ChosenCss-is-open";
+
     @Before
     public void before() {
         // will trigger the mobile layout
@@ -128,6 +130,18 @@ public class MobileChosenIT extends ChosenIT {
 
         // Then
         assertDropdownIsClosed();
+    }
+
+    @Override
+    protected void assertDropdownIsClosed() {
+        webDriverWait().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return webDriver.findElement(By.className(IS_OPEN)) == null;
+            }
+        });
+
+        assertThat(getDropdown().getAttribute("class")).doesNotContain(IS_OPEN);
     }
 
     protected void openDropDown() {

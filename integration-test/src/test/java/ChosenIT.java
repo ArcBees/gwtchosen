@@ -56,7 +56,6 @@ import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRendere
 public abstract class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
-    private static final String IS_OPEN = "com-arcbees-chosen-client-resources-ChosenCss-is-open";
 
     protected final WebDriver webDriver = new ChromeDriver();
 
@@ -241,14 +240,7 @@ public abstract class ChosenIT {
     }
 
     protected void assertDropdownIsClosed() {
-        webDriverWait().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver input) {
-                return webDriver.findElement(By.className(IS_OPEN)) == null;
-            }
-        });
-
-        assertThat(getDropdown().getAttribute("class")).doesNotContain(IS_OPEN);
+        assertThat(getDropdownTop()).isEqualTo(-9000);
     }
 
     protected <T extends Enum<T>> void clickOption(T val, Renderer<T> renderer) {
