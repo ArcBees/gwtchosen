@@ -38,12 +38,14 @@ import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListB
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.arcbees.test.ByDebugId;
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
@@ -54,6 +56,8 @@ import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRendere
 public abstract class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
+    private static final String IS_OPEN = "com-arcbees-chosen-client-resources-ChosenCss-is-open";
+
     protected final WebDriver webDriver = new ChromeDriver();
 
     @After
@@ -237,7 +241,14 @@ public abstract class ChosenIT {
     }
 
     protected void assertDropdownIsClosed() {
-        assertThat(getDropdownTop()).isEqualTo(-9000);
+        webDriverWait().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return webDriver.findElement(By.className(IS_OPEN)) == null;
+            }
+        });
+
+        assertThat(getDropdown().getAttribute("class")).doesNotContain(IS_OPEN);
     }
 
     protected <T extends Enum<T>> void clickOption(T val, Renderer<T> renderer) {
@@ -252,7 +263,12 @@ public abstract class ChosenIT {
     protected int getDropdownTop() {
         WebElement dropdown = getDropdown();
         String topString = dropdown.getCssValue("top");
-        return Integer.parseInt(topString.replaceAll("px", ""));
+
+        if ("auto".equals(topString)) {
+            return 0;
+        }
+
+        return (int) Double.parseDouble(topString.replaceAll("px", ""));
     }
 
     protected WebElement getInput() {
@@ -322,7 +338,7 @@ public abstract class ChosenIT {
 
         String xpath = String.format("//li[text()='%s']", displayString);
 
-        WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
+        WebElement li = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
 
         li.click();
     }

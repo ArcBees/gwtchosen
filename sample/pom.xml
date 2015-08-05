@@ -49,7 +49,7 @@
                     <!-- <includes>**/*GwtTestSuite.java</includes> -->
                     <includes>**/*GwtTest.java</includes>
 
-                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
+                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m -Duser.country="US" -Duser.language="en"</extraJvmArgs>
                     <logLevel>${gwt.loglevel}</logLevel>
                     <style>${gwt.outputstyle}</style>
 
