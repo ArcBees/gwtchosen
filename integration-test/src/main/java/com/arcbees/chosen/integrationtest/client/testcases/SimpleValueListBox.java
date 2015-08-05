@@ -27,6 +27,7 @@ import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.view.client.ProvidesKey;
 
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
