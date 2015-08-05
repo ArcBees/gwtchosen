@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -137,7 +138,11 @@ public class MobileChosenIT extends ChosenIT {
         webDriverWait().until(new Predicate<WebDriver>() {
             @Override
             public boolean apply(WebDriver input) {
-                return webDriver.findElement(By.className(IS_OPEN)) == null;
+                try {
+                    return webDriver.findElement(By.className(IS_OPEN)) == null;
+                } catch (NoSuchElementException e) {
+                    return true;
+                }
             }
         });
 
