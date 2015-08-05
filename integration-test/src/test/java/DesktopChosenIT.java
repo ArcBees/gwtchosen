@@ -41,7 +41,6 @@ import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeSelected;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
