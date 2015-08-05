@@ -38,7 +38,6 @@ import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListB
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.arcbees.test.ByDebugId;
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gwt.text.shared.Renderer;
