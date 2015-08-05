@@ -85,7 +85,7 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
             option.setSelected(false);
         }
 
-        element.removeClass(getCss().resultSelected());
+        animateListItem(element, false);
     }
 
     @Override
