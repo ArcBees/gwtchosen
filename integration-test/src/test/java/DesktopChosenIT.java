@@ -281,12 +281,6 @@ public class DesktopChosenIT extends ChosenIT {
         webDriverWait().until(elementToBeClickable(By.id("firstTextBox")));
 
         webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
-        webDriverWait().until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(@Nullable WebDriver input) {
-                return webDriver.switchTo().activeElement() == getDropdown();
-            }
-        });
         webDriver.switchTo().activeElement().sendKeys(Keys.TAB);
 
         // at this point, focus is on the Chosen widget
