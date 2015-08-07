@@ -37,7 +37,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
