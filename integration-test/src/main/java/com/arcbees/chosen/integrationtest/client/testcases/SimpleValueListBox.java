@@ -27,7 +27,6 @@ import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.google.common.collect.Lists;
 import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.view.client.ProvidesKey;
 
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
@@ -52,12 +51,7 @@ public class SimpleValueListBox extends TestCase {
 
     @Override
     public void run() {
-        listBox = new ChosenValueListBox<CarBrand>(getRenderer(), new ProvidesKey<CarBrand>() {
-            @Override
-            public Object getKey(final CarBrand item) {
-                return item.name();
-            }
-        }, options);
+        listBox = new ChosenValueListBox<CarBrand>(getRenderer(), options);
 
         List<CarBrand> acceptableValues = Lists.newArrayList(CarBrand.values());
         if (addNullValue) {
