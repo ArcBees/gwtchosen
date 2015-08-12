@@ -269,6 +269,73 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td>mobileViewportMaxWidth</td>
+                            <td>int</td>
+                            <td>Sets the maximum width of the application to show the mobile version. Viewport bigger 
+                                than that number will trigger the desktop version.
+                            </td>
+                            <td>649</td>
+                            <td>
+                                <p>mobileViewportMaxWidth = 2000</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileWidth" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>mobileAnimation</td>
+                            <td>boolean</td>
+                            <td>Enable / disable opening and closing animations on mobile.
+                            </td>
+                            <td>true</td>
+                            <td>
+                                <p>mobileAnimation = false</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileAnimation" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>mobileAnimationSpeed</td>
+                            <td>int</td>
+                            <td>Sets the mobile animation speed, in milliseconds.
+                            </td>
+                            <td>150</td>
+                            <td>
+                                <p>mobileAnimationSpeed = 1500</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileSpeed" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 
