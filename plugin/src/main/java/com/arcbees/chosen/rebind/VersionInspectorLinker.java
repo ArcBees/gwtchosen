@@ -58,7 +58,7 @@ public class VersionInspectorLinker extends Linker {
     private static final String ARTIFACT_QUERY_PARAMETER = "artifactid";
     private static final String VERSION_QUERY_PARAMETER = "version";
 
-    private static final String PROPERTY_VERIFY_NEWER_VERSION = "chosenVerifyNewerVersion";
+    private static final String PROPERTY_VERIFY_NEWER_VERSION = "verifyNewerVersion";
 
     private static final Pattern VERSION_PATTERN = Pattern.compile("\"version\":\\s*\"([0-9](?:\\.[0-9])*)\"");
     private static final Pattern LATEST_PATTERN = Pattern.compile("\"latest\":([a-z]{1,4})");
@@ -143,7 +143,7 @@ public class VersionInspectorLinker extends Linker {
             String artifactId = dependency.getArtifactId();
             logger = new Logger(baseLogger.branch(DEBUG, "Checking version information for " + artifactId));
             logger.debug("You can disable this check by adding this line to your GWT module:");
-            logger.debug("<set-configuration-property name=\"chosenVerifyNewerVersion\" value=\"false\"/>");
+            logger.debug("<set-configuration-property name=\"verifyNewerVersion\" value=\"false\"/>");
 
             checkLatestVersion(dependency);
         }
