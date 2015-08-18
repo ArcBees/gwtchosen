@@ -18,16 +18,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
+import com.google.common.base.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
@@ -35,6 +37,8 @@ import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class MobileChosenIT extends ChosenIT {
+    private static final String IS_OPEN = "com-arcbees-chosen-client-resources-ChosenCss-is-open";
+
     @Before
     public void before() {
         // will trigger the mobile layout
@@ -129,21 +133,41 @@ public class MobileChosenIT extends ChosenIT {
         assertDropdownIsClosed();
     }
 
+    @Override
+    protected void assertDropdownIsClosed() {
+        webDriverWait().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                try {
+                    return webDriver.findElement(By.className(IS_OPEN)) == null;
+                } catch (NoSuchElementException e) {
+                    return true;
+                }
+            }
+        });
+
+        assertThat(getDropdown().getAttribute("class")).doesNotContain(IS_OPEN);
+    }
+
     protected void openDropDown() {
         String xpath = "//div[@id='chosen_container__0_chzn']";
         WebElement btn = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
         btn.click();
+
+        waitUntilDropdownIsOpened();
     }
 
     private void closeMobileDropDown() {
         String xpath = "//div[@id='chosen_container__0_chzn']//i[@role='close']";
 
-        WebElement closeButton = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
+        WebElement closeButton = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
 
         closeButton.click();
     }
 
     private void assertDropdownIsOpenWithMobileLayout() {
+        waitUntilDropdownIsOpened();
+
         int top = getDropdownTop();
         int bottom = getDropdownBottom();
 
@@ -152,9 +176,23 @@ public class MobileChosenIT extends ChosenIT {
         assertThat(isMobileChosenComponent()).isTrue();
     }
 
+    private void waitUntilDropdownIsOpened() {
+        webDriverWait().until(new Predicate<WebDriver>() {
+            @Override
+            public boolean apply(WebDriver input) {
+                return getDropdownTop() == 0;
+            }
+        });
+    }
+
     private int getDropdownBottom() {
         WebElement dropdown = getDropdown();
-        String topString = dropdown.getCssValue("bottom");
-        return Integer.parseInt(topString.replaceAll("px", ""));
+        String bottomString = dropdown.getCssValue("bottom");
+
+        if ("auto".equals(bottomString)) {
+            return 0;
+        }
+
+        return Integer.parseInt(bottomString.replaceAll("px", ""));
     }
 }

@@ -63,7 +63,15 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
             if (item.isSelected()) {
                 resultDeselect(item, getResultHighlight());
             } else if (!maxSelectedOptionsReached()) {
+                GQuery high = getResultHighlight();
+
                 super.resultSelect(e);
+
+                searchResultsMouseOver(e);
+                resultClearHighlight();
+                resultsSearch();
+
+                animateListItem(high, true);
             }
         }
     }

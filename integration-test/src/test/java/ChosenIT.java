@@ -44,6 +44,7 @@ import com.google.gwt.text.shared.Renderer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
@@ -54,6 +55,7 @@ import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRendere
 public abstract class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
+
     protected final WebDriver webDriver = new ChromeDriver();
 
     @After
@@ -252,7 +254,12 @@ public abstract class ChosenIT {
     protected int getDropdownTop() {
         WebElement dropdown = getDropdown();
         String topString = dropdown.getCssValue("top");
-        return Integer.parseInt(topString.replaceAll("px", ""));
+
+        if ("auto".equals(topString)) {
+            return 0;
+        }
+
+        return (int) Double.parseDouble(topString.replaceAll("px", ""));
     }
 
     protected WebElement getInput() {
@@ -322,7 +329,7 @@ public abstract class ChosenIT {
 
         String xpath = String.format("//li[text()='%s']", displayString);
 
-        WebElement li = webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
+        WebElement li = webDriverWait().until(elementToBeClickable(By.xpath(xpath)));
 
         li.click();
     }

@@ -816,7 +816,7 @@ public abstract class ChosenImpl {
         return id;
     }
 
-    private void closeField() {
+    protected void closeField() {
         $(document).unbind("click", clickTestAction);
 
         deactiveTabIndexProperty();

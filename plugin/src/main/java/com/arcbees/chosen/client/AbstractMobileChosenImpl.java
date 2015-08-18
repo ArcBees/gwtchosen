@@ -42,7 +42,7 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
         getContainer().on("click", "i[role='close']", new Function() {
             @Override
             public void f() {
-                resultsHide();
+                closeField();
             }
         });
 
@@ -85,19 +85,6 @@ public class AbstractMobileChosenImpl extends DesktopSingleChosenImpl {
     @Override
     protected void maybeSelectResult(Event e) {
         // Do nothing
-    }
-
-    @Override
-    protected void resultSelect(Event e) {
-        GQuery high = getResultHighlight();
-
-        super.resultSelect(e);
-
-        searchResultsMouseOver(e);
-        resultClearHighlight();
-        resultsSearch();
-
-        animateListItem(high, true);
     }
 
     @Override

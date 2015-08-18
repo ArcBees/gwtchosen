@@ -17,4 +17,9 @@
 package com.arcbees.chosen.client;
 
 public class MobileSingleChosenImpl extends AbstractMobileChosenImpl {
+    @Override
+    protected void onResultSelected(SelectParser.OptionItem item, String newValue, String oldValue,
+            boolean metaKeyPressed) {
+        closeField();
+    }
 }
