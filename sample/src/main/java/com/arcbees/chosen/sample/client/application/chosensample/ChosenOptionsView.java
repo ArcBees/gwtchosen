@@ -49,6 +49,12 @@ public class ChosenOptionsView implements IsWidget {
     SelectElement noResultsText;
     @UiField
     SelectElement dropdownPosition;
+    @UiField
+    SelectElement mobileWidth;
+    @UiField
+    SelectElement mobileAnimation;
+    @UiField
+    SelectElement mobileSpeed;
 
     private final Widget widget;
 
@@ -79,6 +85,15 @@ public class ChosenOptionsView implements IsWidget {
 
                     $(dropdownPosition).as(Chosen).chosen(
                             new ChosenOptions().setDropdownPosition(DropdownPosition.ABOVE));
+
+                    $(mobileWidth).as(Chosen).chosen(
+                            new ChosenOptions().setMobileViewportMaxWidth(2000));
+
+                    $(mobileAnimation).as(Chosen).chosen(
+                            new ChosenOptions().setMobileAnimation(false));
+
+                    $(mobileSpeed).as(Chosen).chosen(
+                            new ChosenOptions().setMobileAnimationSpeed(1500));
                 }
             }
         });

@@ -140,13 +140,14 @@ public class ChosenOptions {
      * If you want to disable the mobile layout of the component on every device, set the
      * <code>mobileViewportMaxWidth</code> to -1.
      * <p/>
-     * The component is responsiveonly if you define a viewport in your html file, example:
+     * The component is responsive only if you define a viewport in your html file, example:
      * &lt;meta name="viewport" content="width=device-width, initial-scale=1">
      *
      * @param mobileViewportMaxWidth
      */
-    public void setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
+    public ChosenOptions setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
         this.mobileViewportMaxWidth = mobileViewportMaxWidth;
+        return this;
     }
 
     /**
