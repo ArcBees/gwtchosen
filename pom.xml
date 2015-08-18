@@ -164,6 +164,20 @@
                     <arguments>-Psonatype-oss-release -Prelease -Dgpg.passphrase=${gpg.passphrase}</arguments>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <inherited>true</inherited>
+
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
 
         <pluginManagement>
