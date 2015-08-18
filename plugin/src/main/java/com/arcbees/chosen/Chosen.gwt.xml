@@ -15,7 +15,7 @@
         <when-property-is name="user.agent" value="ie6" />
     </replace-with>
 
-    <define-linker name="versionInspector" class="com.arcbees.chosen.rebind.VersionInspectorLinker"/>
-    <add-linker name="versionInspector"/>
+    <define-linker name="chosenVersionInspector" class="com.arcbees.chosen.rebind.VersionInspectorLinker"/>
+    <add-linker name="chosenVersionInspector"/>
 </module>
     
