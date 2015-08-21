@@ -14,10 +14,20 @@
  * the License.
  */
 
-package com.arcbees.chosen.sample.client.place;
+package com.arcbees.chosen.sample.client.application.widgetsample;
 
-public class NameTokens {
-    public static final String HOME = "HOME";
-    public static final String CHOSEN_SAMPLE = "CHOSEN_SAMPLE";
-    public static final String WIDGET_SAMPLE = "WIDGET_SAMPLE";
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
+
+public class WidgetsampleView extends ViewImpl implements WidgetsamplePresenter.MyView {
+    interface Binder extends UiBinder<Widget, WidgetsampleView> {
+    }
+
+    @Inject
+    WidgetsampleView(
+            Binder binder) {
+        initWidget(binder.createAndBindUi(this));
+    }
 }

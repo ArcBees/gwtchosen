@@ -14,19 +14,14 @@
  * the License.
  */
 
-package com.arcbees.chosen.sample.client.application;
+package com.arcbees.chosen.sample.client.application.widgetsample;
 
-import com.arcbees.chosen.sample.client.application.chosensample.ChosensampleModule;
-import com.arcbees.chosen.sample.client.application.widgetsample.WidgetsampleModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
-public class ApplicationModule extends AbstractPresenterModule {
+public class WidgetsampleModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
-        install(new ChosensampleModule());
-        install(new WidgetsampleModule());
-
-        bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
-                ApplicationPresenter.MyProxy.class);
+        bindPresenter(WidgetsamplePresenter.class, WidgetsamplePresenter.MyView.class, WidgetsampleView.class,
+                WidgetsamplePresenter.MyProxy.class);
     }
 }
