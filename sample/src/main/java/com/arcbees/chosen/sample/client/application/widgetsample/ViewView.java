@@ -72,8 +72,10 @@ public class ViewView implements IsWidget {
 
         private void log(String eventName, String additional) {
             $("#log").append(
-                    "<span class=\"" + res.style().log_line() + "\">" + eventName + " fired by <em>" + elementId + "</em> "
-                            + additional + "</span>").scrollTop($("#log").get(0).getScrollHeight());
+                    "<span class=\"" + res.style().log_line() + "\">" + 
+                            eventName + " fired by <em>" + elementId + "</em> " + additional +
+                     "</span>"
+            ).scrollTop($("#log").get(0).getScrollHeight());
         }
 
         public void onReady(ReadyEvent event) {
@@ -123,6 +125,8 @@ public class ViewView implements IsWidget {
     private static Binder binder = GWT.create(Binder.class);
 
     @UiField
+    static AppResources res;
+    @UiField
     ChosenListBox countriesChosen;
     @UiField(provided = true)
     ChosenListBox teamChosen;
@@ -130,8 +134,6 @@ public class ViewView implements IsWidget {
     ChosenValueListBox<Choices> chosenValueListBox;
     @UiField(provided = true)
     MultipleChosenValueListBox<Choices> multipleChosenValueListBox;
-    @UiField
-    static AppResources res;
 
     private final Widget widget;
 
