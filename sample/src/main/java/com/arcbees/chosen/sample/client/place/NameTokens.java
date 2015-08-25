@@ -17,7 +17,6 @@
 package com.arcbees.chosen.sample.client.place;
 
 public class NameTokens {
-    public static final String HOME = "HOME";
-    public static final String CHOSEN_SAMPLE = "CHOSEN_SAMPLE";
-    public static final String WIDGET_SAMPLE = "WIDGET_SAMPLE";
+    public static final String CHOSEN_SAMPLE = "/";
+    public static final String WIDGET_SAMPLE = "widget-sample";
 }

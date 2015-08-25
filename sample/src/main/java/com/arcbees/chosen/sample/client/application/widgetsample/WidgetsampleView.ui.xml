@@ -18,9 +18,7 @@
             <div class="container">
                 <header class="{res.grid.row}">
                     <div class="{res.grid.col} {res.grid.col_full}">
-                        <div class="{res.style.header}">
-                            <h1>GwtChosen: UiBinder, ChosenListBox and events...</h1>
-                        </div>
+                        <h1>GwtChosen: UiBinder, ChosenListBox and events...</h1>
                     </div>
                 </header>
 
@@ -51,25 +49,27 @@ for (String team : teams) {
 
 teamChosen.setPlaceholderText("Choose your favourite teams");</pre>
                     </div>
-                    <div class="{res.grid.col} {res.grid.col_full}">
-                        <p>This example shows you also when the different events you can
-                            listen for are fired by the component.</p>
-                        <p>
-                            Source code can be found <a
-                                href="https://github.com/ArcBees/gwtchosen/tree/master/sample/src/main/java/com/arcbees/chosen/widgetsample">here</a>
-                        </p>
-                    </div>
                 </div>
 
                 <div class="{res.grid.row}">
+                    
                     <div class="{res.grid.col} {res.grid.col_full}">
                         <h2>Events log</h2>
-                        <div id="log"></div>
-                        <button id="clearLogButton">Clear log history</button>
-                    </div>
-                </div>
 
-                <widgetsample:ViewView></widgetsample:ViewView>
+                        <p>This example shows you also when the different events you can
+                            listen for are fired by the component. Source code can be found <a
+                                href="https://github.com/ArcBees/gwtchosen/tree/master/sample/src/main/java/com/arcbees/chosen/sample/client/application/widgetsample">here</a>
+                        </p>
+                    </div>
+                    
+                    <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_m_full}">
+                        <div id="log" class="{res.style.log}"></div>
+                        <button id="clearLogButton" class="{res.style.clearLogButton}">Clear log history</button>
+                    </div>
+                    
+                    <widgetsample:ViewView></widgetsample:ViewView>
+                    
+                </div>
             </div>
 
         </div>

@@ -38,7 +38,7 @@ body {
     font-family: F_PRIMARY;
     font-size: 1.3rem;
 
-    padding-bottom: 1.8em;
+    padding: 1.8em 0;
 }
 
 
@@ -71,7 +71,7 @@ h1 {
     font-family: F_PRIMARY_BOLD;
     font-size: 3rem;
     
-    margin: 0 0 .8rem;
+    margin: 0 0 2rem;
 }
 
 h2 {
@@ -190,7 +190,7 @@ textarea {
     background-color: C_BACKGROUND_DARK;
 
     padding: 1em 1.5em .8em;
-    margin: 2em 0 1em;
+    margin: 1em 0;
     border: 1px solid C_BORDER;
     -webkit-border-radius: S_BORDER_RADIUS;
     -moz-border-radius: S_BORDER_RADIUS;
@@ -278,6 +278,24 @@ textarea {
 .table tbody tr:hover td,
 .table tbody tr:hover th {
     background-color: #f5f5f5;
+}
+
+.log {
+    display: block;
+    border: 1px solid #444;
+    padding: 1em;
+    height: 200px;
+
+    overflow: auto;
+}
+
+.log_line {
+    display: block;
+    margin-bottom: .5em;
+}
+
+.clearLogButton {
+    margin-top: 1em;
 }
 
 

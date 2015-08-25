@@ -29,8 +29,10 @@ import com.arcbees.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandl
 import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.client.gwt.MultipleChosenValueListBox;
+import com.arcbees.chosen.sample.client.resources.AppResources;
 import com.google.common.collect.Lists;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.query.client.Function;
@@ -70,7 +72,7 @@ public class ViewView implements IsWidget {
 
         private void log(String eventName, String additional) {
             $("#log").append(
-                    "<span class=\"log-line\">" + eventName + " fired by <em>" + elementId + "</em> "
+                    "<span class=\"" + res.style().log_line() + "\">" + eventName + " fired by <em>" + elementId + "</em> "
                             + additional + "</span>").scrollTop($("#log").get(0).getScrollHeight());
         }
 
@@ -128,15 +130,31 @@ public class ViewView implements IsWidget {
     ChosenValueListBox<Choices> chosenValueListBox;
     @UiField(provided = true)
     MultipleChosenValueListBox<Choices> multipleChosenValueListBox;
+    @UiField
+    static AppResources res;
 
     private final Widget widget;
 
     public ViewView() {
-        widget = binder.createAndBindUi(this);
-
         teamChosen = new ChosenListBox(true);
         chosenValueListBox = new ChosenValueListBox(new ChoiceRenderer());
         multipleChosenValueListBox = new MultipleChosenValueListBox(new ChoiceRenderer());
+
+        widget = binder.createAndBindUi(this);
+
+        widget.addAttachHandler(new AttachEvent.Handler() {
+            @Override
+            public void onAttachOrDetach(AttachEvent attachEvent) {
+                if (attachEvent.isAttached()) {
+                    $("#clearLogButton").click(new Function() {
+                        @Override
+                        public void f() {
+                            $("#log").empty();
+                        }
+                    });
+                }
+            }
+        });
 
         init();
     }
@@ -166,13 +184,6 @@ public class ViewView implements IsWidget {
 
         MyEventHandlers multipleValueListBoxHandler = new MyEventHandlers("Multiple ValueChosenListBox");
         multipleChosenValueListBox.addValueChangeHandler(multipleValueListBoxHandler);
-
-        $("#clearLogButton").click(new Function() {
-            @Override
-            public void f() {
-                $("#log").empty();
-            }
-        });
     }
 
     private void init() {
