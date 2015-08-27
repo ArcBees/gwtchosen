@@ -72,7 +72,7 @@
         <guava.version>18.0</guava.version>
         <gsss.version>1.0</gsss.version>
         <checkstyle.version>6.0</checkstyle.version>
-        <arcbees-checkstyle.version>1.1</arcbees-checkstyle.version>
+        <arcbees-checkstyle.version>1.2</arcbees-checkstyle.version>
 
         <!-- maven -->
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -162,6 +162,20 @@
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
                     <arguments>-Psonatype-oss-release -Prelease -Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <inherited>true</inherited>
+
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
