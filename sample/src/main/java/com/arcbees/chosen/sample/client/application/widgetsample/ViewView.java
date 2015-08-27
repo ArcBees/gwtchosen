@@ -45,6 +45,9 @@ import com.google.gwt.user.client.ui.Widget;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class ViewView implements IsWidget {
+    @UiField
+    static AppResources res;
+
     private static enum Choices {
         FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHT, NINTH, TENTH;
 
@@ -72,9 +75,9 @@ public class ViewView implements IsWidget {
 
         private void log(String eventName, String additional) {
             $("#log").append(
-                    "<span class=\"" + res.style().log_line() + "\">" + 
+                    "<span class=\"" + res.style().log_line() + "\">" +
                             eventName + " fired by <em>" + elementId + "</em> " + additional +
-                     "</span>"
+                            "</span>"
             ).scrollTop($("#log").get(0).getScrollHeight());
         }
 
@@ -124,8 +127,6 @@ public class ViewView implements IsWidget {
 
     private static Binder binder = GWT.create(Binder.class);
 
-    @UiField
-    static AppResources res;
     @UiField
     ChosenListBox countriesChosen;
     @UiField(provided = true)

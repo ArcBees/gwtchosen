@@ -59,7 +59,6 @@
                     <runTarget>ChosenSample.html</runTarget>
                     <modules>
                         <module>com.arcbees.chosen.sample.ChosenSample</module>
-                        <module>com.arcbees.chosen.widgetsample.WidgetSample</module>
                     </modules>
                 </configuration>
                 <executions>
