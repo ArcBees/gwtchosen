@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.arcbees.chosen.widgetsample.client;
+package com.arcbees.chosen.sample.client.application.widgetsample;
 
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
@@ -29,22 +29,25 @@ import com.arcbees.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandl
 import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.client.gwt.MultipleChosenValueListBox;
+import com.arcbees.chosen.sample.client.resources.AppResources;
 import com.google.common.collect.Lists;
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-public class WidgetSample implements EntryPoint {
+public class ViewView implements IsWidget {
+    @UiField
+    static AppResources res;
+
     private static enum Choices {
         FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHT, NINTH, TENTH;
 
@@ -72,8 +75,10 @@ public class WidgetSample implements EntryPoint {
 
         private void log(String eventName, String additional) {
             $("#log").append(
-                    "<span class=\"log-line\">" + eventName + " fired by <em>" + elementId + "</em> "
-                            + additional + "</span>").scrollTop($("#log").get(0).getScrollHeight());
+                    "<span class=\"" + res.style().log_line() + "\">" +
+                            eventName + " fired by <em>" + elementId + "</em> " + additional +
+                            "</span>"
+            ).scrollTop($("#log").get(0).getScrollHeight());
         }
 
         public void onReady(ReadyEvent event) {
@@ -103,8 +108,6 @@ public class WidgetSample implements EntryPoint {
         }
     }
 
-    private static MyUiBinder uiBinder = GWT.create(MyUiBinder.class);
-
     private static String[] teamsGroup = new String[]{
             "NFC EAST", "NFC NORTH", "NFC SOUTH", "NFC WEST", "AFC EAST", "AFC NORTH", "AFC SOUTH", "AFC WEST"
     };
@@ -119,9 +122,10 @@ public class WidgetSample implements EntryPoint {
             "Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans",
             "Denver Broncos", "Kansas City Chiefs", "Oakland Raiders", "San Diego Chargers"};
 
-    @UiTemplate("View.ui.xml")
-    interface MyUiBinder extends UiBinder<Widget, WidgetSample> {
+    interface Binder extends UiBinder<Widget, ViewView> {
     }
+
+    private static Binder binder = GWT.create(Binder.class);
 
     @UiField
     ChosenListBox countriesChosen;
@@ -132,20 +136,35 @@ public class WidgetSample implements EntryPoint {
     @UiField(provided = true)
     MultipleChosenValueListBox<Choices> multipleChosenValueListBox;
 
-    public void onModuleLoad() {
-        if (!ChosenListBox.isSupported()) {
-            $("#browserWarning").show();
-        }
+    private final Widget widget;
 
+    public ViewView() {
         teamChosen = new ChosenListBox(true);
         chosenValueListBox = new ChosenValueListBox(new ChoiceRenderer());
         multipleChosenValueListBox = new MultipleChosenValueListBox(new ChoiceRenderer());
 
-        Widget w = uiBinder.createAndBindUi(this);
+        widget = binder.createAndBindUi(this);
+
+        widget.addAttachHandler(new AttachEvent.Handler() {
+            @Override
+            public void onAttachOrDetach(AttachEvent attachEvent) {
+                if (attachEvent.isAttached()) {
+                    $("#clearLogButton").click(new Function() {
+                        @Override
+                        public void f() {
+                            $("#log").empty();
+                        }
+                    });
+                }
+            }
+        });
 
         init();
+    }
 
-        RootPanel.get("view").add(w);
+    @Override
+    public Widget asWidget() {
+        return widget;
     }
 
     private void bind() {
@@ -168,13 +187,6 @@ public class WidgetSample implements EntryPoint {
 
         MyEventHandlers multipleValueListBoxHandler = new MyEventHandlers("Multiple ValueChosenListBox");
         multipleChosenValueListBox.addValueChangeHandler(multipleValueListBoxHandler);
-
-        $("#clearLogButton").click(new Function() {
-            @Override
-            public void f() {
-                $("#log").empty();
-            }
-        });
     }
 
     private void init() {

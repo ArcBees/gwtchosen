@@ -34,11 +34,6 @@
                     </div>
                 </div>
             </header>
-
-            <div id="browserWarning" class="alert" style="display: none;">
-                <strong>Oooops, your browser is not supported.</strong> we cannot enhance the select elements with this browser.<br />
-                Please try a modern browser !
-            </div>
             
             <chosensample:WhatIsChosenView/>
 

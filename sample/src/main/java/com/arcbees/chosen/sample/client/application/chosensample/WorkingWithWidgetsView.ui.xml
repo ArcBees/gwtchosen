@@ -40,7 +40,7 @@ chzn.addItem("United Kingdom");
 chzn.setMaxSelectedOptions(5);
 chzn.setPlaceholderText("Choose your country...");</pre>
 
-            <p>Check <a href="WidgetSample.html">this complete example</a> for more code</p>
+            <p>Check <a href="/#!/widget-sample">this complete example</a> for more code</p>
 
         </div>
 

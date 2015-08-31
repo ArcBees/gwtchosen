@@ -7,7 +7,7 @@
 * [For documentation and examples](http://arcbees.github.com/gwtchosen/)
 
 ##Demo
-* [Widget Sample](http://arcbees.github.com/gwtchosen/widgetsample/index.html)
+* [Widget Sample](http://arcbees.github.com/gwtchosen/#!/widget-sample)
 
 ##Stable version
 * [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.arcbees.gwtchosen)

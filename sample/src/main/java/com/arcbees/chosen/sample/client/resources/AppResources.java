@@ -41,6 +41,12 @@ public interface AppResources extends ClientBundle {
         String tableholder();
 
         String breakable();
+        
+        String log();
+        
+        String log_line();
+        
+        String clearLogButton();
     }
 
     @Source("css/normalize.gss")

@@ -14,9 +14,14 @@
  * the License.
  */
 
-package com.arcbees.chosen.sample.client.place;
+package com.arcbees.chosen.sample.client.application.widgetsample;
 
-public class NameTokens {
-    public static final String CHOSEN_SAMPLE = "/";
-    public static final String WIDGET_SAMPLE = "widget-sample";
+import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
+
+public class WidgetsampleModule extends AbstractPresenterModule {
+    @Override
+    protected void configure() {
+        bindPresenter(WidgetsamplePresenter.class, WidgetsamplePresenter.MyView.class, WidgetsampleView.class,
+                WidgetsamplePresenter.MyProxy.class);
+    }
 }

@@ -17,12 +17,14 @@
 package com.arcbees.chosen.sample.client.application;
 
 import com.arcbees.chosen.sample.client.application.chosensample.ChosensampleModule;
+import com.arcbees.chosen.sample.client.application.widgetsample.WidgetsampleModule;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 
 public class ApplicationModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new ChosensampleModule());
+        install(new WidgetsampleModule());
 
         bindPresenter(ApplicationPresenter.class, ApplicationPresenter.MyView.class, ApplicationView.class,
                 ApplicationPresenter.MyProxy.class);

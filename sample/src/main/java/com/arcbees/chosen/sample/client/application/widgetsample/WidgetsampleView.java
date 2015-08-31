@@ -14,17 +14,20 @@
  * the License.
  */
 
-package com.arcbees.chosen.widgetsample.client;
+package com.arcbees.chosen.sample.client.application.widgetsample;
 
-import com.google.gwt.junit.client.GWTTestCase;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewImpl;
 
-public class CompileWidgetSampleGwtTest extends GWTTestCase {
-    @Override
-    public String getModuleName() {
-        return "com.arcbees.chosen.widgetsample.WidgetSample";
+public class WidgetsampleView extends ViewImpl implements WidgetsamplePresenter.MyView {
+    interface Binder extends UiBinder<Widget, WidgetsampleView> {
     }
 
-    public void testSandbox() {
-        assertTrue(true);
+    @Inject
+    WidgetsampleView(
+            Binder binder) {
+        initWidget(binder.createAndBindUi(this));
     }
 }
