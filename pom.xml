@@ -107,6 +107,7 @@
         <module>plugin</module>
         <module>integration-test</module>
         <module>sample</module>
+        <module>gwtsample</module>
     </modules>
 
     <build>
