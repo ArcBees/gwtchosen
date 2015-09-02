@@ -17,24 +17,30 @@
 
 [class^="icon_"],
 [class*=" icon_"] {
-	font-family: 'icons';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icons';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon_cross:before {
-	content: "\e600";
+    content: "\e600";
 }
+
 .icon_arrow:before {
-	content: "\e601";
+    content: "\e601";
 }
+
 .icon_search:before {
-	content: "\e602";
+    content: "\e602";
+}
+
+.icon_check:before {
+    content: "\f00c";
 }

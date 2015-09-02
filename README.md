@@ -7,7 +7,7 @@
 * [For documentation and examples](http://arcbees.github.com/gwtchosen/)
 
 ##Demo
-* [Widget Sample](http://arcbees.github.io/gwtchosen/ChosenSample.html)
+* [Widget Sample](http://arcbees.github.com/gwtchosen/#!/widget-sample)
 
 ##Stable version
 * [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.arcbees.gwtchosen)
@@ -37,7 +37,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```

@@ -1,0 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section}">
+
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <h2 class="{res.style.section__title}">Setup</h2>
+
+                <p>
+                    GwtChosen depends on<a href="http://www.gwtquery.com">GwtQuery</a>. You need at least GwtQuery 1.2. 
+                    Please follow <a href="http://code.google.com/p/gwtquery/wiki/Downloads">the instructions</a>
+                    to download GwtQuery jar file and put it in your classpath.
+                </p>
+            </div>
+        </div>
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_2_3} {res.grid.col_t_full}">
+                <h3>With maven</h3>
+                <p>Add the following block to your pom.xml</p>
+                <pre>&lt;repositories>
+    &lt;repository>
+        &lt;id>plugins&lt;/id>
+        &lt;url>http://gwtquery-plugins.googlecode.com/svn/mavenrepo&lt;/url>
+    &lt;/repository>
+&lt;/repositories>
+
+&lt;build>
+    &lt;dependencies>
+        &lt;dependency>
+            &lt;groupId>com.arcbees&lt;/groupId>
+            &lt;artifactId>gwtchosen&lt;/artifactId>
+            &lt;version>1.1.0&lt;/version>
+            &lt;scope>provided&lt;/scope>
+         &lt;/dependency>
+    &lt;/dependencies>
+&lt;/build></pre>
+            </div>
+            <div class="{res.grid.col} {res.grid.col_1_3} {res.grid.col_t_full}">
+                <h3>Without maven</h3>
+                <p>
+                    Download
+                    <a href="http://code.google.com/p/gwtquery-plugins/downloads/detail?name=gwtchosen-1.1.0.jar">the last stable jar file</a>
+                    and put it in your claspath.
+                </p>
+            </div>
+
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <p>
+                    Then you need to inherit the plugin in your Module.gwt.xml file:
+                </p>
+                <pre>
+&lt;inherits name='com.arcbees.chosen.Chosen'/></pre>
+            </div>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

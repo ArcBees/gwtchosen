@@ -1,0 +1,312 @@
+/**
+ * STYLE.GSS
+ * Default application style
+ *
+ * - REQUIRE - DEF              Require and images def
+ * - INIT                       Document initialization
+ * - LAYOUT                     Container, Wrapper, Stripe
+ * - ELEMENTS                   Default style for elements like <p> and <a>
+ */
+
+
+/* -- Require - Def -------------------------------------- */
+
+@require "theme";
+
+
+/* -- Init ----------------------------------------------- */
+
+html {
+    font-size: 62.5%;
+}
+
+@media (max-width: 979px) {
+    html {
+        font-size: 59%;
+    }
+}
+
+@media (max-width: 649px) {
+    html {
+        font-size: 56%;
+    }
+}
+
+body {
+    color: C_TEXT;
+    background-color: C_BACKGROUND;
+    font-family: F_PRIMARY;
+    font-size: 1.3rem;
+
+    padding: 1.8em 0;
+}
+
+
+/* -- Wrapper -------------------------------------------- */
+
+.container {
+    margin: 0 auto;
+    width: 980px;
+
+    position: relative;
+}
+
+@media (max-width: 979px) {
+    .container {
+        width: 650px;
+    }
+}
+
+@media (max-width: 649px) {
+    .container {
+        width: 90%;
+    }
+}
+
+
+/* -- Elements ------------------------------------------- */
+
+h1 {
+    color: C_TEXT;
+    font-family: F_PRIMARY_BOLD;
+    font-size: 3rem;
+    
+    margin: 0 0 2rem;
+}
+
+h2 {
+    font-size: 2.4rem;
+}
+
+h3 {
+    font-size: 1.8rem;
+
+    margin: 0 0 .25em;
+}
+
+p {
+    line-height: S_LINEHEIGHT;
+
+    margin: 0 0 1em;
+}
+
+a {
+    color: C_PRIMARY;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    
+    border: 0;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0;
+    margin: 0 0 0 1.2em;
+}
+
+li {
+    margin-bottom: .6em;
+}
+
+pre {
+    line-height: S_LINEHEIGHT;
+    background-color: C_BACKGROUND_DARK;
+    
+    display: block;
+    padding: .75em 1em;
+    margin: 0 0 1em;
+    border: 1px solid C_BORDER;
+    -webkit-border-radius: S_BORDER_RADIUS;
+    -moz-border-radius: S_BORDER_RADIUS;
+    border-radius: S_BORDER_RADIUS;
+}
+
+code {
+    background-color: C_BACKGROUND_DARK;
+    color: C_SECONDARY;
+
+    display: inline-block;
+    padding: 0 .4em;
+    margin: 0 .2em;
+    border: 1px solid C_BORDER;
+    -webkit-border-radius: S_BORDER_RADIUS;
+    -moz-border-radius: S_BORDER_RADIUS;
+    border-radius: S_BORDER_RADIUS;
+}
+
+button {
+    background-color: C_PRIMARY;
+    color: #fff;
+
+    padding: .3em 1em;
+    border: none;
+    -webkit-border-radius: S_BORDER_RADIUS;
+    -moz-border-radius: S_BORDER_RADIUS;
+    border-radius: S_BORDER_RADIUS;
+}
+
+button:hover {
+    background-color: C_PRIMARY_DARK;
+    
+}
+
+select {
+    line-height: 28px;
+    
+    margin-bottom: 1em;
+    border: 1px solid C_BORDER;
+    width: 80%;
+    height: 28px;
+}
+
+select[multiple], 
+select[size] {
+    height: auto;
+}
+
+@media(max-width:649px) {
+    select {
+        width: 100%;
+    }
+}
+
+button,
+input,
+select,
+textarea {
+    vertical-align: middle;
+    box-sizing: content-box;
+}
+
+
+/* -- Components ---------------------------------------- */
+
+.header {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    background-color: C_BACKGROUND_DARK;
+
+    padding: 1em 1.5em .8em;
+    margin: 1em 0;
+    border: 1px solid C_BORDER;
+    -webkit-border-radius: S_BORDER_RADIUS;
+    -moz-border-radius: S_BORDER_RADIUS;
+    border-radius: S_BORDER_RADIUS;
+}
+
+@media (max-width: 649px) {
+    .header {
+        margin-top: 3em;
+    }
+}
+
+.header > p {
+    font-family: F_PRIMARY_LIGHT;
+}
+
+.banner {
+    border: 0;
+    
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    z-index: 1000;
+}
+
+.section {}
+
+.section__title {
+    padding-bottom: 5px;
+    margin: 18px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.tableholder {
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    background-color: transparent;
+    
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table th,
+.table td {
+    line-height: 18px;
+    text-align: left;
+    
+    padding: 8px;
+    vertical-align: top;
+    border-top: 1px solid C_BORDER;
+}
+
+.table th {
+    font-weight: bold;
+}
+
+.table thead th {
+    vertical-align: bottom;
+}
+
+.table caption + thead tr:first-child th,
+.table caption + thead tr:first-child td,
+.table colgroup + thead tr:first-child th,
+.table colgroup + thead tr:first-child td,
+.table thead:first-child tr:first-child th,
+.table thead:first-child tr:first-child td {
+    border-top: 0;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid C_BORDER;
+}
+
+.table tbody tr:nth-child(odd) td,
+.table tbody tr:nth-child(odd) th {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+    background-color: #f5f5f5;
+}
+
+.log {
+    display: block;
+    border: 1px solid #444;
+    padding: 1em;
+    height: 200px;
+
+    overflow: auto;
+}
+
+.log_line {
+    display: block;
+    margin-bottom: .5em;
+}
+
+.clearLogButton {
+    margin-top: 1em;
+}
+
+
+/* -- Classes ------------------------------------------- */
+
+@external "youAreHere";
+.youAreHere {
+    border: dashed 1px lightGrey;
+    border-left: solid 3px orange;
+}
+
+.breakable {
+    word-break: break-all;
+}

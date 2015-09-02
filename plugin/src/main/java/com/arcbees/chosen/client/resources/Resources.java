@@ -20,12 +20,12 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.DataResource;
 
 public interface Resources extends ClientBundle {
-
-    @Source({"com/arcbees/gsss/mixin/client/mixins.gss", "colors.gss", "icons/icons.gss", "chozen.gss"})
-    ChozenCss css();
-
-    @Source("icons/icons.ttf")
-    DataResource iconsTtf();
+    @Source({"com/arcbees/gsss/mixin/client/mixins.gss",
+            "css/colors.gss",
+            "icons/icons.gss",
+            "css/chosen.gss",
+            "css/mobile.gss"})
+    ChosenCss css();
 
     @Source("icons/icons.eot")
     DataResource iconsEot();
@@ -33,7 +33,9 @@ public interface Resources extends ClientBundle {
     @Source("icons/icons.svg")
     DataResource iconsSvg();
 
+    @Source("icons/icons.ttf")
+    DataResource iconsTtf();
+
     @Source("icons/icons.woff")
     DataResource iconsWoff();
-
 }

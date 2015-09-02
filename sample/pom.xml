@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.arcbees</groupId>
         <artifactId>gwtchosen-project</artifactId>
-        <version>2.2.0-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>chosen-sample</artifactId>
@@ -13,6 +13,10 @@
 
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+        <gsss.version>1.1-SNAPSHOT</gsss.version>
+        <gwtp.version>1.4</gwtp.version>
+        <guice.version>3.0</guice.version>
+        <gin.version>2.1.2</gin.version>
     </properties>
 
     <build>
@@ -45,7 +49,7 @@
                     <!-- <includes>**/*GwtTestSuite.java</includes> -->
                     <includes>**/*GwtTest.java</includes>
 
-                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m</extraJvmArgs>
+                    <extraJvmArgs>-Xss1024k -Xmx1024m -XX:MaxPermSize=256m -Duser.country="US" -Duser.language="en"</extraJvmArgs>
                     <logLevel>${gwt.loglevel}</logLevel>
                     <style>${gwt.outputstyle}</style>
 
@@ -55,7 +59,6 @@
                     <runTarget>ChosenSample.html</runTarget>
                     <modules>
                         <module>com.arcbees.chosen.sample.ChosenSample</module>
-                        <module>com.arcbees.chosen.widgetsample.WidgetSample</module>
                     </modules>
                 </configuration>
                 <executions>
@@ -114,6 +117,38 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.arcbees.gss</groupId>
+            <artifactId>gsss</artifactId>
+            <version>${gsss.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- GWT-Platform dependencies -->
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-mvp-client</artifactId>
+            <version>${gwtp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gwtplatform</groupId>
+            <artifactId>gwtp-dispatch-rest</artifactId>
+            <version>${gwtp.version}</version>
+        </dependency>
+
+        <!-- DI dependencies -->
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>${gin.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
         </dependency>
     </dependencies>
 </project>

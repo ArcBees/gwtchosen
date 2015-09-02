@@ -1,0 +1,21 @@
+@provide 'chosen-colors';
+
+@def CHZN_C_PRIMARY                  #fff;
+@def CHZN_C_PRIMARY_STEP1            #f4f4f4;
+@def CHZN_C_PRIMARY_STEP2            #eee;
+@def CHZN_C_PRIMARY_STEP3            #e8e8e8;
+
+@def CHZN_C_SECONDARY                #3875d7;
+@def CHZN_C_SECONDARY_LIGHT          #5897fb;
+@def CHZN_C_SECONDARY_DARK           #2a62bc;
+
+@def CHZN_C_CHOICE                   CHZN_C_PRIMARY;
+@def CHZN_C_CHOICE_STEP1             CHZN_C_PRIMARY_STEP1;
+@def CHZN_C_CHOICE_STEP2             CHZN_C_PRIMARY_STEP2;
+@def CHZN_C_CHOICE_STEP3             CHZN_C_PRIMARY_STEP3;
+
+@def CHZN_C_TEXT                     #333;
+@def CHZN_C_TEXT_LIGHT               #999;
+
+@def CHZN_C_BORDER                   #aaa;
+@def CHZN_C_HIGHLIGHT                #e2e8f4;

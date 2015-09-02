@@ -1,0 +1,54 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section}">
+
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <h2 class="{res.style.section__title}">Selected and Disabled Support</h2>
+
+                <p>Chosen automatically highlights selected options and removes disabled options.</p>
+            </div>
+        </div>
+        
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_t_full}">
+                <p>Single select</p>
+                <div>
+                    <select data-placeholder="Your Favorite Type of Bear" ui:field="chosenSingle" tabindex="7">
+                        <option value=""></option>
+                        <option>American Black Bear</option>
+                        <option>Asiatic Black Bear</option>
+                        <option>Brown Bear</option>
+                        <option>Giant Panda</option>
+                        <option selected="selected">Sloth Bear</option>
+                        <option disabled="disabled">Sun Bear</option>
+                        <option>Polar Bear</option>
+                        <option disabled="disabled">Spectacled Bear</option>
+                    </select>
+                </div>
+            </div>
+            <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_t_full}">
+                <p>Multiple select</p>
+                <div>
+                    <select data-placeholder="Your Favorite Types of Bear"
+                            multiple="multiple" ui:field="chosenMultiple" tabindex="8">
+                        <option value=""></option>
+                        <option>American Black Bear</option>
+                        <option>Asiatic Black Bear</option>
+                        <option>Brown Bear</option>
+                        <option>Giant Panda</option>
+                        <option selected="selected">Sloth Bear</option>
+                        <option disabled="disabled">Sun Bear</option>
+                        <option selected="selected">Polar Bear</option>
+                        <option disabled="disabled">Spectacled Bear</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>
