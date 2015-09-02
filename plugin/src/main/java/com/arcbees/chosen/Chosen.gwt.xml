@@ -6,5 +6,15 @@
     <inherits name="com.google.common.collect.Collect"/>
     <inherits name="com.arcbees.gsss.animation.Animation"/>
     <inherits name="com.arcbees.gsss.mixin.Mixin"/>
+
+    <replace-with class="com.arcbees.chosen.client.ChosenImpl">
+        <when-type-assignable class="com.arcbees.chosen.client.ChosenImpl" />
+    </replace-with>
+    <replace-with class="com.arcbees.chosen.client.NotSupportedChosenImpl">
+        <when-type-assignable class="com.arcbees.chosen.client.ChosenImpl" />
+        <when-property-is name="user.agent" value="ie6" />
+    </replace-with>
+
+    <define-linker name="chosenVersionInspector" class="com.arcbees.chosen.rebind.VersionInspectorLinker"/>
+    <add-linker name="chosenVersionInspector"/>
 </module>
-    
