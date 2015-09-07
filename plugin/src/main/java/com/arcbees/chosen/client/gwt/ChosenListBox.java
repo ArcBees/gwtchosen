@@ -58,7 +58,7 @@ import static com.arcbees.chosen.client.Chosen.Chosen;
 import static com.google.gwt.query.client.GQuery.$;
 
 public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
-    private static String OPTGROUP_TAG = "optgroup";
+    private static final String OPTGROUP_TAG = "optgroup";
 
     private EventBus chznHandlerManager;
     private ChosenOptions options;
@@ -115,7 +115,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @return
      */
     public static boolean isSupported() {
-        return com.arcbees.chosen.client.Chosen.isSupported();
+        return true;
     }
 
     /**
@@ -400,7 +400,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * Return the value of the first selected option if any. Returns false otherwise.
      * In case of multiple ChosenListBox, please use {@link #getValues()} instead.
      *
-     * @return
+     * @return the value of the first selected option if any
      */
     public String getValue() {
         String[] values = getValues();
@@ -412,7 +412,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * Return the values of all selected options in an array.
      * Usefull to know which options are selected in case of multiple ChosenListBox
      *
-     * @return
+     * @return the values of all selected options in an array
      */
     public String[] getValues() {
         ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY, ChosenImpl.class);
@@ -638,7 +638,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * Remove the optgroup (and the children options) by id.
      * To set an id to an optgroup, use {@link #insertGroup(String, String, int)} or {@link #addGroup(String, String)}
      *
-     * @param id
+     * @param id the id of the group to remove
      */
     public void removeGroupById(String id) {
         $("#" + id, getElement()).remove();
@@ -689,7 +689,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     /**
      * Select all options with value present in <code>values</code> array and update the component.
      *
-     * @param values
+     * @param values the values to select
      */
     public void setSelectedValue(String... values) {
         for (String value : values) {
@@ -706,15 +706,12 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     public void setVisible(boolean visible) {
         this.visible = visible;
 
-        if (isSupported()) {
-            GQuery chosenElement = getChosenElement();
-            if (visible) {
-                chosenElement.show();
-            } else {
-                chosenElement.hide();
-            }
+        GQuery chosenElement = getChosenElement();
+
+        if (visible) {
+            chosenElement.show();
         } else {
-            super.setVisible(visible);
+            chosenElement.hide();
         }
     }
 

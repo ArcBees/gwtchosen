@@ -33,7 +33,7 @@ public class UpdatingDynamicallyView implements IsWidget {
     interface Binder extends UiBinder<Widget, UpdatingDynamicallyView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
     ButtonElement updateButton;

@@ -39,7 +39,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         implements HasValue<List<T>>, IsEditor<TakesValueEditor<List<T>>> {
     private final Renderer<T> renderer;
 
-    private Set<T> selectedValues;
+    private final Set<T> selectedValues;
     private TakesValueEditor<List<T>> editor;
 
     /**

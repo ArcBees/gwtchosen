@@ -25,7 +25,7 @@ public class BrowsersSupportView implements IsWidget {
     interface Binder extends UiBinder<Widget, BrowsersSupportView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     private final Widget widget;
 

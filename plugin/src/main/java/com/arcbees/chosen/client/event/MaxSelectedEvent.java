@@ -21,10 +21,10 @@ import com.google.gwt.event.shared.EventHandler;
 
 public class MaxSelectedEvent extends ChosenEvent<MaxSelectedEvent.MaxSelectedHandler> {
     public interface MaxSelectedHandler extends EventHandler {
-        void onMaxSelected(MaxSelectedEvent event);
+        void onMaxSelected();
     }
 
-    public static Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
+    public static final Type<MaxSelectedHandler> TYPE = new Type<MaxSelectedHandler>();
 
     public MaxSelectedEvent(ChosenImpl chosen) {
         super(chosen);
@@ -41,6 +41,6 @@ public class MaxSelectedEvent extends ChosenEvent<MaxSelectedEvent.MaxSelectedHa
 
     @Override
     protected void dispatch(MaxSelectedHandler handler) {
-        handler.onMaxSelected(this);
+        handler.onMaxSelected();
     }
 }

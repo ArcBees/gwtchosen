@@ -211,7 +211,7 @@ public abstract class BaseChosenValueListBox<T> extends Composite implements Foc
      * This method can return {@code null} if the widget is not fully initialized
      * (before the return of the constructor)
      *
-     * @return
+     * @return the ChosenListBox used by this widget
      */
     protected ChosenListBox getChosenListBox() {
         return (ChosenListBox) getWidget();

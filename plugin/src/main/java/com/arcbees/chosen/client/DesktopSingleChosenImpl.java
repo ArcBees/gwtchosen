@@ -58,7 +58,7 @@ public class DesktopSingleChosenImpl extends ChosenImpl {
         activateAction = new Function() {
             @Override
             public boolean f(Event e) {
-                return activateField(e);
+                return activateField();
             }
         };
 

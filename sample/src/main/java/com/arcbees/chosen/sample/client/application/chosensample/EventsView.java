@@ -25,7 +25,7 @@ public class EventsView implements IsWidget {
     interface Binder extends UiBinder<Widget, EventsView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     private final Widget widget;
 

@@ -29,7 +29,7 @@ public class AdvancedCLBOptionsView implements IsWidget {
     interface Binder extends UiBinder<Widget, AdvancedCLBOptionsView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
     SimplePanel hierChosenSingle;

@@ -21,10 +21,10 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class UpdatedEvent extends GwtEvent<UpdatedEvent.UpdatedHandler> {
     public interface UpdatedHandler extends EventHandler {
-        void onUpdated(UpdatedEvent event);
+        void onUpdated();
     }
 
-    public static Type<UpdatedHandler> TYPE = new Type<UpdatedHandler>();
+    public static final Type<UpdatedHandler> TYPE = new Type<UpdatedHandler>();
 
     public UpdatedEvent() {
     }
@@ -40,7 +40,7 @@ public class UpdatedEvent extends GwtEvent<UpdatedEvent.UpdatedHandler> {
 
     @Override
     protected void dispatch(UpdatedHandler handler) {
-        handler.onUpdated(this);
+        handler.onUpdated();
     }
 
 }

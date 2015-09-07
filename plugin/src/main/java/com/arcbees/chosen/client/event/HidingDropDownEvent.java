@@ -21,10 +21,10 @@ import com.google.gwt.event.shared.EventHandler;
 
 public class HidingDropDownEvent extends ChosenEvent<HidingDropDownEvent.HidingDropDownHandler> {
     public interface HidingDropDownHandler extends EventHandler {
-        void onHidingDropdown(HidingDropDownEvent event);
+        void onHidingDropdown();
     }
 
-    public static Type<HidingDropDownHandler> TYPE = new Type<HidingDropDownHandler>();
+    public static final Type<HidingDropDownHandler> TYPE = new Type<HidingDropDownHandler>();
 
     public HidingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
@@ -41,6 +41,6 @@ public class HidingDropDownEvent extends ChosenEvent<HidingDropDownEvent.HidingD
 
     @Override
     protected void dispatch(HidingDropDownHandler handler) {
-        handler.onHidingDropdown(this);
+        handler.onHidingDropdown();
     }
 }

@@ -126,7 +126,7 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
             resultsShow();
         }
 
-        activateField(e);
+        activateField();
     }
 
     @Override
