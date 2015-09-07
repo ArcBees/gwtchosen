@@ -9,12 +9,7 @@
         <div class="{res.grid.col} {res.grid.col_full}">
             <h2 class="{res.style.section__title}">Browsers support</h2>
 
-            <p>All modern browsers are supported (Firefox, Chrome, Safari and IE9). Legacy support for IE8 is also enabled. On IE6 and IE7, we fall back on normal html select element.</p>
-            <p>To know if the use's browser is supported by the plugin, you can call the <code>isSupported()</code> method :</p>
-            <pre>
-boolean chosenSupport = Chosen.isSupported();
-//or
-boolean chosenSupport = ChosenListBox.isSupported();</pre>
+            <p>All modern browsers are supported (Firefox, Chrome, Safari and IE9). Legacy support for IE8 is also enabled.</p>
         </div>
 
     </g:HTMLPanel>

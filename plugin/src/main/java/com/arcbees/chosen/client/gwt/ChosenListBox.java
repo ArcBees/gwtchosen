@@ -109,16 +109,6 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     /**
-     * Indicates of the ChosenListBox is supported by the current browser. If
-     * not (IE6/7), we fall back on normal select element.
-     *
-     * @return
-     */
-    public static boolean isSupported() {
-        return true;
-    }
-
-    /**
      * Creates a ChosenListBox widget that wraps an existing &lt;select&gt;
      * element.
      * <p/>
