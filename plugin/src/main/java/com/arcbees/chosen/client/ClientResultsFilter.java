@@ -66,7 +66,7 @@ class ClientResultsFilter implements ResultsFilter {
                     if (regex.test(optionContent)) {
                         found = true;
                         results++;
-                    } else if (optionContent.indexOf(" ") >= 0 || optionContent.indexOf("[") == 0) {
+                    } else if (optionContent.contains(" ") || optionContent.indexOf("[") == 0) {
                         String[] parts = optionContent.replaceAll("\\[|\\]", "").split(" ");
                         for (String part : parts) {
                             if (regex.test(part)) {

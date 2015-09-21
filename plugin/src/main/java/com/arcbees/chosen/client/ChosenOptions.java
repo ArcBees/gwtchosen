@@ -61,7 +61,7 @@ public class ChosenOptions {
      * Set the number of items needed to show and enable the search input. This option is when the Chosen component is
      * used in "multiple select" mode or when a custom ResultFilter is used.
      *
-     * @param disableSearchThreshold
+     * @param disableSearchThreshold number of items needed to show and enable the search input
      */
     public ChosenOptions setDisableSearchThreshold(int disableSearchThreshold) {
         this.disableSearchThreshold = disableSearchThreshold;
@@ -143,7 +143,8 @@ public class ChosenOptions {
      * The component is responsive only if you define a viewport in your html file, example:
      * &lt;meta name="viewport" content="width=device-width, initial-scale=1">
      *
-     * @param mobileViewportMaxWidth
+     * @param mobileViewportMaxWidth max width threshold below which the component will consider
+     *                               to be displayed on mobile device
      */
     public ChosenOptions setMobileViewportMaxWidth(int mobileViewportMaxWidth) {
         this.mobileViewportMaxWidth = mobileViewportMaxWidth;

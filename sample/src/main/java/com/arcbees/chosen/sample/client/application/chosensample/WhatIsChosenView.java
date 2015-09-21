@@ -31,7 +31,7 @@ public class WhatIsChosenView implements IsWidget {
     interface Binder extends UiBinder<Widget, WhatIsChosenView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
     SelectElement chosenSelect;

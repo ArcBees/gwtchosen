@@ -18,13 +18,9 @@ package com.arcbees.chosen.sample.client.application.widgetsample;
 
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
-import com.arcbees.chosen.client.event.HidingDropDownEvent;
 import com.arcbees.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
-import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ReadyEvent.ReadyHandler;
-import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
@@ -48,7 +44,7 @@ public class ViewView implements IsWidget {
     @UiField
     static AppResources res;
 
-    private static enum Choices {
+    private enum Choices {
         FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHT, NINTH, TENTH;
 
         public String getLiteral() {
@@ -67,7 +63,7 @@ public class ViewView implements IsWidget {
     private static final class MyEventHandlers implements ChosenChangeHandler, HidingDropDownHandler,
             ShowingDropDownHandler, MaxSelectedHandler, ReadyHandler, ValueChangeHandler {
 
-        private String elementId;
+        private final String elementId;
 
         public MyEventHandlers(String id) {
             this.elementId = id;
@@ -81,19 +77,19 @@ public class ViewView implements IsWidget {
             ).scrollTop($("#log").get(0).getScrollHeight());
         }
 
-        public void onReady(ReadyEvent event) {
+        public void onReady() {
             log("ReadyEvent", "");
         }
 
-        public void onMaxSelected(MaxSelectedEvent event) {
+        public void onMaxSelected() {
             log("MaxSelectedEvent", "");
         }
 
-        public void onShowingDropDown(ShowingDropDownEvent event) {
+        public void onShowingDropDown() {
             log("ShowingDropDownEvent", "");
         }
 
-        public void onHidingDropdown(HidingDropDownEvent event) {
+        public void onHidingDropdown() {
             log("HidingDropDownEvent", "");
         }
 
@@ -108,11 +104,11 @@ public class ViewView implements IsWidget {
         }
     }
 
-    private static String[] teamsGroup = new String[]{
+    private static final String[] teamsGroup = new String[]{
             "NFC EAST", "NFC NORTH", "NFC SOUTH", "NFC WEST", "AFC EAST", "AFC NORTH", "AFC SOUTH", "AFC WEST"
     };
 
-    private static String[] teams = new String[]{
+    private static final String[] teams = new String[]{
             "Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Redskins",
             "Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings",
             "Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers",
@@ -125,7 +121,7 @@ public class ViewView implements IsWidget {
     interface Binder extends UiBinder<Widget, ViewView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
     ChosenListBox countriesChosen;
@@ -140,8 +136,8 @@ public class ViewView implements IsWidget {
 
     public ViewView() {
         teamChosen = new ChosenListBox(true);
-        chosenValueListBox = new ChosenValueListBox(new ChoiceRenderer());
-        multipleChosenValueListBox = new MultipleChosenValueListBox(new ChoiceRenderer());
+        chosenValueListBox = new ChosenValueListBox<Choices>(new ChoiceRenderer());
+        multipleChosenValueListBox = new MultipleChosenValueListBox<Choices>(new ChoiceRenderer());
 
         widget = binder.createAndBindUi(this);
 

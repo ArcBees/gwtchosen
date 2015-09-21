@@ -112,7 +112,7 @@ public class DesktopChosenIT extends ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.ABOVE},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.ABOVE},
      * the dropdown is displayed above the input box.
      */
     @Test
@@ -129,7 +129,7 @@ public class DesktopChosenIT extends ChosenIT {
 
     /**
      * Tests that when
-     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.AUTO}
      * - No boundaries are set
      * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
@@ -149,7 +149,7 @@ public class DesktopChosenIT extends ChosenIT {
 
     /**
      * Tests that when
-     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.AUTO}
      * - No boundaries are set
      * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
@@ -175,7 +175,7 @@ public class DesktopChosenIT extends ChosenIT {
 
     /**
      * Tests that when
-     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.AUTO}
      * - Boundaries are set to particular DOM element
      * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown has enough space below
      *
@@ -195,7 +195,7 @@ public class DesktopChosenIT extends ChosenIT {
 
     /**
      * Tests that when
-     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.AUTO}
+     * - the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.AUTO}
      * - Boundaries are set to particular DOM element
      * - the {@link com.arcbees.chosen.client.gwt.ChosenValueListBox} dropdown does not have enough space below
      *
@@ -214,7 +214,7 @@ public class DesktopChosenIT extends ChosenIT {
     }
 
     /**
-     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.Position.BELOW},
+     * Tests that when the dropdown is set to {@link com.arcbees.chosen.client.DropdownPosition.BELOW},
      * the dropdown is displayed below the input box.
      */
     @Test

@@ -71,7 +71,7 @@
         <junit.version>4.11</junit.version>
         <guava.version>18.0</guava.version>
         <gsss.version>1.0</gsss.version>
-        <checkstyle.version>6.8.1</checkstyle.version>
+        <checkstyle.version>6.9</checkstyle.version>
         <arcbees-checkstyle.version>1.2</arcbees-checkstyle.version>
 
         <!-- maven -->

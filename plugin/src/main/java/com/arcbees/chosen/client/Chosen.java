@@ -34,21 +34,11 @@ public class Chosen extends GQuery {
                 }
             });
 
-    public static String CHOSEN_DATA_KEY = "chosen";
+    public static final String CHOSEN_DATA_KEY = "chosen";
 
     // Initialization
     public Chosen(GQuery gq) {
         super(gq);
-    }
-
-    /**
-     * Indicate if the current browser is supported by the plugin or not.
-     *
-     * @deprecated all browsers supported by GWT is supported by the plugin.
-     */
-    @Deprecated
-    public static boolean isSupported() {
-        return true;
     }
 
     public Chosen chosen() {

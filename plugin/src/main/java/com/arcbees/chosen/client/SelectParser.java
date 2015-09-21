@@ -190,8 +190,9 @@ public class SelectParser {
         public abstract boolean isGroup();
     }
 
+    private final List<SelectItem> parsed;
+
     private int optionsIndex;
-    private List<SelectItem> parsed;
 
     public SelectParser() {
         optionsIndex = 0;

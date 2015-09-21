@@ -36,7 +36,7 @@ public class CustomFilteringView implements IsWidget {
     interface Binder extends UiBinder<Widget, CustomFilteringView> {
     }
 
-    private static Binder binder = GWT.create(Binder.class);
+    private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
     SimplePanel serverChosen;

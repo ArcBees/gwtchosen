@@ -155,7 +155,7 @@ public abstract class ChosenImpl {
         rebuildResultItems(false);
     }
 
-    protected boolean activateField(Event e) {
+    protected boolean activateField() {
         activeTabIndexProperty();
 
         container.addClass(css.chznContainerActive());
@@ -228,7 +228,7 @@ public abstract class ChosenImpl {
         if (eventBus != null) {
             updateEventHandlerRegistration =
                     eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
-                        public void onUpdated(UpdatedEvent event) {
+                        public void onUpdated() {
                             update();
                         }
                     });
@@ -237,7 +237,7 @@ public abstract class ChosenImpl {
         searchField.blur(new Function() {
             @Override
             public boolean f(Event e) {
-                return inputBlur(e);
+                return inputBlur();
             }
         });
 
@@ -365,7 +365,7 @@ public abstract class ChosenImpl {
         }
 
         if (!element.hasClass(css.activeResult())) {
-            activateField(e);
+            activateField();
         }
     }
 
@@ -841,7 +841,7 @@ public abstract class ChosenImpl {
         GQuery $e = $(target);
 
         if (!$e.isEmpty() && "ABBR".equalsIgnoreCase($e.get(0).getNodeName()) && !isDisabled) {
-            resultsReset(e);
+            resultsReset();
             return false;
         }
 
@@ -919,7 +919,7 @@ public abstract class ChosenImpl {
         return $();
     }
 
-    private boolean inputBlur(Event e) {
+    private boolean inputBlur() {
         if (!mouseOnContainer) {
             activeField = false;
             Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
@@ -1193,7 +1193,7 @@ public abstract class ChosenImpl {
         }
     }
 
-    private void resultsReset(Event e) {
+    private void resultsReset() {
         OptionElement firstoption = selectElement.getOptions().getItem(0);
         selectedValues = new ArrayList<String>();
 

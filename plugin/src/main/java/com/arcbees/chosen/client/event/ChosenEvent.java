@@ -22,7 +22,7 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public abstract class ChosenEvent<H extends EventHandler> extends GwtEvent<H> {
 
-    private ChosenImpl chosen;
+    private final ChosenImpl chosen;
 
     public ChosenEvent(ChosenImpl chosen) {
         this.chosen = chosen;
