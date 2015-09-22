@@ -13,7 +13,7 @@
 
     <properties>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <gsss.version>1.1-SNAPSHOT</gsss.version>
+        <gsss.version>1.1</gsss.version>
         <gwtp.version>1.4</gwtp.version>
         <guice.version>3.0</guice.version>
         <gin.version>2.1.2</gin.version>
