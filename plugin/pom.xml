@@ -73,7 +73,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-gwt</artifactId>
             <version>${guava.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.arcbees.gss</groupId>
