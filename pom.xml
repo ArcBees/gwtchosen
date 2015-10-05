@@ -11,7 +11,7 @@
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen-project</artifactId>
     <packaging>pom</packaging>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.1-SNAPSHOT</version>
     <inceptionYear>2012</inceptionYear>
     <url>https://github.com/arcbees/gwtchosen</url>
 
@@ -192,6 +192,7 @@
                     <configuration>
                         <additionalJOption>-J-Xmx2048m</additionalJOption>
                         <failOnError>false</failOnError>
+                        <additionalparam>-Xdoclint:none</additionalparam>
                         <links>
                             <link>http://download.oracle.com/javase/6/docs/api/</link>
                             <link>http://google-web-toolkit.googlecode.com/svn/javadoc/latest/</link>
