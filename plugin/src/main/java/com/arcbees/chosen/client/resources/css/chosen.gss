@@ -176,7 +176,7 @@
 }
 
 .chzn-container-single .chzn-drop {
-    @mixin borderradius(0, 0, 4px, 4px);
+    @mixin borderradius(0, 4px, 4px, 0);
     @mixin bgclip();
 }
 
