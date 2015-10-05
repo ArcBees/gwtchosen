@@ -18,6 +18,7 @@ package com.arcbees.chosen.sample.client.application.chosensample;
 
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.DropdownPosition;
+import com.arcbees.chosen.sample.client.resources.ChosenCustomResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.event.logical.shared.AttachEvent;
@@ -34,6 +35,7 @@ public class ChosenOptionsView implements IsWidget {
     }
 
     private static final Binder binder = GWT.create(Binder.class);
+    private static final ChosenCustomResources CUSTOM_RESOURCES = GWT.create(ChosenCustomResources.class);
 
     @UiField
     SelectElement allowSingleDeselect;
@@ -50,11 +52,23 @@ public class ChosenOptionsView implements IsWidget {
     @UiField
     SelectElement dropdownPosition;
     @UiField
+    SelectElement dropdownResources;
+    @UiField
     SelectElement mobileWidth;
     @UiField
     SelectElement mobileAnimation;
     @UiField
     SelectElement mobileSpeed;
+    @UiField
+    SelectElement dropdownPlaceholder;
+    @UiField
+    SelectElement dropdownPlaceholderSingle;
+    @UiField
+    SelectElement dropdownPlaceholderMultiple;
+    @UiField
+    SelectElement mobileOneText;
+    @UiField
+    SelectElement mobileManyText;
 
     private final Widget widget;
 
@@ -86,6 +100,18 @@ public class ChosenOptionsView implements IsWidget {
                     $(dropdownPosition).as(Chosen).chosen(
                             new ChosenOptions().setDropdownPosition(DropdownPosition.ABOVE));
 
+                    $(dropdownResources).as(Chosen).chosen(
+                            new ChosenOptions().setResources(CUSTOM_RESOURCES));
+
+                    $(dropdownPlaceholder).as(Chosen).chosen(
+                            new ChosenOptions().setPlaceholderText("Well, hello!"));
+
+                    $(dropdownPlaceholderSingle).as(Chosen).chosen(
+                            new ChosenOptions().setPlaceholderTextSingle("I'm single, ladies!"));
+
+                    $(dropdownPlaceholderMultiple).as(Chosen).chosen(
+                            new ChosenOptions().setPlaceholderTextMultiple("I'm so multiple!"));
+
                     $(mobileWidth).as(Chosen).chosen(
                             new ChosenOptions().setMobileViewportMaxWidth(2000));
 
@@ -94,6 +120,12 @@ public class ChosenOptionsView implements IsWidget {
 
                     $(mobileSpeed).as(Chosen).chosen(
                             new ChosenOptions().setMobileAnimationSpeed(1500));
+
+                    $(mobileOneText).as(Chosen).chosen(
+                            new ChosenOptions().setOneSelectedTextMultipleMobile("{} bear selected"));
+
+                    $(mobileManyText).as(Chosen).chosen(
+                            new ChosenOptions().setManySelectedTextMultipleMobile("{} bears selected"));
                 }
             }
         });
