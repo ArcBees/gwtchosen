@@ -159,6 +159,7 @@
 }
 
 .chzn-container-single .chzn-search input {
+    color: CHZN_C_TEXT;
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, CHZN_C_CHOICE_STEP2), color-stop(15%, CHZN_C_PRIMARY));
     /* @alternate */ background: -webkit-linear-gradient(top, CHZN_C_CHOICE_STEP2 1%, CHZN_C_PRIMARY 15%);
     /* @alternate */ background: -moz-linear-gradient(top, CHZN_C_CHOICE_STEP2 1%, CHZN_C_PRIMARY 15%);
