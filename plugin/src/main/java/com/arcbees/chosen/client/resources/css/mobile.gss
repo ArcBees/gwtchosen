@@ -37,10 +37,11 @@
 
 .chzn-mobile-container .chzn-search > i {
     font-size: 175%;
+    color: CHZN_C_TEXT;
 
     position: absolute;
     top: 8px;
-    right: 10px;
+    right: 15px;
 }
 
 .chzn-mobile-container .chzn-search > i:hover {
