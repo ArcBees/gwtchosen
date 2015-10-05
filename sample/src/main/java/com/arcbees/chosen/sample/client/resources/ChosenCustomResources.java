@@ -16,16 +16,18 @@
 
 package com.arcbees.chosen.sample.client.resources;
 
-import javax.inject.Inject;
+import com.arcbees.chosen.client.resources.ChosenCss;
+import com.arcbees.chosen.client.resources.Resources;
 
-public class ResourceLoader {
-    @Inject
-    ResourceLoader(
-            AppResources appResources,
-            ChosenCustomResources chosenCustomResources) {
-        appResources.normalize().ensureInjected();
-        appResources.style().ensureInjected();
-        appResources.grid().ensureInjected();
-        chosenCustomResources.css().ensureInjected();
+public interface ChosenCustomResources extends Resources {
+    interface CustomChosenCss extends ChosenCss {
     }
+
+    @Override
+    @Source({"com/arcbees/gsss/mixin/client/mixins.gss",
+            "com/arcbees/chosen/client/resources/icons/icons.gss",
+            "css/chosenCustomColors.gss",
+            "com/arcbees/chosen/client/resources/css/chosen.gss",
+            "com/arcbees/chosen/client/resources/css/mobile.gss"})
+    CustomChosenCss css();
 }

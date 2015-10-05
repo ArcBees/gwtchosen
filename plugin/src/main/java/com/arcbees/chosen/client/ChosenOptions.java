@@ -49,14 +49,6 @@ public class ChosenOptions {
         return disableSearchThreshold;
     }
 
-    public String getManySelectedTextMultipleMobile() {
-        return manySelectedTextMultipleMobile;
-    }
-
-    public String getOneSelectedTextMultipleMobile() {
-        return oneSelectedTextMultipleMobile;
-    }
-
     /**
      * Set the number of items needed to show and enable the search input. This option is when the Chosen component is
      * used in "multiple select" mode or when a custom ResultFilter is used.
@@ -151,6 +143,10 @@ public class ChosenOptions {
         return this;
     }
 
+    public String getOneSelectedTextMultipleMobile() {
+        return oneSelectedTextMultipleMobile;
+    }
+
     /**
      * Set the text to use when one option is selected on a mobile multiple select.
      * <p/>
@@ -159,8 +155,13 @@ public class ChosenOptions {
      * Ex:
      *   options.setOneSelectedTextMultipleMobile("{} country selected");
      */
-    public void setOneSelectedTextMultipleMobile(String oneSelectedTextMultipleMobile) {
+    public ChosenOptions setOneSelectedTextMultipleMobile(String oneSelectedTextMultipleMobile) {
         this.oneSelectedTextMultipleMobile = oneSelectedTextMultipleMobile;
+        return this;
+    }
+
+    public String getManySelectedTextMultipleMobile() {
+        return manySelectedTextMultipleMobile;
     }
 
     /**
@@ -171,8 +172,9 @@ public class ChosenOptions {
      * Ex:
      *   options.setManySelectedTextMultipleMobile("{} countries selected");
      */
-    public void setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
+    public ChosenOptions setManySelectedTextMultipleMobile(String manySelectedTextMultipleMobile) {
         this.manySelectedTextMultipleMobile = manySelectedTextMultipleMobile;
+        return this;
     }
 
     public String getNoResultsText() {
