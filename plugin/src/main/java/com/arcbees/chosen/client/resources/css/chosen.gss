@@ -507,5 +507,7 @@
     right: -9000px;
 }
 
-.chzn-done {
-}
+.chzn-done {}
+.is-open {}
+.chzn-results-holder {}
+.chzn-mobile-container {}
