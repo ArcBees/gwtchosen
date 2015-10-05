@@ -16,7 +16,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -34,7 +34,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>3.0-SNAPSHOT</version>
+    <version>3.1-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
