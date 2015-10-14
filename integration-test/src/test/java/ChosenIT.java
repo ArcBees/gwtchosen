@@ -32,6 +32,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.IsAcceptedValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
@@ -229,6 +230,21 @@ public abstract class ChosenIT {
         Set<String> allNames = CarBrand.getAllNames(ShowNonEmptyValues.RENDERER);
         allNames.add(ShowNonEmptyValues.RENDERER.render(null));
         assertThat(options).isEqualTo(allNames);
+    }
+
+    /**
+     * Tests the isAccepted is correct.
+     */
+    @Test
+    public void testIsAccepted() {
+        // Given
+        loadTestCase(new IsAcceptedValueListBox());
+
+        // When
+        openDropDown();
+
+        // Then
+        assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
     }
 
     protected void assertDropdownIsBelow() {
