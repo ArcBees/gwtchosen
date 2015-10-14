@@ -39,7 +39,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         implements HasValue<List<T>>, IsEditor<TakesValueEditor<List<T>>> {
     private final Renderer<T> renderer;
 
-    private Set<T> selectedValues;
+    private final Set<T> selectedValues;
     private TakesValueEditor<List<T>> editor;
 
     /**
@@ -156,6 +156,13 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     }
 
     @Override
+    protected void addItemToChosenListBox(T value) {
+        int index = valueKeyToIndex.get(value);
+
+        getChosenListBox().addItem(renderer.render(value), "" + index);
+    }
+
+    @Override
     protected ChosenListBox createChosenListBox(ChosenOptions options) {
         return new ChosenListBox(true, options);
     }
@@ -177,7 +184,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
     protected void updateChosenListBox() {
         List<String> valueIndex = new ArrayList<String>();
 
-        for (Iterator<T> iterator =  selectedValues.iterator(); iterator.hasNext();) {
+        for (Iterator<T> iterator = selectedValues.iterator(); iterator.hasNext(); ) {
             Object key = keyProvider.getKey(iterator.next());
             Integer index = valueKeyToIndex.get(key);
 
@@ -192,11 +199,19 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
         getChosenListBox().setSelectedValue(valueIndex.toArray(new String[valueIndex.size()]));
     }
 
-    @Override
-    protected void addItemToChosenListBox(T value) {
-        int index = valueKeyToIndex.get(value);
+    private void checkValuesAcceptability(List<T> values) {
+        List<T> unacceptableValues = new ArrayList<T>();
 
-        getChosenListBox().addItem(renderer.render(value), "" + index);
+        for (T value : values) {
+            if (!isAccepted(value)) {
+                unacceptableValues.add(value);
+            }
+        }
+
+        if (!unacceptableValues.isEmpty()) {
+            throw new IllegalStateException("These following values are not accepted by the component: " +
+                    unacceptableValues);
+        }
     }
 
     private void setValue(List<T> values, boolean fireEvent, boolean fromComponent) {
@@ -216,21 +231,6 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
 
         if (fireEvent) {
             ValueChangeEvent.fire(this, getValue());
-        }
-    }
-
-    private void checkValuesAcceptability(List<T> values) {
-        List<T> unacceptableValues = new ArrayList<T>();
-
-        for (T value : values) {
-            if (!isAccepted(value)) {
-                unacceptableValues.add(value);
-            }
-        }
-
-        if (!unacceptableValues.isEmpty()) {
-            throw new IllegalStateException("These following values are not accepted by the component: " +
-                    unacceptableValues);
         }
     }
 }

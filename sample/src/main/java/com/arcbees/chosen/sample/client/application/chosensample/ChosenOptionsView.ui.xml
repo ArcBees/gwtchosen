@@ -1,0 +1,483 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.grid.row} {res.style.section}">
+        
+        <div class="{res.grid.col} {res.grid.col_full}">
+            
+            <h2 class="{res.style.section__title}">ChosenOptions</h2>
+            
+            <p>
+                The Chosen plugin can be configured by using an instance of the
+                class
+                <code>ChosenOptions</code>
+            </p>
+            <pre>ChosenOptions options = new ChosenOptions();
+    options.setAllowSingleDeselect(true);
+    //set the options you want...
+    $("select").as(Chosen).chosen(options);
+    
+    //to retrieve the options later
+    ChosenOptions options = $("#myselect").as(Chosen).options();</pre>
+            <p>
+                If you are using the
+                <code>ChosenListBox</code>
+                widget, it offers needed methods for configuring it.
+            </p>
+            <pre>
+    ChosenListBox chzn = new ChosenListBox();
+    chzn.setAllowSingleDeselect(true);
+    //...</pre>
+    
+            <h3>Default Text Support</h3>
+            <p>Chosen automatically sets the default field text ("Choose a
+                country...") by reading the select element's data-placeholder
+                value. If no data-placeholder value is present, it will default to
+                "Select Some Option" or "Select Some Options" depending on whether
+                the select is single or multiple. You can change these default
+                texts via the options
+            </p>
+
+            <p>If you have access to the select html element:</p>
+            <pre>&lt;select
+    <strong>data-placeholder="Choose a country..."</strong>
+    style="width:350px;" multiple class="chzn-select"&gt;</pre>
+            <p>
+                or via the
+                <code>ChosenOptions</code>
+                object:
+            </p>
+            <pre>ChosenOptions options = new ChosenOptions();
+    options.setPlaceholderTextSingle("Choose a country...");
+    options.setPlaceholderTextMultiple("Choose countries...");
+    
+    //using the widget
+    ChosenListBox chzn = new ChosenListBox();
+    chzn.setPlaceholderTextSingle("Choose a country...");</pre>
+            <p>
+                <strong>Note:</strong>
+                on single selects, the first element is
+                assumed to be selected by the browser. To take advantage of the
+                default text support, you will need to include a blank option as
+                the first element of your select list.
+            </p>
+            
+            <h3>List of options</h3>
+            <p>
+                The table below lists the different properties of the
+                <code>ChosenOptions</code>
+                . Each property is accessible via getter/setter methods.
+            </p>
+            <div class="{res.style.tableholder}">
+                <table class="{res.style.table}">
+                    <thead>
+                        <tr>
+                            <th>Property name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Default</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>allowSingleDeselect</td>
+                            <td>boolean</td>
+                            <td>When a
+                                <strong>single</strong>
+                                select box isn't a
+                                required field, you can set
+                                <code>allowSingleDeselect</code>
+                                to true and an UI element will be added for option
+                                deselection. This will only work if the
+                                <strong>first
+                                    option
+                                </strong>
+                                has<strong>blank text</strong>.
+                            </td>
+                            <td>false</td>
+                            <td>
+                                <p>allowSingleDeselect = true</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="allowSingleDeselect" tabindex="10">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>disableSearchThreshold</td>
+                            <td>int</td>
+                            <td>If the number of options is less than or equal to the
+                                <code>disableSearchThreshold</code>, the search box is
+                                disabled.
+                            </td>
+                            <td>0</td>
+                            <td>
+                                <p>disableSearchThreshold = 10</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="disableSearchThreshold" tabindex="11">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>dropdownPosition</td>
+                            <td>DropdownPosition</td>
+                            <td>Sets the positioning of the dropdown. ABOVE, BELOW or AUTO. When auto is
+                                selected, the dropdown will be displayed below the input box only if there's
+                                enough vertical space below. Otherwise, the dropdown will be displayed above
+                                the input box.
+                            </td>
+                            <td>BELOW</td>
+                            <td>
+                                <p>dropdownPosition = DropdownPosition.ABOVE</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="dropdownPosition" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>maxSelectedOptions</td>
+                            <td>int</td>
+                            <td>Defines the maximum number of options that can be
+                                selected in a
+                                <strong>multiple</strong>
+                                select box. if this
+                                option is set to<code>-1</code>, the user can select as many
+                                options as he wants.
+                            </td>
+                            <td>-1</td>
+                            <td>
+                                <p>maxSelectedOptions = 5</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="maxSelectedOptions" tabindex="14" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>noResultsText</td>
+                            <td>String</td>
+                            <td>Defines the text to display when the query entered by
+                                the user doesn't match any options.
+                            </td>
+                            <td>
+                                <em>No results match</em>
+                            </td>
+                            <td>
+                                <p>noResultsText = "Ooops, nothing was found"</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="noResultsText" tabindex="15">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>placeholderText</td>
+                            <td>String</td>
+                            <td>Defines the text to display in the input when nothing is typed / selected. Will affect
+                                both Single and Multiple dropdowns.
+                            </td>
+                            <td>Single or Multiple default</td>
+                            <td>
+                                <p>placeholderText = "Well, hello!"</p>
+                                <select ui:field="dropdownPlaceholder" tabindex="16">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>placeholderTextSingle</td>
+                            <td>String</td>
+                            <td>Defines the text to display in the input when nothing is typed / selected. Will only
+                                affect Single select.
+                            </td>
+                            <td><em>Select an Option</em></td>
+                            <td>
+                                <p>placeholderTextSingle = "I'm single, ladies!"</p>
+                                <select ui:field="dropdownPlaceholderSingle" tabindex="16">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>placeholderTextMultiple</td>
+                            <td>String</td>
+                            <td>Defines the text to display in the input when nothing is typed / selected. Will only
+                                affect Multiple select.
+                            </td>
+                            <td><em>Select Some Options</em></td>
+                            <td>
+                                <p>placeholderTextMultiple = "I'm so multiple"</p>
+                                <select ui:field="dropdownPlaceholderMultiple" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>resources</td>
+                            <td>Resources</td>
+                            <td>Provides a custom resources file if you want to use your own styling. See the source
+                                code for more details on how to implement it.
+                            </td>
+                            <td></td>
+                            <td>
+                                <p>resources = CUSTOM_RESOURCES</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="dropdownResources" tabindex="16">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>searchContains</td>
+                            <td>boolean</td>
+                            <td>If
+                                <code>searchContains</code>
+                                equals false, search
+                                will only match words starting with the query entered by the
+                                user. Otherwise, the search will match words containing the
+                                query.
+                            </td>
+                            <td>false</td>
+                            <td>
+                                <p>searchContains = true</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="searchContains" tabindex="12">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>singleBackstrokeDelete</td>
+                            <td>boolean</td>
+                            <td>Indicates if a choice from a
+                                <strong>multiple</strong>
+                                select box can be deleted by pressing one backspace. If this
+                                option is set to false (default), the first backspace selects
+                                the last choice, the second removes it.
+                            </td>
+                            <td>false</td>
+                            <td>
+                                <p>singleBackstrokeDelete = true</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="singleBackstrokeDelete" tabindex="13" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>mobileViewportMaxWidth</td>
+                            <td>int</td>
+                            <td>Sets the maximum width of the application to show the mobile version. Viewport bigger 
+                                than that number will trigger the desktop version.
+                            </td>
+                            <td>649</td>
+                            <td>
+                                <p>mobileViewportMaxWidth = 2000</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileWidth" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>mobileAnimation</td>
+                            <td>boolean</td>
+                            <td>Enable / disable opening and closing animations on mobile.
+                            </td>
+                            <td>true</td>
+                            <td>
+                                <p>mobileAnimation = false</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileAnimation" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>mobileAnimationSpeed</td>
+                            <td>int</td>
+                            <td>Sets the mobile animation speed, in milliseconds.
+                            </td>
+                            <td>150</td>
+                            <td>
+                                <p>mobileAnimationSpeed = 1500</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileSpeed" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>oneSelectedTextMultipleMobile</td>
+                            <td>String</td>
+                            <td>Set the text to use when one option is selected on a mobile multiple select.
+                                <code>{}</code> can be used in the text to indicate where to put the number of option
+                                selected (in this case 1).
+                            </td>
+                            <td>{} item selected</td>
+                            <td>
+                                <p>oneSelectedTextMultipleMobile = "{} bears selected"</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileOneText" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>manySelectedTextMultipleMobile</td>
+                            <td>String</td>
+                            <td>Set the text to use when several options are selected on a mobile multiple select.
+                                <code>{}</code> can be used in the text to indicate where to put the number of option
+                                selected.
+                            </td>
+                            <td>{} items selected</td>
+                            <td>
+                                <p>manySelectedTextMultipleMobile = "{} bears selected"</p>
+                                <select data-placeholder="Your Favorite Type of Bear"
+                                        ui:field="mobileManyText" tabindex="16" multiple="multiple">
+                                    <option value=""></option>
+                                    <option>American Black Bear</option>
+                                    <option>Asiatic Black Bear</option>
+                                    <option>Brown Bear</option>
+                                    <option>Giant Panda</option>
+                                    <option>Sloth Bear</option>
+                                    <option>Sun Bear</option>
+                                    <option>Polar Bear</option>
+                                    <option>Spectacled Bear</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

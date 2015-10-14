@@ -25,7 +25,7 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         void onChange(ChosenChangeEvent event);
     }
 
-    public static Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
+    public static final Type<ChosenChangeHandler> TYPE = new Type<ChosenChangeHandler>();
 
     private final int index;
     private final boolean selection;
@@ -52,12 +52,12 @@ public class ChosenChangeEvent extends ChosenEvent<ChosenChangeEvent.ChosenChang
         return TYPE;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public int getIndex() {
         return index;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public boolean isSelection() {

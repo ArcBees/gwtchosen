@@ -1,0 +1,53 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section}">
+        
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <h2>Advanced ChosenListBox Options</h2>
+            </div>
+        </div>
+        
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <p>
+                    The <code>ChosenListBox</code> widget allows you to programmatically construct option hierarchies of arbitrary depth
+                    within or outside of groups, as well as add CSS class names to individual options:
+                </p>
+            </div>
+            <g:SimplePanel styleName="{res.grid.col} {res.grid.col_1_3}" ui:field="hierChosenSingle"/>
+        </div>
+
+        <div class="{res.grid.row}">
+            <div class="{res.grid.col} {res.grid.col_full}">
+                <h4>Java:</h4>
+                <pre>
+ChosenListBox chzn = new ChosenListBox();
+chzn.setWidth( "350px" );
+chzn.setPlaceholderText( "Navigate to..." );
+chzn.setTabIndex( 9 );
+chzn.addItem( "" );
+chzn.addStyledItem( "Home", "home", null );
+chzn.addGroup( "ABOUT US" ); // group 0
+chzn.addStyledItemToGroup( "Press Releases", "press", null, 0 );
+chzn.addStyledItemToGroup( "Contact Us", "about", null, 0 );
+chzn.addGroup( "PRODUCTS" ); // group 1
+chzn.addStyledItemToGroup( "Tera-Magic", "tm", null, 0, 1 );
+chzn.addStyledItemToGroup( "Tera-Magic Pro", "tmpro", null, 1, 1 );
+// Item will be custom-styled and inserted before "Tera-Magic Pro"
+chzn.insertStyledItemToGroup( "Tera-Magic Standard", "tmstd", "youAreHere", 1, 1, 1 );</pre>
+                <h4>CSS:</h4>
+                <pre>
+.youAreHere {
+    border: dashed 1px lightGrey;
+    border-left: solid 3px orange;
+}</pre>
+            </div>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

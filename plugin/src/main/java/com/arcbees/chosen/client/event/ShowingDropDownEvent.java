@@ -21,10 +21,10 @@ import com.google.gwt.event.shared.EventHandler;
 
 public class ShowingDropDownEvent extends ChosenEvent<ShowingDropDownEvent.ShowingDropDownHandler> {
     public interface ShowingDropDownHandler extends EventHandler {
-        void onShowingDropDown(ShowingDropDownEvent event);
+        void onShowingDropDown();
     }
 
-    public static Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
+    public static final Type<ShowingDropDownHandler> TYPE = new Type<ShowingDropDownHandler>();
 
     public ShowingDropDownEvent(ChosenImpl chosen) {
         super(chosen);
@@ -41,6 +41,6 @@ public class ShowingDropDownEvent extends ChosenEvent<ShowingDropDownEvent.Showi
 
     @Override
     protected void dispatch(ShowingDropDownHandler handler) {
-        handler.onShowingDropDown(this);
+        handler.onShowingDropDown();
     }
 }

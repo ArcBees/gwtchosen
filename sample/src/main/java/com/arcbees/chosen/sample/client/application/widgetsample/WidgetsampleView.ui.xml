@@ -1,0 +1,78 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:widgetsample="urn:import:com.arcbees.chosen.sample.client.application.widgetsample">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel>
+
+        <a href="https://github.com/arcbees/gwtchosen/">
+            <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" 
+                 alt="Fork me on GitHub" 
+                 class="{res.style.banner}"/>
+        </a>
+        
+        <div class="{res.style.container}">
+
+            <div class="container">
+                <header class="{res.grid.row}">
+                    <div class="{res.grid.col} {res.grid.col_full}">
+                        <h1>GwtChosen: UiBinder, ChosenListBox and events...</h1>
+                    </div>
+                </header>
+
+                <div class="{res.grid.row}">
+                    <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_m_full}">
+                        <p>
+                            This example shows you how to use
+                            <code>ChosenListBox</code>
+                            widget. you can use in collaboration with UiBinder :
+                        </p>
+                        <pre>
+&lt;chzn:ChosenListBox ui:field="countriesChosen"
+    allowSingleDeselect="true">
+    &lt;g:item value="">&lt;/g:item>
+    &lt;g:item value="United States">United States&lt;/g:item>
+    &lt;g:item value="United Kingdom">United Kingdom&lt;/g:item>
+    ...
+&lt;/chzn:ChosenListBox></pre>
+                    </div>
+                    <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_m_full}">
+                        <p><br/>or directly in your java class:</p>
+                        <pre>
+ChosenListBox teamChosen = new ChosenListBox(true); //multiple
+// init options for teamchosen
+for (String team : teams) {
+    teamChosen.addItem(team);
+}
+
+teamChosen.setPlaceholderText("Choose your favourite teams");</pre>
+                    </div>
+                </div>
+
+                <div class="{res.grid.row}">
+                    
+                    <div class="{res.grid.col} {res.grid.col_full}">
+                        <h2>Events log</h2>
+
+                        <p>This example shows you also when the different events you can
+                            listen for are fired by the component. Source code can be found <a
+                                href="https://github.com/ArcBees/gwtchosen/tree/master/sample/src/main/java/com/arcbees/chosen/sample/client/application/widgetsample">here</a>
+                        </p>
+                    </div>
+                    
+                    <div class="{res.grid.col} {res.grid.col_1_2} {res.grid.col_m_full}">
+                        <div id="log" class="{res.style.log}"></div>
+                        <button id="clearLogButton" class="{res.style.clearLogButton}">Clear log history</button>
+                    </div>
+                    
+                    <widgetsample:ViewView></widgetsample:ViewView>
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

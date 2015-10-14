@@ -1,15 +1,30 @@
+<!doctype html>
 <html>
-  <head>
-  </head>
-  <body>
-     <script type="text/javascript">
-       // a workaround for capturing and passing gwt.codesvr parameter in development mode
-       function goTo(location) {
-         window.location = location + window.location.search;
-       }
-       goTo('ChosenSample.html');
-     </script>
-     <h2>Loading the demo of the Chosen plugin for GwtQuery</h2>
-  </body>
-</html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>GwtQuery: Chosen plugin example</title>
 
+    <script type="text/javascript" language="javascript" src="ChosenSample/ChosenSample.nocache.js"></script>
+
+    <style>
+        :focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- OPTIONAL: include this if you want history support -->
+<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+        style="position:absolute;width:0;height:0;border:0"></iframe>
+
+<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+<noscript>
+    <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+    </div>
+</noscript>
+</body>
+</html>

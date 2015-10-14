@@ -123,6 +123,16 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     }
 
     @Override
+    protected void addItemToChosenListBox(T value) {
+        getChosenListBox().addItem(renderer.render(value));
+    }
+
+    @Override
+    protected ChosenListBox createChosenListBox(ChosenOptions options) {
+        return new ChosenListBox(options);
+    }
+
+    @Override
     protected void deselectValue(T value) {
         // never happen in single selection mode
     }
@@ -130,11 +140,6 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     @Override
     protected void selectValue(T value) {
         setValue(value, true, false);
-    }
-
-    @Override
-    protected ChosenListBox createChosenListBox(ChosenOptions options) {
-        return new ChosenListBox(options);
     }
 
     @Override
@@ -148,11 +153,6 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
             value = null; // the value is not in the accepted values list anymore.
             getChosenListBox().setSelectedIndex(-1);
         }
-    }
-
-    @Override
-    protected void addItemToChosenListBox(T value) {
-        getChosenListBox().addItem(renderer.render(value));
     }
 
     private void setValue(T newValue, boolean fireEvents, boolean update) {

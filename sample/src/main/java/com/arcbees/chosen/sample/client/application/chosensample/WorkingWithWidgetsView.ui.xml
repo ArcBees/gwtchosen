@@ -1,0 +1,48 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section} {res.grid.row}">
+
+        <div class="{res.grid.col} {res.grid.col_full}">
+
+            <h2 class="{res.style.section__title}">Working with Widgets and UiBinder</h2>
+
+            <p>
+                In addition to the
+                <a href="http://www.gwtquery.com/">GwtQuery</a>
+                way to call the plugin, you have the possiblility to use the
+                <code>ChosenListBox</code>
+                widget either in your uibinder template :
+            </p>
+
+            <pre>&lt;!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent"&gt;
+&lt;ui:UiBinder ...
+    xmlns:chzn="urn:import:com.arcbees.chosen.client.gwt"&gt;
+    &lt;chzn:ChosenListBox maxSelectedOptions="5" placeholderText="Choose your country..."&gt;
+            &lt;g:item value=""&gt;&lt;/g:item&gt;
+            &lt;g:item value="United States"&gt;United States&lt;/g:item&gt;
+            &lt;g:item value="United Kingdom"&gt;United Kingdom&lt;/g:item&gt;
+            ...
+    &lt;/chzn:ChosenListBox&gt;</pre>
+
+            <p>or directly in your java code :</p>
+
+            <pre>import com.arcbees.chosen.client.gwt.ChosenListBox;
+...
+
+ChosenListBox chzn = new ChosenListBox(true);
+chzn.addItem("United States");
+chzn.addItem("United Kingdom");
+...
+chzn.setMaxSelectedOptions(5);
+chzn.setPlaceholderText("Choose your country...");</pre>
+
+            <p>Check <a href="/#!/widget-sample">this complete example</a> for more code</p>
+
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

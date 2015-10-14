@@ -4,10 +4,7 @@
 [Chosen](https://github.com/harvesthq/chosen) is a javascript plugin (for jQuery and Prototype) _that makes long, unwieldy select boxes much more user-friendly._ GwtChosen is a port of the jquery version of Chosen for GWT Web Toolkit. It is not a wrapper but a complete rewrite using the GWT standards. It is available as a GwtQuery plugin or as a widget.
 
 ##Documentation
-* [For documentation and examples](http://arcbees.github.com/gwtchosen/)
-
-##Demo
-* [Widget Sample](http://arcbees.github.io/gwtchosen/ChosenSample.html)
+* [For documentation and examples](http://dev.arcbees.com/gwtchosen/)
 
 ##Stable version
 * [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Ccom.arcbees.gwtchosen)
@@ -19,7 +16,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -37,7 +34,7 @@
 <dependency>
     <groupId>com.arcbees</groupId>
     <artifactId>gwtchosen</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <version>3.1-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```

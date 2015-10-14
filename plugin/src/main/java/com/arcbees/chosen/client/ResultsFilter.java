@@ -20,13 +20,13 @@ public interface ResultsFilter {
     /**
      * This method is called when you user is trying to filter the list of items by entering characters in the
      * input text element.
-     *
+     * <p/>
      * This method is also called when we are revealing the options panel. In this case, the boolean parameter
      * {@code isShowing} is set to true.
      *
      * @param searchText the text entered by the user
-     * @param chosen the chosen component
-     * @param isShowing indicates of this method is called because we are revealing the options.
+     * @param chosen     the chosen component
+     * @param isShowing  indicates of this method is called because we are revealing the options.
      */
     void filter(String searchText, ChosenImpl chosen, boolean isShowing);
 }

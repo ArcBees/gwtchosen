@@ -1,0 +1,31 @@
+@provide 'theme';
+
+/**
+ * Colors
+ */
+
+@def C_PRIMARY eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_PRIMARY");
+@def C_PRIMARY_DARK eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_PRIMARY_DARK");
+@def C_SECONDARY eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_SECONDARY");
+@def C_BACKGROUND eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_BACKGROUND");
+@def C_BACKGROUND_DARK eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_BACKGROUND_DARK");
+@def C_BORDER eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_BORDER");
+@def C_TEXT eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_TEXT");
+@def C_TEXT_LIGHT eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_TEXT_LIGHT");
+@def C_TEXT_DARK eval("com.arcbees.chosen.sample.client.resources.theme.Colors.C_TEXT_DARK");
+
+/**
+ * Fonts
+ */
+
+@def F_PRIMARY eval("com.arcbees.chosen.sample.client.resources.theme.Fonts.F_PRIMARY");
+@def F_PRIMARY_LIGHT eval("com.arcbees.chosen.sample.client.resources.theme.Fonts.F_PRIMARY_LIGHT");
+@def F_PRIMARY_BOLD eval("com.arcbees.chosen.sample.client.resources.theme.Fonts.F_PRIMARY_BOLD");
+
+/**
+ * Sizes
+ */
+
+@def S_LINEHEIGHT eval("com.arcbees.chosen.sample.client.resources.theme.Sizes.S_LINEHEIGHT");
+@def S_SPACING eval("com.arcbees.chosen.sample.client.resources.theme.Sizes.S_SPACING");
+@def S_BORDER_RADIUS eval("com.arcbees.chosen.sample.client.resources.theme.Sizes.S_BORDER_RADIUS");

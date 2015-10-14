@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.style.section} {res.grid.row}">
+
+        <div class="{res.grid.col} {res.grid.col_full}">
+            <h2 class="{res.style.section__title}">Browsers support</h2>
+
+            <p>All modern browsers are supported (Firefox, Chrome, Safari and IE9). Legacy support for IE8 is also enabled.</p>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel tag="section" styleName="{res.grid.row}">
+
+        <div class="{res.grid.col} {res.grid.col_full}">
+            <h2 class="{res.style.section__title}">Custom filtering</h2>
+
+            <p>Sometimes it's useful to implement the filtering behavior of the component to filter for example the list of options on the server side. The <code>resultFilter</code> option allows you to give your own instance of a <code>ResultFilter</code> object that will take care to filter the list of options. Once the filtering is done, don't forget to call the method <code>ChosenImpl.rebuildResultItems()</code> to warn the chosen component that the filtering is done.</p>
+            <p>Example:</p>
+    
+            <pre>
+public class ServerSideResultFilter implements ResultsFilter {
+    private boolean initialized;
+    private final TagProxy tagProxy;
+    
+    public ServerSideResultFilter(TagProxy tagProxy) {
+        this.tagProxy = tagProxy;
+    }
+    
+    @Override
+    public void filter(final String searchText, final ChosenImpl chosen, boolean isShowing) {
+        if (isShowing &amp;&amp; initialized) {
+            return; // do nothing, keep the last results
+        }
+        initialized = true;
+    
+        tagProxy.filterTags(searchText, new MethodCallback&lt;List&lt;Tag>>() {
+            @Override
+            public void onSuccess(Method method, List&lt;Tag> tags) {
+                List&lt;SelectItem> selectItems = chosen.getSelectItems();
+                selectItems.clear();
+    
+                for (Tag tag : tags) {
+                    OptionItem optionItem = new OptionItem();
+                    optionItem.setHtml("&lt;div>" + tag.getLabel() +"&lt;span class=\"count\">" + tag.getCount() +"&lt;/span>&lt;/div>");
+                    optionItem.setText(tag.getLabel());
+                    optionItem.setValue(tag.getLabel());
+                    optionItem.setArrayIndex(tag.getId());
+                    optionItem.setOptionsIndex(tag.getId());
+                    optionItem.setDomId("tagOption_" + tag.getId());
+    
+                    selectItems.add(optionItem);
+                }
+    
+                chosen.rebuildResultItems();
+            }
+        });
+    }
+}
+    
+//...
+    
+ChosenOptions options = new ChosenOptions();
+options.setResultFilter(new ServerSideResultFilter(tagProxy));
+ChosenListBox chzn = new ChosenListBox(true, options);</pre>
+                
+            <p>Example: Start typing some characters to see the list of items</p>
+            
+            <g:SimplePanel ui:field="serverChosen"/>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

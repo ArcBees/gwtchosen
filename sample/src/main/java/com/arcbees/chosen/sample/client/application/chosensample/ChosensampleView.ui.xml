@@ -1,0 +1,82 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:chosensample="urn:import:com.arcbees.chosen.sample.client.application.chosensample">
+
+    <ui:with field="res" type="com.arcbees.chosen.sample.client.resources.AppResources"/>
+
+    <g:HTMLPanel>
+
+        <a href="https://github.com/arcbees/gwtchosen/">
+            <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" 
+                 alt="Fork me on GitHub" 
+                 class="{res.style.banner}"/>
+        </a>
+        
+        <div class="{res.style.container}">
+            
+            <header class="{res.grid.row}">
+                <div class="{res.grid.col} {res.grid.col_full}">
+                    <div class="{res.style.header}">
+                        <h1>Chosen for GWT</h1>
+                        <p>
+                            <a href="http://harvesthq.github.com/chosen/">Chosen</a>
+                            is a
+                            javascript plugin (for jQuery and Prototype)
+                            <em>that makes
+                                long, unwieldy select boxes much more user-friendly.
+                            </em>
+                            GwtChosen is
+                            a port of the jquery version of Chosen for Google Web Toolkit. It is
+                            not a wrapper but a complete rewrite using the GWT standards. It is
+                            available as a GwtQuery plugin or as a widget.
+                        </p>
+                    </div>
+                </div>
+            </header>
+            
+            <chosensample:WhatIsChosenView/>
+
+            <chosensample:WorkingWithWidgetsView/>
+            
+            <chosensample:OptgroupSupportView/>
+            
+            <chosensample:SelectedDisabledSupportView/>
+            
+            <chosensample:AdvancedCLBOptionsView/>
+
+            <chosensample:ChosenOptionsView/>
+            
+            <chosensample:EventsView/>
+
+            <chosensample:UpdatingDynamicallyView/>
+
+            <chosensample:CustomFilteringView/>
+
+            <chosensample:BrowsersSupportView/>
+
+            <chosensample:SetupView/>
+
+            <section class="{res.grid.row} {res.style.section}">
+                <div class="{res.grid.col} {res.grid.col_full}">
+                    <h2 class="{res.style.section__title}">Credits</h2>
+                </div>
+                <div class="{res.grid.col} {res.grid.col_full}">
+                    <p>
+                        The initial chosen javascript plugin was built by <a
+                            href="http://www.getharvest.com/">Harvest</a>. Concept and
+                        development by <a href="http://patrickfiller.com/">Patrick
+                        Filler</a>. Design and CSS by <a href="http://matthewlettini.com/">Matthew
+                        Lettini</a>
+                    </p>
+                    <p>
+                        The GWT port of Chosen was built by <a
+                            href="https://plus.google.com/+JulienDramaix">Julien
+                        Dramaix</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

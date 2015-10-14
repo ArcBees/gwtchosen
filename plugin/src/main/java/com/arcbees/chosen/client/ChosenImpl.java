@@ -27,11 +27,10 @@ import com.arcbees.chosen.client.SelectParser.SelectItem;
 import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenEvent;
 import com.arcbees.chosen.client.event.HidingDropDownEvent;
-import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent;
 import com.arcbees.chosen.client.event.UpdatedEvent;
-import com.arcbees.chosen.client.resources.ChozenCss;
+import com.arcbees.chosen.client.resources.ChosenCss;
 import com.arcbees.chosen.client.resources.Resources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -46,12 +45,10 @@ import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.query.client.Function;
 import com.google.gwt.query.client.GQuery;
-import com.google.gwt.query.client.Properties;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safecss.shared.SafeStylesBuilder;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -64,172 +61,49 @@ import static com.google.gwt.query.client.GQuery.$;
 import static com.google.gwt.query.client.GQuery.document;
 import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
-public class ChosenImpl {
-    public interface ChozenTemplate extends SafeHtmlTemplates {
-        ChozenTemplate templates = GWT.create(ChozenTemplate.class);
+public abstract class ChosenImpl {
+    static final int BACKSPACE = 8;
+    static final String TABINDEX_PROPERTY = "tabindex";
 
-        @Template("<li class=\"{1}\" id=\"{0}\"><span>{2}</span><a href=\"javascript:void(0)\" class=\"{3} {6}\" " +
-                "rel=\"{4}\" data-chosen-value=\"{5}\"></a></li>")
-        SafeHtml choice(String id, String searchChoiceClass, SafeHtml content,
-                String searchChoiceCloseClass, String rel, String value, String iconCloseClass);
-
-        @Template("<div id=\"{0}\" class=\"{1}\"></div>")
-        SafeHtml container(String id, String cssClasses);
-
-        @Template("<ul class=\"{0}\"><li class=\"{1}\"><input type=\"text\" value=\"{2}\" class=\"{3}\" " +
-                "autocomplete=\"off\" style=\"width:25px;\"/></li></ul><div class=\"{4}\" style=\"{6}\"><ul " +
-                "class=\"{5}\"></ul></div>")
-        SafeHtml contentMultiple(String chznChoicesClass, String chznSearchFieldClass,
-                String defaultText, String defaultClass, String chznDropClass, String chznResultClass,
-                SafeStyles offsets);
-
-        @Template("<a href=\"javascript:void(0)\" class=\"{0} {1}\"><span>{2}</span><div><b " +
-                "class=\"{7}\"></b></div></a><div class=\"{3}\" style=\"{6}\"><div class=\"{4} {8}\">" +
-                "<input type=\"text\" autocomplete=\"off\" /></div><ul class=\"{5}\"></ul></div>")
-        SafeHtml contentSingle(String chznSingleClass, String chznDefaultClass, String defaultText,
-                String dropClass, String chznSearchClass, String chznResultClass, SafeStyles offsets,
-                String iconArrowClass, String iconSearchClass);
-
-        @Template("<li id=\"{0}\" class=\"{1}\">{2}</li>")
-        SafeHtml group(String id, String groupResultClass, String content);
-
-        @Template("<li class=\"{0}\">{1}\"<span></span>\"</li>")
-        SafeHtml noResults(String noResultsClass, String content);
-
-        @Template("<li id=\"{0}\" class=\"{1}\" style=\"{2}\">{3}</li>")
-        SafeHtml option(String id, String groupResultClass, SafeStyles style, String content);
-
-        @Template("<li id=\"{0}\" class=\"{1}\" style=\"{2}\">{3}</li>")
-        SafeHtml option(String id, String groupResultClass, SafeStyles safeStyles, SafeHtml htmlContent);
-    }
-
-    private static class ClientResultsFilter implements ResultsFilter {
-        private static final RegExp regExpChars = RegExp.compile("[-[\\]{}()*+?.,\\\\^$|#\\s]", "g");
-
-        @Override
-        public void filter(String searchText, ChosenImpl chosen, boolean isShowing) {
-            ChosenOptions options = chosen.getOptions();
-
-            // TODO should be part of this object
-            String regexAnchor = options.isSearchContains() ? "" : "^";
-            // escape reg exp special chars
-            String escapedSearchText = regExpChars.replace(searchText, "\\$&");
-
-            RegExp regex = RegExp.compile(regexAnchor + escapedSearchText, "i");
-            RegExp zregex = RegExp.compile("(" + escapedSearchText + ")", "i");
-
-            int results = 0;
-
-            List<SelectItem> selectItems = chosen.getSelectItems();
-
-            for (SelectItem item : selectItems) {
-                if (item.isDisabled() || item.isEmpty()) {
-                    continue;
-                }
-
-                if (item.isGroup()) {
-                    $('#' + item.getDomId()).css("display", "none");
-                } else {
-                    OptionItem option = (OptionItem) item;
-
-                    if (!(chosen.isMultiple() && option.isSelected())) {
-                        boolean found = false;
-                        String resultId = option.getDomId();
-                        GQuery result = $("#" + resultId);
-                        String optionContent = option.getHtml();
-                        if (optionContent == null || optionContent.trim().isEmpty()) {
-                            optionContent = option.getText();
-                        }
-
-                        if (regex.test(optionContent)) {
-                            found = true;
-                            results++;
-                        } else if (optionContent.indexOf(" ") >= 0 || optionContent.indexOf("[") == 0) {
-                            String[] parts = optionContent.replaceAll("\\[|\\]", "").split(" ");
-                            for (String part : parts) {
-                                if (regex.test(part)) {
-                                    found = true;
-                                    results++;
-                                }
-                            }
-                        }
-
-                        if (found) {
-                            String text;
-                            if (searchText.length() > 0) {
-                                text = zregex.replace(optionContent, "<em>$1</em>");
-                            } else {
-                                text = optionContent;
-                            }
-
-                            result.html(text);
-                            chosen.resultActivate(result);
-
-                            if (option.getGroupArrayIndex() != -1) {
-                                $("#" + selectItems.get(option.getGroupArrayIndex()).getDomId()).css("display",
-                                        "list-item");
-                            }
-                        } else {
-                            if (chosen.getResultHighlight() != null
-                                    && resultId.equals(chosen.getResultHighlight().attr("id"))) {
-                                chosen.resultClearHighlight();
-                            }
-                            chosen.resultDeactivate(result);
-                        }
-                    }
-                }
-            }
-
-            if (results < 1 && !searchText.isEmpty()) {
-                chosen.noResults(searchText);
-            } else {
-                chosen.winnowResultsSetHighlight();
-            }
-
-            if (isShowing) {
-                chosen.positionDropdownResult();
-            }
-        }
-    }
-
+    private static final int TAB = 9;
+    private static final int ENTER = 13;
+    private static final int SHIFT = 16;
+    private static final int CTRL = 17;
+    private static final int ESCAPE = 27;
+    private static final int UP_ARROW = 38;
+    private static final int DOWN_ARROW = 40;
+    private static final int LEFT_WINDOW_KEY = 91;
     private static final RegExp containerIdRegExp = RegExp.compile("[^\\w]", "g");
     private static final int HORIZONTAL_OFFSET = -9000;
     private static final int VERTICAL_OFFSET = -9000;
-    private static final String DEFAULT_CONTAINER_ID = "chozen_container__";
+    private static final String DEFAULT_CONTAINER_ID = "chosen_container__";
     private static final Set<Class> INJECTED_RESOURCES = new HashSet<Class>();
-
-    private static final String TABINDEX_PROPERTY = "tabindex";
     private static int idCounter;
 
+    protected boolean activeField;
+    // TODO
+    protected int choices;
+    protected Function clickTestAction;
+    protected boolean resultsShowing;
+    protected GQuery searchChoices;
+    protected GQuery searchContainer;
     private GQuery $selectElement;
-    private Function activateAction;
-    private boolean activeField;
     private boolean allowSingleDeselect;
-    private int backstrokeLength;
-    private int choices;
-    private Function clickTestAction;
     private GQuery container;
     private String containerId;
-    private ChozenCss css;
+    private ChosenCss css;
     private List<String> selectedValues = new ArrayList<String>();
     private String defaultText;
     private GQuery dropdown;
     private EventBus eventBus;
     private int fWidth;
     private boolean isDisabled;
-    private boolean isMultiple;
     private boolean isRTL;
     private boolean customFilter;
     private boolean mouseOnContainer;
     private ChosenOptions options;
-    private GQuery pendingBackstroke;
-    private boolean pendingDestroyClick;
     private GQuery resultHighlight;
-    private GQuery resultSingleSelected;
     private String resultsNoneFound;
-    private boolean resultsShowing;
-    private GQuery searchChoices;
-    private GQuery searchContainer;
     private GQuery searchField;
     private GQuery searchResults;
     private SelectElement selectElement;
@@ -250,12 +124,15 @@ public class ChosenImpl {
         return null;
     }
 
-    public List<String> getSelectedValues() {
-        return selectedValues;
-    }
-
     public ChosenOptions getOptions() {
         return options;
+    }
+
+    /**
+     * Return the highlighted result or null if the.
+     */
+    public GQuery getResultHighlight() {
+        return resultHighlight;
     }
 
     public SelectElement getSelectElement() {
@@ -266,82 +143,20 @@ public class ChosenImpl {
         return selectItems;
     }
 
+    public List<String> getSelectedValues() {
+        return selectedValues;
+    }
+
     public boolean isMultiple() {
-        return isMultiple;
-    }
-
-    /**
-     * Return the highlighted result or null if the.
-     */
-    public GQuery getResultHighlight() {
-        return resultHighlight;
-    }
-
-    /**
-     * Is the plugin support the current browser ?
-     *
-     * @return
-     */
-    public boolean isSupported() {
-        return true;
+        return false;
     }
 
     public void rebuildResultItems() {
         rebuildResultItems(false);
     }
 
-    protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
-        this.selectElement = element;
-        this.options = options;
-        this.eventBus = eventBus;
-
-        this.$selectElement = $(selectElement);
-
-        setDefaultValues();
-
-        this.isMultiple = selectElement.isMultiple();
-
-        setDefaultText();
-
-        setup();
-
-        bind();
-
-        finishSetup();
-    }
-
-    protected void release() {
-        if (updateEventHandlerRegistration != null) {
-            updateEventHandlerRegistration.removeHandler();
-            updateEventHandlerRegistration = null;
-        }
-        // empty the searchResult to speed up the container.remove()
-        if (searchResults != null) {
-            searchResults.html("");
-        }
-
-        // remove method clean listener and cie
-        container.remove();
-
-        $selectElement.removeClass(css.chznDone(), "chzn-done").show();
-    }
-
-    protected void update() {
-        if (!isMultiple()) {
-            resultsResetCleanup();
-        }
-
-        setDefaultText();
-        resultClearHighlight();
-        resultSingleSelected = null;
-        resultsBuild(false);
-    }
-
-    private boolean activateField(Event e) {
-        if (!isMultiple && !activeField) {
-            searchField.attr(TABINDEX_PROPERTY, selectedItem.attr(TABINDEX_PROPERTY));
-            selectedItem.attr(TABINDEX_PROPERTY, -1);
-        }
+    protected boolean activateField() {
+        activeTabIndexProperty();
 
         container.addClass(css.chznContainerActive());
         activeField = true;
@@ -351,7 +166,14 @@ public class ChosenImpl {
         return false;
     }
 
-    private void bind() {
+    protected void activeTabIndexProperty() {
+        if (!activeField) {
+            searchField.attr(TABINDEX_PROPERTY, selectedItem.attr(TABINDEX_PROPERTY));
+            selectedItem.attr(TABINDEX_PROPERTY, -1);
+        }
+    }
+
+    protected void bind() {
         container.mousedown(new Function() {
             @Override
             public boolean f(Event e) {
@@ -406,7 +228,7 @@ public class ChosenImpl {
         if (eventBus != null) {
             updateEventHandlerRegistration =
                     eventBus.addHandler(UpdatedEvent.getType(), new UpdatedEvent.UpdatedHandler() {
-                        public void onUpdated(UpdatedEvent event) {
+                        public void onUpdated() {
                             update();
                         }
                     });
@@ -415,7 +237,7 @@ public class ChosenImpl {
         searchField.blur(new Function() {
             @Override
             public boolean f(Event e) {
-                return inputBlur(e);
+                return inputBlur();
             }
         });
 
@@ -446,38 +268,530 @@ public class ChosenImpl {
                 doSearch();
             }
         });
+    }
 
-        if (isMultiple) {
-            searchChoices.click(new Function() {
-                @Override
-                public boolean f(Event e) {
-                    return choicesClick(e);
+    protected abstract SafeHtml buildContainerHtml(String defaultText, SafeStylesBuilder ssb);
+
+    protected String buildDropdownWidth(int ddWidth) {
+        return ddWidth + "px";
+    }
+
+    protected StringBuilder buildOptionStyleClass(OptionItem option) {
+        StringBuilder classes = new StringBuilder();
+
+        if (option.isSelected()) {
+            classes.append(css.resultSelected()).append(" ");
+        }
+
+        if (option.getGroupArrayIndex() != -1) {
+            classes.append(css.groupOption()).append(" ");
+        }
+
+        if (option.getClasses() != null) {
+            classes.append(option.getClasses());
+        }
+
+        return classes;
+    }
+
+    protected int calculateDropdownTop() {
+        int ddTop;
+        DropdownPosition dropdownPosition = options.getDropdownPosition();
+
+        switch (dropdownPosition) {
+            case ABOVE:
+                ddTop = positionAbove();
+                break;
+            case AUTO:
+                if (container.hasClass(css.resultAbove())) {
+                    // if dropdown is already above, let it there.
+                    ddTop = positionAbove();
+                } else if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
+                    ddTop = positionRelativeToWindow();
+                } else {
+                    ddTop = positionRelativeToBoundaries();
                 }
-            });
-            searchField.focus(new Function() {
-                @Override
-                public boolean f(Event e) {
-                    return inputFocus(e);
-                }
-            });
-        } else {
-            container.click(new Function() {
-                @Override
-                public boolean f(Event e) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
+                break;
+            case BELOW:
+            default:
+                ddTop = positionBelow();
+                break;
+        }
+
+        return ddTop;
+    }
+
+    protected void choiceDestroy(GQuery link) {
+        choices--;
+        showSearchFieldDefault(defaultText);
+
+        if (isMultiple() && choices > 0 && searchField.val() != null && searchField.val().length() < 1) {
+            resultsHide();
+        }
+
+        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosen-value"));
+        link.parents("li").first().remove();
+    }
+
+    protected boolean containerMouseDown(Event e) {
+        if (isDisabled) {
+            return true;
+        }
+
+        Element mouseDownTarget = e.getEventTarget().cast();
+        GQuery $e = $(mouseDownTarget);
+
+        boolean targetCloseLink = $e.hasClass(css.searchChoiceClose());
+
+        if (!resultsShowing) {
+            e.stopPropagation();
+        }
+
+        if (!targetCloseLink) {
+            containerMouseDownImpl(e, $e);
+        }
+
+        return false;
+    }
+
+    protected void containerMouseDownImpl(Event e, GQuery element) {
+        if (!activeField) {
+            $(document).click(clickTestAction);
+            resultsShow();
+        } else if (!element.isEmpty() && (element.get(0) == selectedItem.get(0)
+                || element.parents("a." + css.chznSingle()).length() > 0)) {
+            e.preventDefault();
+            resultsToggle();
+        }
+
+        if (!element.hasClass(css.activeResult())) {
+            activateField();
         }
     }
 
-    private void doSearch() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-            @Override
-            public void execute() {
-                resultsSearch();
+    protected void deactiveTabIndexProperty() {
+        selectedItem.attr(TABINDEX_PROPERTY, searchField.attr(TABINDEX_PROPERTY));
+        searchField.attr(TABINDEX_PROPERTY, "-1");
+    }
+
+    protected void fireEvent(ChosenEvent<?> event) {
+        if (eventBus != null) {
+            eventBus.fireEvent(event);
+        }
+    }
+
+    protected String getContainerClass() {
+        return css.chznContainer();
+    }
+
+    protected String getContainerId() {
+        return containerId;
+    }
+
+    protected ChosenCss getCss() {
+        return css;
+    }
+
+    protected GQuery getDropdown() {
+        return dropdown;
+    }
+
+    protected GQuery getSearchChoices() {
+        return searchChoices;
+    }
+
+    protected void setSearchChoices(GQuery searchChoices) {
+        this.searchChoices = searchChoices;
+    }
+
+    protected GQuery getSearchContainer() {
+        return searchContainer;
+    }
+
+    protected void setSearchContainer(GQuery searchContainer) {
+        this.searchContainer = searchContainer;
+    }
+
+    protected GQuery getSearchField() {
+        return searchField;
+    }
+
+    protected GQuery getSearchResults() {
+        return searchResults;
+    }
+
+    protected GQuery getSelectedItem() {
+        return selectedItem;
+    }
+
+    protected void setSelectedItem(GQuery selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    protected int getSideBorderPadding(GQuery elmt, boolean isHidden) {
+        if (isHidden) {
+            // bug in gquery when one parent of the element is hidden
+            return (int) (elmt.cur("padding-left", true) + elmt.cur("padding-right",
+                    true) + elmt.cur("border-left-width", true) + elmt.cur("border-right-width", true));
+        }
+        return elmt.outerWidth() - elmt.width();
+    }
+
+    protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
+        this.selectElement = element;
+        this.options = options;
+        this.eventBus = eventBus;
+
+        $selectElement = $(selectElement);
+
+        setDefaultValues();
+
+        setDefaultText();
+
+        setup();
+
+        bind();
+
+        finishSetup();
+    }
+
+    protected void initSearchElement(int ddWidth, boolean isHidden) {
+        setSearchContainer(getContainer().find("div." + getCss().chznSearch()).first());
+        setSelectedItem(getContainer().find("." + getCss().chznSingle()).first());
+    }
+
+    protected boolean isRTL() {
+        return isRTL;
+    }
+
+    protected boolean isDisabled() {
+        return isDisabled;
+    }
+
+    protected boolean keydownChecker(Event e) {
+        int stroke = e.getKeyCode();
+        searchFieldScale(fWidth);
+
+        switch (stroke) {
+            case TAB:
+                onTabKeydown(e);
+                break;
+
+            case ENTER:
+                if (resultsShowing) {
+                    e.preventDefault();
+                    return false;
+                }
+                return true;
+
+            case UP_ARROW:
+                e.preventDefault();
+                keyupArrow();
+                return false;
+
+            case DOWN_ARROW:
+                this.keydownArrow();
+                return false;
+        }
+
+        return true;
+    }
+
+    protected boolean maxSelectedOptionsReached() {
+        return options.getMaxSelectedOptions() != -1 && options.getMaxSelectedOptions() <= choices;
+    }
+
+    protected void onKeydownBackstroke() {
+        resultClearHighlight();
+        resultsSearch();
+    }
+
+    protected void onTabKeydown(Event e) {
+        mouseOnContainer = false;
+    }
+
+    protected int positionBelow() {
+        return container.outerHeight() - 1;
+    }
+
+    protected GQuery querySelectedResults() {
+        return searchResults.find("." + css.resultSelected() + "." + css.activeResult());
+    }
+
+    protected void release() {
+        if (updateEventHandlerRegistration != null) {
+            updateEventHandlerRegistration.removeHandler();
+            updateEventHandlerRegistration = null;
+        }
+        // empty the searchResult to speed up the container.remove()
+        if (searchResults != null) {
+            searchResults.html("");
+        }
+
+        // remove method clean listener and cie
+        container.remove();
+
+        $selectElement.removeClass(css.chznDone(), "chzn-done").show();
+    }
+
+    protected void resetSelectedItem() {
+        selectedItem.find("span").text(defaultText);
+        selectedItem.addClass(css.chznDefault());
+    }
+
+    protected void resultSelect(Event e) {
+        if (resultHighlight != null) {
+            GQuery high = resultHighlight;
+
+            resultClearHighlight();
+
+            resultDeactivate(high, true);
+
+            high.addClass(css.resultSelected());
+
+            OptionItem item = getOptionItem(high);
+            item.setSelected(true);
+            OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
+            if (option != null) {
+                option.setSelected(true);
             }
-        });
+
+            addChoice(item);
+
+            winnowResultsClear();
+
+            String oldValue = getCurrentValue();
+            String newValue = item.getValue();
+
+            selectedValues.add(newValue);
+
+            onResultSelected(item, newValue, oldValue, e.getMetaKey());
+
+            searchFieldScale(fWidth);
+        }
+    }
+
+    protected OptionItem getOptionItem(GQuery result) {
+        String highId = result.attr("id");
+        int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
+        return (OptionItem) selectItems.get(position);
+    }
+
+    protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        resultsHide();
+    }
+
+    protected void addChoice(OptionItem item) {
+        selectedItem.find("span").text(item.getText());
+        if (allowSingleDeselect) {
+            singleDeselectControlBuild();
+        }
+
+        selectedValues.clear();
+    }
+
+    protected void resultsBuild(boolean init) {
+        resultsBuild(init, defaultText, customFilter);
+    }
+
+    protected void resultsBuild(boolean init, String defaultText, boolean customFilter) {
+        selectItems = new SelectParser().parse(selectElement);
+
+        rebuildResultItems(init);
+    }
+
+    protected void resultsHide() {
+        if (!resultsShowing) {
+            return;
+        }
+
+        if (selectedItem != null) {
+            selectedItem.removeClass(css.chznSingleWithDrop());
+        }
+
+        resultClearHighlight();
+
+        fireEvent(new HidingDropDownEvent(this));
+
+        dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
+        dropdown.css("top", VERTICAL_OFFSET + "px");
+
+        container.removeClass(css.resultAbove());
+
+        resultsShowing = false;
+    }
+
+    protected void resultsResetCleanup() {
+        selectedItem.find("abbr").remove();
+    }
+
+    protected void resultsSearch() {
+        if (resultsShowing) {
+            winnowResults(resultsShowing);
+        } else {
+            resultsShow();
+        }
+    }
+
+    protected boolean resultsShow() {
+        if (!beforeShowResult()) {
+            return false;
+        }
+
+        fireEvent(new ShowingDropDownEvent(this));
+
+        resultsShowing = true;
+
+        searchField.val(searchField.val());
+
+        winnowResults(true);
+
+        positionDropdownResult();
+
+        searchField.focus();
+
+        return true;
+    }
+
+    protected boolean beforeShowResult() {
+        return true;
+    }
+
+    protected void searchFieldScale(int fWidth) {
+        // do nothing
+    }
+
+    protected boolean searchResultsMouseOut(Event e) {
+        Element targetEl = e.getEventTarget().cast();
+        GQuery $e = $(targetEl);
+
+        if ($e.hasClass(css.activeResult()) || $e.parents("." + css.activeResult()).length() > 0) {
+            resultClearHighlight();
+        }
+
+        return false;
+    }
+
+    protected boolean searchResultsMouseUp(Event e) {
+        Element targetEvent = e.getEventTarget().cast();
+        GQuery $e = $(targetEvent);
+
+        GQuery target =
+                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
+        if (!target.isEmpty()) {
+            resultHighlight = target;
+            resultSelect(e);
+        }
+        return false;
+    }
+
+    protected void setTabIndexProperty(String tabIndexProperty) {
+        selectedItem.attr(TABINDEX_PROPERTY, tabIndexProperty);
+        searchField.attr(TABINDEX_PROPERTY, -1);
+    }
+
+    protected void setupDisabledSearchField() {
+        container.addClass(css.chznDisabled());
+        InputElement.as(searchField.get(0)).setDisabled(true);
+    }
+
+    protected void setupEnabledSearchField() {
+        container.removeClass(css.chznDisabled());
+        InputElement.as(searchField.get(0)).setDisabled(false);
+    }
+
+    protected boolean shouldActivateResult(GQuery result) {
+        return true;
+    }
+
+    protected void showSearchFieldDefault(String defaultText) {
+        searchField.val("");
+        searchField.removeClass(css.defaultClass());
+    }
+
+    protected void update() {
+        setDefaultText();
+        resultClearHighlight();
+        resultsBuild(false);
+    }
+
+    void noResults(String terms) {
+        GQuery noResults =
+                $(ChosenTemplate.templates.noResults(css.noResults(), resultsNoneFound).asString());
+        noResults.find("span").html(terms);
+
+        searchResults.append(noResults);
+    }
+
+    void positionDropdownResult() {
+        int ddTop = calculateDropdownTop();
+        if (ddTop < 0) {
+            dropdown.prepend(searchResults);
+            container.addClass(css.resultAbove());
+        }
+
+        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
+    }
+
+    void resultActivate(GQuery query) {
+        query.addClass(css.activeResult());
+    }
+
+    void resultClearHighlight() {
+        if (resultHighlight != null) {
+            resultHighlight.removeClass(css.highlighted());
+            resultHighlight = null;
+        }
+    }
+
+    void resultDeactivate(GQuery query) {
+        resultDeactivate(query, false);
+    }
+
+    boolean searchResultsMouseOver(Event e) {
+        Element targetEl = e.getEventTarget().cast();
+        GQuery $e = $(targetEl);
+
+        GQuery target =
+                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
+        if (!target.isEmpty()) {
+            resultDoHighlight(target);
+        }
+
+        return false;
+    }
+
+    protected void resultDeactivate(GQuery query, boolean selected) {
+        if (!selected) {
+            query.removeClass(getCss().activeResult(), getCss().foundResult());
+        } else {
+            searchResults.find("." + css.resultSelected()).removeClass(css.resultSelected());
+            selectedItem.removeClass(css.chznDefault());
+        }
+    }
+
+    void winnowResultsSetHighlight() {
+        if (resultHighlight == null) {
+            GQuery selectedResults = querySelectedResults();
+
+            GQuery doHigh =
+                    selectedResults != null && selectedResults.length() > 0 ? selectedResults.first()
+                            : getFirstActive();
+
+            if (doHigh != null) {
+                resultDoHighlight(doHigh);
+            }
+        }
+    }
+
+    private void activateFirstResult() {
+        GQuery firstActive = getActiveResults().first();
+        resultDoHighlight(firstActive);
+    }
+
+    private void activateLastResult() {
+        GQuery lastActive = getActiveResults().last();
+        resultDoHighlight(lastActive);
     }
 
     private void blurTest() {
@@ -502,75 +816,10 @@ public class ChosenImpl {
         return id;
     }
 
-    private void choiceBuild(OptionItem option) {
-        if (isMultiple && maxSelectedOptionsReached()) {
-            fireEvent(new MaxSelectedEvent(this));
-            return;
-        }
-
-        String choiceId = containerId + "_c_" + option.getArrayIndex();
-        choices++;
-        SafeHtml html = fromTrustedString(option.getHtml());
-        searchContainer.before(ChozenTemplate.templates.choice(choiceId, css.searchChoice(), html,
-                css.searchChoiceClose(), "" + option.getArrayIndex(), option.getValue(), css.iconCross()).asString());
-        $('#' + choiceId).find("a").click(new Function() {
-            public boolean f(final Event e) {
-                choiceDestroyLinkClick(e);
-                return false;
-            }
-        });
-    }
-
-    private void choiceDestroy(GQuery link) {
-        choices--;
-        showSearchFieldDefault();
-        if (isMultiple && choices > 0 && searchField.val() != null && searchField.val().length() < 1) {
-            resultsHide();
-        }
-
-        resultDeselect(Integer.parseInt(link.attr("rel")), link.attr("data-chosen-value"));
-        link.parents("li").first().remove();
-    }
-
-    private void choiceDestroyLinkClick(Event e) {
-        e.preventDefault();
-        if (!isDisabled) {
-            pendingDestroyClick = true;
-            Element target = e.getEventTarget().cast();
-            choiceDestroy($(target));
-        } else {
-            e.stopPropagation();
-        }
-    }
-
-    private boolean choicesClick(Event e) {
-        e.preventDefault();
-
-        Element target = e.getEventTarget().cast();
-        GQuery $e = $(target);
-
-        if (activeField
-                && !($e.hasClass(css.searchChoice()) || !$e.parents("." + css.searchChoice()).isEmpty())
-                && !resultsShowing) {
-            resultsShow();
-        }
-        return true;
-    }
-
-    private void clearBackstroke() {
-        if (pendingBackstroke != null) {
-            pendingBackstroke.removeClass(css.searchChoiceFocus());
-        }
-        pendingBackstroke = null;
-    }
-
-    private void closeField() {
+    protected void closeField() {
         $(document).unbind("click", clickTestAction);
 
-        if (!isMultiple) {
-            selectedItem.attr(TABINDEX_PROPERTY, searchField.attr(TABINDEX_PROPERTY));
-            searchField.attr(TABINDEX_PROPERTY, "-1");
-        }
+        deactiveTabIndexProperty();
 
         activeField = false;
 
@@ -578,66 +827,72 @@ public class ChosenImpl {
 
         container.removeClass(css.chznContainerActive());
         winnowResultsClear();
-        clearBackstroke();
 
-        showSearchFieldDefault();
-        searchFieldScale();
-    }
+        // TODO check if it's needed
+        // clearBackstroke();
 
-    private boolean containerMouseDown(Event e) {
-        if (isDisabled) {
-            return true;
-        }
-        Element target = e.getEventTarget().cast();
-        GQuery $e = $(target);
-
-        boolean targetCloseLink = $e.hasClass(css.searchChoiceClose());
-
-        if (!resultsShowing) {
-            e.stopPropagation();
-        }
-
-        if (!pendingDestroyClick && !targetCloseLink) {
-            if (!activeField) {
-                if (isMultiple) {
-                    searchField.val("");
-                }
-                $(document).click(clickTestAction);
-                resultsShow();
-            } else if (!isMultiple && !$e.isEmpty()
-                    && ($e.get(0) == selectedItem.get(0) || $e.parents("a." + css.chznSingle()).length() > 0)) {
-                e.preventDefault();
-                resultsToggle();
-            }
-
-            activateField(e);
-        } else {
-            pendingDestroyClick = false;
-        }
-
-        return false;
+        showSearchFieldDefault(defaultText);
+        searchFieldScale(fWidth);
     }
 
     private boolean containerMouseUp(Event e) {
         Element target = e.getEventTarget().cast();
+
         GQuery $e = $(target);
 
         if (!$e.isEmpty() && "ABBR".equalsIgnoreCase($e.get(0).getNodeName()) && !isDisabled) {
-            resultsReset(e);
+            resultsReset();
             return false;
         }
 
         return true;
     }
 
-    private void finishSetup() {
-        $selectElement.addClass(css.chznDone(), "chzn-done");
+    private SafeHtml createOption(OptionItem item) {
+        SafeHtmlBuilder builder = new SafeHtmlBuilder();
+        builder.append(fromTrustedString("<option value='")).appendEscaped(item.getValue())
+                .append(fromTrustedString("'"));
+
+        if (item.isSelected()) {
+            builder.append(fromTrustedString(" selected"));
+        }
+
+        if (item.isDisabled()) {
+            builder.append(fromTrustedString(" disabled"));
+        }
+
+        builder.append(fromTrustedString(">")).appendEscaped(item.getText());
+        builder.append(fromTrustedString("</option>"));
+
+        return builder.toSafeHtml();
     }
 
-    private void fireEvent(ChosenEvent<?> event) {
-        if (eventBus != null) {
-            eventBus.fireEvent(event);
+    private void deselect(String value) {
+        List<String> newValues = new ArrayList<String>();
+        boolean found = false;
+        for (String s : selectedValues) {
+            if (found || !s.equals(value)) {
+                newValues.add(s);
+            } else {
+                // in case of the same item has been selected many times
+                found = true;
+            }
         }
+
+        selectedValues = newValues;
+    }
+
+    private void doSearch() {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+            @Override
+            public void execute() {
+                resultsSearch();
+            }
+        });
+    }
+
+    private void finishSetup() {
+        $selectElement.addClass(css.chznDone(), "chzn-done");
     }
 
     private String generateContainerId() {
@@ -650,16 +905,21 @@ public class ChosenImpl {
         return id;
     }
 
-    private int getSideBorderPadding(GQuery elmt, boolean isHidden) {
-        if (isHidden) {
-            // bug in gquery when one parent of the element is hidden
-            return (int) (elmt.cur("padding-left", true) + elmt.cur("padding-right",
-                    true) + elmt.cur("border-left-width", true) + elmt.cur("border-right-width", true));
-        }
-        return elmt.outerWidth() - elmt.width();
+    private GQuery getActiveResults() {
+        return searchResults.find("li." + css.activeResult());
     }
 
-    private boolean inputBlur(Event e) {
+    private GQuery getFirstActive() {
+        for (Element element : searchResults.elements()) {
+            GQuery gq = $(element);
+            if (gq.hasClass(css.activeResult())) {
+                return gq;
+            }
+        }
+        return $();
+    }
+
+    private boolean inputBlur() {
         if (!mouseOnContainer) {
             activeField = false;
             Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
@@ -672,20 +932,12 @@ public class ChosenImpl {
         return false;
     }
 
-    private boolean inputFocus(final Event e) {
-        if (!activeField) {
-            Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
-                public boolean execute() {
-                    containerMouseDown(e);
-                    return false;
-                }
-            }, 50);
-        }
-        return false;
-    }
-
     private boolean isDetached(GQuery element) {
         return element.parents().filter("body").isEmpty();
+    }
+
+    private boolean isNotResultHighlighted() {
+        return resultHighlight == null || isDetached(resultHighlight);
     }
 
     private void keydownArrow() {
@@ -710,62 +962,8 @@ public class ChosenImpl {
         }
     }
 
-    private void keydownBackstroke() {
-        if (pendingBackstroke != null) {
-            choiceDestroy(pendingBackstroke.find("a").first());
-            clearBackstroke();
-        } else {
-            pendingBackstroke = searchContainer.siblings("li." + css.searchChoice()).last();
-            if (options.isSingleBackstrokeDelete()) {
-                keydownBackstroke();
-            } else {
-                pendingBackstroke.addClass(css.searchChoiceFocus());
-            }
-        }
-    }
-
-    private boolean keydownChecker(Event e) {
-        int stroke = e.getKeyCode();
-        searchFieldScale();
-
-        if (stroke != 8 && pendingBackstroke != null) {
-            clearBackstroke();
-        }
-
-        switch (stroke) {
-            case 8: // backspace
-                backstrokeLength = searchField.val().length();
-                break;
-
-            case 9: // tab
-                if (resultsShowing && !isMultiple) {
-                    resultSelect(e);
-                }
-                mouseOnContainer = false;
-                break;
-
-            case 13: // enter
-                if (resultsShowing) {
-                    e.preventDefault();
-                    return false;
-                }
-                return true;
-
-            case 38: // up arrow
-                e.preventDefault();
-                keyupArrow();
-                return false;
-
-            case 40: // down arrow
-                this.keydownArrow();
-                return false;
-        }
-
-        return true;
-    }
-
     private void keyupArrow() {
-        if (!resultsShowing && !isMultiple) {
+        if (!resultsShowing) {
             resultsShow();
         } else if (isNotResultHighlighted()) {
             activateLastResult();
@@ -792,55 +990,32 @@ public class ChosenImpl {
         }
     }
 
-    private void activateLastResult() {
-        GQuery lastActive = getActiveResults().last();
-        resultDoHighlight(lastActive);
-    }
-
-    private void activateFirstResult() {
-        GQuery firstActive = getActiveResults().first();
-        resultDoHighlight(firstActive);
-    }
-
-    private GQuery getActiveResults() {
-        return searchResults.find("li." + css.activeResult());
-    }
-
-    private boolean isNotResultHighlighted() {
-        return resultHighlight == null || isDetached(resultHighlight);
-    }
-
     private boolean keyupChecker(Event e) {
         int stroke = e.getKeyCode();
 
-        searchFieldScale();
+        searchFieldScale(fWidth);
 
         switch (stroke) {
-            case 8: // backspace
-                if (isMultiple && backstrokeLength < 1 && choices > 0) {
-                    keydownBackstroke();
-                } else if (pendingBackstroke == null) {
-                    resultClearHighlight();
-                    resultsSearch();
-                }
+            case BACKSPACE:
+                onKeydownBackstroke();
                 break;
 
-            case 13: // enter
+            case ENTER:
                 if (resultsShowing) {
                     resultSelect(e);
                 }
                 return true;
-            case 27: // escape
+            case ESCAPE:
                 if (resultsShowing) {
                     resultsHide();
                 }
                 return false;
-            case 9:
-            case 38:
-            case 40:
-            case 16:
-            case 91:
-            case 17:
+            case TAB:
+            case SHIFT:
+            case CTRL:
+            case UP_ARROW:
+            case DOWN_ARROW:
+            case LEFT_WINDOW_KEY:
                 // do nothing
                 break;
             default:
@@ -851,223 +1026,33 @@ public class ChosenImpl {
         return true;
     }
 
-    private boolean maxSelectedOptionsReached() {
-        return options.getMaxSelectedOptions() != -1 && options.getMaxSelectedOptions() <= choices;
-    }
-
     private void noResultClear() {
         searchResults.find("." + css.noResults()).remove();
     }
 
-    private void noResults(String terms) {
-        GQuery noResults =
-                $(ChozenTemplate.templates.noResults(css.noResults(), resultsNoneFound).asString());
-        noResults.find("span").html(terms);
-
-        searchResults.append(noResults);
+    private int positionAbove() {
+        return -dropdown.outerHeight();
     }
 
-    private void resultActivate(GQuery query) {
-        query.addClass(css.activeResult());
-    }
-
-    private SafeHtml resultAddGroup(GroupItem group) {
-        if (!group.isDisabled()) {
-            group.domId = containerId + "_g_" + group.getArrayIndex();
-            return ChozenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
-        } else {
-            return null;
+    private int positionRelativeToBoundaries() {
+        Element dropdownBoundaries = options.getDropdownBoundaries();
+        if (dropdownBoundaries == null) {
+            dropdownBoundaries = options.getDropdownBoundariesProvider().getDropdownBoundaries();
         }
+        GQuery ddContainer = $(dropdownBoundaries);
+        int ddContainerOffsetTop = ddContainer.offset().top;
+        int containerOffsetTop = container.offset().top;
+        int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
+
+        int spaceBelow = ddContainer.outerHeight() - spaceAbove - container.outerHeight();
+        int ddHeight = dropdown.outerHeight();
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
     }
 
-    private SafeHtml resultAddOption(OptionItem option) {
-        if (!option.isDisabled()) {
-            option.domId = containerId + "_o_" + option.getArrayIndex();
-
-            StringBuilder classes = new StringBuilder();
-
-            if (!(option.isSelected() && isMultiple)) {
-                classes.append(css.activeResult()).append(" ");
-            }
-
-            if (option.isSelected()) {
-                classes.append(css.resultSelected()).append(" ");
-            }
-
-            if (option.getGroupArrayIndex() != -1) {
-                classes.append(css.groupOption()).append(" ");
-            }
-
-            if (option.getClasses() != null) {
-                classes.append(option.getClasses());
-            }
-
-            SafeStyles safeStyles = SafeStylesUtils.fromTrustedString(option.getStyle());
-            if (option.getHtml() != null && !option.getHtml().trim().isEmpty()) {
-                SafeHtml html = fromTrustedString(option.getHtml());
-                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
-            } else {
-                return ChozenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
-                        option.getText());
-            }
-        }
-        return null;
-    }
-
-    private void resultClearHighlight() {
-        if (resultHighlight != null) {
-            resultHighlight.removeClass(css.highlighted());
-            resultHighlight = null;
-        }
-    }
-
-    private void resultDeactivate(GQuery query) {
-        query.removeClass(css.activeResult(), css.foundResult());
-    }
-
-    private void resultDeselect(int index, String value) {
-        if (index < selectItems.size()) {
-            OptionItem item = (OptionItem) selectItems.get(index);
-
-            if (item.getValue().equals(value)) {
-                item.setSelected(false);
-
-                // select option in original element
-                OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
-                if (option != null) {
-                    option.setSelected(false);
-                }
-
-                $("#" + containerId + "_o_" + index).removeClass(css.resultSelected()).addClass(
-                        css.activeResult()).show();
-            }
-        }
-
-        resultClearHighlight();
-        winnowResults(false);
-
-        deselect(value);
-
-        fireEvent(new ChosenChangeEvent(value, index, false, this));
-
-        searchFieldScale();
-    }
-
-    private void deselect(String value) {
-        List<String> newValues = new ArrayList<String>();
-        boolean found = false;
-        for (String s : selectedValues) {
-            if (found || !s.equals(value)) {
-                newValues.add(s);
-            } else {
-                // in case of the same item has been selected many times
-                found = true;
-            }
-        }
-
-        selectedValues = newValues;
-    }
-
-    private void resultDoHighlight(GQuery el) {
-        if (el == null || el.length() == 0 || isDetached(el)) {
-            return;
-        }
-
-        resultClearHighlight();
-
-        resultHighlight = el;
-
-        resultHighlight.addClass(css.highlighted());
-
-        int maxHeight = (int) searchResults.cur("maxHeight", true);
-        int visibleTop = searchResults.scrollTop();
-        int visibleBottom = maxHeight + visibleTop;
-
-        int highTop = resultHighlight.position().top + searchResults.scrollTop();
-        int highBottom = highTop + resultHighlight.outerHeight();
-
-        if (highBottom >= visibleBottom) {
-            int toScroll = highBottom - maxHeight;
-            searchResults.scrollTop(toScroll > 0 ? toScroll : 0);
-        } else if (highTop < visibleTop) {
-            searchResults.scrollTop(highTop);
-        }
-    }
-
-    private void resultSelect(Event e) {
-        if (resultHighlight != null) {
-            GQuery high = resultHighlight;
-            String highId = high.attr("id");
-
-            resultClearHighlight();
-
-            if (isMultiple) {
-                resultDeactivate(high);
-            } else {
-                searchResults.find("." + css.resultSelected()).removeClass(css.resultSelected());
-                resultSingleSelected = high;
-                selectedItem.removeClass(css.chznDefault());
-            }
-
-            high.addClass(css.resultSelected());
-
-            int position = Integer.parseInt(highId.substring(highId.lastIndexOf("_") + 1));
-            OptionItem item = (OptionItem) selectItems.get(position);
-            item.setSelected(true);
-            OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
-            if (option != null) {
-                option.setSelected(true);
-            }
-
-            if (isMultiple) {
-                choiceBuild(item);
-            } else {
-                selectedItem.find("span").text(item.getText());
-                if (allowSingleDeselect) {
-                    singleDeselectControlBuild();
-                }
-            }
-
-            if (!e.getMetaKey() || !isMultiple) {
-                resultsHide();
-            }
-
-            searchField.val("");
-
-            String oldValue = getCurrentValue();
-            String newValue = item.getValue();
-
-            if (!isMultiple()) {
-                selectedValues.clear();
-            }
-
-            selectedValues.add(newValue);
-
-            if (isMultiple || oldValue == null || !oldValue.equals($selectElement.val())) {
-                fireEvent(new ChosenChangeEvent(newValue, position, this));
-            }
-
-            searchFieldScale();
-        }
-    }
-
-    private void resultsBuild(boolean init) {
-        selectItems = new SelectParser().parse(selectElement);
-
-        if (isMultiple && choices > 0) {
-            searchChoices.find("li." + css.searchChoice()).remove();
-            choices = 0;
-        } else if (!isMultiple) {
-            selectedItem.addClass(css.chznDefault()).find("span").text(defaultText);
-
-            if (!customFilter && selectElement.getOptions().getLength() <= options.getDisableSearchThreshold()) {
-                container.addClass(css.chznContainerSingleNoSearch());
-            } else {
-                container.removeClass(css.chznContainerSingleNoSearch());
-            }
-        }
-
-        rebuildResultItems(init);
+    private int positionRelativeToWindow() {
+        int ddHeight = dropdown.outerHeight();
+        int spaceBelow = Window.getClientHeight() - container.offset().top - container.outerHeight();
+        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
     }
 
     private void rebuildResultItems(boolean init) {
@@ -1099,27 +1084,23 @@ public class ChosenImpl {
                 }
 
                 if (optionItem.isSelected()) {
-                    if (isMultiple) {
-                        choiceBuild(optionItem);
-                    } else {
-                        selectedItem.removeClass(css.chznDefault()).find("span").text(optionItem.getText());
-                        if (allowSingleDeselect) {
-                            singleDeselectControlBuild();
-                        }
-
-                        selectedValues.clear();
-                    }
+                    addChoice(optionItem);
 
                     selectedValues.add(optionItem.getValue());
                 }
             }
         }
 
-        searchFieldDisabled();
+        isDisabled = selectElement.isDisabled();
+        if (isDisabled) {
+            setupDisabledSearchField();
+        } else {
+            setupEnabledSearchField();
+        }
 
         if (init) {
-            showSearchFieldDefault();
-            searchFieldScale();
+            showSearchFieldDefault(defaultText);
+            searchFieldScale(fWidth);
         }
         if (customFilter) {
             // keep the html select element synchronized with the new result.
@@ -1132,47 +1113,87 @@ public class ChosenImpl {
         }
     }
 
-    private SafeHtml createOption(OptionItem item) {
-        SafeHtmlBuilder builder = new SafeHtmlBuilder();
-        builder.append(fromTrustedString("<option value='")).appendEscaped(item.getValue())
-                .append(fromTrustedString("'"));
-
-        if (item.isSelected()) {
-            builder.append(fromTrustedString(" selected"));
+    private SafeHtml resultAddGroup(GroupItem group) {
+        if (!group.isDisabled()) {
+            group.domId = containerId + "_g_" + group.getArrayIndex();
+            return ChosenTemplate.templates.group(group.domId, css.groupResult(), group.getLabel());
+        } else {
+            return null;
         }
-
-        if (item.isDisabled()) {
-            builder.append(fromTrustedString(" disabled"));
-        }
-
-        builder.append(fromTrustedString(">")).appendEscaped(item.getText());
-        builder.append(fromTrustedString("</option>"));
-
-        return builder.toSafeHtml();
     }
 
-    private void resultsHide() {
-        if (!resultsShowing) {
-            return;
+    private SafeHtml resultAddOption(OptionItem option) {
+        if (!option.isDisabled()) {
+            option.domId = containerId + "_o_" + option.getArrayIndex();
+
+            StringBuilder classes = buildOptionStyleClass(option);
+
+            SafeStyles safeStyles = SafeStylesUtils.fromTrustedString(option.getStyle());
+            if (option.getHtml() != null && !option.getHtml().trim().isEmpty()) {
+                SafeHtml html = fromTrustedString(option.getHtml());
+                return ChosenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles, html);
+            } else {
+                return ChosenTemplate.templates.option(option.getDomId(), classes.toString().trim(), safeStyles,
+                        option.getText());
+            }
+        }
+        return null;
+    }
+
+    private void resultDeselect(int index, String value) {
+        if (index < selectItems.size()) {
+            OptionItem item = (OptionItem) selectItems.get(index);
+
+            if (item.getValue().equals(value)) {
+                item.setSelected(false);
+
+                // select option in original element
+                OptionElement option = selectElement.getOptions().getItem(item.getOptionsIndex());
+                if (option != null) {
+                    option.setSelected(false);
+                }
+
+                $("#" + containerId + "_o_" + index).removeClass(css.resultSelected()).addClass(
+                        css.activeResult()).show();
+            }
         }
 
-        if (!isMultiple) {
-            selectedItem.removeClass(css.chznSingleWithDrop());
+        resultClearHighlight();
+        winnowResults(false);
+
+        deselect(value);
+
+        fireEvent(new ChosenChangeEvent(value, index, false, this));
+
+        searchFieldScale(fWidth);
+    }
+
+    protected void resultDoHighlight(GQuery el) {
+        if (el == null || el.length() == 0 || isDetached(el)) {
+            return;
         }
 
         resultClearHighlight();
 
-        fireEvent(new HidingDropDownEvent(this));
+        resultHighlight = el;
+        el.addClass(css.highlighted());
 
-        dropdown.css(isRTL ? "right" : "left", HORIZONTAL_OFFSET + "px");
-        dropdown.css("top", VERTICAL_OFFSET + "px");
+        int searchResultHeight = searchResults.innerHeight();
+        int visibleTop = searchResults.scrollTop();
+        int visibleBottom = searchResultHeight + visibleTop;
 
-        container.removeClass(css.resultAbove());
+        int highTop = resultHighlight.position().top + searchResults.scrollTop();
+        int highBottom = highTop + resultHighlight.outerHeight();
 
-        resultsShowing = false;
+        if (highBottom >= visibleBottom) {
+            int toScroll = highBottom - searchResultHeight;
+            searchResults.scrollTop(toScroll > 0 ? toScroll : 0);
+        } else if (highTop < visibleTop) {
+            searchResults.scrollTop(highTop);
+        }
     }
 
-    private void resultsReset(Event e) {
+    private void resultsReset() {
         OptionElement firstoption = selectElement.getOptions().getItem(0);
         selectedValues = new ArrayList<String>();
 
@@ -1181,122 +1202,16 @@ public class ChosenImpl {
             selectedValues.add(firstoption.getValue());
         }
 
-        selectedItem.find("span").text(defaultText);
-        if (!isMultiple) {
-            selectedItem.addClass(css.chznDefault());
-        }
+        resetSelectedItem();
 
-        showSearchFieldDefault();
+        showSearchFieldDefault(defaultText);
         resultsResetCleanup();
 
         fireEvent(new ChosenChangeEvent(null, 0, this));
+
         if (activeField) {
             resultsHide();
         }
-    }
-
-    private void resultsResetCleanup() {
-        selectedItem.find("abbr").remove();
-    }
-
-    private void resultsSearch() {
-        if (resultsShowing) {
-            winnowResults(resultsShowing);
-        } else {
-            resultsShow();
-        }
-    }
-
-    private boolean resultsShow() {
-        if (!isMultiple) {
-            selectedItem.addClass(css.chznSingleWithDrop());
-            if (resultSingleSelected != null) {
-                resultDoHighlight(resultSingleSelected);
-            }
-        } else if (maxSelectedOptionsReached()) {
-            fireEvent(new MaxSelectedEvent(this));
-            return false;
-        }
-
-        fireEvent(new ShowingDropDownEvent(this));
-
-        resultsShowing = true;
-
-        searchField.val(searchField.val());
-
-        winnowResults(true);
-
-        positionDropdownResult();
-
-        searchField.focus();
-
-        return true;
-    }
-
-    private void positionDropdownResult() {
-        int ddTop = calculateDropdownTop();
-        if (ddTop < 0) {
-            dropdown.prepend(searchResults);
-            container.addClass(css.resultAbove());
-        }
-
-        dropdown.css("top", ddTop + "px").css(isRTL ? "right" : "left", "0");
-    }
-
-    private int calculateDropdownTop() {
-        int ddTop;
-        DropdownPosition dropdownPosition = options.getDropdownPosition();
-
-        switch (dropdownPosition) {
-            case ABOVE:
-                ddTop = positionAbove();
-                break;
-            case AUTO:
-                if (container.hasClass(css.resultAbove())) {
-                    // if dropdown is already above, let it there.
-                    ddTop = positionAbove();
-                } else if (options.getDropdownBoundaries() == null && options.getDropdownBoundariesProvider() == null) {
-                    ddTop = positionRelativeToWindow();
-                } else {
-                    ddTop = positionRelativeToBoundaries();
-                }
-                break;
-            case BELOW:
-            default:
-                ddTop = positionBelow();
-                break;
-        }
-
-        return ddTop;
-    }
-
-    private int positionRelativeToBoundaries() {
-        Element dropdownBoundaries = options.getDropdownBoundaries();
-        if (dropdownBoundaries == null) {
-            dropdownBoundaries = options.getDropdownBoundariesProvider().getDropdownBoundaries();
-        }
-        GQuery ddContainer = $(dropdownBoundaries);
-        int ddContainerOffsetTop = ddContainer.offset().top;
-        int containerOffsetTop = container.offset().top;
-        int spaceAbove = containerOffsetTop - ddContainerOffsetTop;
-
-        int spaceBelow = ddContainer.outerHeight() - spaceAbove - container.outerHeight();
-        int ddHeight = dropdown.outerHeight();
-        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
-    }
-
-    private int positionRelativeToWindow() {
-        int ddHeight = dropdown.outerHeight();
-        int spaceBelow = Window.getClientHeight() - container.offset().top - container.outerHeight();
-        return spaceBelow < ddHeight ? positionAbove() : positionBelow();
-    }
-
-    private int positionAbove() {
-        return -dropdown.outerHeight();
-    }
-
-    private int positionBelow() {
-        return isMultiple ? container.outerHeight() : container.outerHeight() - 1;
     }
 
     private void resultsToggle() {
@@ -1307,95 +1222,12 @@ public class ChosenImpl {
         }
     }
 
-    private void searchFieldDisabled() {
-        isDisabled = selectElement.isDisabled();
-        if (isDisabled) {
-            container.addClass(css.chznDisabled());
-            InputElement.as(searchField.get(0)).setDisabled(true);
-            if (!isMultiple) {
-                selectedItem.unbind("focus", activateAction);
-            }
-        } else {
-            container.removeClass(css.chznDisabled());
-            InputElement.as(searchField.get(0)).setDisabled(false);
-            if (!isMultiple) {
-                selectedItem.bind("focus", activateAction);
-            }
-        }
-    }
-
-    private void searchFieldScale() {
-        if (!isMultiple) {
-            return;
-        }
-
-        StringBuilder styleBlock =
-                new StringBuilder("position:absolute; " + (isRTL ? "right" : "left") + ": -1000px; top: -1000px; " +
-                        "visibility:hidden;");
-        String[] styleToCopy =
-                {"font-size", "font-style", "font-weight", "font-family", "line-height", "text-transform",
-                        "letter-spacing"};
-
-        for (String style : styleToCopy) {
-            styleBlock.append(style).append(':').append(searchField.css(style)).append(";");
-        }
-
-        GQuery div = $("<div />").attr("style", styleBlock.toString()).text(searchField.val());
-        $("body").append(div);
-
-        int w = div.width() + 25;
-        div.remove();
-
-        if (w > fWidth - 10) {
-            w = fWidth - 10;
-        }
-
-        searchField.css("width", w + "px");
-    }
-
-    private boolean searchResultsMouseOut(Event e) {
-        Element targetEl = e.getEventTarget().cast();
-        GQuery $e = $(targetEl);
-
-        if ($e.hasClass(css.activeResult()) || $e.parents("." + css.activeResult()).length() > 0) {
-            resultClearHighlight();
-        }
-
-        return false;
-    }
-
-    private boolean searchResultsMouseOver(Event e) {
-        Element targetEl = e.getEventTarget().cast();
-        GQuery $e = $(targetEl);
-
-        GQuery target =
-                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
-        if (!target.isEmpty()) {
-            resultDoHighlight(target);
-        }
-
-        return false;
-    }
-
-    private boolean searchResultsMouseUp(Event e) {
-        Element targetEvent = e.getEventTarget().cast();
-        GQuery $e = $(targetEvent);
-
-        GQuery target =
-                $e.hasClass(css.activeResult()) ? $e : $e.parents("." + css.activeResult()).first();
-        if (!target.isEmpty()) {
-            resultHighlight = target;
-            resultSelect(e);
-        }
-        return false;
-    }
-
     private void setDefaultText() {
         String dataPlaceHolder = selectElement.getAttribute("data-placeholder");
 
         if (dataPlaceHolder != null && dataPlaceHolder.length() > 0) {
             defaultText = dataPlaceHolder;
-        } else if (isMultiple) {
+        } else if (isMultiple()) {
             if (options.getPlaceholderTextMultiple() != null) {
                 defaultText = options.getPlaceholderTextMultiple();
             } else if (options.getPlaceholderText() != null) {
@@ -1428,13 +1260,6 @@ public class ChosenImpl {
             @Override
             public boolean f(Event e) {
                 return testActiveClick(e);
-            }
-        };
-
-        activateAction = new Function() {
-            @Override
-            public boolean f(Event e) {
-                return activateField(e);
             }
         };
 
@@ -1476,12 +1301,7 @@ public class ChosenImpl {
         if (tabIndexProperty != null && tabIndexProperty.length() > 0) {
             $selectElement.attr(TABINDEX_PROPERTY, -1);
 
-            if (isMultiple) {
-                searchField.attr(TABINDEX_PROPERTY, tabIndexProperty);
-            } else {
-                selectedItem.attr(TABINDEX_PROPERTY, tabIndexProperty);
-                searchField.attr(TABINDEX_PROPERTY, -1);
-            }
+            setTabIndexProperty(tabIndexProperty);
         }
     }
 
@@ -1505,13 +1325,15 @@ public class ChosenImpl {
             isHidden = fWidth > 0;
         }
 
-        String cssClasses = isRTL ? css.chznContainer() + " " + css.chznRtl() : css.chznContainer();
+        String containerClass = getContainerClass();
+
+        String cssClasses = isRTL ? containerClass + " " + css.chznRtl() : containerClass;
 
         // recopy classes present on the select element
         cssClasses += " " + selectElement.getClassName();
 
         GQuery containerTemp =
-                $(ChozenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
+                $(ChosenTemplate.templates.container(containerId, cssClasses).asString()).width(fWidth);
 
         final SafeStylesBuilder ssb = new SafeStylesBuilder();
         if (isRTL) {
@@ -1521,58 +1343,29 @@ public class ChosenImpl {
         }
         ssb.top(VERTICAL_OFFSET, Style.Unit.PX);
 
-        if (isMultiple) {
-            containerTemp.html(ChozenTemplate.templates.contentMultiple(css.chznChoices(),
-                    css.searchField(), defaultText, css.defaultClass(), css.chznDrop(), css.chznResults(),
-                    ssb.toSafeStyles())
-                    .asString());
-        } else {
-            containerTemp.html(ChozenTemplate.templates.contentSingle(css.chznSingle(),
-                    css.chznDefault(), defaultText, css.chznDrop(), css.chznSearch(), css.chznResults(),
-                    ssb.toSafeStyles(), css.iconArrow(), css.iconSearch())
-                    .asString());
-        }
+        containerTemp.html(buildContainerHtml(defaultText, ssb).asString());
 
         // insert container after the select elements
         $selectElement.hide().after(containerTemp);
         container = $("#" + containerId);
-        container.addClass(isMultiple ? css.chznContainerMulti() : css.chznContainerSingle());
+        container.addClass(isMultiple() ? css.chznContainerMulti() : css.chznContainerSingle());
 
         dropdown = container.find("div." + css.chznDrop()).first();
         int ddWidth = fWidth - getSideBorderPadding(dropdown, isHidden);
-        dropdown.css(Properties.create("{\"width\": " + ddWidth + "px}"));
+
+        dropdown.css("width", buildDropdownWidth(ddWidth));
 
         searchField = container.find("input").first();
         searchResults = container.find("ul." + css.chznResults()).first();
-        searchFieldScale();
+        searchFieldScale(fWidth);
 
-        if (isMultiple) {
-            searchChoices = container.find("ul." + css.chznChoices()).first();
-            searchContainer = container.find("li." + css.searchField()).first();
-        } else {
-            searchContainer = container.find("div." + css.chznSearch()).first();
-            selectedItem = container.find("." + css.chznSingle()).first();
-            int searchFieldWidth =
-                    ddWidth - getSideBorderPadding(searchContainer, isHidden)
-                            - getSideBorderPadding(searchField, isHidden);
-            searchField.css("width", searchFieldWidth + "px");
-        }
+        initSearchElement(ddWidth, isHidden);
 
         resultsBuild(true);
 
         setTabIndex();
 
         fireEvent(new ReadyEvent(this));
-    }
-
-    private void showSearchFieldDefault() {
-        if (isMultiple && choices < 1 && !activeField) {
-            searchField.val(defaultText);
-            searchField.addClass(css.defaultClass());
-        } else {
-            searchField.val("");
-            searchField.removeClass(css.defaultClass());
-        }
     }
 
     private void singleDeselectControlBuild() {
@@ -1611,36 +1404,10 @@ public class ChosenImpl {
             GQuery $li = $(li);
             if ($li.hasClass(css.groupResult())) {
                 $li.css("display", "");
-            } else if (!isMultiple || !$li.hasClass(css.resultSelected())) {
+            } else if (shouldActivateResult($li)) {
                 resultActivate($li);
             }
             $li.removeClass(css.foundResult());
         }
-    }
-
-    private void winnowResultsSetHighlight() {
-        if (resultHighlight == null) {
-            GQuery selectedResults =
-                    !isMultiple ? searchResults.find("." + css.resultSelected() + "." + css.activeResult())
-                            : null;
-
-            GQuery doHigh =
-                    selectedResults != null && selectedResults.length() > 0 ? selectedResults.first()
-                            : getFirstActive();
-
-            if (doHigh != null) {
-                resultDoHighlight(doHigh);
-            }
-        }
-    }
-
-    private GQuery getFirstActive() {
-        for (Element element : searchResults.elements()) {
-            GQuery gq = $(element);
-            if (gq.hasClass(css.activeResult())) {
-                return gq;
-            }
-        }
-        return $();
     }
 }
