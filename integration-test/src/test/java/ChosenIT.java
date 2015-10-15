@@ -388,11 +388,4 @@ public abstract class ChosenIT {
 
         return multiContainer.size() != 0;
     }
-
-    protected void sleep(int milliseconds) {
-        try {
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-        }
-    }
 }
