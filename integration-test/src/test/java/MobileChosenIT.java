@@ -135,7 +135,7 @@ public class MobileChosenIT extends ChosenIT {
     }
 
     /**
-     * Tests that the values are added/selected when using update/setItemSelected
+     * Tests that the values are added/selected when using update/setItemSelected.
      * See https://github.com/ArcBees/gwtchosen/issues/271
      */
     @Test
