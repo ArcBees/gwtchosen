@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
+import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
@@ -267,6 +268,22 @@ public class DesktopChosenIT extends ChosenIT {
         assertDropdownIsBelow();
         assertThat(isMobileChosenComponent()).isFalse();
         assertThat(getOptions()).isEqualTo(CarBrand.getAllNames(RENDERER));
+    }
+
+    /**
+     * Tests that the values are added/selected when using update/setItemSelected
+     * See https://github.com/ArcBees/gwtchosen/issues/271
+     */
+    @Test
+    public void chosenListBox_updateAndSelect_addsAndSelectItem() {
+        // Given
+        loadTestCase(new ChosenListBoxMultipleSelectAddItems());
+
+        // When
+        getElementById(ChosenListBoxMultipleSelectAddItems.BUTTON_ID).click();
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo(ChosenListBoxMultipleSelectAddItems.SELECTED_VALUE);
     }
 
     /**

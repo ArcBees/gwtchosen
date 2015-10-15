@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 ArcBees Inc.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -630,7 +630,9 @@ public abstract class ChosenImpl {
     }
 
     protected void resultsResetCleanup() {
-        selectedItem.find("abbr").remove();
+        if (selectedItem != null) {
+            selectedItem.find("abbr").remove();
+        }
     }
 
     protected void resultsSearch() {
@@ -836,9 +838,6 @@ public abstract class ChosenImpl {
 
         container.removeClass(css.chznContainerActive());
         winnowResultsClear();
-
-        // TODO check if it's needed
-        // clearBackstroke();
 
         showSearchFieldDefault(defaultText);
         searchFieldScale(fWidth);
@@ -1065,6 +1064,7 @@ public abstract class ChosenImpl {
     }
 
     private void rebuildResultItems(boolean init) {
+        GQuery.console.log("rebuild");
         SafeHtmlBuilder content = new SafeHtmlBuilder();
         SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
 
