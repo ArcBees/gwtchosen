@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -75,14 +76,14 @@
         <arcbees-checkstyle.version>1.2</arcbees-checkstyle.version>
 
         <!-- maven -->
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <target.jdk>1.6</target.jdk>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>2.12</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>2.17</maven-failsafe-plugin.version>
         <jetty-maven-plugin.version>9.3.0.M1</jetty-maven-plugin.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
         <maven-checkstyle-plugin.version>2.16</maven-checkstyle-plugin.version>
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
         <port-allocator-maven-plugin.version>1.2</port-allocator-maven-plugin.version>
         <testutils.version>1.2</testutils.version>
 
@@ -101,6 +102,7 @@
 
         <gwt.loglevel>INFO</gwt.loglevel>
         <gwt.outputstyle>OBF</gwt.outputstyle>
+        <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
     </properties>
 
     <modules>
@@ -152,6 +154,17 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <version>${gwt.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -283,12 +296,6 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
-            <version>${gwt.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-codeserver</artifactId>
             <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>

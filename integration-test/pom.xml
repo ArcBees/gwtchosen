@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>gwtchosen-project</artifactId>
         <groupId>com.arcbees</groupId>
@@ -35,6 +36,23 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${target.jdk}</source>
+                    <target>${target.jdk}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>integration-test</id>
@@ -48,6 +66,8 @@
                             <systemPropertyVariables>
                                 <testPort>${allocated-port}</testPort>
                             </systemPropertyVariables>
+                            <parallel>all</parallel>
+                            <threadCount>1</threadCount>
                         </configuration>
                         <executions>
                             <execution>
@@ -63,11 +83,16 @@
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>gwt-maven-plugin</artifactId>
                         <version>${gwt.version}</version>
+                        <configuration>
+                            <copyWebapp>true</copyWebapp>
+                            <hostedWebapp>${webappDirectory}</hostedWebapp>
+
+                            <module>com.arcbees.chosen.integrationtest.ChosenIntegrationTests</module>
+
+                            <runTarget>index.html</runTarget>
+                        </configuration>
                         <executions>
                             <execution>
-                                <configuration>
-                                    <module>com.arcbees.chosen.integrationtest.ChosenIntegrationTests</module>
-                                </configuration>
                                 <goals>
                                     <goal>compile</goal>
                                 </goals>

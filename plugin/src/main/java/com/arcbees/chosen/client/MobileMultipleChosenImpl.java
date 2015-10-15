@@ -17,7 +17,6 @@
 package com.arcbees.chosen.client;
 
 import com.arcbees.chosen.client.SelectParser.OptionItem;
-import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.query.client.GQuery;
@@ -78,9 +77,7 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
-        if (oldValue == null || !oldValue.equals(newValue)) {
-            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
-        }
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
     }
 
     private void resultDeselect(OptionItem item, GQuery element) {

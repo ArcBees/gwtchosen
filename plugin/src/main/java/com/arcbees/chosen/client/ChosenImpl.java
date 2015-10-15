@@ -578,7 +578,15 @@ public abstract class ChosenImpl {
     }
 
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
+
         resultsHide();
+    }
+
+    protected void fireChosenChangeEventIfNotEqual(OptionItem item, String newValue, String oldValue) {
+        if (oldValue == null || !oldValue.equals(newValue)) {
+            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
+        }
     }
 
     protected void addChoice(OptionItem item) {
@@ -682,6 +690,7 @@ public abstract class ChosenImpl {
             resultHighlight = target;
             resultSelect(e);
         }
+
         return false;
     }
 

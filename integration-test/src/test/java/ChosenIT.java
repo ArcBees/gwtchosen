@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 ArcBees Inc.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,8 +16,10 @@
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -35,7 +37,9 @@ import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBoxOnChange;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBoxOnChange;
 import com.arcbees.test.ByDebugId;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -47,6 +51,7 @@ import static org.junit.Assert.fail;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
@@ -61,6 +66,11 @@ public abstract class ChosenIT {
     @After
     public void after() {
         webDriver.quit();
+    }
+
+    @Before
+    public void before() {
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
@@ -215,6 +225,40 @@ public abstract class ChosenIT {
     }
 
     /**
+     * Tests that the ValueChangeEvent is working with the ChosenValueListBox.
+     * See https://github.com/ArcBees/gwtchosen/issues/269
+     */
+    @Test
+    public void select_singleValueListBox_changeEvent() throws InterruptedException {
+        // Given
+        loadTestCase(new SimpleValueListBoxOnChange());
+        String fordRender = RENDERER.render(FORD);
+
+        // When
+        clickOptionWithDisplayString(fordRender);
+
+        // Then
+        WebElement label = getElementById(SimpleValueListBoxOnChange.LABEL_ID);
+        webDriverWait().until(textToBePresentInElement(label, fordRender));
+        assertThat(label.getText()).isEqualTo(fordRender);
+    }
+
+    @Test
+    public void select_multiValueListBox_changeEvent() throws InterruptedException {
+        // Given
+        loadTestCase(new SimpleMultiValueListBoxOnChange());
+        String fordRender = RENDERER.render(FORD);
+
+        // When
+        clickOptionWithDisplayString(fordRender);
+
+        // Then
+        WebElement label = getElementById(SimpleMultiValueListBoxOnChange.LABEL_ID);
+        webDriverWait().until(textToBePresentInElement(label, fordRender));
+        assertThat(label.getText()).isEqualTo(fordRender);
+    }
+
+    /**
      * This test makes sure that when null values are rendered as a non-empty string,
      * then that exact non-empty string will be displayed in the dropdown options.
      */
@@ -320,6 +364,10 @@ public abstract class ChosenIT {
         abbr.click();
     }
 
+    protected WebElement getElementById(String id) {
+        return webDriverWait().until(presenceOfElementLocated(By.id(id)));
+    }
+
     protected WebDriverWait webDriverWait() {
         return new WebDriverWait(webDriver, TIME_OUT_IN_SECONDS);
     }
@@ -339,5 +387,12 @@ public abstract class ChosenIT {
                 By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-container-multi"));
 
         return multiContainer.size() != 0;
+    }
+
+    protected void sleep(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+        }
     }
 }

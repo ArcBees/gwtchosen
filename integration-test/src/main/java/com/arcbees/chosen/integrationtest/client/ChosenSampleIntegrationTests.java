@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 ArcBees Inc.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,7 +28,9 @@ import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBoxOnChange;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
+import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBoxOnChange;
 import com.arcbees.chosen.integrationtest.client.testcases.SingleBackstrokeDelete;
 import com.arcbees.chosen.integrationtest.client.testcases.TabNavigation;
 import com.arcbees.chosen.integrationtest.client.testcases.dropdownposition.Above;
@@ -66,6 +68,8 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new SearchContains());
         registerTestCase(new MaxSelectedOptions());
         registerTestCase(new SingleBackstrokeDelete());
+        registerTestCase(new SimpleValueListBoxOnChange());
+        registerTestCase(new SimpleMultiValueListBoxOnChange());
     }
 
     @Override
