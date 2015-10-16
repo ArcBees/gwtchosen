@@ -40,6 +40,7 @@ public class ChosenListBoxMultipleSelectAddItems extends TestCase {
         button.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
+                listBox.clear();
                 listBox.addItem("Four");
                 listBox.addItem("Five");
                 listBox.addItem("Six");

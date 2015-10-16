@@ -1064,7 +1064,6 @@ public abstract class ChosenImpl {
     }
 
     private void rebuildResultItems(boolean init) {
-        GQuery.console.log("rebuild");
         SafeHtmlBuilder content = new SafeHtmlBuilder();
         SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
 
