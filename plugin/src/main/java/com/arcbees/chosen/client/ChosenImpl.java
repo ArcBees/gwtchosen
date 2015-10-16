@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -630,7 +630,9 @@ public abstract class ChosenImpl {
     }
 
     protected void resultsResetCleanup() {
-        selectedItem.find("abbr").remove();
+        if (selectedItem != null) {
+            selectedItem.find("abbr").remove();
+        }
     }
 
     protected void resultsSearch() {
@@ -836,9 +838,6 @@ public abstract class ChosenImpl {
 
         container.removeClass(css.chznContainerActive());
         winnowResultsClear();
-
-        // TODO check if it's needed
-        // clearBackstroke();
 
         showSearchFieldDefault(defaultText);
         searchFieldScale(fWidth);

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -80,6 +80,13 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
     }
 
+    @Override
+    protected void update() {
+        super.update();
+
+        closeField();
+    }
+
     private void resultDeselect(OptionItem item, GQuery element) {
         choices--;
 
@@ -103,9 +110,9 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     private void updateSelectedText() {
         String selectedText;
         if (choices > 1) {
-            selectedText =  getOptions().getManySelectedTextMultipleMobile();
+            selectedText = getOptions().getManySelectedTextMultipleMobile();
         } else {
-            selectedText =  getOptions().getOneSelectedTextMultipleMobile();
+            selectedText = getOptions().getOneSelectedTextMultipleMobile();
         }
 
         selectedText = selectedText.replace("{}", "" + choices);
