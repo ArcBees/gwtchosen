@@ -32,27 +32,18 @@ import com.google.gwt.view.client.ProvidesKey;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class IsAcceptedValueListBox extends TestCase {
-    private final ChosenOptions options;
-    private final boolean addNullValue;
 
+    private final ChosenOptions options;
     private ChosenValueListBox<CarBrand> listBox;
 
     public IsAcceptedValueListBox() {
-        this(new ChosenOptions(), false);
-    }
-
-    protected IsAcceptedValueListBox(final boolean addNullValue) {
-        this(new ChosenOptions(), addNullValue);
-    }
-
-    protected IsAcceptedValueListBox(final ChosenOptions options, final boolean addNullValue) {
-        this.options = options;
-        this.addNullValue = addNullValue;
+        this.options = new ChosenOptions();
     }
 
     @Override
     public void run() {
-        listBox = new ChosenValueListBox<CarBrand>(getRenderer(), new ProvidesKey<CarBrand>() {
+        //issue #241 is happening with custom ProvidesKey. All other tests use the object jtself as a key.
+        listBox = new ChosenValueListBox<CarBrand>(RENDERER, new ProvidesKey<CarBrand>() {
             @Override
             public Object getKey(final CarBrand item) {
                 return item == null ? null : item.name();
@@ -60,12 +51,10 @@ public class IsAcceptedValueListBox extends TestCase {
         }, options);
 
         final List<CarBrand> acceptableValues = Lists.newArrayList(CarBrand.values());
-        if (addNullValue) {
-            acceptableValues.add(0, null);
-        }
 
         listBox.setAcceptableValues(acceptableValues);
 
+        //Check if the issue #241 is fixed
         if (!listBox.isAccepted(CarBrand.AUDI)) {
             throw new AssertionError("Audi is acceptable value");
         }
@@ -73,12 +62,4 @@ public class IsAcceptedValueListBox extends TestCase {
         RootPanel.get().add(listBox);
     }
 
-    @Nullable
-    protected ChosenValueListBox<CarBrand> getListBox() {
-        return listBox;
-    }
-
-    protected Renderer<CarBrand> getRenderer() {
-        return RENDERER;
-    }
 }
