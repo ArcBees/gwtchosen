@@ -18,14 +18,11 @@ package com.arcbees.chosen.integrationtest.client.testcases;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.arcbees.chosen.client.ChosenOptions;
 import com.arcbees.chosen.client.gwt.ChosenValueListBox;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.google.common.collect.Lists;
-import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.ProvidesKey;
 
@@ -42,7 +39,7 @@ public class IsAcceptedValueListBox extends TestCase {
 
     @Override
     public void run() {
-        //issue #241 is happening with custom ProvidesKey. All other tests use the object jtself as a key.
+        // Issue #241 is happening with custom ProvidesKey. All other tests use the object jtself as a key.
         listBox = new ChosenValueListBox<CarBrand>(RENDERER, new ProvidesKey<CarBrand>() {
             @Override
             public Object getKey(final CarBrand item) {
@@ -54,7 +51,7 @@ public class IsAcceptedValueListBox extends TestCase {
 
         listBox.setAcceptableValues(acceptableValues);
 
-        //Check if the issue #241 is fixed
+        // Check if the issue #241 is fixed
         if (!listBox.isAccepted(CarBrand.AUDI)) {
             throw new AssertionError("Audi is acceptable value");
         }
