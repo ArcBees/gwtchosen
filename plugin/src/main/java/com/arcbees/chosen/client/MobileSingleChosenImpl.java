@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -16,10 +16,13 @@
 
 package com.arcbees.chosen.client;
 
+import com.arcbees.chosen.client.SelectParser.OptionItem;
+
 public class MobileSingleChosenImpl extends AbstractMobileChosenImpl {
     @Override
-    protected void onResultSelected(SelectParser.OptionItem item, String newValue, String oldValue,
-            boolean metaKeyPressed) {
+    protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
+
         closeField();
     }
 }

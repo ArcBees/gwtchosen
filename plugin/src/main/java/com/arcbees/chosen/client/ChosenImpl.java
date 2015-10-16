@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -578,7 +578,15 @@ public abstract class ChosenImpl {
     }
 
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
+
         resultsHide();
+    }
+
+    protected void fireChosenChangeEventIfNotEqual(OptionItem item, String newValue, String oldValue) {
+        if (oldValue == null || !oldValue.equals(newValue)) {
+            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
+        }
     }
 
     protected void addChoice(OptionItem item) {
@@ -622,7 +630,9 @@ public abstract class ChosenImpl {
     }
 
     protected void resultsResetCleanup() {
-        selectedItem.find("abbr").remove();
+        if (selectedItem != null) {
+            selectedItem.find("abbr").remove();
+        }
     }
 
     protected void resultsSearch() {
@@ -682,6 +692,7 @@ public abstract class ChosenImpl {
             resultHighlight = target;
             resultSelect(e);
         }
+
         return false;
     }
 
@@ -827,9 +838,6 @@ public abstract class ChosenImpl {
 
         container.removeClass(css.chznContainerActive());
         winnowResultsClear();
-
-        // TODO check if it's needed
-        // clearBackstroke();
 
         showSearchFieldDefault(defaultText);
         searchFieldScale(fWidth);

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -17,7 +17,6 @@
 package com.arcbees.chosen.client;
 
 import com.arcbees.chosen.client.SelectParser.OptionItem;
-import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -182,9 +181,7 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
             resultsHide();
         }
 
-        if (oldValue == null || !oldValue.equals(newValue)) {
-            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
-        }
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
     }
 
     @Override

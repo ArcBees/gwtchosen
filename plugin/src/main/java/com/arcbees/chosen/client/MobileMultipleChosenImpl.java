@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2014 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -17,7 +17,6 @@
 package com.arcbees.chosen.client;
 
 import com.arcbees.chosen.client.SelectParser.OptionItem;
-import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.query.client.GQuery;
@@ -78,9 +77,14 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void onResultSelected(OptionItem item, String newValue, String oldValue, boolean metaKeyPressed) {
-        if (oldValue == null || !oldValue.equals(newValue)) {
-            fireEvent(new ChosenChangeEvent(newValue, item.getArrayIndex(), this));
-        }
+        fireChosenChangeEventIfNotEqual(item, newValue, oldValue);
+    }
+
+    @Override
+    protected void update() {
+        super.update();
+
+        closeField();
     }
 
     private void resultDeselect(OptionItem item, GQuery element) {
@@ -106,9 +110,9 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     private void updateSelectedText() {
         String selectedText;
         if (choices > 1) {
-            selectedText =  getOptions().getManySelectedTextMultipleMobile();
+            selectedText = getOptions().getManySelectedTextMultipleMobile();
         } else {
-            selectedText =  getOptions().getOneSelectedTextMultipleMobile();
+            selectedText = getOptions().getOneSelectedTextMultipleMobile();
         }
 
         selectedText = selectedText.replace("{}", "" + choices);
