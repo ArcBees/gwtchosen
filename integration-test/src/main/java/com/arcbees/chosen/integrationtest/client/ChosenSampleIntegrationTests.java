@@ -25,6 +25,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultiple
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
+import com.arcbees.chosen.integrationtest.client.testcases.IsAcceptedValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
@@ -65,6 +66,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new AutoWithBoundariesHasNotEnoughSpace());
         registerTestCase(new SimpleMultiValueListBox());
         registerTestCase(new SimpleValueListBox());
+        registerTestCase(new IsAcceptedValueListBox());
         registerTestCase(new DisableSearchThreshold());
         registerTestCase(new SearchContains());
         registerTestCase(new MaxSelectedOptions());
