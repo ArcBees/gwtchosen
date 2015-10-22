@@ -1,5 +1,3 @@
-[![Dependency Status](https://www.versioneye.com/user/projects/54de6d40271c93aa12000006/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54de6d40271c93aa12000006)
-
 ##GwtChosen
 [Chosen](https://github.com/harvesthq/chosen) is a javascript plugin (for jQuery and Prototype) _that makes long, unwieldy select boxes much more user-friendly._ GwtChosen is a port of the jquery version of Chosen for GWT Web Toolkit. It is not a wrapper but a complete rewrite using the GWT standards. It is available as a GwtQuery plugin or as a widget.
 
