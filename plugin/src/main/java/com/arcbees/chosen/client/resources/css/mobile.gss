@@ -40,7 +40,7 @@
     color: CHZN_C_TEXT;
 
     position: absolute;
-    top: 8px;
+    top: 6px;
     right: 15px;
 }
 
