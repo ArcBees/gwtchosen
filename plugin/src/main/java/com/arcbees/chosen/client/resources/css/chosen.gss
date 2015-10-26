@@ -274,14 +274,16 @@
 
     display: block;
     width: 12px;
-    height: 13px;
+    height: 12px;
 
     position: absolute;
     right: 3px;
-    top: 4px;
+    top: 2px;
 }
 
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close::before {
+    vertical-align: middle;
+
     @mixin transition(all, 0.2s);
 }
 
