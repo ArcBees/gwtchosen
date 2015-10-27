@@ -1260,7 +1260,7 @@ public abstract class ChosenImpl {
         } else if (options.getNoResultsText() != null) {
             resultsNoneFound = options.getNoResultsText();
         } else {
-            resultsNoneFound = "No results match";
+            resultsNoneFound = "No results match ";
         }
     }
 
