@@ -1064,6 +1064,10 @@ public abstract class ChosenImpl {
     }
 
     private void rebuildResultItems(boolean init) {
+        if (selectedItem != null) {
+            selectedItem.toggleClass(css.chznDefault(), selectedValues.isEmpty());
+        }
+
         SafeHtmlBuilder content = new SafeHtmlBuilder();
         SafeHtmlBuilder optionsHtml = new SafeHtmlBuilder();
 

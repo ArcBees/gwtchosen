@@ -25,6 +25,7 @@ import org.openqa.selenium.WebElement;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
+import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxSingleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
@@ -284,6 +285,19 @@ public class DesktopChosenIT extends ChosenIT {
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo(ChosenListBoxMultipleSelectAddItems.SELECTED_VALUE);
+    }
+
+    @Test
+    public void chosenListBox_updateAndSelect_removeDefaultStyle() {
+        // Given
+        loadTestCase(new ChosenListBoxSingleSelectAddItems());
+
+        // When
+        getElementById(ChosenListBoxSingleSelectAddItems.BUTTON_ID).click();
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo(ChosenListBoxSingleSelectAddItems.SELECTED_VALUE);
+        assertThat(getPlaceholder().getAttribute("class")).doesNotContain("chzn-default");
     }
 
     /**

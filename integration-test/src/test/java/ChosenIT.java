@@ -311,6 +311,12 @@ public abstract class ChosenIT {
                 By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-drop")));
     }
 
+    protected WebElement getPlaceholder() {
+        String xpath = "//div[@id='chosen_container__0_chzn']//a";
+
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
+    }
+
     protected int getDropdownTop() {
         WebElement dropdown = getDropdown();
         String topString = dropdown.getCssValue("top");
