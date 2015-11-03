@@ -19,8 +19,10 @@ package com.arcbees.chosen.client;
 import com.arcbees.chosen.client.SelectParser.OptionItem;
 import com.arcbees.chosen.client.event.MaxSelectedEvent;
 import com.google.gwt.dom.client.OptionElement;
+import com.google.gwt.dom.client.SelectElement;
 import com.google.gwt.query.client.GQuery;
 import com.google.gwt.user.client.Event;
+import com.google.web.bindery.event.shared.EventBus;
 
 public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     @Override
@@ -48,6 +50,7 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         }
     }
 
+    @Override
     protected void resultDeactivate(GQuery query, boolean selected) {
         if (!selected) {
             super.resultDeactivate(query, selected);
@@ -87,6 +90,13 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         closeField();
     }
 
+    @Override
+    protected void init(SelectElement element, ChosenOptions options, EventBus eventBus) {
+        super.init(element, options, eventBus);
+
+        updateSelectedText();
+    }
+
     private void resultDeselect(OptionItem item, GQuery element) {
         choices--;
 
@@ -111,8 +121,10 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
         String selectedText;
         if (choices > 1) {
             selectedText = getOptions().getManySelectedTextMultipleMobile();
-        } else {
+        } else if (choices == 1) {
             selectedText = getOptions().getOneSelectedTextMultipleMobile();
+        } else {
+            selectedText = defaultText;
         }
 
         selectedText = selectedText.replace("{}", "" + choices);
