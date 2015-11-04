@@ -84,6 +84,7 @@ public class DesktopMultipleChosenImpl extends ChosenImpl {
         return classes;
     }
 
+    @Override
     protected void addChoice(OptionItem option) {
         if (maxSelectedOptionsReached()) {
             fireEvent(new MaxSelectedEvent(this));

@@ -87,13 +87,13 @@ public abstract class ChosenImpl {
     protected boolean resultsShowing;
     protected GQuery searchChoices;
     protected GQuery searchContainer;
+    protected String defaultText;
     private GQuery $selectElement;
     private boolean allowSingleDeselect;
     private GQuery container;
     private String containerId;
     private ChosenCss css;
     private List<String> selectedValues = new ArrayList<String>();
-    private String defaultText;
     private GQuery dropdown;
     private EventBus eventBus;
     private int fWidth;
