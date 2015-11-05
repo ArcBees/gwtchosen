@@ -21,6 +21,7 @@ import java.util.Map;
 
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxSingleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
@@ -28,6 +29,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.IsAcceptedValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
+import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxSelectedOptionsOnInit;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
@@ -76,6 +78,8 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new SimpleMultiValueListBoxOnChange());
         registerTestCase(new ChosenListBoxMultipleSelectAddItems());
         registerTestCase(new ChosenListBoxSingleSelectAddItems());
+        registerTestCase(new MultiValueListBoxSelectedOptionsOnInit());
+        registerTestCase(new ChosenListBoxMultipleSelect());
     }
 
     @Override

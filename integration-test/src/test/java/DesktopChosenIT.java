@@ -1,12 +1,12 @@
 /**
  * Copyright 2015 ArcBees Inc.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -23,7 +23,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
-import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxSingleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
@@ -47,30 +46,12 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.BMW;
-import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.TOYOTA;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
 public class DesktopChosenIT extends ChosenIT {
-
-    /**
-     * Goal: ensure allowSingleDeselect is working properly.
-     */
-    @Test
-    public void allowSingleDeselect() {
-        // Given
-        loadTestCase(new AllowSingleDeselect());
-        clickOption(CADILLAC, RENDERER);
-
-        // When
-        singleDeselect();
-
-        // Then
-        assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
-    }
-
     /**
      * Tests that when
      * - we deselect an option to a multiple chosen list box.
@@ -297,7 +278,7 @@ public class DesktopChosenIT extends ChosenIT {
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo(ChosenListBoxSingleSelectAddItems.SELECTED_VALUE);
-        assertThat(getPlaceholder().getAttribute("class")).doesNotContain("chzn-default");
+        assertThat(getSinglePlaceholder().getAttribute("class")).doesNotContain("chzn-default");
     }
 
     /**
@@ -347,6 +328,13 @@ public class DesktopChosenIT extends ChosenIT {
 
         // Then
         assertDropdownIsClosed();
+    }
+
+    @Override
+    protected String getMultiplePlaceHolderText() {
+        String xpath = "//div[@id='chosen_container__0_chzn']//input";
+
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath))).getAttribute("value");
     }
 
     protected void openDropDown() {
