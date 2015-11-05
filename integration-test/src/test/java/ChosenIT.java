@@ -108,7 +108,7 @@ public abstract class ChosenIT {
     }
 
     /**
-     * Ensure default text is displayed on Multiple select
+     * Ensure default text is displayed on Multiple select.
      */
     @Test
     public void multipleListBox_displayPlaceHolder() {
