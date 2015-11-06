@@ -392,7 +392,7 @@
     border: 1px solid CHZN_C_BORDER;
 
     @mixin shadow_inner_color(0, 1px, 0, 0, CHZN_C_PRIMARY);
-    @mixin borderradius_b(0);
+    @mixin borderradius(4px, 0, 0, 4px);
 }
 
 .chzn-container-active .chzn-single-with-drop div {
