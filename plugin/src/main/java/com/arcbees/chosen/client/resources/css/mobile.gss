@@ -94,7 +94,7 @@
     align-items: stretch;
 }
 
-.chzn-mobile-container .chzn-results li:hover {
+.chzn-mobile-container .chzn-results li:hover:not(.group-result) {
     background-color: CHZN_C_SECONDARY;
     color: CHZN_C_PRIMARY;
     
@@ -107,6 +107,15 @@
 
 .chzn-mobile-container .chzn-results li:hover em {
     background-color: CHZN_C_SECONDARY_DARK;
+}
+
+.chzn-mobile-container .chzn-results li.group-result {
+    background-color: CHZN_C_BORDER;
+    color: CHZN_C_TEXT;
+    font-weight: bold;
+
+    padding: .6em 15px;
+    margin-bottom: 0;
 }
 
 .chzn-mobile-container .result-selected {
