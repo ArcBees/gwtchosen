@@ -40,7 +40,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void addChoice(OptionItem item) {
-        GQuery.console.log("ADD CHOICE");
         if (maxSelectedOptionsReached()) {
             fireEvent(new MaxSelectedEvent(this));
         } else {
@@ -53,7 +52,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void resultDeactivate(GQuery query, boolean selected) {
-        GQuery.console.log("DEACTIVATE");
         if (!selected) {
             super.resultDeactivate(query, selected);
         }
@@ -61,7 +59,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void resultSelect(Event e) {
-        GQuery.console.log("SELECT");
         if (getResultHighlight() != null) {
             OptionItem item = getOptionItem(getResultHighlight());
 
@@ -90,7 +87,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
 
     @Override
     protected void update() {
-        GQuery.console.log("UPDATE");
         super.update();
 
         closeField();
@@ -104,7 +100,6 @@ public class MobileMultipleChosenImpl extends AbstractMobileChosenImpl {
     }
 
     private void resultDeselect(OptionItem item, GQuery element) {
-        GQuery.console.log("DESELECT");
         choices--;
 
         item.setSelected(false);
