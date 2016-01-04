@@ -62,6 +62,9 @@ import static com.google.gwt.query.client.GQuery.document;
 import static com.google.gwt.safehtml.shared.SafeHtmlUtils.fromTrustedString;
 
 public abstract class ChosenImpl {
+    public static final String MULTIPLE_DEFAULT_TEXT = "Select Some Options";
+    public static final String SINGLE_DEFAULT_TEXT = "Select an Option";
+
     static final int BACKSPACE = 8;
     static final String TABINDEX_PROPERTY = "tabindex";
 
@@ -1246,7 +1249,7 @@ public abstract class ChosenImpl {
             } else if (options.getPlaceholderText() != null) {
                 defaultText = options.getPlaceholderText();
             } else {
-                defaultText = "Select Some Options";
+                defaultText = MULTIPLE_DEFAULT_TEXT;
             }
         } else {
             if (options.getPlaceholderTextSingle() != null) {
@@ -1254,7 +1257,7 @@ public abstract class ChosenImpl {
             } else if (options.getPlaceholderText() != null) {
                 defaultText = options.getPlaceholderText();
             } else {
-                defaultText = "Select an Option";
+                defaultText = SINGLE_DEFAULT_TEXT;
             }
         }
 

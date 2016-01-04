@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 ArcBees Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -25,12 +25,14 @@ import org.openqa.selenium.WebElement;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
+import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxSelectedOptionsOnInit;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.google.common.base.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.HONDA;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.MERCEDES;
@@ -118,6 +120,15 @@ public class MobileChosenIT extends ChosenIT {
         assertDropdownIsOpenWithMobileLayout();
     }
 
+    @Test
+    public void selectedValuesOnInit_setsItemsSelectedText() {
+        // Given
+        loadTestCase(new MultiValueListBoxSelectedOptionsOnInit());
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo("2 items selected");
+    }
+
     /**
      * On mobile, we should be able to close the dropdown by clicking on the icon net to the input.
      */
@@ -164,6 +175,13 @@ public class MobileChosenIT extends ChosenIT {
         });
 
         assertThat(getDropdown().getAttribute("class")).doesNotContain(IS_OPEN);
+    }
+
+    @Override
+    protected String getMultiplePlaceHolderText() {
+        String xpath = "//div[@id='chosen_container__0_chzn']//span";
+
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath))).getText();
     }
 
     protected void openDropDown() {

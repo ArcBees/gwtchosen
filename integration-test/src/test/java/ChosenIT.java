@@ -28,9 +28,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
+import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelect;
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
 import com.arcbees.chosen.integrationtest.client.testcases.EnabledDisabled;
 import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
@@ -55,6 +58,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.AUDI;
+import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.CADILLAC;
 import static com.arcbees.chosen.integrationtest.client.domain.CarBrand.FORD;
 import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRenderer.RENDERER;
 
@@ -85,6 +89,34 @@ public abstract class ChosenIT {
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo(fordRender);
+    }
+
+    /**
+     * Goal: ensure allowSingleDeselect is working properly.
+     */
+    @Test
+    public void allowSingleDeselect() {
+        // Given
+        loadTestCase(new AllowSingleDeselect());
+        clickOption(CADILLAC, RENDERER);
+
+        // When
+        singleDeselect();
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
+    }
+
+    /**
+     * Ensure default text is displayed on Multiple select.
+     */
+    @Test
+    public void multipleListBox_displayPlaceHolder() {
+        // Given
+        loadTestCase(new ChosenListBoxMultipleSelect());
+
+        // Then
+        assertThat(getMultiplePlaceHolderText()).isEqualTo(ChosenImpl.MULTIPLE_DEFAULT_TEXT);
     }
 
     /**
@@ -311,11 +343,13 @@ public abstract class ChosenIT {
                 By.className("com-arcbees-chosen-client-resources-ChosenCss-chzn-drop")));
     }
 
-    protected WebElement getPlaceholder() {
+    protected WebElement getSinglePlaceholder() {
         String xpath = "//div[@id='chosen_container__0_chzn']//a";
 
         return webDriverWait().until(presenceOfElementLocated(By.xpath(xpath)));
     }
+
+    protected abstract String getMultiplePlaceHolderText();
 
     protected int getDropdownTop() {
         WebElement dropdown = getDropdown();
