@@ -330,12 +330,15 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
     }
 
     public GQuery getChosenElement() {
-        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY,
-                ChosenImpl.class);
+        ChosenImpl impl = getChosenImpl();
         if (impl != null) {
             return impl.getContainer();
         }
         return $();
+    }
+
+    protected ChosenImpl getChosenImpl() {
+        return $(getElement()).data(CHOSEN_DATA_KEY, ChosenImpl.class);
     }
 
     public int getDisableSearchThreshold() {
@@ -405,7 +408,7 @@ public class ChosenListBox extends ListBox implements HasAllChosenHandlers {
      * @return the values of all selected options in an array
      */
     public String[] getValues() {
-        ChosenImpl impl = $(getElement()).data(CHOSEN_DATA_KEY, ChosenImpl.class);
+        ChosenImpl impl = getChosenImpl();
 
         if (impl != null) {
             List<String> selectedValues = impl.getSelectedValues();
