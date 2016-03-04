@@ -157,7 +157,7 @@ public class MultipleChosenValueListBox<T> extends BaseChosenValueListBox<T>
 
     @Override
     protected void addItemToChosenListBox(T value) {
-        int index = valueKeyToIndex.get(value);
+        int index = valueKeyToIndex.get(keyProvider.getKey(value));
 
         getChosenListBox().addItem(renderer.render(value), "" + index);
     }
