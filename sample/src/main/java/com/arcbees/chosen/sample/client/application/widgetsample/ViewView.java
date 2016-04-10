@@ -20,6 +20,7 @@ import com.arcbees.chosen.client.event.ChosenChangeEvent;
 import com.arcbees.chosen.client.event.ChosenChangeEvent.ChosenChangeHandler;
 import com.arcbees.chosen.client.event.HidingDropDownEvent.HidingDropDownHandler;
 import com.arcbees.chosen.client.event.MaxSelectedEvent.MaxSelectedHandler;
+import com.arcbees.chosen.client.event.ReadyEvent;
 import com.arcbees.chosen.client.event.ReadyEvent.ReadyHandler;
 import com.arcbees.chosen.client.event.ShowingDropDownEvent.ShowingDropDownHandler;
 import com.arcbees.chosen.client.gwt.ChosenListBox;
@@ -77,7 +78,7 @@ public class ViewView implements IsWidget {
             ).scrollTop($("#log").get(0).getScrollHeight());
         }
 
-        public void onReady() {
+        public void onReady(ReadyEvent event) {
             log("ReadyEvent", "");
         }
 
