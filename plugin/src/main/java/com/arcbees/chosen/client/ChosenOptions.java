@@ -31,6 +31,7 @@ public class ChosenOptions {
     private boolean searchContains;
     private boolean singleBackstrokeDelete;
     private boolean highlightSearchTerm;
+    private boolean performSearchIfEmptyText;
     private ResultsFilter resultFilter;
     private DropdownPosition dropdownPosition;
     private Element dropdownBoundaries;
@@ -266,6 +267,15 @@ public class ChosenOptions {
         return singleBackstrokeDelete;
     }
 
+    public ChosenOptions setPerformSearchIfEmptyText(boolean performSearchIfEmptyText) {
+        this.performSearchIfEmptyText = performSearchIfEmptyText;
+        return this;
+    }
+
+    public boolean isPerformSearchIfEmptyText() {
+        return performSearchIfEmptyText;
+    }
+
     public ChosenOptions setSingleBackstrokeDelete(boolean singleBackstrokeDelete) {
         this.singleBackstrokeDelete = singleBackstrokeDelete;
         return this;
@@ -297,6 +307,7 @@ public class ChosenOptions {
         maxSelectedOptions = -1;
         highlightSearchTerm = true;
         dropdownPosition = DropdownPosition.BELOW;
+        performSearchIfEmptyText = true;
         mobileViewportMaxWidth = 649;
         oneSelectedTextMultipleMobile = "{} item selected";
         manySelectedTextMultipleMobile = "{} items selected";
