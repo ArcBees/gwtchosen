@@ -26,6 +26,7 @@ import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelectAddItems;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxSelectedOptionsOnInit;
+import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxWithCustomKeyProvider;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleValueListBox;
 import com.google.common.base.Predicate;
@@ -124,6 +125,15 @@ public class MobileChosenIT extends ChosenIT {
     public void selectedValuesOnInit_setsItemsSelectedText() {
         // Given
         loadTestCase(new MultiValueListBoxSelectedOptionsOnInit());
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo("2 items selected");
+    }
+
+    @Test
+    public void multiValueListBoxWithCustomProvider_setsItemsSelectedText() {
+        // Given
+        loadTestCase(new MultiValueListBoxWithCustomKeyProvider());
 
         // Then
         assertThat(getSelectedOptionText()).isEqualTo("2 items selected");

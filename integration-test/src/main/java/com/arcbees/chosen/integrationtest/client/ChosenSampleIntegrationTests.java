@@ -30,6 +30,7 @@ import com.arcbees.chosen.integrationtest.client.testcases.HideEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.IsAcceptedValueListBox;
 import com.arcbees.chosen.integrationtest.client.testcases.MaxSelectedOptions;
 import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxSelectedOptionsOnInit;
+import com.arcbees.chosen.integrationtest.client.testcases.MultiValueListBoxWithCustomKeyProvider;
 import com.arcbees.chosen.integrationtest.client.testcases.SearchContains;
 import com.arcbees.chosen.integrationtest.client.testcases.ShowNonEmptyValues;
 import com.arcbees.chosen.integrationtest.client.testcases.SimpleMultiValueListBox;
@@ -80,6 +81,7 @@ public class ChosenSampleIntegrationTests implements EntryPoint, ValueChangeHand
         registerTestCase(new ChosenListBoxSingleSelectAddItems());
         registerTestCase(new MultiValueListBoxSelectedOptionsOnInit());
         registerTestCase(new ChosenListBoxMultipleSelect());
+        registerTestCase(new MultiValueListBoxWithCustomKeyProvider());
     }
 
     @Override
