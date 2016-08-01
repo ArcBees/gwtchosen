@@ -32,6 +32,7 @@ import com.arcbees.chosen.client.ChosenImpl;
 import com.arcbees.chosen.integrationtest.client.TestCase;
 import com.arcbees.chosen.integrationtest.client.domain.CarBrand;
 import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselect;
+import com.arcbees.chosen.integrationtest.client.testcases.AllowSingleDeselectNullNonEmpty;
 import com.arcbees.chosen.integrationtest.client.testcases.ChooseOption;
 import com.arcbees.chosen.integrationtest.client.testcases.ChosenListBoxMultipleSelect;
 import com.arcbees.chosen.integrationtest.client.testcases.DisableSearchThreshold;
@@ -65,6 +66,7 @@ import static com.arcbees.chosen.integrationtest.client.domain.DefaultCarRendere
 public abstract class ChosenIT {
     private static final String ROOT = "http://localhost:" + System.getProperty("testPort");
     private static final int TIME_OUT_IN_SECONDS = 20;
+    private static final String CHOSEN_XPATH = "//div[@id='chozen_container__0_chzn']";
 
     protected final WebDriver webDriver = new ChromeDriver();
 
@@ -98,6 +100,38 @@ public abstract class ChosenIT {
     public void allowSingleDeselect() {
         // Given
         loadTestCase(new AllowSingleDeselect());
+        clickOption(CADILLAC, RENDERER);
+
+        // When
+        singleDeselect();
+
+        // Then
+        assertThat(getSelectedOptionText()).isEqualTo(AllowSingleDeselect.PLACEHOLDER);
+        assertThat(getChosen().findElements(By.tagName("abbr"))).isEmpty();
+    }
+
+    /**
+     * Goal: ensure allowSingleDeselect shows the X/cross when there is a value.
+     */
+    @Test
+    public void allowSingleDeselect_visibleOnSelection() {
+        // Given
+        loadTestCase(new AllowSingleDeselect());
+
+        // When
+        clickOption(CADILLAC, RENDERER);
+
+        // Then
+        assertThat(getChosen().findElements(By.tagName("abbr"))).isNotEmpty();
+    }
+
+    /**
+     * Goal: ensure allowSingleDeselect is working properly when a null renderer isn't an empty string.
+     */
+    @Test
+    public void allowSingleDeselect_nullNonEmpty() {
+        // Given
+        loadTestCase(new AllowSingleDeselectNullNonEmpty());
         clickOption(CADILLAC, RENDERER);
 
         // When
@@ -395,6 +429,28 @@ public abstract class ChosenIT {
                 return element.getText();
             }
         });
+    }
+
+    private WebElement getChosen() {
+        return webDriverWait().until(presenceOfElementLocated(By.xpath(CHOSEN_XPATH)));
+    }
+
+    private List<WebElement> getSelectedOptions() {
+        String xpath = CHOSEN_XPATH + "//span";
+
+        List<WebElement> options = webDriverWait().until(presenceOfAllElementsLocatedBy(By.xpath(xpath)));
+        return Lists.transform(options, new Function<WebElement, WebElement>() {
+            @Override
+            public WebElement apply(WebElement element) {
+                return element;
+            }
+        });
+    }
+
+    private WebElement getSelectedOption() {
+        List<WebElement> selectedOption = getSelectedOptions();
+
+        return selectedOption.isEmpty() ? null : selectedOption.get(0);
     }
 
     protected boolean isMobileChosenComponent() {

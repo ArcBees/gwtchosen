@@ -40,6 +40,11 @@ class ClientResultsFilter implements ResultsFilter {
         RegExp regex = RegExp.compile(regexAnchor + escapedSearchText, "i");
         RegExp zregex = RegExp.compile("(" + escapedSearchText + ")", "i");
 
+        boolean performSearch = true;
+        if (!options.isPerformSearchIfEmptyText() && searchText.isEmpty()) {
+            performSearch = false;
+        }
+
         int results = 0;
 
         List<SelectItem> selectItems = chosen.getSelectItems();
@@ -63,13 +68,13 @@ class ClientResultsFilter implements ResultsFilter {
                         optionContent = option.getText();
                     }
 
-                    if (regex.test(optionContent)) {
+                    if (performSearch && regex.test(optionContent)) {
                         found = true;
                         results++;
                     } else if (optionContent.contains(" ") || optionContent.indexOf("[") == 0) {
                         String[] parts = optionContent.replaceAll("\\[|\\]", "").split(" ");
                         for (String part : parts) {
-                            if (regex.test(part)) {
+                            if (performSearch && regex.test(part)) {
                                 found = true;
                                 results++;
                             }

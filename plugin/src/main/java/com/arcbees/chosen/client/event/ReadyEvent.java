@@ -21,7 +21,7 @@ import com.google.gwt.event.shared.EventHandler;
 
 public class ReadyEvent extends ChosenEvent<ReadyEvent.ReadyHandler> {
     public interface ReadyHandler extends EventHandler {
-        void onReady();
+        void onReady(ReadyEvent event);
     }
 
     public static final Type<ReadyHandler> TYPE = new Type<ReadyHandler>();
@@ -41,7 +41,7 @@ public class ReadyEvent extends ChosenEvent<ReadyEvent.ReadyHandler> {
 
     @Override
     protected void dispatch(ReadyHandler handler) {
-        handler.onReady();
+        handler.onReady(this);
     }
 
 }
