@@ -123,11 +123,6 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
     }
 
     @Override
-    protected void addItemToChosenListBox(T value) {
-        getChosenListBox().addItem(renderer.render(value));
-    }
-
-    @Override
     protected ChosenListBox createChosenListBox(ChosenOptions options) {
         return new ChosenListBox(options);
     }
@@ -152,6 +147,16 @@ public class ChosenValueListBox<T> extends BaseChosenValueListBox<T> implements 
         } else {
             value = null; // the value is not in the accepted values list anymore.
             getChosenListBox().setSelectedIndex(-1);
+        }
+    }
+
+    @Override
+    protected void addItemToChosenListBox(T value) {
+        if (value == null) {
+            // Treat null value as empty so that ChosenImpl can do a allowSingleDeselect
+            getChosenListBox().addItem(renderer.render(value), "");
+        } else {
+            getChosenListBox().addItem(renderer.render(value));
         }
     }
 
